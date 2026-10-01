@@ -1,0 +1,73 @@
+/// <reference lib="webworker" />
+/**
+ * Service worker: cached app shell (offline), Web Push display and notification click handling.
+ * API calls are never cached (always network).
+ */
+import { clientsClaim } from "workbox-core";
+import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from "workbox-precaching";
+import { NavigationRoute, registerRoute } from "workbox-routing";
+
+declare const self: ServiceWorkerGlobalScope;
+
+self.skipWaiting();
+clientsClaim();
+cleanupOutdatedCaches();
+precacheAndRoute(self.__WB_MANIFEST);
+
+// SPA navigation fallback → cached index.html (offline shell). Backend paths are excluded.
+registerRoute(
+  new NavigationRoute(createHandlerBoundToURL("index.html"), {
+    denylist: [/^\/api\//, /^\/admin/, /^\/ws\//, /^\/static\//, /^\/health\//],
+  }),
+);
+
+interface PushPayload {
+  title?: string;
+  body?: string;
+  url?: string;
+  tag?: string;
+  notification_id?: string;
+  type?: string;
+}
+
+self.addEventListener("push", (event) => {
+  let data: PushPayload;
+  try {
+    data = event.data?.json() ?? {};
+  } catch {
+    data = { title: "Поруч", body: event.data?.text() };
+  }
+  const title = data.title || "Поруч";
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      body: data.body ?? "",
+      icon: "/icons/icon-192.png",
+      badge: "/icons/icon-192.png",
+      tag: data.tag,
+      data: { url: data.url || "/" },
+      lang: "uk",
+    }),
+  );
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const target = new URL((event.notification.data?.url as string) || "/", self.location.origin).href;
+  event.waitUntil(
+    (async () => {
+      const windows = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+      // 1) find an existing app window, 2) focus it, 3) navigate; 4) otherwise open a new one.
+      const existing = windows.find((client) => new URL(client.url).origin === self.location.origin);
+      if (existing) {
+        await existing.focus();
+        if ("navigate" in existing) {
+          await (existing as WindowClient)
+            .navigate(target)
+            .catch(() => existing.postMessage({ type: "navigate", url: target }));
+        }
+        return;
+      }
+      await self.clients.openWindow(target);
+    })(),
+  );
+});

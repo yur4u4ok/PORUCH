@@ -1,0 +1,75 @@
+.location {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 700;
+  font-size: var(--text-lg);
+}
+.sos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 190px;
+  border: none;
+  border-radius: 28px;
+  background: radial-gradient(circle at 30% 20%, #ff6b5e, var(--color-primary) 60%);
+  color: #fff;
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 14px 36px rgb(226 72 61 / 0.35);
+  transition: transform var(--transition);
+}
+.sos:active {
+  transform: scale(0.985);
+}
+.sosIcon {
+  font-size: 56px;
+  line-height: 1;
+}
+.sosSub {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  opacity: 0.9;
+}
+.helpButton {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-help);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 800;
+}
+.helpButton small {
+  display: block;
+  font-weight: 500;
+  opacity: 0.9;
+}
+.helpIcon {
+  font-size: 32px;
+}
+.mapLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  text-decoration: none;
+  font-weight: 600;
+}
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
