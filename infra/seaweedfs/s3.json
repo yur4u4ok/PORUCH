@@ -1,0 +1,9 @@
+{
+  "identities": [
+    {
+      "name": "poruch-dev",
+      "credentials": [{ "accessKey": "poruch", "secretKey": "poruch-secret" }],
+      "actions": ["Admin", "Read", "List", "Tagging", "Write"]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+# Infrastructure only (PostGIS, Redis, S3 (SeaweedFS), Mailpit) for running backend/frontend natively:
+#   docker compose -f docker-compose.dev.yml up -d
+name: poruch-infra
+
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-poruch}
+      POSTGRES_USER: ${POSTGRES_USER:-poruch}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-poruch}
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 20
+
+  # S3-compatible object storage for development (SeaweedFS). Dev credentials: infra/seaweedfs/s3.json
+  s3:
+    image: chrislusf/seaweedfs:latest
+    command: server -dir=/data -s3 -s3.port=8333 -s3.config=/etc/seaweedfs/s3.json -s3.allowedOrigins=*
+    ports: ["9000:8333"]
+    volumes:
+      - s3data:/data
+      - ./infra/seaweedfs/s3.json:/etc/seaweedfs/s3.json:ro
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports: ["8025:8025", "1025:1025"]
+
+volumes:
+  pgdata:
+  s3data:

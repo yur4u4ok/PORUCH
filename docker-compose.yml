@@ -1,0 +1,68 @@
+# Full development environment:  docker compose up
+name: poruch
+
+x-backend: &backend
+  build:
+    context: ./backend
+    target: dev
+  env_file: .env
+  environment:
+    DATABASE_URL: postgis://${POSTGRES_USER:-poruch}:${POSTGRES_PASSWORD:-poruch}@postgres:5432/${POSTGRES_DB:-poruch}
+    REDIS_URL: redis://redis:6379/0
+    CELERY_BROKER_URL: redis://redis:6379/1
+    CELERY_RESULT_BACKEND: redis://redis:6379/2
+    AWS_S3_ENDPOINT_URL: http://s3:8333
+    EMAIL_URL: smtp://mailpit:1025
+  volumes:
+    - ./backend:/app
+  depends_on:
+    postgres: { condition: service_healthy }
+    redis: { condition: service_healthy }
+    # S3-compatible object storage for development (SeaweedFS). Dev credentials: infra/seaweedfs/s3.json
+  s3:
+    image: chrislusf/seaweedfs:latest
+    command: server -dir=/data -s3 -s3.port=8333 -s3.config=/etc/seaweedfs/s3.json -s3.allowedOrigins=*
+    ports: ["9000:8333"]
+    volumes:
+      - s3data:/data
+      - ./infra/seaweedfs/s3.json:/etc/seaweedfs/s3.json:ro
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports: ["8025:8025", "1025:1025"]
+
+  backend:
+    <<: *backend
+    # Dev only: migrations run automatically. Production runs them as a separate step.
+    command: sh -c "python manage.py migrate --noinput && python manage.py init_storage && python manage.py runserver 0.0.0.0:8000"
+    ports: ["8000:8000"]
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:8000/health/live/"]
+      interval: 10s
+      retries: 30
+
+  celery:
+    <<: *backend
+    command: celery -A config worker -l info --concurrency 2
+
+  celery-beat:
+    <<: *backend
+    command: celery -A config beat -l info --schedule /tmp/celerybeat-schedule
+
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    env_file: .env
+    environment:
+      VITE_PROXY_TARGET: http://backend:8000
+    ports: ["5173:5173"]
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      backend: { condition: service_started }
+
+volumes:
+  pgdata:
+  s3data:
