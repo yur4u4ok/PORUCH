@@ -56,3 +56,18 @@ def test_seed_demo_data(no_push):
     assert ThankYou.objects.count() == 1
     call_command("seed_demo_data", "--reset")
     assert HelpRequest.objects.count() == 5
+
+
+@pytest.mark.django_db
+def test_kpi_report(no_push):
+    from django.core.management import call_command
+
+    from apps.help_requests.management.commands.kpi_report import compute_kpis
+
+    assert compute_kpis()["help_success_rate"] is None
+    call_command("seed_demo_data")
+    kpis = compute_kpis()
+    assert kpis["requests_total"] == 5
+    assert kpis["help_success_rate"] == 0.2
+    assert kpis["response_rate"] == 0.6
+    assert kpis["time_to_help_minutes"] is not None

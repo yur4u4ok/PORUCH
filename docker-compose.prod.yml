@@ -1,0 +1,82 @@
+# Production-like stack (single host). For Kubernetes use the same images and commands.
+#   docker compose -f docker-compose.prod.yml --env-file .env.production run --rm migrate
+#   docker compose -f docker-compose.prod.yml --env-file .env.production up -d
+# Object storage is external (AWS S3 / R2 / MinIO cluster) and configured via AWS_* variables.
+name: poruch-prod
+
+x-backend: &backend
+  build:
+    context: ./backend
+    target: production
+  image: poruch-backend:latest
+  env_file: .env.production
+  environment:
+    DJANGO_SETTINGS_MODULE: config.settings.production
+  restart: unless-stopped
+  depends_on:
+    postgres: { condition: service_healthy }
+    redis: { condition: service_healthy }
+
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    env_file: .env.production
+    volumes: [pgdata:/var/lib/postgresql/data]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes: [redisdata:/data]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 20
+
+  # Controlled, explicit migration step — never run automatically on container start.
+  migrate:
+    <<: *backend
+    restart: "no"
+    profiles: ["migrate"]
+    command: python manage.py migrate --noinput
+
+  backend:
+    <<: *backend
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:8000/health/ready/"]
+      interval: 15s
+      retries: 5
+
+  celery:
+    <<: *backend
+    command: celery -A config worker -l info --concurrency 4
+    healthcheck:
+      disable: true
+
+  celery-beat:
+    <<: *backend
+    command: celery -A config beat -l info --schedule /tmp/celerybeat-schedule
+    healthcheck:
+      disable: true
+
+  frontend:
+    build:
+      context: ./frontend
+      target: production
+      args:
+        VITE_MAP_STYLE_URL: ${VITE_MAP_STYLE_URL:-}
+    image: poruch-frontend:latest
+    environment:
+      BACKEND_UPSTREAM: http://backend:8000
+    ports: ["80:80"]
+    restart: unless-stopped
+    depends_on: [backend]
+
+volumes:
+  pgdata:
+  redisdata:
