@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { useState } from "react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
@@ -41,6 +42,23 @@ describe("UI components", () => {
     expect(screen.getByRole("tab", { name: "Список" })).toHaveAttribute("aria-selected", "true");
     await userEvent.click(screen.getByRole("tab", { name: "Карта" }));
     expect(onChange).toHaveBeenCalledWith("map");
+  });
+
+  it("Modal keeps focus in its input while typing (inline onClose)", async () => {
+    function Harness() {
+      const [value, setValue] = useState("");
+      return (
+        <Modal open onClose={() => undefined} title="Сума">
+          <input aria-label="amount" value={value} onChange={(e) => setValue(e.target.value)} />
+        </Modal>
+      );
+    }
+    render(<Harness />);
+    const input = screen.getByLabelText("amount");
+    await userEvent.click(input);
+    await userEvent.type(input, "400");
+    expect(input).toHaveValue("400");
+    expect(input).toHaveFocus();
   });
 
   it("Modal closes on Escape", async () => {

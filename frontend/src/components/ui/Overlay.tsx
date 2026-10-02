@@ -8,19 +8,27 @@ import styles from "./Overlay.module.css";
 
 function useOverlayBehaviour(open: boolean, onClose: () => void) {
   const panelRef = useRef<HTMLDivElement>(null);
+  // Keep the latest onClose without re-running the open effect: callers often pass inline
+  // arrows, and re-running would steal focus from inputs on every keystroke.
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
   useEffect(() => {
     if (!open) return;
     const previous = document.activeElement as HTMLElement | null;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onCloseRef.current();
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
-    panelRef.current?.focus();
+    // Focus the dialog once on open (unless a field inside already took focus, e.g. autoFocus).
+    if (!panelRef.current?.contains(document.activeElement)) panelRef.current?.focus();
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
       previous?.focus?.();
     };
-  }, [open, onClose]);
+  }, [open]);
   return panelRef;
 }
 
