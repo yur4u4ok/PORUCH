@@ -18,6 +18,7 @@ import {
   type LoginForm,
   type RegisterForm,
 } from "@/features/auth/schemas";
+import { useFieldError } from "@/hooks/useFieldError";
 import { toast } from "@/stores/toastStore";
 
 import styles from "../Landing/Landing.module.css";
@@ -44,6 +45,7 @@ function applyServerErrors<T extends Record<string, unknown>>(
 
 export function LoginPage() {
   const { t } = useTranslation();
+  const fe = useFieldError();
   const navigate = useNavigate();
   const location = useLocation();
   const from = (location.state as { from?: string } | null)?.from ?? "/";
@@ -75,14 +77,14 @@ export function LoginPage() {
           type="email"
           autoComplete="email"
           {...register("email")}
-          error={formState.errors.email?.message}
+          error={fe(formState.errors.email?.message)}
         />
         <Input
           label={t("auth.password")}
           type="password"
           autoComplete="current-password"
           {...register("password")}
-          error={formState.errors.password?.message}
+          error={fe(formState.errors.password?.message)}
         />
         <Button type="submit" size="lg" block loading={login.isPending}>
           {t("auth.login")}
@@ -102,6 +104,7 @@ export function LoginPage() {
 
 export function RegisterPage() {
   const { t } = useTranslation();
+  const fe = useFieldError();
   const navigate = useNavigate();
   const registerMutation = useRegister();
   const { register, handleSubmit, setError, formState } = useForm<RegisterForm>({
@@ -130,14 +133,14 @@ export function RegisterPage() {
           label={t("auth.displayName")}
           autoComplete="given-name"
           {...register("display_name")}
-          error={formState.errors.display_name?.message}
+          error={fe(formState.errors.display_name?.message)}
         />
         <Input
           label={t("auth.email")}
           type="email"
           autoComplete="email"
           {...register("email")}
-          error={formState.errors.email?.message}
+          error={fe(formState.errors.email?.message)}
         />
         <Input
           label={t("auth.password")}
@@ -145,7 +148,7 @@ export function RegisterPage() {
           autoComplete="new-password"
           hint={t("auth.passwordHint")}
           {...register("password")}
-          error={formState.errors.password?.message}
+          error={fe(formState.errors.password?.message)}
         />
         <Button type="submit" size="lg" block loading={registerMutation.isPending}>
           {t("auth.register")}
@@ -237,6 +240,7 @@ export function VerifyEmailPage() {
 
 export function ForgotPasswordPage() {
   const { t } = useTranslation();
+  const fe = useFieldError();
   const [sent, setSent] = useState(false);
   const { register, handleSubmit, formState } = useForm<{ email: string }>({
     resolver: zodResolver(emailSchema),
@@ -261,7 +265,7 @@ export function ForgotPasswordPage() {
             label={t("auth.email")}
             type="email"
             {...register("email")}
-            error={formState.errors.email?.message}
+            error={fe(formState.errors.email?.message)}
           />
           <Button type="submit" block loading={formState.isSubmitting}>
             {t("auth.resetSend")}
@@ -275,6 +279,7 @@ export function ForgotPasswordPage() {
 
 export function ResetPasswordPage() {
   const { t } = useTranslation();
+  const fe = useFieldError();
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const { register, handleSubmit, formState, setError } = useForm<{ password: string }>({
@@ -300,7 +305,7 @@ export function ResetPasswordPage() {
           type="password"
           autoComplete="new-password"
           {...register("password")}
-          error={formState.errors.password?.message}
+          error={fe(formState.errors.password?.message)}
         />
         <Button type="submit" block loading={formState.isSubmitting}>
           {t("auth.setPassword")}

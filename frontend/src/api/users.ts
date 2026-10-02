@@ -22,6 +22,7 @@ export interface MeUpdate {
   show_name?: boolean;
   show_avatar?: boolean;
   onboarding_completed?: boolean;
+  custom_items?: string[];
 }
 
 export interface PreferencesUpdate {

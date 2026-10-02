@@ -101,6 +101,10 @@ export function MapView({
     return () => {
       map.remove();
       mapRef.current = null;
+      // Markers belong to the destroyed map: drop the references so they are recreated on the new one.
+      markersRef.current = [];
+      meRef.current = null;
+      pickerRef.current = null;
     };
     // map is created once; center updates handled below
     // eslint-disable-next-line react-hooks/exhaustive-deps

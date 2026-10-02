@@ -15,6 +15,7 @@ import type { NotificationCategory } from "@/types/api";
 import { formatTime } from "@/utils/format";
 
 import { CategoryChips, RadiusChips } from "./components";
+import styles from "./components.module.css";
 
 export function AvailabilityToggle() {
   const { t } = useTranslation();
@@ -64,6 +65,10 @@ export function AvailabilityToggle() {
         disabled={clear.isPending || setAvailability.isPending}
         onChange={(checked) => (checked ? openSheet() : clear.mutate())}
       />
+      <details className={styles.explain}>
+        <summary>{t("availability.explainTitle")}</summary>
+        <p>{t("availability.explain")}</p>
+      </details>
       <BottomSheet
         open={open}
         onClose={() => setOpen(false)}
@@ -74,6 +79,7 @@ export function AvailabilityToggle() {
           </Button>
         }
       >
+        <p className="muted">{t("availability.explain")}</p>
         <div className="stack-sm">
           <strong>{t("availability.radius")}</strong>
           <RadiusChips

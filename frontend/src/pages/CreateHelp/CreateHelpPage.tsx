@@ -17,6 +17,7 @@ import { PhotoUploader } from "@/features/help/PhotoUploader";
 import { useGeolocation } from "@/features/location/useGeolocation";
 import { usePublicConfig } from "@/features/profile/hooks";
 import { useOnline } from "@/hooks/useOnline";
+import { useFieldError } from "@/hooks/useFieldError";
 import { toast } from "@/stores/toastStore";
 import type { Category, Media } from "@/types/api";
 import { CATEGORY_EMOJI, URGENCY_EMOJI } from "@/utils/categories";
@@ -35,6 +36,7 @@ const STEP_TITLES = [
 
 export default function CreateHelpPage() {
   const { t } = useTranslation();
+  const fe = useFieldError();
   const navigate = useNavigate();
   const online = useOnline();
   const { data: me } = useMe();
@@ -76,6 +78,17 @@ export default function CreateHelpPage() {
   }, [step, values.location, locate, setValue]);
 
   const fallbackCenter = position ?? me?.city?.center ?? null;
+
+  // Explicit action with visible feedback: moves the pin (and the map) to a fresh GPS fix.
+  const useMyLocation = async () => {
+    const pos = await locate({ force: true });
+    if (pos) {
+      setValue("location", { ...pos }, { shouldValidate: true });
+      toast.success(t("create.locationUpdated"));
+    } else {
+      toast.error(t("create.locationDenied"));
+    }
+  };
 
   const selectCategory = (category: Category) => {
     setValue("category", category, { shouldValidate: true });
@@ -169,7 +182,7 @@ export default function CreateHelpPage() {
           <CategoryGrid value={values.category ?? null} onChange={selectCategory} />
           {formState.errors.category && (
             <p role="alert" style={{ color: "var(--color-danger)" }}>
-              {formState.errors.category.message}
+              {fe(formState.errors.category.message)}
             </p>
           )}
           {subcategories.length > 0 && (
@@ -199,7 +212,7 @@ export default function CreateHelpPage() {
             placeholder={t("create.titlePlaceholder")}
             maxLength={120}
             {...register("title")}
-            error={formState.errors.title?.message}
+            error={fe(formState.errors.title?.message)}
           />
           <Textarea
             label={t("create.descriptionLabel")}
@@ -209,7 +222,7 @@ export default function CreateHelpPage() {
             showCounter
             valueLength={values.description.length}
             {...register("description")}
-            error={formState.errors.description?.message}
+            error={fe(formState.errors.description?.message)}
             autoFocus
           />
         </div>
@@ -220,6 +233,7 @@ export default function CreateHelpPage() {
           {fallbackCenter ? (
             <LazyMap
               center={values.location ?? fallbackCenter}
+              me={position}
               zoom={15}
               height={340}
               picker={values.location ?? fallbackCenter}
@@ -241,15 +255,7 @@ export default function CreateHelpPage() {
           <p className="muted" style={{ fontSize: 13 }}>
             🔒 {t("create.locationPrivacy")} · {t("create.locationHint")}
           </p>
-          <Button
-            variant="secondary"
-            loading={geoStatus === "locating"}
-            onClick={() =>
-              void locate({ force: true }).then(
-                (pos) => pos && setValue("location", pos, { shouldValidate: true }),
-              )
-            }
-          >
+          <Button variant="secondary" loading={geoStatus === "locating"} onClick={useMyLocation}>
             🎯 {t("create.useMyLocation")}
           </Button>
           {!values.location && fallbackCenter && (
@@ -264,7 +270,7 @@ export default function CreateHelpPage() {
           )}
           {formState.errors.location && (
             <p role="alert" style={{ color: "var(--color-danger)" }}>
-              {formState.errors.location.message}
+              {fe(formState.errors.location.message)}
             </p>
           )}
         </div>
@@ -296,19 +302,20 @@ export default function CreateHelpPage() {
                 value={field.value}
                 onChange={field.onChange}
                 options={[
-                  { value: "NONE", icon: "❤️", label: t("reward.NONE") },
+                  { value: "NONE", icon: "🤝", label: t("reward.NONE") },
                   { value: "WILLING", icon: "💰", label: t("reward.WILLING") },
-                  { value: "UNSURE", icon: "🤷", label: t("reward.UNSURE") },
+                  { value: "UNSURE", icon: "☕", label: t("reward.UNSURE") },
                 ]}
               />
             )}
           />
           {values.reward_type === "WILLING" && (
             <Input
-              label={t("reward.amount")}
+              label={`${t("reward.amount")} *`}
+              required
               inputMode="decimal"
               {...register("reward_amount")}
-              error={formState.errors.reward_amount?.message}
+              error={fe(formState.errors.reward_amount?.message)}
             />
           )}
           <p className="muted">{t("reward.note")}</p>

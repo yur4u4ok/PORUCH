@@ -1,10 +1,10 @@
-import i18n from "@/i18n";
+import i18n, { intlLocale } from "@/i18n";
 
 export function formatDistance(meters: number | null | undefined): string {
   if (meters == null) return "";
   const rounded = Math.max(100, Math.round(meters / 100) * 100);
   if (rounded < 1000) return i18n.t("common.m", { value: rounded });
-  const km = (rounded / 1000).toLocaleString("uk-UA", { maximumFractionDigits: 1 });
+  const km = (rounded / 1000).toLocaleString(intlLocale(), { maximumFractionDigits: 1 });
   return i18n.t("common.km", { value: km });
 }
 
@@ -26,11 +26,11 @@ export function timeLeft(iso: string, now: Date = new Date()): string {
 }
 
 export function formatTime(iso: string): string {
-  return new Date(iso).toLocaleTimeString("uk-UA", { hour: "2-digit", minute: "2-digit" });
+  return new Date(iso).toLocaleTimeString(intlLocale(), { hour: "2-digit", minute: "2-digit" });
 }
 
 export function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("uk-UA", { day: "numeric", month: "long", year: "numeric" });
+  return new Date(iso).toLocaleDateString(intlLocale(), { day: "numeric", month: "long", year: "numeric" });
 }
 
 export function uuid(): string {

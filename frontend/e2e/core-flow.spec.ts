@@ -34,7 +34,7 @@ test("help request end-to-end flow", async ({ browser }) => {
   await author.getByRole("button", { name: "Далі" }).click();
   await author.getByRole("radio", { name: /Зараз/ }).click();
   await author.getByRole("button", { name: "Далі" }).click();
-  await author.getByRole("radio", { name: /Просто допомога/ }).click();
+  await author.getByRole("radio", { name: /Без оплати/ }).click();
   await author.getByRole("button", { name: "Далі" }).click();
   await author.getByRole("button", { name: "Далі" }).click(); // photos are optional
   await author.getByRole("button", { name: "Попросити про допомогу" }).click();

@@ -1,6 +1,7 @@
 from typing import ClassVar
 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils import timezone
 
@@ -66,6 +67,8 @@ class Profile(models.Model):
     show_name = models.BooleanField(default=True)
     show_avatar = models.BooleanField(default=True)
     onboarding_completed = models.BooleanField(default=False)
+    # Free-text "Маю" items for things not in the catalog (used with HAS_OTHER).
+    custom_items = ArrayField(models.CharField(max_length=40), default=list, blank=True)
     # Reputation counters (denormalised, updated by services with F() expressions)
     helped_count = models.PositiveIntegerField(default=0)
     thanks_received_count = models.PositiveIntegerField(default=0)

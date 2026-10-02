@@ -37,24 +37,46 @@ function CapabilitiesEditor({
   open,
   onClose,
   initial,
+  initialCustom,
 }: {
   open: boolean;
   onClose: () => void;
   initial: string[];
+  initialCustom: string[];
 }) {
   const { t } = useTranslation();
   const { data: all } = useCapabilities();
   const save = useSetMyCapabilities();
-  const [selected, setSelected] = useState<string[]>(initial);
+  const updateMe = useUpdateMe();
+  const [selected, setSelected] = useState<string[]>(
+    initialCustom.length && !initial.includes("HAS_OTHER") ? [...initial, "HAS_OTHER"] : initial,
+  );
+  const [custom, setCustom] = useState<string[]>(initialCustom);
+  const [draft, setDraft] = useState("");
+  const otherSelected = selected.includes("HAS_OTHER");
   const toggle = (code: string) =>
     setSelected((s) => (s.includes(code) ? s.filter((c) => c !== code) : [...s, code]));
+
+  const addDraft = () => {
+    const value = draft.trim().slice(0, 40);
+    if (value && !custom.includes(value) && custom.length < 10) setCustom([...custom, value]);
+    setDraft("");
+  };
+
+  const onSave = async () => {
+    const pending = draft.trim() ? [...custom, draft.trim().slice(0, 40)] : custom;
+    await save.mutateAsync(selected);
+    await updateMe.mutateAsync({ custom_items: otherSelected ? pending.slice(0, 10) : [] });
+    onClose();
+  };
+
   return (
     <BottomSheet
       open={open}
       onClose={onClose}
       title={t("profile.editCapabilities")}
       actions={
-        <Button block loading={save.isPending} onClick={() => save.mutate(selected, { onSuccess: onClose })}>
+        <Button block loading={save.isPending || updateMe.isPending} onClick={() => void onSave()}>
           {t("common.save")}
         </Button>
       }
@@ -71,6 +93,47 @@ function CapabilitiesEditor({
                 </Chip>
               ))}
           </div>
+          {kind === "ITEM" && otherSelected && (
+            <div className="stack-sm">
+              <div className="row" style={{ alignItems: "flex-end" }}>
+                <div style={{ flex: 1 }}>
+                  <Input
+                    label={t("profile.customItemsLabel")}
+                    placeholder={t("profile.customItemsPlaceholder")}
+                    hint={t("profile.customItemsHint")}
+                    value={draft}
+                    maxLength={40}
+                    onChange={(e) => setDraft(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        addDraft();
+                      }
+                    }}
+                  />
+                </div>
+                <Button
+                  variant="secondary"
+                  onClick={addDraft}
+                  disabled={!draft.trim() || custom.length >= 10}
+                >
+                  {t("profile.customItemsAdd")}
+                </Button>
+              </div>
+              <div className="row wrap">
+                {custom.map((item) => (
+                  <Chip
+                    key={item}
+                    active
+                    onClick={() => setCustom(custom.filter((c) => c !== item))}
+                    ariaLabel={`${t("common.delete")}: ${item}`}
+                  >
+                    ✨ {item} ✕
+                  </Chip>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       ))}
     </BottomSheet>
@@ -207,8 +270,8 @@ export default function ProfilePage() {
       </div>
 
       <Card className="stack-sm">
-        {caps.data && caps.data.length > 0 ? (
-          <CapabilityList capabilities={caps.data} />
+        {(caps.data && caps.data.length > 0) || me.custom_items.length > 0 ? (
+          <CapabilityList capabilities={caps.data ?? []} customItems={me.custom_items} />
         ) : (
           <p className="muted">{t("onboarding.categoriesTitle")}</p>
         )}
@@ -240,6 +303,7 @@ export default function ProfilePage() {
           open={editCaps}
           onClose={() => setEditCaps(false)}
           initial={caps.data?.map((c) => c.code) ?? []}
+          initialCustom={me.custom_items}
         />
       )}
       <BottomSheet

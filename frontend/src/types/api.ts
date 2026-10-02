@@ -72,6 +72,7 @@ export interface PublicUser {
 
 export interface PublicProfile extends PublicUser {
   capabilities: Capability[];
+  custom_items: string[];
 }
 
 export interface Me {
@@ -85,6 +86,7 @@ export interface Me {
   show_name: boolean;
   show_avatar: boolean;
   onboarding_completed: boolean;
+  custom_items: string[];
   helped_count: number;
   thanks_received_count: number;
   has_password: boolean;

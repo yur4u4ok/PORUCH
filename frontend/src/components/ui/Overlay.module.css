@@ -54,6 +54,12 @@
   gap: var(--space-2);
 }
 .actions {
+  position: sticky;
+  bottom: calc(-1 * var(--space-6) - var(--safe-bottom));
+  margin: 0 calc(-1 * var(--space-5));
+  padding: var(--space-3) var(--space-5) calc(var(--space-3) + var(--safe-bottom));
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
   display: flex;
   gap: var(--space-2);
   justify-content: flex-end;

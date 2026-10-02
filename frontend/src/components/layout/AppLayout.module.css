@@ -86,8 +86,8 @@
     width: var(--sidebar-width);
     flex-shrink: 0;
     padding: var(--space-6) var(--space-4);
-    border-right: 1px solid var(--color-border);
-    background: var(--color-surface);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
   }
   .brand {
     display: flex;
@@ -97,6 +97,7 @@
     font-weight: 800;
     margin-bottom: var(--space-6);
     text-decoration: none;
+    color: #fff;
   }
   .brand img {
     width: 36px;
@@ -112,14 +113,17 @@
     border-radius: var(--radius-md);
     text-decoration: none;
     font-weight: 600;
-    color: var(--color-text-muted);
+    color: rgb(255 255 255 / 0.78);
   }
   .sideItem:hover {
-    background: var(--color-surface-2);
+    background: rgb(255 255 255 / 0.1);
+    color: #fff;
   }
-  .sideActive {
-    background: var(--color-primary-soft);
-    color: var(--color-primary);
+  .sideActive,
+  .sideActive:hover {
+    background: rgb(255 255 255 / 0.16);
+    color: #fff;
+    box-shadow: inset 3px 0 0 var(--color-accent);
   }
   .sideItem .dot {
     position: static;

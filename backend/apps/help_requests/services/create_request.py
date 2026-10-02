@@ -27,9 +27,9 @@ def derive_title(description: str) -> str:
 
 def validate_reward(reward_type: str, reward_amount: Decimal | None) -> Decimal | None:
     if reward_type != RewardType.WILLING:
-        return None  # amount is only informative and only for «Готовий віддячити»
-    if reward_amount is not None and reward_amount < 0:
-        raise ValidationFailed(details={"reward_amount": [_("Сума не може бути від'ємною.")]})
+        return None  # amount is only informative and only for «Готовий(-а) віддячити»
+    if reward_amount is None or reward_amount <= 0:
+        raise ValidationFailed(details={"reward_amount": [_("Вкажіть суму подяки.")]})
     return reward_amount
 
 

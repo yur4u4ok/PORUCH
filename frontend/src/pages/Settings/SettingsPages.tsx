@@ -17,6 +17,7 @@ import {
   useUpdateMe,
   useUpdatePreferences,
 } from "@/features/profile/hooks";
+import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
 import { ThemeSwitcher } from "@/features/profile/ThemeSwitcher";
 import { toast } from "@/stores/toastStore";
 import type { NotificationCategory } from "@/types/api";
@@ -26,6 +27,10 @@ export function SettingsPage() {
   return (
     <main className="page stack">
       <PageHeader title={t("settings.title")} />
+      <Card className="stack-sm">
+        <strong>{t("settings.language")}</strong>
+        <LanguageSwitcher />
+      </Card>
       <Card className="stack-sm">
         <strong>{t("settings.theme")}</strong>
         <ThemeSwitcher />

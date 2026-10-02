@@ -50,9 +50,9 @@ export default function PublicProfilePage() {
           {user.is_verified && ` · ✓ ${t("profile.verified")}`}
         </span>
       </div>
-      {user.capabilities.length > 0 && (
+      {(user.capabilities.length > 0 || user.custom_items.length > 0) && (
         <Card>
-          <CapabilityList capabilities={user.capabilities} />
+          <CapabilityList capabilities={user.capabilities} customItems={user.custom_items} />
         </Card>
       )}
       <ThanksList userId={user.id} />

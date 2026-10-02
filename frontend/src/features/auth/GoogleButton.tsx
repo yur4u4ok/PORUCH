@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
 import { usePublicConfig } from "@/features/profile/hooks";
@@ -38,6 +39,7 @@ function loadScript(): Promise<void> {
 /** Google Identity Services button; rendered only when GOOGLE_CLIENT_ID is configured. */
 export function GoogleButton({ redirectTo = "/" }: { redirectTo?: string }) {
   const { data: config } = usePublicConfig();
+  const { i18n } = useTranslation();
   const ref = useRef<HTMLDivElement>(null);
   const login = useGoogleLogin();
   const navigate = useNavigate();
@@ -58,7 +60,7 @@ export function GoogleButton({ redirectTo = "/" }: { redirectTo?: string }) {
           theme: "outline",
           size: "large",
           width: 320,
-          locale: "uk",
+          locale: i18n.language,
         });
       })
       .catch(() => undefined);

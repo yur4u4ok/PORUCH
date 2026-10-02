@@ -26,8 +26,8 @@ USERS = [
     ("olena", "Олена", ["AUTO_TIRE", "AUTO_BATTERY", "HAS_JUMPER_CABLES", "HAS_COMPRESSOR"]),
     ("taras", "Тарас", ["HOUSE_MOVING", "HOUSE_ASSEMBLY", "HAS_TOOLKIT", "HAS_DRILL"]),
     ("iryna", "Ірина", ["ANIMAL_HELP", "PERSON_HELP", "DELIVERY"]),
-    ("andrii", "Андрій", ["AUTO_TOW", "AUTO_FUEL", "HAS_TOW_ROPE", "HAS_CAR"]),
-    ("sofia", "Софія", ["ITEM_LENDING", "HOUSE_TOOLS", "HAS_LADDER"]),
+    ("andrii", "Андрій", ["AUTO_TOW", "AUTO_FUEL", "HAS_CAR", "HAS_POWER"]),
+    ("sofia", "Софія", ["ITEM_LENDING", "HOUSE_TOOLS", "HAS_LADDER", "HAS_OTHER"]),
 ]
 
 REQUESTS = [

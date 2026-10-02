@@ -1,19 +1,14 @@
+/** Messages are i18n keys ("key" or "key|max"), translated at render via useFieldError(). */
 import { z } from "zod";
-
-import i18n from "@/i18n";
 
 export const createHelpSchema = z
   .object({
     category: z.enum(["AUTO", "HOME", "ITEMS", "ANIMALS", "PEOPLE", "DISTRICT", "URGENT", "OTHER"], {
-      message: i18n.t("validation.required"),
+      message: "validation.required",
     }),
     subcategory: z.string().nullable(),
-    title: z.string().max(120, i18n.t("validation.max", { max: 120 })),
-    description: z
-      .string()
-      .trim()
-      .min(1, i18n.t("validation.required"))
-      .max(1000, i18n.t("validation.max", { max: 1000 })),
+    title: z.string().max(120, "validation.max|120"),
+    description: z.string().trim().min(1, "validation.required").max(1000, "validation.max|1000"),
     location: z
       .object({ latitude: z.number(), longitude: z.number(), accuracy: z.number().nullable().optional() })
       .nullable(),
@@ -23,11 +18,15 @@ export const createHelpSchema = z
       .string()
       .trim()
       .refine((v) => v === "" || (/^\d{1,8}([.,]\d{1,2})?$/.test(v) && Number(v.replace(",", ".")) >= 0), {
-        message: i18n.t("validation.amount"),
+        message: "validation.amount",
       }),
     emergency_acknowledged: z.boolean(),
   })
-  .refine((v) => v.location !== null, { path: ["location"], message: i18n.t("create.locationError") });
+  .refine((v) => v.location !== null, { path: ["location"], message: "create.locationError" })
+  .refine((v) => v.reward_type !== "WILLING" || Number(v.reward_amount.replace(",", ".")) > 0, {
+    path: ["reward_amount"],
+    message: "reward.amountRequired",
+  });
 
 export type CreateHelpForm = z.infer<typeof createHelpSchema>;
 

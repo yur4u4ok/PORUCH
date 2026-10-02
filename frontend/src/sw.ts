@@ -45,7 +45,6 @@ self.addEventListener("push", (event) => {
       badge: "/icons/icon-192.png",
       tag: data.tag,
       data: { url: data.url || "/" },
-      lang: "uk",
     }),
   );
 });

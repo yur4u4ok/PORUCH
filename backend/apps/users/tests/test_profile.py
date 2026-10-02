@@ -61,3 +61,15 @@ def test_deactivate_account(auth_client, user):
     assert not PushSubscription.objects.filter(user=user).exists()
     assert not Availability.objects.get(user=user).is_active
     assert active.status == "CANCELLED"
+
+
+def test_custom_items_and_general_item_catalog(auth_client):
+    codes = {c["code"] for c in auth_client.get(reverse("capabilities")).data}
+    assert {"HAS_OTHER", "HAS_LADDER", "HAS_FIRST_AID"} <= codes
+    assert "HAS_JACK" not in codes  # retired car-only item
+    response = auth_client.patch(reverse("me"), {"custom_items": [" Велосипед ", "Тачка", "Велосипед"]}, format="json")
+    assert response.data["custom_items"] == ["Велосипед", "Тачка"]
+    too_long = auth_client.patch(reverse("me"), {"custom_items": ["x" * 41]}, format="json")
+    assert too_long.status_code == 400
+    public = auth_client.get(reverse("user-profile", args=[auth_client.user.id])).data
+    assert public["custom_items"] == ["Велосипед", "Тачка"]

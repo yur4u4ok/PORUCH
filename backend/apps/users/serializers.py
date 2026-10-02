@@ -36,6 +36,7 @@ class PublicUserSerializer(serializers.Serializer):
 
 class PublicProfileSerializer(PublicUserSerializer):
     capabilities = serializers.SerializerMethodField()
+    custom_items = serializers.ListField(source="profile.custom_items", child=serializers.CharField(), read_only=True)
 
     def get_capabilities(self, user: User) -> list[dict]:
         caps = [uc.capability for uc in user.user_capabilities.all()]
@@ -53,6 +54,7 @@ class MeSerializer(serializers.Serializer):
     show_name = serializers.BooleanField(source="profile.show_name")
     show_avatar = serializers.BooleanField(source="profile.show_avatar")
     onboarding_completed = serializers.BooleanField(source="profile.onboarding_completed")
+    custom_items = serializers.ListField(source="profile.custom_items", child=serializers.CharField(), read_only=True)
     helped_count = serializers.IntegerField(source="profile.helped_count", read_only=True)
     thanks_received_count = serializers.IntegerField(source="profile.thanks_received_count", read_only=True)
     has_password = serializers.SerializerMethodField()
@@ -72,6 +74,9 @@ class MeUpdateSerializer(serializers.Serializer):
     show_name = serializers.BooleanField(required=False)
     show_avatar = serializers.BooleanField(required=False)
     onboarding_completed = serializers.BooleanField(required=False)
+    custom_items = serializers.ListField(
+        child=serializers.CharField(max_length=40, allow_blank=True), required=False, max_length=10
+    )
 
 
 class RegisterSerializer(serializers.Serializer):

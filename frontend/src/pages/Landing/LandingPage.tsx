@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
 import { Button } from "@/components/ui";
+import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
 
 import styles from "./Landing.module.css";
 
@@ -9,7 +10,12 @@ export default function LandingPage() {
   const { t } = useTranslation();
   return (
     <main className={styles.hero}>
-      <img src="/icons/favicon.svg" alt="" className={styles.logo} />
+      <div className="row-between">
+        <img src="/icons/favicon.svg" alt="" className={styles.logo} />
+        <div style={{ width: 120 }}>
+          <LanguageSwitcher compact />
+        </div>
+      </div>
       <h1 className={styles.title}>{t("landing.title")}</h1>
       <div className={styles.duo}>
         <section className={`${styles.panel} ${styles.panelNeed}`}>

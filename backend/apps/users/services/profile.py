@@ -20,6 +20,13 @@ def update_profile(user: User, data: dict) -> Profile:
                     raise ValidationFailed(details={"display_name": [_("Ім'я не може бути порожнім.")]})
             setattr(profile, name, value)
             fields.append(name)
+    if "custom_items" in data:
+        items = [i.strip() for i in data["custom_items"] if i and i.strip()]
+        items = list(dict.fromkeys(items))
+        if len(items) > 10 or any(len(i) > 40 for i in items):
+            raise ValidationFailed(details={"custom_items": [_("До 10 пунктів, кожен до 40 символів.")]})
+        profile.custom_items = items
+        fields.append("custom_items")
     if "city_id" in data:
         city = None
         if data["city_id"]:

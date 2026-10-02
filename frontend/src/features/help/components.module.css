@@ -78,3 +78,16 @@
 .tileUrgent {
   border-color: color-mix(in srgb, var(--color-primary) 40%, var(--color-border));
 }
+.explain {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+.explain summary {
+  cursor: pointer;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.explain p {
+  margin-top: var(--space-2);
+}
