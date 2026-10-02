@@ -150,7 +150,7 @@ export function MapView({
       return;
     }
     if (!pickerRef.current) {
-      const marker = new Marker({ draggable: true, color: "#1f3a5f" })
+      const marker = new Marker({ draggable: true, color: "#3b2a20" })
         .setLngLat([picker.longitude, picker.latitude])
         .addTo(map);
       marker.on("dragend", () => {

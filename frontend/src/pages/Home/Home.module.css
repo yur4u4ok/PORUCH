@@ -17,10 +17,10 @@
   padding: var(--space-6);
   border-radius: var(--radius-xl);
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-on-primary);
   text-decoration: none;
   overflow: hidden;
-  box-shadow: 0 16px 40px rgb(31 58 95 / 0.28);
+  box-shadow: 0 16px 40px rgb(59 42 32 / 0.3);
   transition: transform var(--transition);
 }
 .sos:active {
@@ -34,7 +34,7 @@
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgb(233 162 59 / 0.55), rgb(233 162 59 / 0) 70%);
+  background: radial-gradient(circle, rgb(201 161 91 / 0.6), rgb(201 161 91 / 0) 70%);
   pointer-events: none;
 }
 .sosIcon {
@@ -45,7 +45,7 @@
   align-items: center;
   justify-content: center;
   background: var(--color-accent);
-  color: var(--color-primary);
+  color: #2a1f18;
   font-size: 28px;
   font-weight: 800;
 }
