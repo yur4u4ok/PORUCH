@@ -5,16 +5,16 @@ from django.db.models import Q
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
-from apps.help_requests.constants import HelpRequestStatus
+from apps.help_requests.constants import HelpRequestStatus, RewardOption, RewardType
 from apps.help_requests.models import HelpRequest
-from apps.interactions.constants import ACTIVE_RESPONSE_STATUSES, ResponseStatus
+from apps.interactions.constants import ACTIVE_RESPONSE_STATUSES, OfferType, ResponseStatus
 from apps.interactions.models import HelpResponse
 from apps.moderation.selectors import is_blocked_between
 from apps.notifications.models import NotificationType
 from apps.notifications.services.notify import notify
 from apps.users.models import User
 from common import analytics
-from common.exceptions import Conflict, Forbidden, InvalidState, NotFound
+from common.exceptions import Conflict, Forbidden, InvalidState, NotFound, ValidationFailed
 
 
 def _display_name(user: User) -> str:
@@ -22,8 +22,36 @@ def _display_name(user: User) -> str:
     return profile.display_name if profile.show_name else _("Сусід")
 
 
+def _normalize_offer(help_request: HelpRequest, offer_type: str | None, offered_amount):
+    """Offers only make sense for «Готовий(-а) віддячити»; otherwise the response is a plain ACCEPT."""
+    if help_request.reward_type != RewardType.WILLING:
+        return OfferType.ACCEPT, None
+    offer_type = offer_type or OfferType.ACCEPT
+    if offer_type == OfferType.COUNTER:
+        if offered_amount is None or offered_amount <= 0:
+            raise ValidationFailed(details={"offered_amount": [_("Вкажіть суму, яку пропонуєте.")]})
+        return offer_type, offered_amount
+    return offer_type, None
+
+
+def offer_summary(help_request: HelpRequest, offer_type: str | None, amount) -> str:
+    """Human text of the agreed terms for the chat (UA; informational, no payments)."""
+    if offer_type == OfferType.FREE or help_request.reward_type != RewardType.WILLING:
+        return _("Допомога без оплати")
+    if offer_type == OfferType.COUNTER and amount:
+        return _("{amount} грн").format(amount=f"{amount:.0f}")
+    parts = []
+    if help_request.reward_amount:
+        parts.append(_("{amount} грн").format(amount=f"{help_request.reward_amount:.0f}"))
+    labels = dict(RewardOption.choices)
+    parts += [str(labels[o]) for o in help_request.reward_options if o in labels]
+    return ", ".join(parts)
+
+
 @transaction.atomic
-def respond(helper: User, help_request_id, message: str = "") -> tuple[HelpResponse, bool]:
+def respond(
+    helper: User, help_request_id, message: str = "", offer_type: str | None = None, offered_amount=None
+) -> tuple[HelpResponse, bool]:
     """Create a PENDING response. Idempotent: returns the existing active response."""
     help_request = HelpRequest.objects.select_for_update().select_related("author").filter(id=help_request_id).first()
     if help_request is None:
@@ -44,9 +72,16 @@ def respond(helper: User, help_request_id, message: str = "") -> tuple[HelpRespo
     if HelpResponse.objects.filter(help_request=help_request, helper=helper, status=ResponseStatus.REJECTED).exists():
         raise Conflict(_("Автор вже відхилив вашу пропозицію."), code="RESPONSE_REJECTED")
 
+    offer_type, offered_amount = _normalize_offer(help_request, offer_type, offered_amount)
     try:
         with transaction.atomic():
-            response = HelpResponse.objects.create(help_request=help_request, helper=helper, message=message.strip())
+            response = HelpResponse.objects.create(
+                help_request=help_request,
+                helper=helper,
+                message=message.strip(),
+                offer_type=offer_type,
+                offered_amount=offered_amount,
+            )
     except IntegrityError:
         return (
             HelpResponse.objects.get(help_request=help_request, helper=helper, status__in=ACTIVE_RESPONSE_STATUSES),
@@ -69,7 +104,8 @@ def respond(helper: User, help_request_id, message: str = "") -> tuple[HelpRespo
         help_request.author,
         NotificationType.HELP_RESPONSE_RECEIVED,
         title=_("🤝 Хтось може допомогти"),
-        body=_("{name} готовий(а) допомогти з вашим запитом").format(name=_display_name(helper)),
+        body=_("{name} готовий(а) допомогти з вашим запитом").format(name=_display_name(helper))
+        + (f" · {offer_summary(help_request, offer_type, offered_amount)}" if offer_type != OfferType.ACCEPT else ""),
         url=f"/help/{help_request.id}",
         help_request=help_request,
         data={"help_request_id": str(help_request.id), "response_id": str(response.id)},
@@ -114,7 +150,23 @@ def select_helper(author: User, help_request_id, response_id):
     help_request.status = HelpRequestStatus.IN_PROGRESS
     help_request.selected_helper = response.helper
     help_request.in_progress_at = now
-    help_request.save(update_fields=["status", "selected_helper", "in_progress_at", "updated_at"])
+    # Lock in the agreed terms: author's terms, the helper's counter-offer, or free help.
+    help_request.agreed_offer_type = response.offer_type
+    help_request.agreed_amount = (
+        response.offered_amount
+        if response.offer_type == OfferType.COUNTER
+        else (help_request.reward_amount if response.offer_type == OfferType.ACCEPT else None)
+    )
+    help_request.save(
+        update_fields=[
+            "status",
+            "selected_helper",
+            "in_progress_at",
+            "agreed_offer_type",
+            "agreed_amount",
+            "updated_at",
+        ]
+    )
 
     response.status = ResponseStatus.ACCEPTED
     response.save(update_fields=["status", "updated_at"])
@@ -128,6 +180,13 @@ def select_helper(author: User, help_request_id, response_id):
 
     conversation = get_or_create_for_help_request(help_request, response.helper)
     post_system_message(conversation, _("Помічника обрано. Домовтеся про деталі в цьому чаті."))
+    if help_request.reward_type == RewardType.WILLING:
+        post_system_message(
+            conversation,
+            _("Домовленість про подяку: {terms}").format(
+                terms=offer_summary(help_request, response.offer_type, response.offered_amount)
+            ),
+        )
 
     notify(
         response.helper,
@@ -208,7 +267,18 @@ def cancel_response(helper: User, response_id) -> HelpResponse:
         help_request.status = HelpRequestStatus.ACTIVE
         help_request.selected_helper = None
         help_request.in_progress_at = None
-        help_request.save(update_fields=["status", "selected_helper", "in_progress_at", "updated_at"])
+        help_request.agreed_offer_type = None
+        help_request.agreed_amount = None
+        help_request.save(
+            update_fields=[
+                "status",
+                "selected_helper",
+                "in_progress_at",
+                "agreed_offer_type",
+                "agreed_amount",
+                "updated_at",
+            ]
+        )
         close_conversations(help_request, helper)
         notify(
             help_request.author,

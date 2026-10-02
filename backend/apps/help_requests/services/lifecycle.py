@@ -19,7 +19,7 @@ from apps.users.models import Profile, User
 from common import analytics
 from common.exceptions import Forbidden, InvalidState, NotFound, ValidationFailed
 
-EDITABLE_FIELDS = {"title", "description", "reward_type", "reward_amount"}
+EDITABLE_FIELDS = {"title", "description", "reward_type", "reward_amount", "reward_options"}
 
 
 def _lock_own(author: User, help_request_id) -> HelpRequest:
@@ -47,9 +47,11 @@ def update_help_request(author: User, help_request_id, data: dict) -> HelpReques
                 raise ValidationFailed(details={name: [_("Поле не може бути порожнім.")]})
         setattr(help_request, name, value)
         fields.append(name)
-    if "reward_type" in data or "reward_amount" in data:
-        help_request.reward_amount = validate_reward(help_request.reward_type, help_request.reward_amount)
-        fields.append("reward_amount")
+    if {"reward_type", "reward_amount", "reward_options"} & data.keys():
+        help_request.reward_amount, help_request.reward_options = validate_reward(
+            help_request.reward_type, help_request.reward_amount, help_request.reward_options
+        )
+        fields += ["reward_amount", "reward_options"]
     if "photo_ids" in data:
         photo_ids = data["photo_ids"] or []
         if len(photo_ids) > settings.HELP_REQUEST_MAX_PHOTOS:

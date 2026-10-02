@@ -3,7 +3,7 @@ from django.core.validators import MaxLengthValidator
 from django.db import models
 from django.db.models import Q
 
-from apps.interactions.constants import ResponseStatus
+from apps.interactions.constants import OfferType, ResponseStatus
 from common.models import UUIDModel
 
 
@@ -17,6 +17,8 @@ class HelpResponse(UUIDModel):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="help_responses", db_index=True
     )
     message = models.TextField(max_length=500, blank=True, validators=[MaxLengthValidator(500)])
+    offer_type = models.CharField(max_length=10, choices=OfferType.choices, default=OfferType.ACCEPT)
+    offered_amount = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     status = models.CharField(max_length=10, choices=ResponseStatus.choices, default=ResponseStatus.PENDING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

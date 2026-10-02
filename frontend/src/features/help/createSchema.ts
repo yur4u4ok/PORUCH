@@ -20,13 +20,17 @@ export const createHelpSchema = z
       .refine((v) => v === "" || (/^\d{1,8}([.,]\d{1,2})?$/.test(v) && Number(v.replace(",", ".")) >= 0), {
         message: "validation.amount",
       }),
+    reward_options: z.array(z.enum(["PIZZA", "COFFEE", "RETURN_HELP", "GIVE_ITEM"])),
     emergency_acknowledged: z.boolean(),
   })
   .refine((v) => v.location !== null, { path: ["location"], message: "create.locationError" })
-  .refine((v) => v.reward_type !== "WILLING" || Number(v.reward_amount.replace(",", ".")) > 0, {
-    path: ["reward_amount"],
-    message: "reward.amountRequired",
-  });
+  .refine(
+    (v) =>
+      v.reward_type !== "WILLING" ||
+      Number(v.reward_amount.replace(",", ".")) > 0 ||
+      v.reward_options.length > 0,
+    { path: ["reward_amount"], message: "reward.chooseAtLeastOne" },
+  );
 
 export type CreateHelpForm = z.infer<typeof createHelpSchema>;
 
@@ -35,7 +39,7 @@ export const STEP_FIELDS: (keyof CreateHelpForm)[][] = [
   ["title", "description"],
   ["location"],
   ["urgency"],
-  ["reward_type", "reward_amount"],
+  ["reward_type", "reward_amount", "reward_options"],
   [],
   [],
 ];

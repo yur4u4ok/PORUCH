@@ -85,9 +85,21 @@ class TestCreate:
         assert r2.data["reward_amount"] == "150.50"
         r3 = auth_client.post(LIST_URL, payload(lviv, reward_type="WILLING", reward_amount="-1"), format="json")
         assert r3.status_code == 400
-        # amount is required for «Готовий(-а) віддячити»
+        # «Готовий(-а) віддячити» needs an amount or at least one option
         r4 = auth_client.post(LIST_URL, payload(lviv, reward_type="WILLING"), format="json")
-        assert r4.status_code == 400 and "reward_amount" in r4.data["details"]
+        assert r4.status_code == 400 and r4.data["code"] == "REWARD_REQUIRED"
+        r5 = auth_client.post(
+            LIST_URL, payload(lviv, reward_type="WILLING", reward_options=["COFFEE", "PIZZA"]), format="json"
+        )
+        assert (
+            r5.status_code == 201
+            and r5.data["reward_options"] == ["COFFEE", "PIZZA"]
+            and r5.data["reward_amount"] is None
+        )
+        r6 = auth_client.post(LIST_URL, payload(lviv, reward_type="WILLING", reward_options=["CAKE"]), format="json")
+        assert r6.status_code == 400
+        r7 = auth_client.post(LIST_URL, payload(lviv, reward_type="NONE", reward_options=["COFFEE"]), format="json")
+        assert r7.data["reward_options"] == []
 
     def test_unknown_subcategory(self, auth_client, lviv):
         response = auth_client.post(LIST_URL, payload(lviv, subcategory="LOST_PET"), format="json")

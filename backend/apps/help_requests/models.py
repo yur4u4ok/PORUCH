@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.gis.db import models as gis_models
+from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxLengthValidator, MinValueValidator
 from django.db import models
 from django.db.models import Q
@@ -8,6 +9,7 @@ from apps.help_requests.constants import (
     CLOSED_STATUSES,
     Category,
     HelpRequestStatus,
+    RewardOption,
     RewardType,
     Urgency,
 )
@@ -33,6 +35,11 @@ class HelpRequest(TimeStampedModel):
     reward_amount = models.DecimalField(
         null=True, blank=True, max_digits=10, decimal_places=2, validators=[MinValueValidator(0)]
     )
+
+    reward_options = ArrayField(models.CharField(max_length=20, choices=RewardOption.choices), default=list, blank=True)
+    # Terms locked in when the author chooses a helper (informational, no payments).
+    agreed_offer_type = models.CharField(max_length=10, null=True, blank=True)
+    agreed_amount = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
 
     status = models.CharField(
         max_length=12, choices=HelpRequestStatus.choices, default=HelpRequestStatus.ACTIVE, db_index=True

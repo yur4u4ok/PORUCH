@@ -240,3 +240,71 @@ class TestCompletionAndThanks:
         data = make_client().get(reverse("user-profile", args=[helper.id])).data
         assert data["helped_count"] == 1 and data["thanks_received_count"] == 1
         assert HelpRequest.objects.get(id=hr.id).status == "COMPLETED"
+
+
+class TestRewardOffers:
+    def _willing(self, **kw):
+        return HelpRequestFactory(reward_type="WILLING", reward_amount=500, reward_options=["PIZZA"], **kw)
+
+    def test_counter_offer_is_agreed_on_selection(self, make_client, no_push):
+        hr = self._willing()
+        helper = make_client()
+        response = helper.post(
+            f"{URL}{hr.id}/respond/", {"offer_type": "COUNTER", "offered_amount": "400"}, format="json"
+        )
+        assert response.status_code == 201
+        assert response.data["offer_type"] == "COUNTER" and response.data["offered_amount"] == "400.00"
+        note = Notification.objects.get(user=hr.author, type="HELP_RESPONSE_RECEIVED")
+        assert "400 грн" in note.body
+        data = (
+            make_client(hr.author)
+            .post(f"{URL}{hr.id}/select-helper/", {"response_id": response.data["id"]}, format="json")
+            .data
+        )
+        assert data["agreed_offer_type"] == "COUNTER" and data["agreed_amount"] == "400.00"
+        texts = list(Message.objects.filter(conversation__help_request=hr).values_list("text", flat=True))
+        assert any("Домовленість про подяку: 400 грн" in t for t in texts)
+
+    def test_accept_author_terms_and_free_help(self, make_client):
+        hr = self._willing()
+        accept = make_client().post(f"{URL}{hr.id}/respond/", {"offer_type": "ACCEPT"}, format="json").data
+        free = make_client().post(f"{URL}{hr.id}/respond/", {"offer_type": "FREE"}, format="json").data
+        assert free["offered_amount"] is None
+        author = make_client(hr.author)
+        author.post(f"{URL}{hr.id}/select-helper/", {"response_id": accept["id"]}, format="json")
+        hr.refresh_from_db()
+        assert hr.agreed_offer_type == "ACCEPT" and hr.agreed_amount == 500
+        texts = list(Message.objects.filter(conversation__help_request=hr).values_list("text", flat=True))
+        assert any("500 грн, Поставлю піцу" in t for t in texts)
+
+    def test_counter_requires_amount(self, make_client):
+        hr = self._willing()
+        response = make_client().post(f"{URL}{hr.id}/respond/", {"offer_type": "COUNTER"}, format="json")
+        assert response.status_code == 400 and "offered_amount" in response.data["details"]
+
+    def test_offer_ignored_without_reward(self, make_client):
+        hr = HelpRequestFactory(reward_type="NONE")
+        data = (
+            make_client()
+            .post(f"{URL}{hr.id}/respond/", {"offer_type": "COUNTER", "offered_amount": "100"}, format="json")
+            .data
+        )
+        assert data["offer_type"] == "ACCEPT" and data["offered_amount"] is None
+
+    def test_withdraw_resets_agreement(self, make_client):
+        hr = self._willing()
+        resp = HelpResponseFactory(help_request=hr, offer_type="FREE")
+        select_helper(hr.author, hr.id, resp.id)
+        make_client(resp.helper).post(f"/api/v1/help-responses/{resp.id}/cancel/")
+        hr.refresh_from_db()
+        assert hr.agreed_offer_type is None and hr.status == "ACTIVE"
+
+
+@pytest.mark.django_db(transaction=True)
+def test_respond_runs_in_its_own_transaction():
+    """Regression: respond() uses select_for_update and must open its own transaction."""
+    from apps.interactions.services.responses import respond
+
+    hr = HelpRequestFactory(reward_type="WILLING", reward_amount=500)
+    response, created = respond(UserFactory(), hr.id, "", "COUNTER", 400)
+    assert created and response.offered_amount == 400

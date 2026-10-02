@@ -21,6 +21,7 @@ import { useFieldError } from "@/hooks/useFieldError";
 import { toast } from "@/stores/toastStore";
 import type { Category, Media } from "@/types/api";
 import { CATEGORY_EMOJI, URGENCY_EMOJI } from "@/utils/categories";
+import { REWARD_OPTION_EMOJI, REWARD_OPTIONS, rewardSummary } from "@/utils/reward";
 
 import styles from "./CreateHelp.module.css";
 
@@ -59,6 +60,7 @@ export default function CreateHelpPage() {
         urgency: "NOW",
         reward_type: "NONE",
         reward_amount: "",
+        reward_options: [],
         emergency_acknowledged: false,
       },
       mode: "onTouched",
@@ -131,6 +133,7 @@ export default function CreateHelpPage() {
         reward_type: form.reward_type,
         reward_amount:
           form.reward_type === "WILLING" && form.reward_amount ? form.reward_amount.replace(",", ".") : null,
+        reward_options: form.reward_type === "WILLING" ? form.reward_options : [],
         photo_ids: photos.map((p) => p.id),
         emergency_acknowledged: form.emergency_acknowledged,
       },
@@ -304,19 +307,47 @@ export default function CreateHelpPage() {
                 options={[
                   { value: "NONE", icon: "❤️", label: t("reward.NONE") },
                   { value: "WILLING", icon: "💰", label: t("reward.WILLING") },
-                  { value: "UNSURE", icon: "☕", label: t("reward.UNSURE") },
+                  { value: "UNSURE", icon: "🍫", label: t("reward.UNSURE") },
                 ]}
               />
             )}
           />
           {values.reward_type === "WILLING" && (
-            <Input
-              label={`${t("reward.amount")} *`}
-              required
-              inputMode="decimal"
-              {...register("reward_amount")}
-              error={fe(formState.errors.reward_amount?.message)}
-            />
+            <fieldset className={styles.rewardBox}>
+              <legend className="visually-hidden">{t("reward.WILLING")}</legend>
+              <Input label={t("reward.amountOptional")} inputMode="decimal" {...register("reward_amount")} />
+              <p className="muted">{t("reward.orSomethingElse")}</p>
+              <Controller
+                control={control}
+                name="reward_options"
+                render={({ field }) => (
+                  <div className={styles.checks}>
+                    {REWARD_OPTIONS.map((option) => (
+                      <label key={option} className={styles.check}>
+                        <input
+                          type="checkbox"
+                          checked={field.value.includes(option)}
+                          onChange={(e) =>
+                            field.onChange(
+                              e.target.checked
+                                ? [...field.value, option]
+                                : field.value.filter((o: string) => o !== option),
+                            )
+                          }
+                        />
+                        <span aria-hidden>{REWARD_OPTION_EMOJI[option]}</span>
+                        {t(`reward.options.${option}`)}
+                      </label>
+                    ))}
+                  </div>
+                )}
+              />
+              {formState.errors.reward_amount && (
+                <p role="alert" className={styles.error}>
+                  {fe(formState.errors.reward_amount.message)}
+                </p>
+              )}
+            </fieldset>
           )}
           <p className="muted">{t("reward.note")}</p>
         </div>
@@ -346,8 +377,15 @@ export default function CreateHelpPage() {
             </dd>
             <dt>{t("request.rewardInfo")}</dt>
             <dd>
-              {values.reward_type === "WILLING" && values.reward_amount
-                ? t("reward.willingWithAmount", { amount: values.reward_amount })
+              {values.reward_type === "WILLING"
+                ? `${t("reward.WILLING")}: ${rewardSummary(
+                    {
+                      reward_type: "WILLING",
+                      reward_amount: values.reward_amount.replace(",", ".") || null,
+                      reward_options: values.reward_options,
+                    },
+                    t,
+                  )}`
                 : t(`reward.${values.reward_type}`)}
             </dd>
             {photos.length > 0 && (

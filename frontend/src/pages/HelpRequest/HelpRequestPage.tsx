@@ -15,6 +15,7 @@ import {
   Modal,
   SkeletonList,
   Textarea,
+  Input,
 } from "@/components/ui";
 import { LazyMap } from "@/components/ui/LazyMap";
 import { ConfirmDialog, ReportDialog, StatusBadge, UrgencyBadge } from "@/features/help/components";
@@ -33,9 +34,10 @@ import { PersonRow } from "@/features/profile/PersonRow";
 import { useBlockUser } from "@/features/profile/hooks";
 import { useLocationStore } from "@/stores/locationStore";
 import { toast } from "@/stores/toastStore";
-import type { HelpRequest } from "@/types/api";
+import type { HelpRequest, OfferType } from "@/types/api";
 import { URGENCY_HEX, requestEmoji } from "@/utils/categories";
 import { formatDistance, timeAgo, timeLeft } from "@/utils/format";
+import { agreedSummary, offerSummary, rewardSummary } from "@/utils/reward";
 
 import styles from "./HelpRequest.module.css";
 
@@ -60,6 +62,11 @@ function ResponsesSection({ request }: { request: HelpRequest }) {
         pending.map((response) => (
           <Card key={response.id} className="stack-sm">
             <PersonRow user={response.helper} />
+            {request.reward_type === "WILLING" && (
+              <Badge tone={response.offer_type === "COUNTER" ? "warning" : "success"}>
+                {offerSummary(response, t)}
+              </Badge>
+            )}
             {response.message && <p>«{response.message}»</p>}
             <div className="row">
               <Button
@@ -188,7 +195,32 @@ function HelperActions({ request }: { request: HelpRequest }) {
   const { t } = useTranslation();
   const [sheet, setSheet] = useState(false);
   const [message, setMessage] = useState("");
+  const [offerType, setOfferType] = useState<OfferType>("ACCEPT");
+  const [offeredAmount, setOfferedAmount] = useState("");
+  const [amountError, setAmountError] = useState<string | undefined>();
   const respond = useRespondToHelp(request.id);
+  const withReward = request.reward_type === "WILLING";
+
+  const submitResponse = () => {
+    const amount = offeredAmount.trim().replace(",", ".");
+    if (withReward && offerType === "COUNTER" && !(Number(amount) > 0)) {
+      setAmountError(t("reward.amountRequired"));
+      return;
+    }
+    respond.mutate(
+      {
+        message,
+        offer_type: withReward ? offerType : "ACCEPT",
+        offered_amount: withReward && offerType === "COUNTER" ? amount : null,
+      },
+      {
+        onSuccess: () => {
+          setSheet(false);
+          toast.success(t("request.responseSent"));
+        },
+      },
+    );
+  };
   const withdraw = useWithdrawResponse(request.id);
   const mine = request.my_response;
 
@@ -237,23 +269,43 @@ function HelperActions({ request }: { request: HelpRequest }) {
         onClose={() => setSheet(false)}
         title={t("request.canHelp")}
         actions={
-          <Button
-            variant="help"
-            block
-            loading={respond.isPending}
-            onClick={() =>
-              respond.mutate(message, {
-                onSuccess: () => {
-                  setSheet(false);
-                  toast.success(t("request.responseSent"));
-                },
-              })
-            }
-          >
+          <Button variant="help" block loading={respond.isPending} onClick={submitResponse}>
             {t("request.canHelp")}
           </Button>
         }
       >
+        {withReward && (
+          <fieldset className={styles.offer}>
+            <legend>{t("offer.authorOffers", { terms: rewardSummary(request, t) })}</legend>
+            {(["ACCEPT", "COUNTER", "FREE"] as OfferType[]).map((type) => (
+              <label key={type} className={styles.offerOption}>
+                <input
+                  type="radio"
+                  name="offer"
+                  checked={offerType === type}
+                  onChange={() => {
+                    setOfferType(type);
+                    setAmountError(undefined);
+                  }}
+                />
+                {t(`offer.${type}`)}
+              </label>
+            ))}
+            {offerType === "COUNTER" && (
+              <Input
+                label={t("offer.amount")}
+                inputMode="decimal"
+                value={offeredAmount}
+                onChange={(e) => setOfferedAmount(e.target.value)}
+                error={amountError}
+                autoFocus
+              />
+            )}
+            <p className="muted" style={{ fontSize: 13 }}>
+              {t("offer.note")}
+            </p>
+          </fieldset>
+        )}
         <Textarea
           label={t("request.responseMessage")}
           maxLength={500}
@@ -330,10 +382,11 @@ export default function HelpRequestPage() {
       {request.reward_type !== "NONE" && (
         <p>
           <strong>{t("request.rewardInfo")}:</strong>{" "}
-          {request.reward_type === "WILLING" && request.reward_amount
-            ? t("reward.willingWithAmount", { amount: request.reward_amount })
-            : t(`reward.${request.reward_type}`)}
+          {request.reward_type === "WILLING" ? rewardSummary(request, t) : t(`reward.${request.reward_type}`)}
         </p>
+      )}
+      {agreedSummary(request, t) && (
+        <div className={styles.notice}>🤝 {t("offer.agreed", { terms: agreedSummary(request, t) })}</div>
       )}
 
       {request.photos.length > 0 && (

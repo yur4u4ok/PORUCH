@@ -9,6 +9,7 @@ import {
 import {
   helpRequestsApi,
   type CreateHelpRequestInput,
+  type RespondInput,
   type HistoryQuery,
   type NearbyQuery,
 } from "@/api/helpRequests";
@@ -90,7 +91,7 @@ function useRequestMutation<TVars>(id: string, fn: (vars: TVars) => Promise<unkn
 }
 
 export const useRespondToHelp = (id: string) =>
-  useRequestMutation(id, (message: string) => helpRequestsApi.respond(id, message));
+  useRequestMutation(id, (input: RespondInput) => helpRequestsApi.respond(id, input));
 export const useCancelHelpRequest = (id: string) => useRequestMutation(id, () => helpRequestsApi.cancel(id));
 export const useCompleteHelpRequest = (id: string) =>
   useRequestMutation(id, () => helpRequestsApi.complete(id));

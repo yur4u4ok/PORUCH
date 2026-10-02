@@ -224,7 +224,17 @@
     "amount": "Thank-you amount, UAH",
     "note": "Payment is never required. This is just information for the helper.",
     "willingWithAmount": "Happy to pay back: {{amount}} UAH",
-    "amountRequired": "Enter the amount"
+    "amountRequired": "Enter the amount",
+    "money": "{{amount}} UAH",
+    "options": {
+      "PIZZA": "I'll buy pizza",
+      "COFFEE": "Coffee",
+      "RETURN_HELP": "I'll help you back",
+      "GIVE_ITEM": "Give/lend an item"
+    },
+    "chooseAtLeastOne": "Enter an amount or tick at least one option",
+    "amountOptional": "Amount, UAH",
+    "orSomethingElse": "Or how else you'll say thanks:"
   },
   "status": {
     "ACTIVE": "Looking for help",
@@ -491,5 +501,21 @@
     "HAS_FIRST_AID": "First aid kit",
     "HAS_PET_CARRIER": "Pet carrier",
     "HAS_OTHER": "Other"
+  },
+  "offer": {
+    "title": "Your offer",
+    "ACCEPT": "I accept the author's terms",
+    "COUNTER": "I propose a different amount",
+    "FREE": "I'll help for free",
+    "authorOffers": "The author offers: {{terms}}",
+    "amount": "Your amount, UAH",
+    "counterShort": "Offers {{amount}} UAH",
+    "short": {
+      "ACCEPT": "Accepts the terms",
+      "COUNTER": "Different amount",
+      "FREE": "For free"
+    },
+    "agreed": "Agreed: {{terms}}",
+    "note": "The platform doesn't handle payments: the arrangement is between you."
   }
 }

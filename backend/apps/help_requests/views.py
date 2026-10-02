@@ -132,7 +132,7 @@ class HelpRequestViewSet(viewsets.ViewSet):
     def respond(self, request, pk=None):
         ser = RespondSerializer(data=request.data)
         ser.is_valid(raise_exception=True)
-        response, created = response_svc.respond(request.user, pk, ser.validated_data["message"])
+        response, created = response_svc.respond(request.user, pk, **ser.validated_data)
         return Response(
             HelpResponseSerializer(response).data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK
         )

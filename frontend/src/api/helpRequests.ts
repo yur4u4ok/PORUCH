@@ -5,6 +5,8 @@ import type {
   HelpResponse,
   HelpRequestStatus,
   Paginated,
+  OfferType,
+  RewardOption,
   RewardType,
   ThankYou,
   Urgency,
@@ -36,8 +38,15 @@ export interface CreateHelpRequestInput {
   urgency: Urgency;
   reward_type: RewardType;
   reward_amount?: string | null;
+  reward_options?: RewardOption[];
   photo_ids?: string[];
   emergency_acknowledged?: boolean;
+}
+
+export interface RespondInput {
+  message: string;
+  offer_type?: OfferType;
+  offered_amount?: string | null;
 }
 
 const csv = (values?: string[]) => (values && values.length ? values.join(",") : undefined);
@@ -65,8 +74,8 @@ export const helpRequestsApi = {
   ) => http.patch<HelpRequest>(`/help-requests/${id}/`, input),
   cancel: (id: string) => http.post<HelpRequest>(`/help-requests/${id}/cancel/`),
   complete: (id: string) => http.post<HelpRequest>(`/help-requests/${id}/complete/`),
-  respond: (id: string, message = "") =>
-    http.post<HelpResponse>(`/help-requests/${id}/respond/`, { message }),
+  respond: (id: string, offer: RespondInput) =>
+    http.post<HelpResponse>(`/help-requests/${id}/respond/`, offer),
   selectHelper: (id: string, responseId: string) =>
     http.post<HelpRequest>(`/help-requests/${id}/select-helper/`, { response_id: responseId }),
   responses: (id: string) => http.get<HelpResponse[]>(`/help-requests/${id}/responses/`),

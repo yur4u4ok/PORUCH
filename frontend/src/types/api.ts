@@ -5,6 +5,8 @@ export type Category = "AUTO" | "HOME" | "ITEMS" | "ANIMALS" | "PEOPLE" | "DISTR
 export type NotificationCategory = Exclude<Category, "OTHER">;
 export type Urgency = "NOW" | "TODAY" | "WHENEVER";
 export type RewardType = "NONE" | "WILLING" | "UNSURE";
+export type RewardOption = "PIZZA" | "COFFEE" | "RETURN_HELP" | "GIVE_ITEM";
+export type OfferType = "ACCEPT" | "COUNTER" | "FREE";
 export type HelpRequestStatus = "ACTIVE" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED" | "EXPIRED";
 export type ResponseStatus = "PENDING" | "ACCEPTED" | "REJECTED" | "CANCELLED";
 export type MessageType = "TEXT" | "IMAGE" | "SYSTEM";
@@ -140,6 +142,9 @@ export interface HelpRequest {
   urgency: Urgency;
   reward_type: RewardType;
   reward_amount: string | null;
+  reward_options: RewardOption[];
+  agreed_offer_type: OfferType | null;
+  agreed_amount: string | null;
   status: HelpRequestStatus;
   created_at: ISODateTime;
   updated_at: ISODateTime;
@@ -163,6 +168,8 @@ export interface HelpResponse {
   help_request_id: UUID;
   helper: PublicUser;
   message: string;
+  offer_type: OfferType;
+  offered_amount: string | null;
   status: ResponseStatus;
   created_at: ISODateTime;
 }

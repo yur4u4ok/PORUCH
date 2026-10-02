@@ -74,6 +74,15 @@ class RewardType(models.TextChoices):
     UNSURE = "UNSURE", "Не знаю"
 
 
+class RewardOption(models.TextChoices):
+    """Non-monetary ways to say thanks (with «Готовий(-а) віддячити»)."""
+
+    PIZZA = "PIZZA", "Поставлю піцу"
+    COFFEE = "COFFEE", "Кава"
+    RETURN_HELP = "RETURN_HELP", "Допоможу у відповідь"
+    GIVE_ITEM = "GIVE_ITEM", "Віддам/позичу річ"
+
+
 class HelpRequestStatus(models.TextChoices):
     ACTIVE = "ACTIVE", "Активний"
     IN_PROGRESS = "IN_PROGRESS", "Виконується"

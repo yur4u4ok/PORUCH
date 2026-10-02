@@ -6,7 +6,7 @@ from django.db import transaction
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
-from apps.help_requests.constants import SUBCATEGORIES, Category, RewardType, Urgency
+from apps.help_requests.constants import SUBCATEGORIES, Category, RewardOption, RewardType, Urgency
 from apps.help_requests.models import HelpRequest
 from apps.users.models import User
 from common import analytics
@@ -25,12 +25,24 @@ def derive_title(description: str) -> str:
     return first_line[:117] + "..." if len(first_line) > 120 else first_line
 
 
-def validate_reward(reward_type: str, reward_amount: Decimal | None) -> Decimal | None:
+def validate_reward(
+    reward_type: str, reward_amount: Decimal | None, reward_options: list[str] | None = None
+) -> tuple[Decimal | None, list[str]]:
+    """«Готовий(-а) віддячити» needs at least one way to thank: an amount and/or an option."""
     if reward_type != RewardType.WILLING:
-        return None  # amount is only informative and only for «Готовий(-а) віддячити»
-    if reward_amount is None or reward_amount <= 0:
-        raise ValidationFailed(details={"reward_amount": [_("Вкажіть суму подяки.")]})
-    return reward_amount
+        return None, []  # informative only, and only for «Готовий(-а) віддячити»
+    options = list(dict.fromkeys(reward_options or []))
+    if set(options) - set(RewardOption.values):
+        raise ValidationFailed(details={"reward_options": [_("Невідомий варіант подяки.")]})
+    if reward_amount is not None and reward_amount <= 0:
+        raise ValidationFailed(details={"reward_amount": [_("Сума має бути більшою за нуль.")]})
+    if reward_amount is None and not options:
+        raise ValidationFailed(
+            _("Оберіть, як ви віддячите."),
+            code="REWARD_REQUIRED",
+            details={"reward_amount": [_("Вкажіть суму або оберіть варіант подяки.")]},
+        )
+    return reward_amount, options
 
 
 def validate_subcategory(category: str, subcategory: str | None) -> str | None:
@@ -51,6 +63,7 @@ def create_help_request(
     urgency: str,
     reward_type: str = RewardType.NONE,
     reward_amount: Decimal | None = None,
+    reward_options: list[str] | None = None,
     title: str | None = None,
     subcategory: str | None = None,
     photo_ids: list | None = None,
@@ -76,6 +89,7 @@ def create_help_request(
     if category == Category.URGENT:
         urgency = Urgency.NOW
     photos = get_ready_media_list(author, photo_ids, kind="HELP_REQUEST")
+    amount, options = validate_reward(reward_type, reward_amount, reward_options)
     now = timezone.now()
     help_request = HelpRequest.objects.create(
         author=author,
@@ -87,7 +101,8 @@ def create_help_request(
         location_accuracy=coords.accuracy,
         urgency=urgency,
         reward_type=reward_type,
-        reward_amount=validate_reward(reward_type, reward_amount),
+        reward_amount=amount,
+        reward_options=options,
         expires_at=expiration_for(urgency, now),
     )
     if photos:

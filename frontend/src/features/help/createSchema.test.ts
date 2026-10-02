@@ -11,6 +11,7 @@ const valid = {
   urgency: "NOW",
   reward_type: "NONE",
   reward_amount: "",
+  reward_options: [],
   emergency_acknowledged: false,
 };
 

@@ -1,7 +1,7 @@
 from django.conf import settings
 from rest_framework import serializers
 
-from apps.help_requests.constants import Category, HelpRequestStatus, RewardType, Urgency
+from apps.help_requests.constants import Category, HelpRequestStatus, RewardOption, RewardType, Urgency
 from apps.help_requests.models import HelpRequest
 from apps.help_requests.selectors import can_see_exact_location
 from apps.interactions.constants import ACTIVE_RESPONSE_STATUSES
@@ -22,6 +22,9 @@ class HelpRequestCreateSerializer(serializers.Serializer):
     reward_amount = serializers.DecimalField(
         max_digits=10, decimal_places=2, required=False, allow_null=True, min_value=0
     )
+    reward_options = serializers.ListField(
+        child=serializers.ChoiceField(choices=RewardOption.choices), required=False, max_length=4
+    )
     photo_ids = serializers.ListField(
         child=serializers.UUIDField(), required=False, max_length=settings.HELP_REQUEST_MAX_PHOTOS
     )
@@ -34,6 +37,9 @@ class HelpRequestUpdateSerializer(serializers.Serializer):
     reward_type = serializers.ChoiceField(choices=RewardType.choices, required=False)
     reward_amount = serializers.DecimalField(
         max_digits=10, decimal_places=2, required=False, allow_null=True, min_value=0
+    )
+    reward_options = serializers.ListField(
+        child=serializers.ChoiceField(choices=RewardOption.choices), required=False, max_length=4
     )
     photo_ids = serializers.ListField(
         child=serializers.UUIDField(), required=False, max_length=settings.HELP_REQUEST_MAX_PHOTOS
@@ -96,6 +102,9 @@ class HelpRequestSerializer(serializers.ModelSerializer):
             "urgency",
             "reward_type",
             "reward_amount",
+            "reward_options",
+            "agreed_offer_type",
+            "agreed_amount",
             "status",
             "created_at",
             "updated_at",
