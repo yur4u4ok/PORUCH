@@ -17,6 +17,7 @@ import {
   useUpdateMe,
   useUpdatePreferences,
 } from "@/features/profile/hooks";
+import { ThemeSwitcher } from "@/features/profile/ThemeSwitcher";
 import { toast } from "@/stores/toastStore";
 import type { NotificationCategory } from "@/types/api";
 
@@ -25,6 +26,10 @@ export function SettingsPage() {
   return (
     <main className="page stack">
       <PageHeader title={t("settings.title")} />
+      <Card className="stack-sm">
+        <strong>{t("settings.theme")}</strong>
+        <ThemeSwitcher />
+      </Card>
       <Card to="/settings/notifications">🔔 {t("settings.notifications")}</Card>
       <Card to="/settings/privacy">🔒 {t("settings.privacy")}</Card>
       <p className="muted" style={{ fontSize: 13 }}>
