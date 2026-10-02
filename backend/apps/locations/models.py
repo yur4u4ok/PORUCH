@@ -10,6 +10,8 @@ from common.models import UUIDModel
 
 class City(UUIDModel):
     name = models.CharField(max_length=100)
+    # Localized names, e.g. {"en": "Lviv", "pl": "Lwów"}; `name` is the Ukrainian default.
+    translations = models.JSONField(default=dict, blank=True)
     slug = models.SlugField(unique=True)
     country_code = models.CharField(max_length=2)
     center = gis_models.PointField(geography=True, srid=4326)

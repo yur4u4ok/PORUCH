@@ -15,7 +15,7 @@ class CitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = City
-        fields = ["id", "name", "slug", "country_code", "center", "default_zoom", "is_default"]
+        fields = ["id", "name", "translations", "slug", "country_code", "center", "default_zoom", "is_default"]
 
     def get_center(self, city: City) -> dict:
         return {"latitude": city.center.y, "longitude": city.center.x}

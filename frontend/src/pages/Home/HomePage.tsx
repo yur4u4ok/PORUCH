@@ -11,12 +11,18 @@ import { useGeolocation } from "@/features/location/useGeolocation";
 import { useSyncNotificationLocation } from "@/features/location/useSyncNotificationLocation";
 import { usePreferences } from "@/features/profile/hooks";
 
+import { cityName } from "@/utils/city";
+
 import styles from "./Home.module.css";
 
 function LocationHeader() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { data: me } = useMe();
-  return <div className={styles.location}>📍 {me?.city?.name ?? t("home.locationUnknown")}</div>;
+  return (
+    <div className={styles.location}>
+      📍 {me?.city ? cityName(me.city, i18n.language) : t("home.locationUnknown")}
+    </div>
+  );
 }
 
 function EmergencyHelpButton() {

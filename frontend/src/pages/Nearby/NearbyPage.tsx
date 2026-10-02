@@ -15,12 +15,13 @@ import { PushToggle } from "@/features/notifications/PushToggle";
 import { usePublicConfig } from "@/features/profile/hooks";
 import { useNearbyFilters } from "@/stores/nearbyFiltersStore";
 import type { LatLng, Urgency } from "@/types/api";
+import { cityName } from "@/utils/city";
 import { CATEGORY_ORDER, URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
 
 const ZOOM_BY_RADIUS: Record<number, number> = { 500: 15, 1000: 14, 3000: 13, 5000: 12, 10000: 11 };
 
 export default function NearbyPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
   const filters = useNearbyFilters();
@@ -116,7 +117,7 @@ export default function NearbyPage() {
                 <Button onClick={() => void locate({ force: true })}>{t("nearby.allowLocation")}</Button>
                 {me?.city && (
                   <Button variant="secondary" onClick={() => setManualCenter(me.city!.center)}>
-                    {t("nearby.useCityCenter", { city: me.city.name })}
+                    {t("nearby.useCityCenter", { city: cityName(me.city, i18n.language) })}
                   </Button>
                 )}
               </div>

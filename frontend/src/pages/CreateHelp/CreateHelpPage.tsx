@@ -302,7 +302,7 @@ export default function CreateHelpPage() {
                 value={field.value}
                 onChange={field.onChange}
                 options={[
-                  { value: "NONE", icon: "🤝", label: t("reward.NONE") },
+                  { value: "NONE", icon: "❤️", label: t("reward.NONE") },
                   { value: "WILLING", icon: "💰", label: t("reward.WILLING") },
                   { value: "UNSURE", icon: "☕", label: t("reward.UNSURE") },
                 ]}

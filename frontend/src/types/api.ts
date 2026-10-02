@@ -45,6 +45,7 @@ export interface Media {
 export interface City {
   id: UUID;
   name: string;
+  translations: Record<string, string>;
   slug: string;
   country_code: string;
   center: LatLng;

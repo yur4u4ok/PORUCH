@@ -71,7 +71,7 @@ export function AppLayout() {
       <PushDeepLinkTracker />
       <nav className={styles.sidebar} aria-label={BRAND}>
         <NavLink to="/" className={styles.brand}>
-          <img src="/icons/favicon.svg" alt="" />
+          <img src="/icons/logo-inverse.svg" alt="" />
           {BRAND}
         </NavLink>
         {[
