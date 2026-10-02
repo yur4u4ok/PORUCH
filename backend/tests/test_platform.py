@@ -21,7 +21,7 @@ def test_error_format_and_auth_required(api_client):
 def test_public_config(api_client):
     data = api_client.get("/api/v1/config/").json()
     assert data["vapid_public_key"] == "test-public"
-    assert data["radii"] == [500, 1000, 3000, 5000, 10000]
+    assert data["radii"] == [500, 1000, 3000, 5000, 10000, 20000]
     assert any(c["code"] == "AUTO_TIRE" for c in data["capabilities"])
 
 

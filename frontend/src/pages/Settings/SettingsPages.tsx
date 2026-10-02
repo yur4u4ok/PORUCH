@@ -21,6 +21,7 @@ import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
 import { ThemeSwitcher } from "@/features/profile/ThemeSwitcher";
 import { toast } from "@/stores/toastStore";
 import type { NotificationCategory } from "@/types/api";
+import { DEFAULT_RADII } from "@/utils/radius";
 
 export function SettingsPage() {
   const { t } = useTranslation();
@@ -89,7 +90,7 @@ export function NotificationSettingsPage() {
       <Card className="stack-sm">
         <strong>{t("settings.radius")}</strong>
         <RadiusChips
-          radii={config?.radii ?? [500, 1000, 3000, 5000, 10000]}
+          radii={config?.radii ?? DEFAULT_RADII}
           value={prefs.notification_radius}
           onChange={(r) => update.mutate({ notification_radius: r })}
         />

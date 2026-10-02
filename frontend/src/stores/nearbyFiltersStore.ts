@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 import type { Category, Urgency } from "@/types/api";
+import { NEARBY_DEFAULT_RADIUS } from "@/utils/radius";
 
 interface NearbyFiltersState {
   radius: number;
@@ -18,7 +19,7 @@ const toggle = <T>(list: T[], value: T) =>
   list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
 
 export const useNearbyFilters = create<NearbyFiltersState>((set) => ({
-  radius: 3000,
+  radius: NEARBY_DEFAULT_RADIUS,
   categories: [],
   urgencies: [],
   view: "list",
@@ -26,5 +27,5 @@ export const useNearbyFilters = create<NearbyFiltersState>((set) => ({
   toggleCategory: (category) => set((s) => ({ categories: toggle(s.categories, category) })),
   toggleUrgency: (urgency) => set((s) => ({ urgencies: toggle(s.urgencies, urgency) })),
   setView: (view) => set({ view }),
-  reset: () => set({ categories: [], urgencies: [], radius: 3000 }),
+  reset: () => set({ categories: [], urgencies: [], radius: NEARBY_DEFAULT_RADIUS }),
 }));

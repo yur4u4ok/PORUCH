@@ -17,8 +17,16 @@ import { useNearbyFilters } from "@/stores/nearbyFiltersStore";
 import type { LatLng, Urgency } from "@/types/api";
 import { cityName } from "@/utils/city";
 import { CATEGORY_ORDER, URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
+import { DEFAULT_RADII } from "@/utils/radius";
 
-const ZOOM_BY_RADIUS: Record<number, number> = { 500: 15, 1000: 14, 3000: 13, 5000: 12, 10000: 11 };
+const ZOOM_BY_RADIUS: Record<number, number> = {
+  500: 15,
+  1000: 14,
+  3000: 13,
+  5000: 12,
+  10000: 11,
+  20000: 10,
+};
 
 export default function NearbyPage() {
   const { t, i18n } = useTranslation();
@@ -100,7 +108,7 @@ export default function NearbyPage() {
         ]}
       />
       <RadiusChips
-        radii={config?.radii ?? [500, 1000, 3000, 5000, 10000]}
+        radii={config?.radii ?? DEFAULT_RADII}
         value={filters.radius}
         onChange={filters.setRadius}
       />

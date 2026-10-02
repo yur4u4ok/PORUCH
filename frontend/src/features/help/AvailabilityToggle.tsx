@@ -13,6 +13,7 @@ import {
 import { toast } from "@/stores/toastStore";
 import type { NotificationCategory } from "@/types/api";
 import { formatTime } from "@/utils/format";
+import { DEFAULT_RADII } from "@/utils/radius";
 
 import { CategoryChips, RadiusChips } from "./components";
 import styles from "./components.module.css";
@@ -82,11 +83,7 @@ export function AvailabilityToggle() {
         <p className="muted">{t("availability.explain")}</p>
         <div className="stack-sm">
           <strong>{t("availability.radius")}</strong>
-          <RadiusChips
-            radii={config?.radii ?? [500, 1000, 3000, 5000, 10000]}
-            value={radius}
-            onChange={setRadius}
-          />
+          <RadiusChips radii={config?.radii ?? DEFAULT_RADII} value={radius} onChange={setRadius} />
         </div>
         <div className="stack-sm">
           <strong>{t("availability.categories")}</strong>
