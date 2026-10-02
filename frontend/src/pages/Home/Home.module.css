@@ -20,7 +20,7 @@
   color: var(--color-on-primary);
   text-decoration: none;
   overflow: hidden;
-  box-shadow: 0 16px 40px rgb(59 42 32 / 0.3);
+  box-shadow: 0 16px 40px rgb(14 90 84 / 0.28);
   transition: transform var(--transition);
 }
 .sos:active {
@@ -34,7 +34,7 @@
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgb(201 161 91 / 0.6), rgb(201 161 91 / 0) 70%);
+  background: radial-gradient(circle, rgb(242 181 68 / 0.45), rgb(242 181 68 / 0) 70%);
   pointer-events: none;
 }
 .sosIcon {
@@ -45,14 +45,15 @@
   align-items: center;
   justify-content: center;
   background: var(--color-accent);
-  color: #2a1f18;
+  color: #17302d;
   font-size: 28px;
   font-weight: 800;
 }
 .sosTitle {
   font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   line-height: 1.15;
 }
 .sosSub {
@@ -67,10 +68,13 @@
   gap: var(--space-3);
   padding: var(--space-4) var(--space-5);
   border-radius: var(--radius-lg);
-  background: var(--color-help);
-  color: #fff;
+  border: 2px solid var(--color-primary);
+  background: var(--color-surface);
+  color: var(--color-text);
   text-decoration: none;
-  font-weight: 800;
+}
+.helpButton:hover {
+  background: var(--color-primary-soft);
 }
 .helpButton strong {
   font-family: var(--font-display);
@@ -79,7 +83,7 @@
 .helpButton small {
   display: block;
   font-weight: 500;
-  opacity: 0.9;
+  color: var(--color-text-muted);
 }
 .helpIcon {
   font-size: 32px;

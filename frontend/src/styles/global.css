@@ -1,5 +1,4 @@
-@import "@fontsource-variable/unbounded";
-@import "@fontsource-variable/nunito-sans";
+@import "@fontsource-variable/manrope";
 @import "./tokens.css";
 @import "maplibre-gl/dist/maplibre-gl.css";
 
@@ -38,8 +37,8 @@ p {
 h1,
 h2 {
   font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-weight: 750;
+  letter-spacing: -0.02em;
 }
 
 h1 {

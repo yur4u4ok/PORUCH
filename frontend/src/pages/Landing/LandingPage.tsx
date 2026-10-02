@@ -42,7 +42,14 @@ export default function LandingPage() {
           <li>{t("landing.step4")}</li>
         </ol>
       </section>
-      <p className={`muted ${styles.notice}`}>{t("landing.notMarketplace")}</p>
+      <section className={styles.trust} aria-labelledby="trust-title">
+        <h3 id="trust-title">{t("landing.trustTitle")}</h3>
+        <ul>
+          {(t("landing.trust", { returnObjects: true }) as string[]).map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
       <p className={`muted ${styles.notice}`}>⚠️ {t("emergency.short")}</p>
     </main>
   );

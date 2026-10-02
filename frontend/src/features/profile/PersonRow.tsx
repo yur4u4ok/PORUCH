@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
-import { Avatar } from "@/components/ui";
+import { Avatar, Badge } from "@/components/ui";
 import type { PublicUser } from "@/types/api";
 
 import styles from "@/pages/HelpRequest/HelpRequest.module.css";
@@ -22,7 +22,14 @@ export function PersonRow({
     <>
       <Avatar name={name} media={user.avatar} size={48} />
       <div className={styles.personInfo}>
-        <div className={styles.personName}>{name}</div>
+        <div className={styles.personName}>
+          {name}{" "}
+          {user.is_verified && (
+            <Badge tone="info" className={styles.verified}>
+              ✓ {t("profile.verifiedShort")}
+            </Badge>
+          )}
+        </div>
         <div className={styles.personStats}>
           {t("profile.helpedShort", { count: user.helped_count })} ·{" "}
           {t("profile.thanksShort", { count: user.thanks_received_count })}

@@ -32,7 +32,7 @@ export function StatusBadge({ status }: { status: HelpRequestStatus }) {
   const { t } = useTranslation();
   const tone =
     status === "ACTIVE"
-      ? "danger"
+      ? "info"
       : status === "IN_PROGRESS"
         ? "warning"
         : status === "COMPLETED"
