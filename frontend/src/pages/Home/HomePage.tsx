@@ -23,11 +23,14 @@ function EmergencyHelpButton() {
   const { t } = useTranslation();
   return (
     <Link to="/help/create" className={styles.sos}>
+      <span className={styles.sosLight} aria-hidden />
       <span className={styles.sosIcon} aria-hidden>
-        🆘
+        +
       </span>
-      {t("home.needHelp")}
-      <span className={styles.sosSub}>{t("home.needHelpSub")}</span>
+      <span>
+        <span className={styles.sosTitle}>{t("home.needHelp")}</span>
+        <span className={styles.sosSub}>{t("home.needHelpSub")}</span>
+      </span>
     </Link>
   );
 }
@@ -40,7 +43,7 @@ function NearbyHelpButton() {
         🤝
       </span>
       <span>
-        {t("home.someoneNeeds")}
+        <strong>{t("home.someoneNeeds")}</strong>
         <small>{t("home.someoneNeedsSub")}</small>
       </span>
     </Link>

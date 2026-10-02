@@ -26,7 +26,7 @@ function useNavEntries(): NavEntry[] {
   return [
     { to: "/", icon: "🏠", label: t("nav.home"), end: true },
     { to: "/nearby", icon: "🗺", label: t("nav.nearby") },
-    { to: "/help/create", icon: "➕", label: t("nav.help"), create: true },
+    { to: "/help/create", icon: "+", label: t("nav.help"), create: true },
     { to: "/chats", icon: "💬", label: t("nav.chats"), badge: unreadChats },
     { to: "/profile", icon: "👤", label: t("nav.profile"), end: true },
   ];

@@ -1,4 +1,5 @@
 .location {
+  font-family: var(--font-display);
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -6,36 +7,59 @@
   font-size: var(--text-lg);
 }
 .sos {
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
+  justify-content: space-between;
+  gap: var(--space-6);
   width: 100%;
-  min-height: 190px;
-  border: none;
-  border-radius: 28px;
-  background: radial-gradient(circle at 30% 20%, #ff6b5e, var(--color-primary) 60%);
+  min-height: 200px;
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  background: var(--color-primary);
   color: #fff;
-  font-size: var(--text-xl);
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 14px 36px rgb(226 72 61 / 0.35);
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgb(31 58 95 / 0.28);
   transition: transform var(--transition);
 }
 .sos:active {
   transform: scale(0.985);
 }
+/* the warm "light in a window": someone nearby will see it */
+.sosLight {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(233 162 59 / 0.55), rgb(233 162 59 / 0) 70%);
+  pointer-events: none;
+}
 .sosIcon {
-  font-size: 56px;
-  line-height: 1;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent);
+  color: var(--color-primary);
+  font-size: 28px;
+  font-weight: 800;
+}
+.sosTitle {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.15;
 }
 .sosSub {
-  font-size: var(--text-sm);
-  font-weight: 500;
-  opacity: 0.9;
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--text-md);
+  opacity: 0.85;
 }
 .helpButton {
   display: flex;
@@ -47,6 +71,10 @@
   color: #fff;
   text-decoration: none;
   font-weight: 800;
+}
+.helpButton strong {
+  font-family: var(--font-display);
+  font-weight: 600;
 }
 .helpButton small {
   display: block;

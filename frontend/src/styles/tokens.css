@@ -1,33 +1,37 @@
 :root {
-  --color-bg: #fff8f4;
+  --color-bg: #f3f5f7;
   --color-surface: #ffffff;
-  --color-surface-2: #f6eee9;
-  --color-border: #eadfd8;
-  --color-text: #1d1b1a;
-  --color-text-muted: #6f6762;
-  --color-primary: #e2483d;
-  --color-primary-hover: #c93b31;
-  --color-primary-soft: #fde4e1;
+  --color-surface-2: #e9eef3;
+  --color-border: #d9e1e9;
+  --color-text: #16202b;
+  --color-text-muted: #5b6878;
+  --color-primary: #1f3a5f;
+  --color-primary-hover: #172d4a;
+  --color-primary-soft: #e1e9f3;
   --color-on-primary: #ffffff;
-  --color-help: #1f8a70;
-  --color-help-hover: #187560;
-  --color-help-soft: #dcf2ea;
+  /* "window light": warm signal that someone nearby responds */
+  --color-accent: #e9a23b;
+  --color-accent-soft: #fbefd9;
+  --color-help: #2f7d5b;
+  --color-help-hover: #25664a;
+  --color-help-soft: #dff0e7;
   --color-warning: #c98a00;
   --color-warning-soft: #fff3d1;
   --color-danger: #c62828;
   --color-success: #2e7d32;
-  --color-urgent-now: #e2483d;
+  --color-urgent-now: #c2410c;
   --color-urgent-today: #e0a100;
   --color-urgent-whenever: #2e9b58;
-  --color-overlay: rgb(20 14 10 / 0.45);
+  --color-overlay: rgb(14 24 38 / 0.5);
 
   --radius-sm: 8px;
   --radius-md: 14px;
-  --radius-lg: 22px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
   --radius-full: 999px;
-  --shadow-sm: 0 1px 2px rgb(60 30 20 / 0.06), 0 1px 3px rgb(60 30 20 / 0.08);
-  --shadow-md: 0 6px 20px rgb(60 30 20 / 0.1);
-  --shadow-lg: 0 18px 50px rgb(60 30 20 / 0.18);
+  --shadow-sm: 0 1px 2px rgb(22 40 64 / 0.06), 0 1px 3px rgb(22 40 64 / 0.08);
+  --shadow-md: 0 6px 20px rgb(22 40 64 / 0.1);
+  --shadow-lg: 0 18px 50px rgb(22 40 64 / 0.18);
 
   --space-1: 4px;
   --space-2: 8px;
@@ -37,7 +41,9 @@
   --space-6: 24px;
   --space-8: 32px;
 
-  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans:
+    "Nunito Sans Variable", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Unbounded Variable", var(--font-sans);
   --text-xs: 12px;
   --text-sm: 14px;
   --text-md: 16px;
@@ -55,14 +61,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #151211;
-    --color-surface: #1f1b19;
-    --color-surface-2: #2a2421;
-    --color-border: #3a322e;
-    --color-text: #f5efeb;
-    --color-text-muted: #b0a59f;
-    --color-primary-soft: #45201c;
-    --color-help-soft: #173a31;
+    --color-bg: #121c28;
+    --color-surface: #1a2737;
+    --color-surface-2: #223246;
+    --color-border: #2e4058;
+    --color-text: #eef2f6;
+    --color-text-muted: #a3b1c2;
+    --color-primary: #3e6a9e;
+    --color-primary-hover: #4a79b0;
+    --color-primary-soft: #1f3550;
+    --color-help: #3a9a70;
+    --color-help-soft: #173a2c;
+    --color-accent-soft: #3a2e17;
     --color-warning-soft: #3d3016;
     --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
     --shadow-md: 0 6px 20px rgb(0 0 0 / 0.45);

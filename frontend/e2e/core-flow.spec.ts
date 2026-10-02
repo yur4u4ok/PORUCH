@@ -23,7 +23,7 @@ test("help request end-to-end flow", async ({ browser }) => {
   await registerAndOnboard(helper, "Помічник", helperEmail);
 
   // 3. Author creates a request through the wizard
-  await author.getByRole("link", { name: /^ПОТРІБНА ДОПОМОГА/ }).click();
+  await author.getByRole("link", { name: /^Потрібна допомога/ }).click();
   await author.getByRole("radio", { name: /Автомобіль/ }).click();
   await author.getByRole("button", { name: "Пробите колесо" }).click();
   await author.getByRole("button", { name: "Далі" }).click();
@@ -37,7 +37,7 @@ test("help request end-to-end flow", async ({ browser }) => {
   await author.getByRole("radio", { name: /Просто допомога/ }).click();
   await author.getByRole("button", { name: "Далі" }).click();
   await author.getByRole("button", { name: "Далі" }).click(); // photos are optional
-  await author.getByRole("button", { name: "ПОПРОСИТИ ПРО ДОПОМОГУ" }).click();
+  await author.getByRole("button", { name: "Попросити про допомогу" }).click();
   await expect(author.getByRole("heading", { name: title })).toBeVisible();
   await expect(author.getByText("Поки що ніхто не відгукнувся")).toBeVisible();
 

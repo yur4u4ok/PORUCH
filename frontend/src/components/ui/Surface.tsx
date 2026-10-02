@@ -28,7 +28,7 @@ export function Badge({
   children,
   className,
 }: {
-  tone?: "neutral" | "danger" | "warning" | "success" | "count";
+  tone?: "neutral" | "danger" | "info" | "warning" | "success" | "count";
   children: ReactNode;
   className?: string;
 }) {
