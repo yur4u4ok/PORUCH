@@ -1,6 +1,8 @@
 import clsx from "clsx";
 import { useEffect, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+
+import { BRAND } from "@/app/brand";
 import { NavLink, Outlet, useNavigate, useSearchParams } from "react-router";
 
 import { IconButton } from "@/components/ui";
@@ -67,10 +69,10 @@ export function AppLayout() {
   return (
     <div className={styles.shell}>
       <PushDeepLinkTracker />
-      <nav className={styles.sidebar} aria-label={t("app.name")}>
+      <nav className={styles.sidebar} aria-label={BRAND}>
         <NavLink to="/" className={styles.brand}>
           <img src="/icons/favicon.svg" alt="" />
-          {t("app.name")}
+          {BRAND}
         </NavLink>
         {[
           ...entries,
@@ -93,7 +95,7 @@ export function AppLayout() {
         <OfflineBanner />
         <Outlet />
       </div>
-      <nav className={styles.bottomNav} aria-label={t("app.name")}>
+      <nav className={styles.bottomNav} aria-label={BRAND}>
         {entries.map((entry) => (
           <NavLink
             key={entry.to}

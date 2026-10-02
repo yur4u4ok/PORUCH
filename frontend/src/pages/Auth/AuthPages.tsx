@@ -2,6 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+
+import { BRAND } from "@/app/brand";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router";
 
 import { authApi } from "@/api/auth";
@@ -67,7 +69,7 @@ export function LoginPage() {
 
   return (
     <main className={styles.authPage}>
-      <Link to="/" aria-label={t("app.name")}>
+      <Link to="/" aria-label={BRAND}>
         <img src="/icons/favicon.svg" alt="" width={56} height={56} />
       </Link>
       <h1>{t("auth.loginTitle")}</h1>
@@ -124,7 +126,7 @@ export function RegisterPage() {
 
   return (
     <main className={styles.authPage}>
-      <Link to="/" aria-label={t("app.name")}>
+      <Link to="/" aria-label={BRAND}>
         <img src="/icons/favicon.svg" alt="" width={56} height={56} />
       </Link>
       <h1>{t("auth.registerTitle")}</h1>

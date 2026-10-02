@@ -35,9 +35,9 @@ self.addEventListener("push", (event) => {
   try {
     data = event.data?.json() ?? {};
   } catch {
-    data = { title: "Поруч", body: event.data?.text() };
+    data = { title: "Poruch", body: event.data?.text() };
   }
-  const title = data.title || "Поруч";
+  const title = data.title || "Poruch";
   event.waitUntil(
     self.registration.showNotification(title, {
       body: data.body ?? "",

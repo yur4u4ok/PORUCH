@@ -200,7 +200,7 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Поруч — API локальної мережі взаємодопомоги",
+    "TITLE": "Poruch — API локальної мережі взаємодопомоги",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "COMPONENT_SPLIT_REQUEST": True,
@@ -229,7 +229,7 @@ STORAGES = {
 # --- Email ----------------------------------------------------------------
 EMAIL_CONFIG = env.email_url("EMAIL_URL", default="consolemail://")
 vars().update(EMAIL_CONFIG)
-DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="Поруч <no-reply@poruch.local>")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="Poruch <no-reply@poruch.local>")
 
 # --- S3 media -------------------------------------------------------------
 AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID", default="")

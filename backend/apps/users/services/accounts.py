@@ -74,10 +74,10 @@ def send_verification_email(user: User) -> None:
     token = make_email_verification_token(user)
     link = _frontend_url("/auth/verify-email", token=token)
     body = _(
-        "Вітаємо у «Поруч»!\n\nПідтвердіть свою електронну адресу, перейшовши за посиланням:\n{link}\n\n"
+        "Вітаємо у Poruch!\n\nПідтвердіть свою електронну адресу, перейшовши за посиланням:\n{link}\n\n"
         "Якщо ви не реєструвалися — просто проігноруйте цей лист."
     ).format(link=link)
-    subject = _("Підтвердження email — Поруч")
+    subject = _("Підтвердження email — Poruch")
     transaction.on_commit(lambda: send_email.delay(user.email, subject, body))
 
 
@@ -107,10 +107,10 @@ def request_password_reset(email: str) -> None:
     token = default_token_generator.make_token(user)
     link = _frontend_url("/auth/reset-password", uid=uid, token=token)
     body = _(
-        "Ви запросили відновлення пароля в «Поруч».\n\nЩоб встановити новий пароль, перейдіть за посиланням:\n"
+        "Ви запросили відновлення пароля в Poruch.\n\nЩоб встановити новий пароль, перейдіть за посиланням:\n"
         "{link}\n\nЯкщо це були не ви — проігноруйте цей лист."
     ).format(link=link)
-    send_email.delay(user.email, _("Відновлення пароля — Поруч"), body)
+    send_email.delay(user.email, _("Відновлення пароля — Poruch"), body)
 
 
 def confirm_password_reset(*, uid: str, token: str, password: str) -> User:

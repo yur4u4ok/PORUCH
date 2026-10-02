@@ -1,6 +1,5 @@
 {
   "app": {
-    "name": "Poruch",
     "tagline": "Local mutual aid network",
     "offline": "No internet connection. Some features are temporarily unavailable.",
     "updateReady": "A new version of the app is available",

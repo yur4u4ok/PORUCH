@@ -30,3 +30,11 @@ describe("i18n", () => {
     expect(i18n.t("home.needHelp")).toBe("Потрібна допомога");
   });
 });
+
+describe("brand", () => {
+  it("is not translatable", () => {
+    expect(JSON.stringify(uk)).not.toContain('Поруч"');
+    expect((uk as { app: Record<string, string> }).app.name).toBeUndefined();
+    expect((en as { app: Record<string, string> }).app.name).toBeUndefined();
+  });
+});
