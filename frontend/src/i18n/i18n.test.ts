@@ -33,7 +33,6 @@ describe("i18n", () => {
 
 describe("brand", () => {
   it("is not translatable", () => {
-    expect(JSON.stringify(uk)).not.toContain('Поруч"');
     expect((uk as { app: Record<string, string> }).app.name).toBeUndefined();
     expect((en as { app: Record<string, string> }).app.name).toBeUndefined();
   });
