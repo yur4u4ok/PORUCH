@@ -137,10 +137,14 @@
     "someoneNeeds": "Someone needs help",
     "someoneNeedsSub": "See requests nearby",
     "nearbyMap": "Help nearby",
-    "myActive": "My active help",
-    "nearbyPreview": "Help nearby",
+    "nearbyPreview": "Requests from people nearby",
     "locationUnknown": "Location unknown",
-    "enableLocation": "Turn on location to see requests nearby"
+    "enableLocation": "Turn on location to see requests nearby",
+    "myRequests": "My requests",
+    "myRequestsHint": "What you've posted",
+    "imHelping": "I'm helping",
+    "imHelpingHint": "Other people's requests where you were chosen to help",
+    "nearbyPreviewHint": "Someone nearby needs help — maybe yours"
   },
   "availability": {
     "title": "I can help right now",

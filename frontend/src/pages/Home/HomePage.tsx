@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
@@ -56,19 +56,57 @@ function NearbyHelpButton() {
   );
 }
 
+function HomeSection({
+  title,
+  hint,
+  action,
+  children,
+}: {
+  title: string;
+  hint: string;
+  action?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <section className={styles.section}>
+      <div className="row-between">
+        <div>
+          <h2>{title}</h2>
+          <p className="muted" style={{ fontSize: 14 }}>
+            {hint}
+          </p>
+        </div>
+        {action}
+      </div>
+      {children}
+    </section>
+  );
+}
+
+/** Two separate lists so "what I posted" never mixes with "where I help". */
 function MyActiveHelp() {
   const { t } = useTranslation();
   const asAuthor = useHelpHistory({ role: "author", status: ["ACTIVE", "IN_PROGRESS"] });
   const asHelper = useHelpHistory({ role: "helper", status: ["IN_PROGRESS"] });
-  const items = [...(asAuthor.data?.pages[0]?.results ?? []), ...(asHelper.data?.pages[0]?.results ?? [])];
-  if (!items.length) return null;
+  const mine = asAuthor.data?.pages[0]?.results ?? [];
+  const helping = asHelper.data?.pages[0]?.results ?? [];
   return (
-    <section className={styles.section}>
-      <h2>{t("home.myActive")}</h2>
-      {items.map((request) => (
-        <HelpRequestCard key={request.id} request={request} showStatus />
-      ))}
-    </section>
+    <>
+      {mine.length > 0 && (
+        <HomeSection title={t("home.myRequests")} hint={t("home.myRequestsHint")}>
+          {mine.map((request) => (
+            <HelpRequestCard key={request.id} request={request} showStatus />
+          ))}
+        </HomeSection>
+      )}
+      {helping.length > 0 && (
+        <HomeSection title={t("home.imHelping")} hint={t("home.imHelpingHint")}>
+          {helping.map((request) => (
+            <HelpRequestCard key={request.id} request={request} showStatus />
+          ))}
+        </HomeSection>
+      )}
+    </>
   );
 }
 
@@ -92,11 +130,11 @@ function NearbyRequestsPreview() {
   const items = nearby.data?.pages[0]?.results.slice(0, 5) ?? [];
 
   return (
-    <section className={styles.section}>
-      <div className="row-between">
-        <h2>{t("home.nearbyPreview")}</h2>
-        <Link to="/nearby">{t("common.seeAll")}</Link>
-      </div>
+    <HomeSection
+      title={t("home.nearbyPreview")}
+      hint={t("home.nearbyPreviewHint")}
+      action={<Link to="/nearby">{t("common.seeAll")}</Link>}
+    >
       {!position && status !== "locating" ? (
         <EmptyState
           icon="📍"
@@ -116,7 +154,7 @@ function NearbyRequestsPreview() {
       ) : (
         items.map((request) => <HelpRequestCard key={request.id} request={request} />)
       )}
-    </section>
+    </HomeSection>
   );
 }
 
