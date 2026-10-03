@@ -1,8 +1,10 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
+import { BrandMark } from "@/components/layout/BrandMark";
 import { Button } from "@/components/ui";
 import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
+import { emergencyVars } from "@/utils/emergency";
 
 import styles from "./Landing.module.css";
 
@@ -11,10 +13,8 @@ export default function LandingPage() {
   return (
     <main className={styles.hero}>
       <div className="row-between">
-        <img src="/icons/favicon.svg" alt="" className={styles.logo} />
-        <div style={{ width: 120 }}>
-          <LanguageSwitcher compact />
-        </div>
+        <BrandMark size="lg" />
+        <LanguageSwitcher compact />
       </div>
       <h1 className={styles.title}>{t("landing.title")}</h1>
       <div className={styles.duo}>
@@ -56,7 +56,7 @@ export default function LandingPage() {
           ))}
         </ul>
       </section>
-      <p className={`muted ${styles.notice}`}>⚠️ {t("emergency.short")}</p>
+      <p className={`muted ${styles.notice}`}>⚠️ {t("emergency.short", emergencyVars())}</p>
     </main>
   );
 }

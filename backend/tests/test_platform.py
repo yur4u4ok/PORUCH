@@ -71,3 +71,12 @@ def test_kpi_report(no_push):
     assert kpis["help_success_rate"] == 0.2
     assert kpis["response_rate"] == 0.6
     assert kpis["time_to_help_minutes"] is not None
+
+
+def test_format_money_by_currency():
+    from common.utils.money import format_money
+
+    assert format_money(500, "UAH") == "500 грн"
+    assert format_money(10, "EUR") == "10 €"
+    assert format_money(12, "USD") == "$12"
+    assert format_money("12.50", "GBP") == "£12.5"

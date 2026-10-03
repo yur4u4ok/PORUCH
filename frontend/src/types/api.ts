@@ -139,9 +139,11 @@ export interface HelpRequest {
   subcategory: string | null;
   title: string;
   description: string;
+  place_name: string;
   urgency: Urgency;
   reward_type: RewardType;
   reward_amount: string | null;
+  reward_currency: string;
   reward_options: RewardOption[];
   agreed_offer_type: OfferType | null;
   agreed_amount: string | null;
@@ -248,8 +250,9 @@ export interface SharePreview {
   urgency: Urgency | null;
   reward_type: RewardType | null;
   reward_amount: string | null;
+  reward_currency: string;
   reward_options: RewardOption[];
-  city: Pick<City, "name" | "translations"> | null;
+  place: string;
   created_at: ISODateTime;
   expires_at: ISODateTime;
 }

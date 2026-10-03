@@ -37,8 +37,9 @@ import { useLocationStore } from "@/stores/locationStore";
 import { toast } from "@/stores/toastStore";
 import type { HelpRequest, OfferType } from "@/types/api";
 import { URGENCY_HEX, requestEmoji } from "@/utils/categories";
-import { formatDistance, timeAgo, timeLeft } from "@/utils/format";
+import { currencySymbol, formatDistance, timeAgo, timeLeft } from "@/utils/format";
 import { agreedSummary, offerSummary, rewardSummary } from "@/utils/reward";
+import { emergencyVars } from "@/utils/emergency";
 
 import styles from "./HelpRequest.module.css";
 
@@ -65,7 +66,7 @@ function ResponsesSection({ request }: { request: HelpRequest }) {
             <PersonRow user={response.helper} />
             {request.reward_type === "WILLING" && (
               <Badge tone={response.offer_type === "COUNTER" ? "warning" : "success"}>
-                {offerSummary(response, t)}
+                {offerSummary(response, request.reward_currency, t)}
               </Badge>
             )}
             {response.message && <p>«{response.message}»</p>}
@@ -294,7 +295,7 @@ function HelperActions({ request }: { request: HelpRequest }) {
             ))}
             {offerType === "COUNTER" && (
               <Input
-                label={t("offer.amount")}
+                label={t("offer.amount", { currency: currencySymbol(request.reward_currency) })}
                 inputMode="decimal"
                 value={offeredAmount}
                 onChange={(e) => setOfferedAmount(e.target.value)}
@@ -375,7 +376,7 @@ export default function HelpRequestPage() {
       </div>
 
       {(request.category === "URGENT" || request.urgency === "NOW") && (
-        <div className={styles.warning}>⚠️ {t("emergency.short")}</div>
+        <div className={styles.warning}>⚠️ {t("emergency.short", emergencyVars())}</div>
       )}
 
       <p className={styles.description}>{request.description}</p>

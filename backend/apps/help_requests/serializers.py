@@ -9,6 +9,7 @@ from apps.locations.serializers import LocationInputSerializer
 from apps.media.serializers import MediaSerializer
 from apps.users.serializers import PublicUserSerializer
 from common.utils.geo import approximate_point, point_to_dict, round_distance
+from common.utils.money import SUPPORTED_CURRENCIES
 
 
 class HelpRequestCreateSerializer(serializers.Serializer):
@@ -22,9 +23,11 @@ class HelpRequestCreateSerializer(serializers.Serializer):
     reward_amount = serializers.DecimalField(
         max_digits=10, decimal_places=2, required=False, allow_null=True, min_value=0
     )
+    reward_currency = serializers.ChoiceField(choices=SUPPORTED_CURRENCIES, required=False)
     reward_options = serializers.ListField(
         child=serializers.ChoiceField(choices=RewardOption.choices), required=False, max_length=4
     )
+    place_name = serializers.CharField(max_length=120, required=False, allow_blank=True)
     photo_ids = serializers.ListField(
         child=serializers.UUIDField(), required=False, max_length=settings.HELP_REQUEST_MAX_PHOTOS
     )
@@ -38,6 +41,7 @@ class HelpRequestUpdateSerializer(serializers.Serializer):
     reward_amount = serializers.DecimalField(
         max_digits=10, decimal_places=2, required=False, allow_null=True, min_value=0
     )
+    reward_currency = serializers.ChoiceField(choices=SUPPORTED_CURRENCIES, required=False)
     reward_options = serializers.ListField(
         child=serializers.ChoiceField(choices=RewardOption.choices), required=False, max_length=4
     )
@@ -100,9 +104,11 @@ class HelpRequestSerializer(serializers.ModelSerializer):
             "subcategory",
             "title",
             "description",
+            "place_name",
             "urgency",
             "reward_type",
             "reward_amount",
+            "reward_currency",
             "reward_options",
             "agreed_offer_type",
             "agreed_amount",

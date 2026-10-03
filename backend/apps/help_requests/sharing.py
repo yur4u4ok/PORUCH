@@ -16,9 +16,9 @@ from rest_framework.views import APIView
 
 from apps.help_requests.constants import HelpRequestStatus, RewardOption, RewardType
 from apps.help_requests.models import HelpRequest
-from apps.locations.models import City
 from common import analytics
 from common.throttling import SharePreviewThrottle
+from common.utils.money import format_money
 
 
 def share_url(help_request: HelpRequest) -> str:
@@ -29,7 +29,9 @@ def reward_text(help_request: HelpRequest) -> str:
     if help_request.reward_type != RewardType.WILLING:
         return str(RewardType(help_request.reward_type).label)
     labels = dict(RewardOption.choices)
-    parts = [f"{help_request.reward_amount:.0f} грн"] if help_request.reward_amount else []
+    parts = (
+        [format_money(help_request.reward_amount, help_request.reward_currency)] if help_request.reward_amount else []
+    )
     parts += [str(labels[o]) for o in help_request.reward_options if o in labels]
     return ", ".join(parts)
 
@@ -52,8 +54,9 @@ class SharePreviewSerializer(serializers.Serializer):
     urgency = serializers.CharField(allow_null=True)
     reward_type = serializers.CharField(allow_null=True)
     reward_amount = serializers.DecimalField(max_digits=10, decimal_places=2, allow_null=True)
+    reward_currency = serializers.CharField()
     reward_options = serializers.ListField(child=serializers.CharField())
-    city = serializers.DictField(allow_null=True)
+    place = serializers.CharField(allow_blank=True)
     created_at = serializers.DateTimeField()
     expires_at = serializers.DateTimeField()
 
@@ -61,14 +64,15 @@ class SharePreviewSerializer(serializers.Serializer):
 def preview_data(help_request: HelpRequest) -> dict:
     active = help_request.status == HelpRequestStatus.ACTIVE and not help_request.is_closed
     profile = getattr(help_request.author, "profile", None)
-    city = (profile.city if profile else None) or City.objects.filter(is_default=True).first()
+    city = profile.city if profile else None
     base = {
         "id": help_request.id,
         "active": active,
         "status": help_request.status,
         "created_at": help_request.created_at,
         "expires_at": help_request.expires_at,
-        "city": {"name": city.name, "translations": city.translations} if city else None,
+        "place": help_request.place_name or (city.name if city else ""),
+        "reward_currency": help_request.reward_currency,
     }
     if not active:
         # Do not keep exposing details of finished requests.
@@ -114,7 +118,7 @@ def share_redirect(request, code):
     """/r/<code>: HTML with Open Graph tags for messenger previews, then redirects to the app."""
     help_request = _get(code)
     data = preview_data(help_request)
-    city = data["city"]["name"] if data["city"] else ""
+    city = data["place"]
     if data["active"]:
         title = _("Потрібна допомога: {title}").format(title=help_request.title)
         description = " · ".join(filter(None, [city, reward_text(help_request), help_request.description[:140]]))

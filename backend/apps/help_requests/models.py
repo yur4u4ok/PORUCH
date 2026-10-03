@@ -34,6 +34,8 @@ class HelpRequest(TimeStampedModel):
 
     location = gis_models.PointField(geography=True, srid=4326)  # GIST index created by GeoDjango
     location_accuracy = models.FloatField(null=True, blank=True)
+    # Human place label (locality) reverse-geocoded on the client, e.g. "Lviv". Display only.
+    place_name = models.CharField(max_length=120, blank=True, default="")
 
     urgency = models.CharField(max_length=10, choices=Urgency.choices, db_index=True)
 
@@ -42,6 +44,7 @@ class HelpRequest(TimeStampedModel):
         null=True, blank=True, max_digits=10, decimal_places=2, validators=[MinValueValidator(0)]
     )
 
+    reward_currency = models.CharField(max_length=3, default="UAH")
     reward_options = ArrayField(models.CharField(max_length=20, choices=RewardOption.choices), default=list, blank=True)
     # Terms locked in when the author chooses a helper (informational, no payments).
     agreed_offer_type = models.CharField(max_length=10, null=True, blank=True)

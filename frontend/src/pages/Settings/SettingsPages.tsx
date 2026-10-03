@@ -18,10 +18,12 @@ import {
   useUpdatePreferences,
 } from "@/features/profile/hooks";
 import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
+import { RegionSettings } from "@/features/profile/RegionSettings";
 import { ThemeSwitcher } from "@/features/profile/ThemeSwitcher";
 import { toast } from "@/stores/toastStore";
 import type { NotificationCategory } from "@/types/api";
 import { DEFAULT_RADII } from "@/utils/radius";
+import { emergencyVars } from "@/utils/emergency";
 
 export function SettingsPage() {
   const { t } = useTranslation();
@@ -33,13 +35,17 @@ export function SettingsPage() {
         <LanguageSwitcher />
       </Card>
       <Card className="stack-sm">
+        <strong>{t("settings.region")}</strong>
+        <RegionSettings />
+      </Card>
+      <Card className="stack-sm">
         <strong>{t("settings.theme")}</strong>
         <ThemeSwitcher />
       </Card>
       <Card to="/settings/notifications">🔔 {t("settings.notifications")}</Card>
       <Card to="/settings/privacy">🔒 {t("settings.privacy")}</Card>
       <p className="muted" style={{ fontSize: 13 }}>
-        ⚠️ {t("settings.about")}
+        ⚠️ {t("settings.about", emergencyVars())}
       </p>
     </main>
   );

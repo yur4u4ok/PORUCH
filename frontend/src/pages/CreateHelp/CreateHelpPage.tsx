@@ -14,6 +14,7 @@ import { CategoryGrid, EmergencyDisclaimer, OptionTiles, UrgencyBadge } from "@/
 import { createHelpSchema, STEP_FIELDS, type CreateHelpForm } from "@/features/help/createSchema";
 import { useCreateHelpRequest } from "@/features/help/hooks";
 import { PhotoUploader } from "@/features/help/PhotoUploader";
+import { placeNameFor, usePlace } from "@/features/location/place";
 import { useGeolocation } from "@/features/location/useGeolocation";
 import { usePublicConfig } from "@/features/profile/hooks";
 import { useOnline } from "@/hooks/useOnline";
@@ -21,7 +22,9 @@ import { useFieldError } from "@/hooks/useFieldError";
 import { toast } from "@/stores/toastStore";
 import type { Category, Media } from "@/types/api";
 import { CATEGORY_EMOJI, URGENCY_EMOJI } from "@/utils/categories";
+import { currencySymbol, region } from "@/utils/format";
 import { REWARD_OPTION_EMOJI, REWARD_OPTIONS, rewardSummary } from "@/utils/reward";
+import { emergencyVars } from "@/utils/emergency";
 
 import styles from "./CreateHelp.module.css";
 
@@ -36,7 +39,8 @@ const STEP_TITLES = [
 ];
 
 export default function CreateHelpPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { currency } = region();
   const fe = useFieldError();
   const navigate = useNavigate();
   const online = useOnline();
@@ -79,7 +83,8 @@ export default function CreateHelpPage() {
     });
   }, [step, values.location, locate, setValue]);
 
-  const fallbackCenter = position ?? me?.city?.center ?? null;
+  const place = usePlace();
+  const fallbackCenter = position ?? place?.center ?? me?.city?.center ?? null;
 
   // Explicit action with visible feedback: moves the pin (and the map) to a fresh GPS fix.
   const useMyLocation = async () => {
@@ -117,11 +122,12 @@ export default function CreateHelpPage() {
     setStep((s) => Math.min(s + 1, STEP_TITLES.length - 1));
   };
 
-  const onSubmit = handleSubmit((form) => {
+  const onSubmit = handleSubmit(async (form) => {
     if (!online) {
       toast.error(t("create.offline"));
       return;
     }
+    const placeName = (await placeNameFor(i18n.language, form.location!)) || place?.name || "";
     create.mutate(
       {
         category: form.category,
@@ -134,6 +140,8 @@ export default function CreateHelpPage() {
         reward_amount:
           form.reward_type === "WILLING" && form.reward_amount ? form.reward_amount.replace(",", ".") : null,
         reward_options: form.reward_type === "WILLING" ? form.reward_options : [],
+        reward_currency: currency,
+        place_name: placeName,
         photo_ids: photos.map((p) => p.id),
         emergency_acknowledged: form.emergency_acknowledged,
       },
@@ -204,7 +212,9 @@ export default function CreateHelpPage() {
               </div>
             </div>
           )}
-          {values.category === "URGENT" && <div className={styles.warning}>🚨 {t("emergency.short")}</div>}
+          {values.category === "URGENT" && (
+            <div className={styles.warning}>🚨 {t("emergency.short", emergencyVars())}</div>
+          )}
         </div>
       )}
 
@@ -315,7 +325,11 @@ export default function CreateHelpPage() {
           {values.reward_type === "WILLING" && (
             <fieldset className={styles.rewardBox}>
               <legend className="visually-hidden">{t("reward.WILLING")}</legend>
-              <Input label={t("reward.amountOptional")} inputMode="decimal" {...register("reward_amount")} />
+              <Input
+                label={t("reward.amountOptional", { currency: currencySymbol(currency) })}
+                inputMode="decimal"
+                {...register("reward_amount")}
+              />
               <p className="muted">{t("reward.orSomethingElse")}</p>
               <Controller
                 control={control}
@@ -382,6 +396,7 @@ export default function CreateHelpPage() {
                     {
                       reward_type: "WILLING",
                       reward_amount: values.reward_amount.replace(",", ".") || null,
+                      reward_currency: currency,
                       reward_options: values.reward_options,
                     },
                     t,

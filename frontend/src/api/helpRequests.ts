@@ -39,7 +39,9 @@ export interface CreateHelpRequestInput {
   urgency: Urgency;
   reward_type: RewardType;
   reward_amount?: string | null;
+  reward_currency?: string;
   reward_options?: RewardOption[];
+  place_name?: string;
   photo_ids?: string[];
   emergency_acknowledged?: boolean;
 }

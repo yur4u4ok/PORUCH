@@ -42,7 +42,8 @@ def _resolve_city(city_id) -> City | None:
         if city is None:
             raise ValidationFailed(details={"city_id": [_("Невідоме місто.")]})
         return city
-    return City.objects.filter(is_active=True, is_default=True).first()
+    # No implicit city: the client detects the real location (geolocation / IP) instead.
+    return None
 
 
 @transaction.atomic

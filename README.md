@@ -22,6 +22,7 @@ PWA, у якій люди поруч допомагають одне одном�
 | «Я зараз можу допомогти» (тимчасова доступність) | `apps/locations`, `features/help/AvailabilityToggle.tsx` |
 | Фото: presigned upload у S3, перевірка реального MIME, resize, thumbnail, видалення EXIF | `apps/media` |
 | Скарги, блокування, приховування точної локації, попередження про екстрені служби | `apps/moderation`, `common/utils/geo.py` |
+| 13 мов інтерфейсу, регіональні формати (валюта, км/милі, дата, час), визначення місця | `frontend/src/i18n`, `utils/format.ts`, `features/location/place.ts`, `common/utils/money.py` |
 | Django Admin, health checks, structured logging, аналітичні події | `common/`, `*/admin.py` |
 
 ## 2. Architecture
@@ -111,7 +112,7 @@ docker compose exec backend python manage.py makemigrations
 docker compose exec backend python manage.py migrate
 ```
 
-CI перевіряє `makemigrations --check` і `migrate`. У production міграції — окремий контрольований крок (див. Deployment). Довідкові дані (каталог можливостей, місто Львів) додаються data-міграціями.
+CI перевіряє `makemigrations --check` і `migrate`. У production міграції — окремий контрольований крок (див. Deployment). Довідкові дані (каталог можливостей, демо-місто) додаються data-міграціями. Місто користувача не призначається за замовчуванням: фронтенд визначає реальне місце (геолокація або IP).
 
 ## 9. Running tests
 

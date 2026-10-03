@@ -24,7 +24,7 @@ def test_public_preview_without_login_hides_private_data(api_client):
     data = response.json()
     assert data["active"] is True and data["title"] == hr.title
     assert data["reward_amount"] == "500.00" and data["reward_options"] == ["PIZZA"]
-    assert data["city"]["name"] == "Львів"
+    assert data["place"] == "" and data["reward_currency"] == "UAH"
     # never exposed publicly
     for private in ("author", "location", "photos", "distance_m", "email"):
         assert private not in data
@@ -47,7 +47,7 @@ def test_unknown_code_and_inactive_author_are_404(api_client):
 
 def test_short_link_renders_open_graph_and_redirects(settings):
     settings.FRONTEND_URL = "https://poruch.app"
-    hr = HelpRequestFactory(title="Пробите колесо", reward_type="WILLING", reward_amount=500)
+    hr = HelpRequestFactory(title="Пробите колесо", reward_type="WILLING", reward_amount=500, place_name="Львів")
     html = Client().get(f"/r/{hr.share_code}").content.decode()
     assert 'property="og:title" content="Потрібна допомога: Пробите колесо"' in html
     assert "500 грн" in html and "Львів" in html
@@ -58,3 +58,11 @@ def test_short_link_renders_open_graph_and_redirects(settings):
 def test_share_codes_are_unique():
     codes = {HelpRequestFactory().share_code for _ in range(20)}
     assert len(codes) == 20
+
+
+def test_preview_uses_request_place_and_currency(api_client):
+    hr = HelpRequestFactory(reward_type="WILLING", reward_amount=12, reward_currency="USD", place_name="Austin")
+    data = api_client.get(f"/api/v1/share/{hr.share_code}/").json()
+    assert data["place"] == "Austin" and data["reward_currency"] == "USD"
+    html = api_client.get(f"/r/{hr.share_code}").content.decode()
+    assert "Austin" in html and "$12" in html

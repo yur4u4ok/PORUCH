@@ -6,6 +6,7 @@ import { onUnauthorized } from "@/api/client";
 import { queryKeys } from "@/api/queryKeys";
 import { Toaster } from "@/components/ui";
 import { useMe } from "@/features/auth/hooks";
+import { usePlace } from "@/features/location/place";
 import { syncPushSubscription } from "@/features/notifications/push";
 
 import { UpdatePrompt } from "./pwa";
@@ -15,6 +16,7 @@ import { router } from "./router";
 function SessionEffects() {
   const qc = useQueryClient();
   const { data: me } = useMe();
+  usePlace(); // detects the real location → regional formats and fallback map centre
 
   useEffect(() => onUnauthorized(() => qc.setQueryData(queryKeys.me, null)), [qc]);
 

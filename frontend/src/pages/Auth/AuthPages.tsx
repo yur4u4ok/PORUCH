@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { BRAND } from "@/app/brand";
+import { BrandMark } from "@/components/layout/BrandMark";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router";
 
 import { authApi } from "@/api/auth";
@@ -70,8 +71,8 @@ export function LoginPage() {
 
   return (
     <main className={styles.authPage}>
-      <Link to="/" aria-label={BRAND}>
-        <img src="/icons/favicon.svg" alt="" width={56} height={56} />
+      <Link to="/" aria-label={BRAND} style={{ textDecoration: "none" }}>
+        <BrandMark />
       </Link>
       <h1>{t("auth.loginTitle")}</h1>
       <form className="stack" onSubmit={onSubmit} noValidate>
@@ -127,8 +128,8 @@ export function RegisterPage() {
 
   return (
     <main className={styles.authPage}>
-      <Link to="/" aria-label={BRAND}>
-        <img src="/icons/favicon.svg" alt="" width={56} height={56} />
+      <Link to="/" aria-label={BRAND} style={{ textDecoration: "none" }}>
+        <BrandMark />
       </Link>
       <h1>{t("auth.registerTitle")}</h1>
       <form className="stack" onSubmit={onSubmit} noValidate>

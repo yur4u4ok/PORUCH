@@ -14,7 +14,8 @@ import type {
   Urgency,
 } from "@/types/api";
 import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCY_EMOJI, requestEmoji } from "@/utils/categories";
-import { formatDistance, timeAgo } from "@/utils/format";
+import { formatDistance, formatRadius, timeAgo } from "@/utils/format";
+import { emergencyVars } from "@/utils/emergency";
 
 import styles from "./components.module.css";
 
@@ -118,7 +119,7 @@ export function RadiusChips({
     <div className={styles.chips} role="radiogroup" aria-label={t("nearby.radius")}>
       {radii.map((r) => (
         <Chip key={r} active={value === r} onClick={() => onChange(r)}>
-          {t(`radius.${r}`)}
+          {formatRadius(r)}
         </Chip>
       ))}
     </div>
@@ -202,8 +203,11 @@ export function EmergencyDisclaimer({
       title={`🚨 ${t("emergency.title")}`}
       actions={
         <>
-          <Button variant="secondary" onClick={() => (window.location.href = "tel:112")}>
-            📞 {t("emergency.call")}
+          <Button
+            variant="secondary"
+            onClick={() => (window.location.href = `tel:${emergencyVars().number}`)}
+          >
+            📞 {t("emergency.call", emergencyVars())}
           </Button>
           <Button onClick={onAccept}>{t("common.understood")}</Button>
         </>

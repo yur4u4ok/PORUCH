@@ -5,22 +5,23 @@ import { Link, Navigate, useNavigate, useParams } from "react-router";
 
 import { helpRequestsApi } from "@/api/helpRequests";
 import { BRAND } from "@/app/brand";
+import { BrandMark } from "@/components/layout/BrandMark";
 import { Button, Card, EmptyState, Loader } from "@/components/ui";
 import { useMe } from "@/features/auth/hooks";
 import { UrgencyBadge } from "@/features/help/components";
 import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
 import { rememberAfterAuth } from "@/utils/afterAuth";
 import { requestEmoji } from "@/utils/categories";
-import { cityName } from "@/utils/city";
 import { timeAgo } from "@/utils/format";
 import { rewardSummary } from "@/utils/reward";
+import { emergencyVars } from "@/utils/emergency";
 
 import styles from "../Landing/Landing.module.css";
 
 /** Public landing for a shared request link: works without an account. */
 export default function SharePage() {
   const { code = "" } = useParams();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: me, isPending: mePending } = useMe();
   const preview = useQuery({
@@ -42,13 +43,10 @@ export default function SharePage() {
   return (
     <main className={styles.authPage}>
       <div className="row-between">
-        <Link to="/" className="row" style={{ textDecoration: "none", fontWeight: 800 }}>
-          <img src="/icons/favicon.svg" alt="" width={40} height={40} />
-          {BRAND}
+        <Link to="/" aria-label={BRAND} style={{ textDecoration: "none" }}>
+          <BrandMark />
         </Link>
-        <div style={{ width: 120 }}>
-          <LanguageSwitcher compact />
-        </div>
+        <LanguageSwitcher compact />
       </div>
 
       {!data ? (
@@ -72,7 +70,7 @@ export default function SharePage() {
                 <h1 style={{ fontSize: "var(--text-xl)" }}>{data.title}</h1>
                 <div className="row wrap muted" style={{ fontSize: 14 }}>
                   {data.urgency && <UrgencyBadge urgency={data.urgency} />}
-                  {data.city && <span>📍 {cityName(data.city, i18n.language)}</span>}
+                  {data.place && <span>📍 {data.place}</span>}
                   <span>{timeAgo(data.created_at)}</span>
                 </div>
               </div>
@@ -85,6 +83,7 @@ export default function SharePage() {
                   {
                     reward_type: data.reward_type,
                     reward_amount: data.reward_amount,
+                    reward_currency: data.reward_currency,
                     reward_options: data.reward_options,
                   },
                   t,
@@ -104,7 +103,7 @@ export default function SharePage() {
             {t("share.login")}
           </Button>
           <p className="muted" style={{ fontSize: 13 }}>
-            ⚠️ {t("emergency.short")}
+            ⚠️ {t("emergency.short", emergencyVars())}
           </p>
         </>
       )}

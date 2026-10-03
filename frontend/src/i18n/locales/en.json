@@ -1,6 +1,6 @@
 {
   "app": {
-    "tagline": "Local mutual aid network",
+    "slogan": "Help from people nearby",
     "offline": "No internet connection. Some features are temporarily unavailable.",
     "updateReady": "A new version of the app is available",
     "reload": "Update"
@@ -35,8 +35,6 @@
     "errorRateLimited": "Too many requests. Try again a bit later.",
     "anonymous": "Neighbour",
     "seeAll": "All",
-    "km": "{{value}} km",
-    "m": "{{value}} m",
     "fromYou": "{{distance}} away",
     "since": "Member since {{year}}"
   },
@@ -225,11 +223,8 @@
     "NONE": "No payment",
     "WILLING": "Happy to pay back",
     "UNSURE": "For a small thank-you",
-    "amount": "Thank-you amount, UAH",
     "note": "Payment is never required. This is just information for the helper.",
-    "willingWithAmount": "Happy to pay back: {{amount}} UAH",
     "amountRequired": "Enter the amount",
-    "money": "{{amount}} UAH",
     "options": {
       "PIZZA": "I'll buy pizza",
       "COFFEE": "Coffee",
@@ -237,7 +232,7 @@
       "GIVE_ITEM": "Give/lend an item"
     },
     "chooseAtLeastOne": "Enter an amount or tick at least one option",
-    "amountOptional": "Amount, UAH",
+    "amountOptional": "Amount, {{currency}}",
     "orSomethingElse": "Or how else you'll say thanks:"
   },
   "status": {
@@ -256,8 +251,8 @@
   "emergency": {
     "title": "Important",
     "text": "If there is a threat to life, health or property, contact the emergency services. This service is for mutual aid between people and does not replace emergency services.",
-    "short": "This service does not replace emergency services. In a dangerous or critical situation call 112 / 101 / 102 / 103.",
-    "call": "Call 112"
+    "short": "This service does not replace emergency services. In a dangerous or critical situation call {{numbers}}.",
+    "call": "Call {{number}}"
   },
   "create": {
     "title": "I need help",
@@ -436,9 +431,16 @@
     "deactivateText": "Your active requests will be cancelled, push subscriptions and \"I can help right now\" turned off. Your help history is kept.",
     "deactivateConfirm": "Deactivate",
     "language": "Language",
-    "languageUk": "Українська",
-    "languageEn": "English",
-    "about": "This service does not replace emergency services: 112 / 101 / 102 / 103",
+    "region": "Region and formats",
+    "regionHint": "Currency, distance units, date and time format. Detected automatically from your location.",
+    "country": "Country",
+    "currency": "Currency",
+    "units": "Distance",
+    "unitsMetric": "Kilometres",
+    "unitsImperial": "Miles",
+    "auto": "Automatic ({{value}})",
+    "example": "Example",
+    "about": "This service does not replace emergency services: {{numbers}}",
     "theme": "Theme",
     "themeLight": "Light",
     "themeDark": "Dark",
@@ -456,14 +458,6 @@
     "description": "Details (optional)",
     "send": "Send report",
     "sent": "Report sent. Thank you!"
-  },
-  "radius": {
-    "500": "500 m",
-    "1000": "1 km",
-    "3000": "3 km",
-    "5000": "5 km",
-    "10000": "10 km",
-    "20000": "20 km"
   },
   "errors": {
     "notFoundTitle": "Page not found",
@@ -513,8 +507,8 @@
     "COUNTER": "I propose a different amount",
     "FREE": "I'll help for free",
     "authorOffers": "The author offers: {{terms}}",
-    "amount": "Your amount, UAH",
-    "counterShort": "Offers {{amount}} UAH",
+    "amount": "Your amount, {{currency}}",
+    "counterShort": "Offers {{amount}}",
     "short": {
       "ACCEPT": "Accepts the terms",
       "COUNTER": "Different amount",

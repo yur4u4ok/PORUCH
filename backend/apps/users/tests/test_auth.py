@@ -29,7 +29,7 @@ def test_register_creates_user_profile_preferences_and_sends_email(api_client):
     user = User.objects.get(email="new@example.com")
     assert not user.email_verified
     assert Profile.objects.get(user=user).display_name == "Остап"
-    assert Profile.objects.get(user=user).city.slug == "lviv"
+    assert Profile.objects.get(user=user).city is None  # no implicit default city
     assert NotificationPreference.objects.filter(user=user).exists()
     assert len(mail.outbox) == 1
     assert "/auth/verify-email?token=" in mail.outbox[0].body

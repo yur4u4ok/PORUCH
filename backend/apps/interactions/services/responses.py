@@ -15,6 +15,7 @@ from apps.notifications.services.notify import notify
 from apps.users.models import User
 from common import analytics
 from common.exceptions import Conflict, Forbidden, InvalidState, NotFound, ValidationFailed
+from common.utils.money import format_money
 
 
 def _display_name(user: User) -> str:
@@ -39,10 +40,10 @@ def offer_summary(help_request: HelpRequest, offer_type: str | None, amount) -> 
     if offer_type == OfferType.FREE or help_request.reward_type != RewardType.WILLING:
         return _("Допомога без оплати")
     if offer_type == OfferType.COUNTER and amount:
-        return _("{amount} грн").format(amount=f"{amount:.0f}")
+        return format_money(amount, help_request.reward_currency)
     parts = []
     if help_request.reward_amount:
-        parts.append(_("{amount} грн").format(amount=f"{help_request.reward_amount:.0f}"))
+        parts.append(format_money(help_request.reward_amount, help_request.reward_currency))
     labels = dict(RewardOption.choices)
     parts += [str(labels[o]) for o in help_request.reward_options if o in labels]
     return ", ".join(parts)

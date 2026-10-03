@@ -16,6 +16,7 @@ import { usePublicConfig } from "@/features/profile/hooks";
 import { useNearbyFilters } from "@/stores/nearbyFiltersStore";
 import type { LatLng, Urgency } from "@/types/api";
 import { cityName } from "@/utils/city";
+import { usePlace } from "@/features/location/place";
 import { CATEGORY_ORDER, URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
 import { DEFAULT_RADII } from "@/utils/radius";
 
@@ -36,6 +37,9 @@ export default function NearbyPage() {
   const { data: config } = usePublicConfig();
   const { position: geoPosition, status, locate } = useGeolocation();
   const { data: me } = useMe();
+  const place = usePlace();
+  const fallback =
+    place ?? (me?.city ? { name: cityName(me.city, i18n.language), center: me.city.center } : null);
   // Fallback when geolocation is denied: browse around the city centre (approximate, not shared).
   const [manualCenter, setManualCenter] = useState<LatLng | null>(null);
   const position = geoPosition ?? manualCenter;
@@ -123,9 +127,9 @@ export default function NearbyPage() {
             action={
               <div className="stack-sm">
                 <Button onClick={() => void locate({ force: true })}>{t("nearby.allowLocation")}</Button>
-                {me?.city && (
-                  <Button variant="secondary" onClick={() => setManualCenter(me.city!.center)}>
-                    {t("nearby.useCityCenter", { city: cityName(me.city, i18n.language) })}
+                {fallback && (
+                  <Button variant="secondary" onClick={() => setManualCenter(fallback.center)}>
+                    {t("nearby.useCityCenter", { city: fallback.name })}
                   </Button>
                 )}
               </div>

@@ -48,7 +48,9 @@ export async function registerAndOnboard(page: Page, name: string, email: string
 
   // Onboarding: location → notifications (skip) → categories
   await expect(page.getByText("Крок 1 з 3")).toBeVisible();
-  await page.getByRole("button", { name: "Дозволити геолокацію" }).click();
+  // The position may already be known (the app reads it when permission was granted earlier).
+  const allow = page.getByRole("button", { name: "Дозволити геолокацію" });
+  if (await allow.isVisible()) await allow.click();
   await expect(page.getByText("Геолокацію отримано ✓")).toBeVisible();
   await page.getByRole("button", { name: "Далі" }).click();
   await page.getByRole("button", { name: "Далі" }).click();

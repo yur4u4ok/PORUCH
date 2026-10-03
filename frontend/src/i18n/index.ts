@@ -1,19 +1,23 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
+import { isLocale, type Locale } from "./languages";
+import { useRegionStore } from "./region";
 import en from "./locales/en.json";
 import uk from "./locales/uk.json";
 
-export const SUPPORTED_LOCALES = ["uk", "en"] as const; // add pl: locales/pl.json + list here
-export type Locale = (typeof SUPPORTED_LOCALES)[number];
+export { LANGUAGES, SUPPORTED_LOCALES, type Locale } from "./languages";
 
 const STORAGE_KEY = "poruch.lang";
-const INTL_LOCALE: Record<Locale, string> = { uk: "uk-UA", en: "en-GB" };
 
-function isLocale(value: unknown): value is Locale {
-  return typeof value === "string" && (SUPPORTED_LOCALES as readonly string[]).includes(value);
-}
+// English is the fallback and Ukrainian the original: both bundled. The rest load on demand.
+const loaders = import.meta.glob<{ default: Record<string, unknown> }>([
+  "./locales/*.json",
+  "!./locales/en.json",
+  "!./locales/uk.json",
+]);
 
+/** Saved choice → browser languages → VITE_DEFAULT_LOCALE → English. */
 function initialLocale(): Locale {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -21,34 +25,50 @@ function initialLocale(): Locale {
   } catch {
     /* storage unavailable */
   }
+  for (const tag of navigator.languages ?? [navigator.language]) {
+    const base = tag?.split("-")[0]?.toLowerCase();
+    if (isLocale(base)) return base;
+  }
   const env = import.meta.env.VITE_DEFAULT_LOCALE;
-  return isLocale(env) ? env : "uk";
+  return isLocale(env) ? env : "en";
 }
 
+async function ensureLoaded(locale: Locale): Promise<void> {
+  if (i18n.hasResourceBundle(locale, "translation")) return;
+  const load = loaders[`./locales/${locale}.json`];
+  if (load) i18n.addResourceBundle(locale, "translation", (await load()).default);
+}
+
+const syncHtmlLang = (lng: string) => document.documentElement.setAttribute("lang", lng);
+
+const start = initialLocale();
 void i18n.use(initReactI18next).init({
   resources: { uk: { translation: uk }, en: { translation: en } },
-  lng: initialLocale(),
-  fallbackLng: "uk",
+  lng: "en",
+  fallbackLng: "en",
   interpolation: { escapeValue: false },
   returnNull: false,
 });
-
-const syncHtmlLang = (lng: string) => document.documentElement.setAttribute("lang", lng);
-syncHtmlLang(i18n.language);
 i18n.on("languageChanged", syncHtmlLang);
+// Regional formats changed: re-render everything that uses translations (and so formatters).
+useRegionStore.subscribe(() => void i18n.changeLanguage(i18n.language));
 
-export function setLocale(locale: Locale): void {
+/** Resolves once the initial language is loaded; render after it to avoid a flash of English. */
+export const i18nReady: Promise<unknown> = ensureLoaded(start).then(() => i18n.changeLanguage(start));
+
+export async function setLocale(locale: Locale): Promise<void> {
   try {
     localStorage.setItem(STORAGE_KEY, locale);
   } catch {
     /* storage unavailable: still switch for this session */
   }
-  void i18n.changeLanguage(locale);
+  await ensureLoaded(locale);
+  await i18n.changeLanguage(locale);
 }
 
-/** BCP 47 locale for dates and numbers (Intl). */
-export function intlLocale(): string {
-  return INTL_LOCALE[isLocale(i18n.language) ? i18n.language : "uk"];
+export function currentLocale(): Locale {
+  const lng = i18n.language?.split("-")[0];
+  return isLocale(lng) ? lng : "en";
 }
 
 export default i18n;

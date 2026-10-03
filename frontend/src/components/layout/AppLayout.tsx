@@ -6,6 +6,8 @@ import { BRAND } from "@/app/brand";
 import { NavLink, Outlet, useNavigate, useSearchParams } from "react-router";
 
 import { IconButton } from "@/components/ui";
+
+import { BrandMark } from "./BrandMark";
 import { useConversations } from "@/features/chat/hooks";
 import { useMarkNotificationRead, useUnreadCount } from "@/features/notifications/hooks";
 import { useOnline } from "@/hooks/useOnline";
@@ -71,8 +73,7 @@ export function AppLayout() {
       <PushDeepLinkTracker />
       <nav className={styles.sidebar} aria-label={BRAND}>
         <NavLink to="/" className={styles.brand}>
-          <img src="/icons/logo-inverse.svg" alt="" />
-          {BRAND}
+          <BrandMark inverse />
         </NavLink>
         {[
           ...entries,

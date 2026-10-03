@@ -12,6 +12,7 @@ from apps.users.models import User
 from common import analytics
 from common.exceptions import ValidationFailed
 from common.utils.geo import validate_coordinates
+from common.utils.money import DEFAULT_CURRENCY
 
 
 def expiration_for(urgency: str, now=None):
@@ -64,6 +65,8 @@ def create_help_request(
     reward_type: str = RewardType.NONE,
     reward_amount: Decimal | None = None,
     reward_options: list[str] | None = None,
+    reward_currency: str = DEFAULT_CURRENCY,
+    place_name: str = "",
     title: str | None = None,
     subcategory: str | None = None,
     photo_ids: list | None = None,
@@ -103,6 +106,8 @@ def create_help_request(
         reward_type=reward_type,
         reward_amount=amount,
         reward_options=options,
+        reward_currency=reward_currency,
+        place_name=place_name.strip()[:120],
         expires_at=expiration_for(urgency, now),
     )
     if photos:

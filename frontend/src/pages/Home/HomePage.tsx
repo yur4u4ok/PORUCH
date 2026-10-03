@@ -12,17 +12,17 @@ import { useSyncNotificationLocation } from "@/features/location/useSyncNotifica
 import { usePreferences } from "@/features/profile/hooks";
 
 import { cityName } from "@/utils/city";
+import { usePlace } from "@/features/location/place";
+import { emergencyVars } from "@/utils/emergency";
 
 import styles from "./Home.module.css";
 
 function LocationHeader() {
   const { t, i18n } = useTranslation();
   const { data: me } = useMe();
-  return (
-    <div className={styles.location}>
-      📍 {me?.city ? cityName(me.city, i18n.language) : t("home.locationUnknown")}
-    </div>
-  );
+  const place = usePlace();
+  const name = place?.name ?? (me?.city ? cityName(me.city, i18n.language) : null);
+  return <div className={styles.location}>📍 {name ?? t("home.locationUnknown")}</div>;
 }
 
 function EmergencyHelpButton() {
@@ -172,7 +172,7 @@ export default function HomePage() {
       <MyActiveHelp />
       <NearbyRequestsPreview />
       <p className="muted" style={{ fontSize: 13 }}>
-        ⚠️ {t("emergency.short")}
+        ⚠️ {t("emergency.short", emergencyVars())}
       </p>
     </main>
   );

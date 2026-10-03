@@ -19,7 +19,7 @@ from apps.users.models import Profile, User
 from common import analytics
 from common.exceptions import Forbidden, InvalidState, NotFound, ValidationFailed
 
-EDITABLE_FIELDS = {"title", "description", "reward_type", "reward_amount", "reward_options"}
+EDITABLE_FIELDS = {"title", "description", "reward_type", "reward_amount", "reward_options", "reward_currency"}
 
 
 def _lock_own(author: User, help_request_id) -> HelpRequest:
