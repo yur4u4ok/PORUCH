@@ -49,7 +49,10 @@
 | GET/POST/DELETE | `/availability/` | «Я зараз можу допомогти» |
 | POST | `/media/upload-url/` · `/media/confirm/` · DELETE `/media/{id}/` | Завантаження фото |
 | POST | `/reports/` | Скарга |
+| GET | `/share/{code}/` | Публічний перегляд запиту за посиланням (без входу, без приватних даних) |
 | GET/POST | `/blocks/` · DELETE `/blocks/{user_id}/` | Блокування |
+
+Посилання для поширення: `/r/{code}` (поза `/api`) — HTML з Open Graph для месенджерів, перенаправляє на `/share/{code}` у застосунку. База посилань — `SHARE_BASE_URL`.
 
 Службові: `/health/live/`, `/health/ready/` (перевіряє PostgreSQL і Redis), `/admin/`.
 

@@ -5,6 +5,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import AllowAny, BasePermission, IsAdminUser
 
+from apps.help_requests.sharing import SharePreviewView, share_redirect
 from apps.users.authentication import CookieJWTAuthentication
 from apps.users.urls import auth_urlpatterns
 from common import health
@@ -16,6 +17,7 @@ docs_permission: list[type[BasePermission]] = [AllowAny] if settings.API_DOCS_PU
 api_v1: list[URLPattern | URLResolver] = [
     path("auth/", include(auth_urlpatterns)),
     path("config/", PublicConfigView.as_view(), name="config"),
+    path("share/<str:code>/", SharePreviewView.as_view(), name="share-preview"),
     path("", include("apps.users.urls")),
     path("", include("apps.locations.urls")),
     path("", include("apps.help_requests.urls")),
@@ -40,6 +42,8 @@ urlpatterns = [
         ),
         name="swagger-ui",
     ),
+    path("r/<str:code>", share_redirect, name="share-redirect"),
+    path("r/<str:code>/", share_redirect),
     path("health/live/", health.live, name="health-live"),
     path("health/ready/", health.ready, name="health-ready"),
     path("admin/", admin.site.urls),

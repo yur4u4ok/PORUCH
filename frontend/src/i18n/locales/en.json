@@ -522,5 +522,23 @@
     },
     "agreed": "Agreed: {{terms}}",
     "note": "The platform doesn't handle payments: the arrangement is between you."
+  },
+  "share": {
+    "button": "Share",
+    "title": "Share request",
+    "text": "Help needed: {{title}}",
+    "why": "The network is still growing. Send the request to your building chat or friends — help will come faster.",
+    "copy": "Copy link",
+    "copied": "Link copied",
+    "telegram": "Telegram",
+    "viber": "Viber",
+    "whatsapp": "WhatsApp",
+    "publicTitle": "Someone nearby needs help",
+    "canHelp": "I can help",
+    "inactive": "This request is no longer active",
+    "inactiveText": "Someone has already helped or the request was closed. See other requests nearby.",
+    "whatIsPoruch": "Poruch is a local mutual aid network. To respond, log in or sign up — it takes a minute.",
+    "login": "I already have an account",
+    "notFound": "The link is invalid"
   }
 }

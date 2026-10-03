@@ -22,6 +22,7 @@ import {
 } from "@/features/auth/schemas";
 import { useFieldError } from "@/hooks/useFieldError";
 import { toast } from "@/stores/toastStore";
+import { consumeAfterAuth, peekAfterAuth } from "@/utils/afterAuth";
 
 import styles from "../Landing/Landing.module.css";
 
@@ -50,7 +51,7 @@ export function LoginPage() {
   const fe = useFieldError();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = (location.state as { from?: string } | null)?.from ?? "/";
+  const from = (location.state as { from?: string } | null)?.from ?? peekAfterAuth() ?? "/";
   const login = useLogin();
   const { register, handleSubmit, setError, formState } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
@@ -58,7 +59,7 @@ export function LoginPage() {
 
   const onSubmit = handleSubmit((values) =>
     login.mutate(values, {
-      onSuccess: () => navigate(from, { replace: true }),
+      onSuccess: () => navigate(consumeAfterAuth(from), { replace: true }),
       onError: (error) => {
         if (error instanceof ApiError && error.code === "INVALID_CREDENTIALS") {
           setError("password", { message: t("auth.invalidCredentials") });
@@ -230,7 +231,7 @@ export function VerifyEmailPage() {
       {state === "ok" && (
         <Card className="stack">
           <h2>✅ {t("auth.verifySuccess")}</h2>
-          <Link to="/">
+          <Link to={peekAfterAuth() ?? "/"}>
             <Button block>{t("auth.verifiedContinue")}</Button>
           </Link>
         </Card>

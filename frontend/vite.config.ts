@@ -49,6 +49,8 @@ export default defineConfig(({ mode }) => {
       port: 5173,
       proxy: {
         "/api": { target: proxyTarget },
+        // Share links are rendered by the backend (Open Graph tags for messengers).
+        "/r/": { target: proxyTarget },
         "/admin": { target: proxyTarget },
         "/static": { target: proxyTarget },
         "/ws": { target: proxyTarget.replace(/^http/, "ws"), ws: true },

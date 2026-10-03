@@ -30,6 +30,7 @@ import {
   useThankHelper,
   useWithdrawResponse,
 } from "@/features/help/hooks";
+import { ShareButton } from "@/features/help/ShareButton";
 import { PersonRow } from "@/features/profile/PersonRow";
 import { useBlockUser } from "@/features/profile/hooks";
 import { useLocationStore } from "@/stores/locationStore";
@@ -439,6 +440,18 @@ export default function HelpRequestPage() {
       )}
 
       {request.is_author ? <AuthorActions request={request} /> : <HelperActions request={request} />}
+
+      {request.share_url && (
+        <ShareButton
+          url={request.share_url}
+          text={[
+            t("share.text", { title: request.title }),
+            request.reward_type === "WILLING" ? rewardSummary(request, t) : null,
+          ]
+            .filter(Boolean)
+            .join(" · ")}
+        />
+      )}
 
       {!request.is_author && (
         <div className={styles.secondaryActions}>

@@ -161,6 +161,7 @@ export interface HelpRequest {
   conversation_id: UUID | null;
   can_respond: boolean;
   thanked: boolean | null;
+  share_url: string | null;
 }
 
 export interface HelpResponse {
@@ -234,4 +235,21 @@ export interface ThankYou {
 export interface Block {
   user: PublicUser;
   created_at: ISODateTime;
+}
+
+export interface SharePreview {
+  id: UUID;
+  active: boolean;
+  status: HelpRequestStatus;
+  category: Category | null;
+  subcategory: string | null;
+  title: string | null;
+  description: string | null;
+  urgency: Urgency | null;
+  reward_type: RewardType | null;
+  reward_amount: string | null;
+  reward_options: RewardOption[];
+  city: Pick<City, "name" | "translations"> | null;
+  created_at: ISODateTime;
+  expires_at: ISODateTime;
 }

@@ -1,3 +1,5 @@
+import secrets
+
 from django.conf import settings
 from django.contrib.gis.db import models as gis_models
 from django.contrib.postgres.fields import ArrayField
@@ -14,6 +16,10 @@ from apps.help_requests.constants import (
     Urgency,
 )
 from common.models import TimeStampedModel
+
+
+def new_share_code() -> str:
+    return secrets.token_urlsafe(6)
 
 
 class HelpRequest(TimeStampedModel):
@@ -60,6 +66,8 @@ class HelpRequest(TimeStampedModel):
         related_name="helped_requests",
     )
     photos = models.ManyToManyField("media.Media", blank=True, related_name="+")
+    # Short public code for share links (/r/<code>); reveals no private data.
+    share_code = models.CharField(max_length=16, unique=True, default=new_share_code, editable=False)
 
     class Meta:
         ordering = ["-created_at"]

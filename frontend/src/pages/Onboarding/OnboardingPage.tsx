@@ -8,6 +8,7 @@ import { useGeolocation } from "@/features/location/useGeolocation";
 import { PushToggle } from "@/features/notifications/PushToggle";
 import { usePublicConfig, useUpdateMe, useUpdatePreferences } from "@/features/profile/hooks";
 import type { NotificationCategory } from "@/types/api";
+import { consumeAfterAuth } from "@/utils/afterAuth";
 
 import styles from "../Landing/Landing.module.css";
 
@@ -34,7 +35,7 @@ export default function OnboardingPage() {
   const finish = async () => {
     await updatePrefs.mutateAsync({ enabled_categories: categories }).catch(() => undefined);
     await updateMe.mutateAsync({ onboarding_completed: true });
-    navigate(from, { replace: true });
+    navigate(consumeAfterAuth(from), { replace: true });
   };
 
   const toggle = (c: NotificationCategory) =>

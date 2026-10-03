@@ -35,6 +35,7 @@ const request = {
   conversation_id: null,
   can_respond: true,
   thanked: null,
+  share_url: null,
 } satisfies HelpRequest;
 
 describe("help components", () => {

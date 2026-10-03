@@ -20,6 +20,7 @@ const ProfilePage = lazy(() => import("@/pages/Profile/ProfilePage"));
 const PublicProfilePage = lazy(() => import("@/pages/Profile/PublicProfilePage"));
 const NotificationsPage = lazy(() => import("@/pages/Notifications/NotificationsPage"));
 const OnboardingPage = lazy(() => import("@/pages/Onboarding/OnboardingPage"));
+const SharePage = lazy(() => import("@/pages/Share/SharePage"));
 const NotFoundPage = lazy(() => import("@/pages/NotFound/NotFoundPage"));
 const auth = () => import("@/pages/Auth/AuthPages");
 const LoginPage = lazy(() => auth().then((m) => ({ default: m.LoginPage })));
@@ -74,6 +75,8 @@ export const router = createBrowserRouter([
   { path: "/auth/forgot-password", element: page(<ForgotPasswordPage />) },
   { path: "/auth/reset-password", element: page(<ResetPasswordPage />) },
   { path: "/auth/verify-email", element: page(<VerifyEmailPage />) },
+  // Public: shared request links work without an account.
+  { path: "/share/:code", element: page(<SharePage />) },
   {
     element: <RequireAuth allowUnverified allowOnboarding />,
     children: [{ path: "/auth/verify-pending", element: page(<VerifyPendingPage />) }],

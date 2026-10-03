@@ -90,6 +90,7 @@ class HelpRequestSerializer(serializers.ModelSerializer):
     conversation_id = serializers.SerializerMethodField()
     can_respond = serializers.SerializerMethodField()
     thanked = serializers.SerializerMethodField()
+    share_url = serializers.SerializerMethodField()
 
     class Meta:
         model = HelpRequest
@@ -105,6 +106,7 @@ class HelpRequestSerializer(serializers.ModelSerializer):
             "reward_options",
             "agreed_offer_type",
             "agreed_amount",
+            "share_url",
             "status",
             "created_at",
             "updated_at",
@@ -170,6 +172,11 @@ class HelpRequestSerializer(serializers.ModelSerializer):
         return not any(
             r.status in ACTIVE_RESPONSE_STATUSES or r.status == "REJECTED" for r in self._viewer_responses(obj)
         )
+
+    def get_share_url(self, obj) -> str | None:
+        from apps.help_requests.sharing import share_url
+
+        return share_url(obj) if obj.status == HelpRequestStatus.ACTIVE else None
 
     def get_thanked(self, obj) -> bool | None:
         if obj.author_id != self._viewer.pk or obj.status != HelpRequestStatus.COMPLETED:

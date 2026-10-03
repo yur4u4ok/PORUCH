@@ -17,6 +17,8 @@ ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=[])
 ENVIRONMENT = env("DJANGO_ENVIRONMENT", default="development")
 
 FRONTEND_URL = env("FRONTEND_URL", default="http://localhost:5173")
+# Public base for share links, e.g. https://poruch.app → https://poruch.app/r/<code>
+SHARE_BASE_URL = env("SHARE_BASE_URL", default=FRONTEND_URL)
 
 INSTALLED_APPS = [
     "daphne",
@@ -194,6 +196,7 @@ REST_FRAMEWORK = {
         "messages": env("RATE_LIMIT_MESSAGES", default="60/minute"),
         "reports": env("RATE_LIMIT_REPORTS", default="20/hour"),
         "media_upload": env("RATE_LIMIT_MEDIA_UPLOAD", default="60/hour"),
+        "share_preview": env("RATE_LIMIT_SHARE_PREVIEW", default="120/minute"),
     },
     "DATETIME_FORMAT": "iso-8601",
     "TEST_REQUEST_DEFAULT_FORMAT": "json",

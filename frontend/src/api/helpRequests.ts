@@ -8,11 +8,12 @@ import type {
   OfferType,
   RewardOption,
   RewardType,
+  SharePreview,
   ThankYou,
   Urgency,
 } from "@/types/api";
 
-import { http } from "./client";
+import { http, request } from "./client";
 
 export interface NearbyQuery {
   lat: number;
@@ -79,6 +80,7 @@ export const helpRequestsApi = {
   selectHelper: (id: string, responseId: string) =>
     http.post<HelpRequest>(`/help-requests/${id}/select-helper/`, { response_id: responseId }),
   responses: (id: string) => http.get<HelpResponse[]>(`/help-requests/${id}/responses/`),
+  sharePreview: (code: string) => request<SharePreview>(`/share/${code}/`, { skipRefresh: true }),
   thankYou: (id: string, message: string) =>
     http.post<ThankYou>(`/help-requests/${id}/thank-you/`, { message }),
 };
