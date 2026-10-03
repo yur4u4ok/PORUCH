@@ -50,6 +50,13 @@ function RootGate() {
   return <RequireAuth />;
 }
 
+/** Share links are served by the backend (Open Graph for messengers); if the app catches one
+ * first (e.g. an installed service worker), go straight to the public share page. */
+function ShortShareRedirect() {
+  const { code } = useParams();
+  return <Navigate to={`/share/${code}`} replace />;
+}
+
 function LegacyChatRedirect() {
   const { id } = useParams();
   return <Navigate to={`/chats/${id}`} replace />;
@@ -77,6 +84,7 @@ export const router = createBrowserRouter([
   { path: "/auth/verify-email", element: page(<VerifyEmailPage />) },
   // Public: shared request links work without an account.
   { path: "/share/:code", element: page(<SharePage />) },
+  { path: "/r/:code", element: <ShortShareRedirect /> },
   {
     element: <RequireAuth allowUnverified allowOnboarding />,
     children: [{ path: "/auth/verify-pending", element: page(<VerifyPendingPage />) }],

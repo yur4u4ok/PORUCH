@@ -17,7 +17,7 @@ precacheAndRoute(self.__WB_MANIFEST);
 // SPA navigation fallback → cached index.html (offline shell). Backend paths are excluded.
 registerRoute(
   new NavigationRoute(createHandlerBoundToURL("index.html"), {
-    denylist: [/^\/api\//, /^\/admin/, /^\/ws\//, /^\/static\//, /^\/health\//],
+    denylist: [/^\/api\//, /^\/admin/, /^\/ws\//, /^\/static\//, /^\/health\//, /^\/r\//],
   }),
 );
 
