@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useRegionStore } from "@/i18n/region";
 import { useLocationStore } from "@/stores/locationStore";
 import type { LatLng } from "@/types/api";
 
-import { geolocationPermission, useGeolocation } from "./useGeolocation";
+import { geolocationPermission } from "./useGeolocation";
 
 /** Where the user is, in human terms. Only used for display and as an approximate fallback centre. */
 export interface Place {
@@ -82,17 +82,24 @@ const round = (value: number) => Math.round(value * 50) / 50; // ~2 km cells: no
 /** The user's real location: device geolocation when already allowed, otherwise the IP address. */
 export function usePlace() {
   const { i18n } = useTranslation();
-  const position = useLocationStore((s) => s.position);
-  const { locate } = useGeolocation();
+  const mapPosition = useLocationStore((s) => s.position);
+  // Own coarse fix, kept out of the shared store: the map must always ask for a fresh, precise one.
+  const [coarse, setCoarse] = useState<LatLng | null>(null);
+  const position = mapPosition ?? coarse;
   const setDetectedCountry = useRegionStore((s) => s.setDetectedCountry);
 
   // Never prompts: only reads the position when permission was granted before.
   useEffect(() => {
     if (position) return;
     void geolocationPermission().then((state) => {
-      if (state === "granted") void locate();
+      if (state !== "granted") return;
+      navigator.geolocation.getCurrentPosition(
+        (pos) => setCoarse({ latitude: pos.coords.latitude, longitude: pos.coords.longitude }),
+        () => undefined,
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 10 * 60 * 1000 },
+      );
     });
-  }, [position, locate]);
+  }, [position]);
 
   const cell = position ? [round(position.latitude), round(position.longitude)] : null;
   const query = useQuery({
