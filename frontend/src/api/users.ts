@@ -15,6 +15,8 @@ import type {
 
 import { http, request } from "./client";
 
+export type SupportTopic = "QUESTION" | "BUG" | "IDEA" | "SAFETY" | "OTHER";
+
 export interface MeUpdate {
   display_name?: string;
   avatar_id?: string | null;
@@ -65,4 +67,6 @@ export const usersApi = {
     help_request_id?: string;
     message_id?: string;
   }) => http.post<{ id: string }>("/reports/", input),
+  support: (input: { topic: SupportTopic; message: string; page?: string }) =>
+    http.post<void>("/support/", input),
 };

@@ -91,6 +91,15 @@ export function AppLayout() {
             {!!entry.badge && <span className={styles.dot}>{entry.badge}</span>}
           </NavLink>
         ))}
+        <NavLink
+          to="/support"
+          className={({ isActive }) =>
+            clsx(styles.sideItem, styles.sideBottom, isActive && styles.sideActive)
+          }
+        >
+          <span aria-hidden>💬</span>
+          {t("support.title")}
+        </NavLink>
       </nav>
       <div className={styles.main}>
         <OfflineBanner />

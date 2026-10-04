@@ -10,9 +10,11 @@ from apps.moderation.serializers import (
     BlockSerializer,
     ReportCreateSerializer,
     ReportSerializer,
+    SupportMessageSerializer,
 )
 from apps.moderation.services import moderation as svc
-from common.throttling import ReportsThrottle
+from apps.moderation.services.support import send_support_message
+from common.throttling import ReportsThrottle, SupportThrottle
 
 
 class ReportCreateView(APIView):
@@ -45,3 +47,14 @@ class BlockDeleteView(APIView):
     def delete(self, request, user_id):
         svc.unblock_user(request.user, user_id)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class SupportMessageView(APIView):
+    throttle_classes = [SupportThrottle]
+
+    @extend_schema(request=SupportMessageSerializer, responses={202: None})
+    def post(self, request):
+        ser = SupportMessageSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        send_support_message(request.user, **ser.validated_data)
+        return Response(status=status.HTTP_202_ACCEPTED)

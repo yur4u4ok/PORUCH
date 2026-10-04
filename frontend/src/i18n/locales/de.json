@@ -534,5 +534,23 @@
     "whatIsPoruch": "Poruch ist ein lokales Netzwerk für Nachbarschaftshilfe. Melde dich an oder registriere dich, um zu antworten – das dauert eine Minute.",
     "login": "Ich habe schon ein Konto",
     "notFound": "Der Link ist ungültig"
+  },
+  "support": {
+    "title": "Support",
+    "intro": "Eine Frage, ein Problem oder eine Idee? Schreib dem Poruch-Team – wir lesen jede Nachricht.",
+    "topic": "Thema",
+    "topics": {
+      "QUESTION": "Frage",
+      "BUG": "Etwas funktioniert nicht",
+      "IDEA": "Idee",
+      "SAFETY": "Sicherheit oder Beschwerde",
+      "OTHER": "Sonstiges"
+    },
+    "message": "Nachricht",
+    "placeholder": "Beschreibe, was passiert ist oder was du ändern möchtest",
+    "send": "Senden",
+    "sent": "Nachricht gesendet",
+    "replyNote": "Wir antworten an {{email}}.",
+    "another": "Noch eine schreiben"
   }
 }

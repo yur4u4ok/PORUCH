@@ -546,5 +546,23 @@
     "whatIsPoruch": "Poruch to lokalna sieć wzajemnej pomocy. Aby odpowiedzieć, zaloguj się lub zarejestruj – to zajmie minutę.",
     "login": "Mam już konto",
     "notFound": "Link jest nieprawidłowy"
+  },
+  "support": {
+    "title": "Pomoc techniczna",
+    "intro": "Pytanie, problem czy pomysł? Napisz do zespołu Poruch – czytamy każdą wiadomość.",
+    "topic": "Temat",
+    "topics": {
+      "QUESTION": "Pytanie",
+      "BUG": "Coś nie działa",
+      "IDEA": "Pomysł",
+      "SAFETY": "Bezpieczeństwo lub skarga",
+      "OTHER": "Inne"
+    },
+    "message": "Wiadomość",
+    "placeholder": "Opisz, co się stało lub co chcesz zmienić",
+    "send": "Wyślij",
+    "sent": "Wiadomość wysłana",
+    "replyNote": "Odpowiemy na {{email}}.",
+    "another": "Napisz kolejną"
   }
 }

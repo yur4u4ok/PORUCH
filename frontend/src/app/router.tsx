@@ -29,6 +29,7 @@ const VerifyEmailPage = lazy(() => auth().then((m) => ({ default: m.VerifyEmailP
 const VerifyPendingPage = lazy(() => auth().then((m) => ({ default: m.VerifyPendingPage })));
 const ForgotPasswordPage = lazy(() => auth().then((m) => ({ default: m.ForgotPasswordPage })));
 const ResetPasswordPage = lazy(() => auth().then((m) => ({ default: m.ResetPasswordPage })));
+const SupportPage = lazy(() => import("@/pages/Support/SupportPage"));
 const settings = () => import("@/pages/Settings/SettingsPages");
 const SettingsPage = lazy(() => settings().then((m) => ({ default: m.SettingsPage })));
 const NotificationSettingsPage = lazy(() =>
@@ -113,6 +114,7 @@ export const router = createBrowserRouter([
           { path: "settings", element: page(<SettingsPage />) },
           { path: "settings/notifications", element: page(<NotificationSettingsPage />) },
           { path: "settings/privacy", element: page(<PrivacySettingsPage />) },
+          { path: "support", element: page(<SupportPage />) },
           { path: "*", element: page(<NotFoundPage />) },
         ],
       },

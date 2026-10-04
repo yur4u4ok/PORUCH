@@ -1,4 +1,5 @@
 import pytest
+from rest_framework.test import APIClient
 
 from apps.moderation.models import Report, UserBlock
 from tests.factories import HelpRequestFactory, HelpResponseFactory, UserFactory
@@ -69,3 +70,26 @@ def test_cannot_report_message_from_foreign_conversation(make_client):
     stranger = make_client()
     response = stranger.post("/api/v1/reports/", {"reason": "SPAM", "message_id": str(message.id)}, format="json")
     assert response.status_code == 400
+
+
+def test_support_message_is_emailed_with_reply_to_user(settings, django_capture_on_commit_callbacks):
+    from django.core import mail
+
+    settings.SUPPORT_EMAIL = "support@example.com"
+    settings.CELERY_TASK_ALWAYS_EAGER = True
+    user = UserFactory()
+    client = APIClient()
+    client.force_authenticate(user)
+    with django_capture_on_commit_callbacks(execute=True):
+        response = client.post(
+            "/api/v1/support/", {"topic": "BUG", "message": "Карта не відкривається", "page": "/nearby"}, format="json"
+        )
+    assert response.status_code == 202
+    assert len(mail.outbox) == 1
+    sent = mail.outbox[0]
+    assert sent.to == ["support@example.com"] and sent.reply_to == [user.email]
+    assert "Карта не відкривається" in sent.body and "/nearby" in sent.body
+
+
+def test_support_requires_login():
+    assert APIClient().post("/api/v1/support/", {"topic": "BUG", "message": "x"}).status_code == 401

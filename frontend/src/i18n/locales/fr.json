@@ -534,5 +534,23 @@
     "whatIsPoruch": "Poruch est un réseau local d'entraide. Pour répondre, connectez-vous ou inscrivez-vous : une minute suffit.",
     "login": "J'ai déjà un compte",
     "notFound": "Le lien est invalide"
+  },
+  "support": {
+    "title": "Assistance",
+    "intro": "Une question, un problème ou une idée ? Écrivez à l'équipe Poruch : nous lisons chaque message.",
+    "topic": "Sujet",
+    "topics": {
+      "QUESTION": "Question",
+      "BUG": "Quelque chose ne marche pas",
+      "IDEA": "Idée",
+      "SAFETY": "Sécurité ou plainte",
+      "OTHER": "Autre"
+    },
+    "message": "Message",
+    "placeholder": "Décrivez ce qui s'est passé ou ce que vous aimeriez changer",
+    "send": "Envoyer",
+    "sent": "Message envoyé",
+    "replyNote": "Nous répondrons à {{email}}.",
+    "another": "Écrire un autre message"
   }
 }

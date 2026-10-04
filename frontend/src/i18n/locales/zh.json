@@ -528,5 +528,23 @@
     "whatIsPoruch": "Poruch 是一个本地互助网络。登录或注册后即可回应，只需一分钟。",
     "login": "我已有账号",
     "notFound": "链接无效"
+  },
+  "support": {
+    "title": "客服支持",
+    "intro": "有问题、故障或想法？写信给 Poruch 团队，每条消息我们都会阅读。",
+    "topic": "主题",
+    "topics": {
+      "QUESTION": "问题",
+      "BUG": "某个功能不正常",
+      "IDEA": "建议",
+      "SAFETY": "安全或投诉",
+      "OTHER": "其他"
+    },
+    "message": "内容",
+    "placeholder": "描述发生了什么，或你希望改进什么",
+    "send": "发送",
+    "sent": "已发送",
+    "replyNote": "我们会回复到 {{email}}。",
+    "another": "再写一条"
   }
 }

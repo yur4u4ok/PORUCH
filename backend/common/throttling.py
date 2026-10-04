@@ -45,6 +45,10 @@ class ReportsThrottle(UserScopedThrottle):
     scope = "reports"
 
 
+class SupportThrottle(UserScopedThrottle):
+    scope = "support"
+
+
 class SharePreviewThrottle(IPScopedThrottle):
     scope = "share_preview"
 

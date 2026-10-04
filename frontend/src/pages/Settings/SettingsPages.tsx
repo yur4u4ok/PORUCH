@@ -44,6 +44,7 @@ export function SettingsPage() {
       </Card>
       <Card to="/settings/notifications">🔔 {t("settings.notifications")}</Card>
       <Card to="/settings/privacy">🔒 {t("settings.privacy")}</Card>
+      <Card to="/support">💬 {t("support.title")}</Card>
       <p className="muted" style={{ fontSize: 13 }}>
         ⚠️ {t("settings.about", emergencyVars())}
       </p>

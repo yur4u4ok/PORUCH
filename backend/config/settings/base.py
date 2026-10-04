@@ -195,6 +195,7 @@ REST_FRAMEWORK = {
         "respond": env("RATE_LIMIT_RESPOND", default="30/hour"),
         "messages": env("RATE_LIMIT_MESSAGES", default="60/minute"),
         "reports": env("RATE_LIMIT_REPORTS", default="20/hour"),
+        "support": env("RATE_LIMIT_SUPPORT", default="5/hour"),
         "media_upload": env("RATE_LIMIT_MEDIA_UPLOAD", default="60/hour"),
         "share_preview": env("RATE_LIMIT_SHARE_PREVIEW", default="120/minute"),
     },
@@ -232,6 +233,8 @@ STORAGES = {
 # --- Email ----------------------------------------------------------------
 EMAIL_CONFIG = env.email_url("EMAIL_URL", default="consolemail://")
 vars().update(EMAIL_CONFIG)
+# Where «Підтримка» messages go. Empty = support form disabled.
+SUPPORT_EMAIL = env("SUPPORT_EMAIL", default="")
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="Poruch <no-reply@poruch.local>")
 
 # --- S3 media -------------------------------------------------------------

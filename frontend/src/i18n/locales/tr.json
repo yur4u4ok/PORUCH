@@ -534,5 +534,23 @@
     "whatIsPoruch": "Poruch yerel bir yardımlaşma ağıdır. Yanıt vermek için giriş yap ya da kayıt ol — bir dakika sürer.",
     "login": "Zaten hesabım var",
     "notFound": "Bağlantı geçersiz"
+  },
+  "support": {
+    "title": "Destek",
+    "intro": "Bir sorun, soru ya da fikir mi var? Poruch ekibine yaz — her mesajı okuyoruz.",
+    "topic": "Konu",
+    "topics": {
+      "QUESTION": "Soru",
+      "BUG": "Bir şey çalışmıyor",
+      "IDEA": "Fikir",
+      "SAFETY": "Güvenlik veya şikâyet",
+      "OTHER": "Diğer"
+    },
+    "message": "Mesaj",
+    "placeholder": "Ne olduğunu ya da neyi değiştirmek istediğini anlat",
+    "send": "Gönder",
+    "sent": "Mesaj gönderildi",
+    "replyNote": "{{email}} adresine yanıt vereceğiz.",
+    "another": "Bir tane daha yaz"
   }
 }
