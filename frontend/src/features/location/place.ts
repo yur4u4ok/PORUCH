@@ -1,12 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useRegionStore } from "@/i18n/region";
 import { useLocationStore } from "@/stores/locationStore";
 import type { LatLng } from "@/types/api";
-
-import { geolocationPermission } from "./useGeolocation";
 
 /** Where the user is, in human terms. Only used for display and as an approximate fallback centre. */
 export interface Place {
@@ -83,23 +81,10 @@ const round = (value: number) => Math.round(value * 50) / 50; // ~2 km cells: no
 export function usePlace() {
   const { i18n } = useTranslation();
   const mapPosition = useLocationStore((s) => s.position);
-  // Own coarse fix, kept out of the shared store: the map must always ask for a fresh, precise one.
-  const [coarse, setCoarse] = useState<LatLng | null>(null);
-  const position = mapPosition ?? coarse;
   const setDetectedCountry = useRegionStore((s) => s.setDetectedCountry);
-
-  // Never prompts: only reads the position when permission was granted before.
-  useEffect(() => {
-    if (position) return;
-    void geolocationPermission().then((state) => {
-      if (state !== "granted") return;
-      navigator.geolocation.getCurrentPosition(
-        (pos) => setCoarse({ latitude: pos.coords.latitude, longitude: pos.coords.longitude }),
-        () => undefined,
-        { enableHighAccuracy: false, timeout: 10000, maximumAge: 10 * 60 * 1000 },
-      );
-    });
-  }, [position]);
+  // City comes from the map's own fix when there is one, otherwise from the IP address.
+  // Never request a separate low-accuracy fix: browsers cache it and hand it to the map later.
+  const position = mapPosition;
 
   const cell = position ? [round(position.latitude), round(position.longitude)] : null;
   const query = useQuery({

@@ -35,7 +35,8 @@ export function useGeolocation() {
             setStatus(error.code === error.PERMISSION_DENIED ? "denied" : "unavailable");
             resolve(null);
           },
-          { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 },
+          // A forced request must be a fresh fix, never one the browser cached earlier.
+          { enableHighAccuracy: true, timeout: 15000, maximumAge: options.force ? 0 : 60000 },
         );
       });
     },
