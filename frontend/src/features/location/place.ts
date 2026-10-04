@@ -104,6 +104,7 @@ export function usePlace() {
   const cell = position ? [round(position.latitude), round(position.longitude)] : null;
   const query = useQuery({
     queryKey: ["place", i18n.language, cell],
+    // Only the rounded cell goes to the geocoder; the map keeps the exact position (see below).
     queryFn: ({ signal }) =>
       reverseGeocode(i18n.language, cell ? { latitude: cell[0]!, longitude: cell[1]! } : null, signal),
     staleTime: 60 * 60 * 1000,
@@ -122,7 +123,10 @@ export function usePlace() {
     if (query.data.countryCode) setDetectedCountry(query.data.countryCode);
   }, [query.data, query.isPlaceholderData, setDetectedCountry]);
 
-  return query.data ?? null;
+  const place = query.data ?? null;
+  // Only a real map fix counts as precise; a coarse or cached fix must never centre a map.
+  if (place?.precise && mapPosition) return { ...place, center: mapPosition };
+  return place?.precise ? { ...place, precise: false } : place;
 }
 
 /**
