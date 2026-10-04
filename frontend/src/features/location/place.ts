@@ -115,10 +115,10 @@ export function usePlace() {
 }
 
 /**
- * Best approximate map centre when there is no fresh GPS fix:
- * device-based place → the profile city → IP guess (can be kilometres off, last resort).
+ * Map centre when there is no GPS fix: an exact device position or the profile city.
+ * The IP-based guess is never used on a map — it is kilometres off and looks like "your" location.
  */
 export function fallbackCenter(place: Place | null, profileCenter?: LatLng | null): LatLng | null {
   if (place?.precise) return place.center;
-  return profileCenter ?? place?.center ?? null;
+  return profileCenter ?? null;
 }
