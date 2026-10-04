@@ -38,7 +38,7 @@ export default function NearbyPage() {
   const { position: geoPosition, status, locate } = useGeolocation();
   const { data: me } = useMe();
   const place = usePlace();
-  const fallbackName = place?.name ?? (me?.city ? cityName(me.city, i18n.language) : null);
+  const fallbackName = place?.precise ? place.name : me?.city ? cityName(me.city, i18n.language) : null;
   const fallbackPoint = fallbackCenter(place, me?.city?.center);
   const fallback = fallbackName && fallbackPoint ? { name: fallbackName, center: fallbackPoint } : null;
   // Fallback when geolocation is denied: browse around the city centre (approximate, not shared).
