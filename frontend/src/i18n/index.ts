@@ -17,7 +17,7 @@ const loaders = import.meta.glob<{ default: Record<string, unknown> }>([
   "!./locales/uk.json",
 ]);
 
-/** Saved choice → browser languages → VITE_DEFAULT_LOCALE → English. */
+/** Saved choice → VITE_DEFAULT_LOCALE → Ukrainian. Other languages only by explicit choice. */
 function initialLocale(): Locale {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -25,12 +25,8 @@ function initialLocale(): Locale {
   } catch {
     /* storage unavailable */
   }
-  for (const tag of navigator.languages ?? [navigator.language]) {
-    const base = tag?.split("-")[0]?.toLowerCase();
-    if (isLocale(base)) return base;
-  }
   const env = import.meta.env.VITE_DEFAULT_LOCALE;
-  return isLocale(env) ? env : "en";
+  return isLocale(env) ? env : "uk";
 }
 
 async function ensureLoaded(locale: Locale): Promise<void> {
