@@ -16,7 +16,7 @@ import { usePublicConfig } from "@/features/profile/hooks";
 import { useNearbyFilters } from "@/stores/nearbyFiltersStore";
 import type { LatLng, Urgency } from "@/types/api";
 import { cityName } from "@/utils/city";
-import { usePlace } from "@/features/location/place";
+import { fallbackCenter, usePlace } from "@/features/location/place";
 import { CATEGORY_ORDER, URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
 import { DEFAULT_RADII } from "@/utils/radius";
 
@@ -38,8 +38,9 @@ export default function NearbyPage() {
   const { position: geoPosition, status, locate } = useGeolocation();
   const { data: me } = useMe();
   const place = usePlace();
-  const fallback =
-    place ?? (me?.city ? { name: cityName(me.city, i18n.language), center: me.city.center } : null);
+  const fallbackName = place?.name ?? (me?.city ? cityName(me.city, i18n.language) : null);
+  const fallbackPoint = fallbackCenter(place, me?.city?.center);
+  const fallback = fallbackName && fallbackPoint ? { name: fallbackName, center: fallbackPoint } : null;
   // Fallback when geolocation is denied: browse around the city centre (approximate, not shared).
   const [manualCenter, setManualCenter] = useState<LatLng | null>(null);
   const position = geoPosition ?? manualCenter;

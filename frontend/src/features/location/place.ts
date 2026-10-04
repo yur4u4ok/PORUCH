@@ -117,3 +117,12 @@ export function usePlace() {
 
   return query.data ?? null;
 }
+
+/**
+ * Best approximate map centre when there is no fresh GPS fix:
+ * device-based place → the profile city → IP guess (can be kilometres off, last resort).
+ */
+export function fallbackCenter(place: Place | null, profileCenter?: LatLng | null): LatLng | null {
+  if (place?.precise) return place.center;
+  return profileCenter ?? place?.center ?? null;
+}

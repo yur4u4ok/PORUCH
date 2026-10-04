@@ -14,7 +14,7 @@ import { CategoryGrid, EmergencyDisclaimer, OptionTiles, UrgencyBadge } from "@/
 import { createHelpSchema, STEP_FIELDS, type CreateHelpForm } from "@/features/help/createSchema";
 import { useCreateHelpRequest } from "@/features/help/hooks";
 import { PhotoUploader } from "@/features/help/PhotoUploader";
-import { placeNameFor, usePlace } from "@/features/location/place";
+import { fallbackCenter as approximateCenter, placeNameFor, usePlace } from "@/features/location/place";
 import { useGeolocation } from "@/features/location/useGeolocation";
 import { usePublicConfig } from "@/features/profile/hooks";
 import { useOnline } from "@/hooks/useOnline";
@@ -84,7 +84,7 @@ export default function CreateHelpPage() {
   }, [step, values.location, locate, setValue]);
 
   const place = usePlace();
-  const fallbackCenter = position ?? place?.center ?? me?.city?.center ?? null;
+  const fallbackCenter = position ?? approximateCenter(place, me?.city?.center);
 
   // Explicit action with visible feedback: moves the pin (and the map) to a fresh GPS fix.
   const useMyLocation = async () => {
