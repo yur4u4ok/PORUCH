@@ -1,0 +1,43 @@
+name: Deploy
+
+# Production deploy: runs only after CI has fully passed on a push to main.
+# Uses scripts/deploy.sh (copy code → build → migrate → restart → wait for health).
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch: # manual "Run workflow" button in the Actions tab (deploys main)
+
+# Never cancel a deploy half-way; queue the next one instead.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-24.04
+    environment:
+      name: production
+      url: https://poruch-app.duckdns.org
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Exactly the commit CI tested (not whatever main points to now).
+          ref: ${{ github.event.workflow_run.head_sha || 'main' }}
+
+      - name: SSH key and trusted server fingerprint
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Deploy
+        run: PORUCH_SSH_KEY="$HOME/.ssh/deploy_key" scripts/deploy.sh
