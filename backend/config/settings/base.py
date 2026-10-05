@@ -237,6 +237,9 @@ vars().update(EMAIL_CONFIG)
 SUPPORT_EMAIL = env("SUPPORT_EMAIL", default="")
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="Poruch <no-reply@poruch.local>")
 
+# Days to keep database backups in object storage (manage.py backups).
+BACKUP_KEEP_DAYS = env.int("BACKUP_KEEP_DAYS", default=14)
+
 # --- S3 media -------------------------------------------------------------
 AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID", default="")
 AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY", default="")
