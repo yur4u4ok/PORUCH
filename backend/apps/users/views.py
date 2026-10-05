@@ -67,7 +67,7 @@ class LoginView(APIView):
         ser.is_valid(raise_exception=True)
         user = authenticate(request, email=ser.validated_data["email"].lower(), password=ser.validated_data["password"])
         if user is None:
-            raise DomainError(_("Невірний email або пароль."), code="INVALID_CREDENTIALS")
+            raise DomainError(_("Неправильний email або пароль."), code="INVALID_CREDENTIALS")
         analytics.track(user_id=user.id, event="user_logged_in")
         return set_auth_cookies(Response(_me(user)), issue_tokens(user))
 
