@@ -124,7 +124,7 @@ def share_redirect(request, code):
         description = " · ".join(filter(None, [city, reward_text(help_request), help_request.description[:140]]))
     else:
         title = _("Запит уже неактивний")
-        description = _("Попроси допомогу в людей поруч або допоможи сам.")
+        description = _("Poruch — локальна мережа взаємодопомоги")
     app_url = f"{settings.FRONTEND_URL.rstrip('/')}/share/{code}"
     return render(
         request,
