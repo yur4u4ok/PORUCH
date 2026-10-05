@@ -162,3 +162,22 @@ def test_login_rate_limited(api_client, settings, user):
     response = api_client.post(reverse("auth-login"), {"email": user.email, "password": "bad"}, format="json")
     assert response.status_code == 429
     assert response.data["code"] == "RATE_LIMITED"
+
+
+def test_google_popup_code_is_exchanged_for_id_token(api_client, settings):
+    settings.GOOGLE_CLIENT_ID = "client-id"
+    settings.GOOGLE_CLIENT_SECRET = "secret"
+    claims = {"sub": "g-777", "email": "popup@example.com", "email_verified": True, "given_name": "Popup"}
+    token_response = mock.Mock(ok=True, json=lambda: {"id_token": "id-token"})
+    with (
+        mock.patch("requests.post", return_value=token_response) as post,
+        mock.patch("apps.users.services.accounts._verify_google_credential", return_value=claims) as verify,
+    ):
+        response = api_client.post(reverse("auth-google"), {"code": "one-time"}, format="json")
+    assert response.status_code == 201
+    assert post.call_args.kwargs["data"]["redirect_uri"] == "postmessage"
+    verify.assert_called_once_with("id-token")
+
+
+def test_google_auth_requires_credential_or_code(api_client):
+    assert api_client.post(reverse("auth-google"), {}, format="json").status_code == 400

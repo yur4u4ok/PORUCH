@@ -21,7 +21,7 @@ export const authApi = {
       skipRefresh: true,
     }),
   resendVerification: () => http.post<void>("/auth/verify-email/resend/"),
-  google: (credential: string) => http.post<Me>("/auth/google/", { credential }),
+  google: (input: { credential: string } | { code: string }) => http.post<Me>("/auth/google/", input),
   requestPasswordReset: (email: string) => http.post<void>("/auth/password-reset/", { email }),
   confirmPasswordReset: (uid: string, token: string, password: string) =>
     http.post<void>("/auth/password-reset/confirm/", { uid, token, password }),

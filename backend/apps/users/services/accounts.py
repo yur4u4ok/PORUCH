@@ -147,6 +147,35 @@ def _verify_google_credential(credential: str) -> dict:
         raise DomainError(_("Не вдалося перевірити обліковий запис Google."), code="GOOGLE_INVALID") from exc
 
 
+GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token"
+
+
+def exchange_google_code(code: str) -> str:
+    """Popup code flow: trade the one-time code for an ID token (verified as usual afterwards)."""
+    import requests
+
+    if not settings.GOOGLE_CLIENT_ID or not settings.GOOGLE_CLIENT_SECRET:
+        raise DomainError(_("Вхід через Google не налаштовано."), code="GOOGLE_NOT_CONFIGURED")
+    try:
+        response = requests.post(
+            GOOGLE_TOKEN_URL,
+            data={
+                "code": code,
+                "client_id": settings.GOOGLE_CLIENT_ID,
+                "client_secret": settings.GOOGLE_CLIENT_SECRET,
+                "redirect_uri": "postmessage",  # required value for the GIS popup flow
+                "grant_type": "authorization_code",
+            },
+            timeout=10,
+        )
+        id_token = response.json().get("id_token") if response.ok else None
+    except (requests.RequestException, ValueError):
+        id_token = None
+    if not id_token:
+        raise DomainError(_("Не вдалося перевірити обліковий запис Google."), code="GOOGLE_INVALID")
+    return id_token
+
+
 @transaction.atomic
 def authenticate_google(credential: str) -> tuple[User, bool]:
     """Return (user, created). Links Google identity to an existing account by verified email."""

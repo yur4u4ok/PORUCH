@@ -1,57 +1,32 @@
-.wrap {
-  position: relative;
-  cursor: pointer;
-  width: 100%;
-  min-height: 44px;
-  overflow: hidden;
-  border-radius: var(--radius-md);
-}
-
-/* Looks like our secondary button. */
-.face {
+/* Same shape as our secondary button. */
+.button {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
+  width: 100%;
   min-height: 44px;
   padding: 0 var(--space-4);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);
   color: var(--color-text);
+  font: inherit;
   font-weight: 700;
+  cursor: pointer;
   transition: background 0.15s;
 }
 
-.wrap:hover .face {
+.button:hover:not(:disabled) {
   background: var(--color-primary-soft);
 }
 
-.wrap:focus-within .face {
+.button:focus-visible {
   outline: 2px solid var(--color-primary);
-  outline-offset: -2px;
+  outline-offset: 2px;
 }
 
-/* Google's real button: the actual click target, kept invisible on top. */
-.gis {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0.01;
-}
-
-/* Google's wrappers stay out of layout; its iframe (the real button) covers ours exactly. */
-.gis div {
-  position: static !important;
-}
-
-.gis iframe {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  margin: 0 !important;
-  cursor: pointer;
+.button:disabled {
+  opacity: 0.6;
+  cursor: progress;
 }

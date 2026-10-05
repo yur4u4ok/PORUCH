@@ -96,7 +96,15 @@ class TokenSerializer(serializers.Serializer):
 
 
 class GoogleAuthSerializer(serializers.Serializer):
-    credential = serializers.CharField(max_length=4096)
+    """Either an ID token (credential) or a one-time authorization code from the popup flow."""
+
+    credential = serializers.CharField(max_length=4096, required=False)
+    code = serializers.CharField(max_length=1024, required=False)
+
+    def validate(self, attrs):
+        if not attrs.get("credential") and not attrs.get("code"):
+            raise serializers.ValidationError({"credential": ["credential or code is required."]})
+        return attrs
 
 
 class PasswordResetSerializer(serializers.Serializer):

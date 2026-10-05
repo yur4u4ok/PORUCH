@@ -139,7 +139,9 @@ class GoogleAuthView(APIView):
     def post(self, request):
         ser = s.GoogleAuthSerializer(data=request.data)
         ser.is_valid(raise_exception=True)
-        user, created = accounts.authenticate_google(ser.validated_data["credential"])
+        data = ser.validated_data
+        credential = data.get("credential") or accounts.exchange_google_code(data["code"])
+        user, created = accounts.authenticate_google(credential)
         response = Response(_me(user), status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
         return set_auth_cookies(response, issue_tokens(user))
 
