@@ -65,6 +65,19 @@ select {
   color: inherit;
 }
 
+/* Everything you pick from or tick shows the hand cursor. */
+select,
+input[type="checkbox"],
+input[type="radio"],
+label:has(> input[type="checkbox"]),
+label:has(> input[type="radio"]) {
+  cursor: pointer;
+}
+
+select:disabled {
+  cursor: not-allowed;
+}
+
 img {
   max-width: 100%;
   display: block;
