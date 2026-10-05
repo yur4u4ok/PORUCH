@@ -8,6 +8,7 @@ LOCAL=/var/backups/poruch
 C="docker compose -f $DIR/docker-compose.prod.yml --env-file $DIR/.env.production"
 FILE="poruch-$(date -u +%Y-%m-%d_%H%M).dump"
 
+umask 077  # dumps contain user data: root only
 mkdir -p "$LOCAL"
 cd "$DIR"
 # Custom format (-Fc): compressed, restorable table by table with pg_restore.

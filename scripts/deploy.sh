@@ -27,4 +27,11 @@ $SSH "$SERVER" "cd $DIR && C='docker compose -f docker-compose.prod.yml --env-fi
   && docker image prune -f >/dev/null \
   && \$C ps --format 'table {{.Service}}\t{{.Status}}'"
 
-echo "→ Health: $(curl -s -o /dev/null -w '%{http_code}' https://poruch-app.duckdns.org/health/ready/)"
+echo -n "→ Waiting for the backend"
+for _ in $(seq 1 30); do
+  code=$(curl -s -o /dev/null -w '%{http_code}' https://poruch-app.duckdns.org/health/ready/ || true)
+  [ "$code" = "200" ] && { echo " — OK, site is up"; exit 0; }
+  echo -n "."; sleep 3
+done
+echo " — still not healthy (last HTTP $code). Check: ssh to the server and run 'docker compose -f /opt/poruch/docker-compose.prod.yml logs backend'"
+exit 1
