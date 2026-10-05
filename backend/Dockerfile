@@ -29,4 +29,6 @@ RUN DJANGO_SECRET_KEY=build-only DATABASE_URL=postgis://x:x@localhost/x python m
 USER app
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s CMD curl -fs http://localhost:8000/health/live/ || exit 1
-CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "--proxy-headers", "config.asgi:application"]
+# Several worker processes (HTTP + WebSocket); realtime events between them go through Redis.
+ENV WEB_CONCURRENCY=3
+CMD ["sh", "-c", "exec uvicorn config.asgi:application --host 0.0.0.0 --port 8000 --workers ${WEB_CONCURRENCY} --proxy-headers --forwarded-allow-ips='*' --no-server-header"]

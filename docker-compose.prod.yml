@@ -5,7 +5,14 @@
 # Object storage is external (AWS S3 / R2 / MinIO cluster) and configured via AWS_* variables.
 name: poruch-prod
 
+# Docker logs would otherwise grow until the disk is full.
+x-logging: &logging
+  logging:
+    driver: json-file
+    options: { max-size: "10m", max-file: "5" }
+
 x-backend: &backend
+  <<: *logging
   build:
     context: ./backend
     target: production
@@ -20,6 +27,7 @@ x-backend: &backend
 
 services:
   postgres:
+    <<: *logging
     image: postgis/postgis:16-3.4
     env_file: .env.production
     volumes: [pgdata:/var/lib/postgresql/data]
@@ -32,6 +40,7 @@ services:
       retries: 20
 
   redis:
+    <<: *logging
     image: redis:7-alpine
     command: redis-server --appendonly yes
     volumes: [redisdata:/data]
@@ -50,6 +59,10 @@ services:
 
   backend:
     <<: *backend
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.production
+      # Pool only for the web workers: 3 workers × max 10 = 30 of Postgres' 100 connections.
+      DATABASE_POOL: "true"
     healthcheck:
       test: ["CMD", "curl", "-fs", "http://localhost:8000/health/ready/"]
       interval: 15s
@@ -68,6 +81,7 @@ services:
       disable: true
 
   frontend:
+    <<: *logging
     build:
       context: ./frontend
       target: production
@@ -81,6 +95,7 @@ services:
 
   # HTTPS: obtains and renews a Let's Encrypt certificate for $DOMAIN automatically.
   caddy:
+    <<: *logging
     image: caddy:2-alpine
     environment:
       DOMAIN: ${DOMAIN:?set DOMAIN in .env.production}
