@@ -1,0 +1,3934 @@
+# Технічне завдання
+
+## PWA «Локальна мережа взаємодопомоги»
+
+**Версія:** 1.0
+**Тип:** Production-ready MVP / перша повна версія
+**Frontend:** React + TypeScript + Vite + PWA
+**Backend:** Django + Django REST Framework
+**Database:** PostgreSQL + PostGIS
+**Realtime:** Django Channels + WebSocket
+**Background jobs:** Celery + Redis
+**Push notifications:** Web Push API
+**Storage:** S3-compatible object storage
+**Maps:** MapLibre GL JS + OpenStreetMap-compatible tiles
+**Deployment:** Docker Compose для local development, Docker/Kubernetes-compatible production deployment
+
+---
+
+# 1. Мета продукту
+
+Створити локальну цифрову мережу взаємодопомоги, у якій люди можуть:
+
+1. повідомити людей поблизу, що їм потрібна допомога;
+2. отримати повідомлення про потребу в допомозі поруч;
+3. запропонувати свою допомогу;
+4. поспілкуватися з людиною;
+5. отримати/надати допомогу;
+6. подякувати після завершення;
+7. поступово сформувати репутацію на основі реальної допомоги.
+
+Основний принцип:
+
+> **«Мені потрібна допомога → люди поруч отримують повідомлення → хтось може допомогти → допомога відбулася → людина дякує».**
+
+Другий напрямок:
+
+> **«Я можу допомогти → бачу релевантні запити поруч → реагую → допомагаю».**
+
+Це НЕ класичний marketplace послуг.
+
+У системі не повинно бути концепцій:
+
+* «замовник»;
+* «виконавець»;
+* «замовлення»;
+* обов'язкова оплата;
+* обов'язкова комісія платформи.
+
+Одна й та сама людина може бути як тим, хто просить допомоги, так і тим, хто допомагає.
+
+---
+
+# 2. Основна цінність
+
+Користувач не повинен думати:
+
+> «Чи є тут потрібна мені послуга?»
+
+Він повинен думати:
+
+> «Мені потрібна допомога — чи є хтось поруч, хто може допомогти?»
+
+Або:
+
+> «Хтось поруч потребує допомоги — чи можу я зараз допомогти?»
+
+---
+
+# 3. Основні use cases
+
+## 3.1. Автомобіль
+
+* пробите колесо;
+* розряджений акумулятор;
+* потрібні дроти для прикурювання;
+* потрібен компресор;
+* потрібен домкрат;
+* закінчилося пальне;
+* потрібно витягнути автомобіль;
+* потрібна допомога з буксируванням;
+* ключі залишилися в автомобілі;
+* дрібна технічна допомога.
+
+## 3.2. Дім
+
+* перенести важкий предмет;
+* зібрати меблі;
+* щось полагодити;
+* потрібен інструмент;
+* потрібно просвердлити отвір;
+* допомогти з переїздом;
+* потрібна фізична допомога.
+
+## 3.3. Речі
+
+* позичити інструмент;
+* позичити предмет;
+* передати предмет;
+* забрати предмет;
+* доставити предмет;
+* знайти/повернути загублену річ.
+
+## 3.4. Тварини
+
+* загубилася тварина;
+* знайдена тварина;
+* потрібно перевезти тварину;
+* потрібна допомога з пошуком.
+
+## 3.5. Люди
+
+* допомогти літній людині;
+* допомогти донести речі;
+* супроводити;
+* допомогти людині, яка загубилася.
+
+## 3.6. Район / локальна ситуація
+
+* попередити людей про небезпеку;
+* допомогти після негоди;
+* знайти загублений предмет;
+* локальна ситуація, де потрібна допомога.
+
+## 3.7. Надзвичайні ситуації
+
+Можливість створити запит з високою терміновістю.
+
+При цьому система ОБОВ'ЯЗКОВО показує:
+
+> Цей сервіс не замінює екстрені служби. У небезпечній або критичній ситуації телефонуйте 112 / 101 / 102 / 103.
+
+---
+
+# 4. Географія
+
+Перша версія працює в межах одного міста.
+
+Для development використовується:
+
+**Lviv, Ukraine**
+
+Архітектура повинна підтримувати інші міста без зміни основної логіки.
+
+Користувач має географічні координати:
+
+```text
+latitude
+longitude
+```
+
+У БД вони зберігаються через PostGIS:
+
+```text
+PointField(geography=True, srid=4326)
+```
+
+---
+
+# 5. Основний UX
+
+## 5.1. Головний екран
+
+Після входу користувач бачить:
+
+```text
+┌──────────────────────────────┐
+│ 📍 Львів                     │
+│                              │
+│       🆘                     │
+│  ПОТРІБНА ДОПОМОГА           │
+│                              │
+│  ──────────────────────────  │
+│                              │
+│ 🤝 КОМУСЬ ПОТРІБНА ДОПОМОГА  │
+│                              │
+│ 🗺 Допомога поруч             │
+│                              │
+│ ──────────────────────────  │
+│                              │
+│ 🏠 Головна                   │
+│ 🗺 Поруч                     │
+│ ➕ Допомога                  │
+│ 💬 Чати                      │
+│ 👤 Профіль                   │
+└──────────────────────────────┘
+```
+
+Основний CTA:
+
+**«ПОТРІБНА ДОПОМОГА»**
+
+Другий CTA:
+
+**«КОМУСЬ ПОТРІБНА ДОПОМОГА»**
+
+---
+
+# 6. Authentication
+
+Підтримати:
+
+* email + password;
+* Google OAuth.
+
+Архітектура повинна дозволяти додати Apple Sign-In пізніше.
+
+Після реєстрації:
+
+* username/display name;
+* avatar optional;
+* city;
+* notification permissions;
+* location permission;
+* categories user can help with.
+
+Телефон НЕ є обов'язковим для першої версії.
+
+Email повинен бути verified.
+
+---
+
+# 7. User Profile
+
+Профіль:
+
+```text
+Avatar
+Ім'я
+
+🤝 Допоміг: 17
+❤️ Отримав подяк: 15
+
+На платформі з: 2026
+
+Можу допомогти:
+🚗 Авто
+🔧 Інструменти
+📦 Перенесення речей
+
+Маю:
+🔧 Набір інструментів
+🚗 Компресор
+🔋 Пускові дроти
+```
+
+Також:
+
+* verification status;
+* кількість успішних допомог;
+* кількість подяк;
+* дата реєстрації;
+* категорії допомоги;
+* capability list.
+
+Не використовувати класичну оцінку 1–5 як основну систему репутації.
+
+Основна репутація:
+
+**реальні допомоги + подяки.**
+
+---
+
+# 8. Capabilities
+
+Користувач може вказати, з чим він готовий допомагати.
+
+Приклади:
+
+```text
+AUTO_TIRE
+AUTO_BATTERY
+AUTO_FUEL
+AUTO_TOW
+AUTO_TOOLS
+
+HOUSE_MOVING
+HOUSE_REPAIR
+HOUSE_ASSEMBLY
+HOUSE_TOOLS
+
+DELIVERY
+ITEM_LENDING
+
+ANIMAL_HELP
+
+PERSON_HELP
+
+OTHER
+```
+
+Capabilities використовуються для:
+
+* notification filtering;
+* пошуку релевантної допомоги;
+* профілю.
+
+---
+
+# 9. Режим «Я зараз можу допомогти»
+
+Користувач може тимчасово активувати:
+
+**«Я зараз можу допомогти»**
+
+Після активації:
+
+```text
+Я зараз можу допомогти
+Радіус: 3 км
+Категорії:
+🚗 Авто
+🔧 Інструменти
+```
+
+Це тимчасовий статус.
+
+Він автоматично вимикається через configurable timeout.
+
+Default:
+
+**2 години.**
+
+Користувач може вимкнути його вручну.
+
+---
+
+# 10. Створення Help Request
+
+Натискання:
+
+**«ПОТРІБНА ДОПОМОГА»**
+
+відкриває форму.
+
+## Step 1 — Category
+
+```text
+🚗 Автомобіль
+🏠 Дім
+📦 Речі
+🐕 Тварини
+👨 Людина
+📍 Район
+🚨 Терміново
+Інше
+```
+
+## Step 2 — Description
+
+Поле:
+
+```text
+Що сталося?
+```
+
+Максимум:
+
+**1000 символів.**
+
+## Step 3 — Location
+
+Автоматично отримати геолокацію.
+
+Показати карту:
+
+```text
+📍 Ви знаходитесь тут
+```
+
+Користувач може пересунути marker.
+
+## Step 4 — Urgency
+
+```text
+🔴 Зараз
+🟡 Сьогодні
+🟢 Коли буде можливість
+```
+
+## Step 5 — Reward
+
+Допомога може бути:
+
+```text
+❤️ Просто допомога
+
+💰 Готовий віддячити
+
+🤷 Не знаю
+```
+
+Якщо користувач вибрав «Готовий віддячити»:
+
+```text
+Необов'язкова сума
+```
+
+Система НЕ повинна вимагати оплату.
+
+## Step 6 — Photo
+
+Optional.
+
+До:
+
+**5 фотографій.**
+
+Максимальний розмір:
+
+**10 MB/photo.**
+
+## Step 7
+
+Button:
+
+**«ПОПРОСИТИ ПРО ДОПОМОГУ»**
+
+---
+
+# 11. Help Request model
+
+Django model:
+
+```python
+class HelpRequest(models.Model):
+    id = UUIDField(primary_key=True)
+
+    author = ForeignKey(User)
+
+    category = CharField(...)
+    subcategory = CharField(null=True, blank=True)
+
+    title = CharField(max_length=120)
+    description = TextField(max_length=1000)
+
+    location = PointField(
+        geography=True,
+        srid=4326,
+    )
+
+    location_accuracy = FloatField(null=True)
+
+    urgency = CharField(...)
+
+    reward_type = CharField(...)
+    reward_amount = DecimalField(
+        null=True,
+        blank=True,
+        max_digits=10,
+        decimal_places=2,
+    )
+
+    status = CharField(...)
+
+    created_at = DateTimeField()
+    updated_at = DateTimeField()
+
+    expires_at = DateTimeField()
+
+    completed_at = DateTimeField(null=True)
+
+    selected_helper = ForeignKey(
+        User,
+        null=True,
+        blank=True,
+    )
+```
+
+---
+
+# 12. Help Request statuses
+
+```text
+ACTIVE
+IN_PROGRESS
+COMPLETED
+CANCELLED
+EXPIRED
+```
+
+Flow:
+
+```text
+ACTIVE
+   ↓
+IN_PROGRESS
+   ↓
+COMPLETED
+```
+
+Alternative:
+
+```text
+ACTIVE → CANCELLED
+ACTIVE → EXPIRED
+```
+
+---
+
+# 13. Nearby requests
+
+Користувач може відкрити:
+
+**«Допомога поруч»**
+
+Система показує активні запити.
+
+Фільтри:
+
+```text
+Радіус:
+500 м
+1 км
+3 км
+5 км
+10 км
+
+Категорія
+
+Терміновість
+```
+
+Результати сортуються за:
+
+1. distance;
+2. urgency;
+3. created_at.
+
+---
+
+# 14. Геопошук
+
+Використовувати PostGIS.
+
+Приклад логіки:
+
+```sql
+ST_DWithin(
+    location,
+    user_location,
+    radius_meters
+)
+```
+
+Distance:
+
+```sql
+ST_Distance(
+    location,
+    user_location
+)
+```
+
+Не використовувати Python loops для геопошуку.
+
+Пошук повинен виконуватися на рівні PostgreSQL.
+
+Створити необхідні spatial indexes.
+
+---
+
+# 15. Privacy of location
+
+До того, як користувач відгукнувся:
+
+НЕ показувати:
+
+* точну адресу;
+* точні координати.
+
+Показувати:
+
+```text
+📍 1.2 км від вас
+```
+
+або приблизний район.
+
+Після того, як користувач натиснув:
+
+**«МОЖУ ДОПОМОГТИ»**
+
+можна показати необхідну для зустрічі інформацію.
+
+Точне місцезнаходження повинно бути доступне тільки учасникам конкретної взаємодії.
+
+---
+
+# 16. Response / Offer to Help
+
+На Help Request:
+
+```text
+🛞 Пробите колесо
+
+Потрібна допомога зараз.
+
+📍 1.3 км
+
+[ Можу допомогти ]
+```
+
+При натисканні:
+
+**«Можу допомогти»**
+
+створюється:
+
+```text
+HelpResponse
+```
+
+Статус:
+
+```text
+PENDING
+```
+
+Автор Help Request бачить:
+
+```text
+Остап
+🤝 17 допомог
+❤️ 15 подяк
+
+[ Обрати ]
+```
+
+---
+
+# 17. HelpResponse
+
+```python
+class HelpResponse(models.Model):
+    id = UUIDField(primary_key=True)
+
+    help_request = ForeignKey(
+        HelpRequest,
+        related_name="responses",
+    )
+
+    helper = ForeignKey(User)
+
+    message = TextField(
+        max_length=500,
+        blank=True,
+    )
+
+    status = CharField(...)
+
+    created_at = DateTimeField()
+```
+
+Statuses:
+
+```text
+PENDING
+ACCEPTED
+REJECTED
+CANCELLED
+```
+
+---
+
+# 18. Вибір помічника
+
+Автор запиту може:
+
+* прийняти допомогу;
+* відхилити;
+* переглянути профіль.
+
+При прийнятті:
+
+```text
+HelpRequest.status = IN_PROGRESS
+HelpResponse.status = ACCEPTED
+selected_helper = helper
+```
+
+Інші pending responses можуть бути автоматично переведені в:
+
+```text
+REJECTED
+```
+
+---
+
+# 19. Chat
+
+Після прийняття допомоги створюється conversation.
+
+Учасники:
+
+```text
+request_author
+helper
+```
+
+Chat підтримує:
+
+* text;
+* images;
+* timestamps;
+* read status.
+
+Realtime через WebSocket.
+
+---
+
+# 20. WebSocket
+
+Endpoint:
+
+```text
+/ws/conversations/{conversation_id}/
+```
+
+Events:
+
+```text
+message.created
+message.read
+typing.started
+typing.stopped
+user.online
+user.offline
+```
+
+При новому повідомленні:
+
+1. WebSocket доставляє повідомлення;
+2. якщо користувач offline — створюється push notification.
+
+---
+
+# 21. Message model
+
+```python
+class Message(models.Model):
+    id = UUIDField(primary_key=True)
+
+    conversation = ForeignKey(Conversation)
+
+    sender = ForeignKey(User)
+
+    text = TextField(
+        max_length=3000,
+        blank=True,
+    )
+
+    message_type = CharField(...)
+
+    attachment = ForeignKey(
+        Media,
+        null=True,
+        blank=True,
+    )
+
+    created_at = DateTimeField()
+
+    read_at = DateTimeField(
+        null=True,
+        blank=True,
+    )
+```
+
+Message types:
+
+```text
+TEXT
+IMAGE
+SYSTEM
+```
+
+---
+
+# 22. Push Notifications
+
+Push notifications є одним із ключових компонентів продукту.
+
+Користувач НЕ повинен постійно відкривати сайт.
+
+Потрібно реалізувати:
+
+**Web Push API + Service Worker.**
+
+Зберігати push subscription.
+
+```python
+class PushSubscription(models.Model):
+    user = ForeignKey(User)
+
+    endpoint = TextField(unique=True)
+
+    p256dh = TextField()
+
+    auth = TextField()
+
+    created_at = DateTimeField()
+
+    last_used_at = DateTimeField(null=True)
+```
+
+---
+
+# 23. Notification types
+
+```text
+NEW_NEARBY_REQUEST
+HELP_RESPONSE_RECEIVED
+HELP_RESPONSE_ACCEPTED
+HELP_RESPONSE_REJECTED
+NEW_MESSAGE
+REQUEST_COMPLETED
+THANK_YOU_RECEIVED
+REQUEST_EXPIRING
+```
+
+---
+
+# 24. Smart notifications
+
+Не потрібно надсилати кожен запит усім користувачам міста.
+
+При створенні HelpRequest:
+
+1. знайти користувачів у потрібному radius;
+2. відфільтрувати за category;
+3. врахувати urgency;
+4. врахувати notification preferences;
+5. виключити автора;
+6. виключити blocked users;
+7. відправити push.
+
+Наприклад:
+
+```text
+🆘 Допомога поруч
+
+Пробите колесо
+
+📍 1.4 км від вас
+🔴 Потрібна допомога зараз
+
+[Можу допомогти]
+```
+
+---
+
+# 25. Notification Radius
+
+Користувач може встановити:
+
+```text
+500 м
+1 км
+3 км
+5 км
+10 км
+```
+
+Default:
+
+**3 км.**
+
+---
+
+# 26. Notification Categories
+
+Користувач може вимкнути категорії:
+
+```text
+☑ Авто
+☑ Дім
+☑ Речі
+☑ Тварини
+☑ Люди
+☑ Район
+☑ Термінове
+```
+
+---
+
+# 27. Notification anti-spam
+
+Не відправляти одному користувачу необмежену кількість notifications.
+
+Ввести rate limiting.
+
+Наприклад:
+
+```text
+max 10 nearby-help notifications / hour
+```
+
+Для HIGH urgency допускається окрема логіка.
+
+Також:
+
+* не надсилати notification для вже закритого request;
+* не надсилати автору;
+* не надсилати користувачам, які вже відмовились;
+* не надсилати blocked users;
+* не надсилати після expiration.
+
+---
+
+# 28. «Я можу допомогти зараз»
+
+Окрема функція.
+
+Endpoint:
+
+```text
+POST /api/v1/availability/
+```
+
+Користувач встановлює:
+
+```text
+active = true
+radius = 3000
+categories = [...]
+expires_at = now + 2 hours
+```
+
+Це дозволяє системі краще розуміти, хто реально доступний.
+
+---
+
+# 29. Map
+
+Основний map screen:
+
+```text
+┌─────────────────────────────┐
+│ 🔍 Допомога поруч           │
+│                             │
+│       📍                    │
+│   🆘        🆘              │
+│                             │
+│      🆘                     │
+│                             │
+│ ─────────────────────────── │
+│ Фільтри                     │
+└─────────────────────────────┘
+```
+
+Markers:
+
+* request;
+* approximate location;
+* urgency.
+
+Не показувати точну позицію до дозволеного етапу.
+
+---
+
+# 30. Map technology
+
+Frontend:
+
+```text
+MapLibre GL JS
+```
+
+Map data:
+
+```text
+OpenStreetMap
+```
+
+Архітектура повинна дозволяти замінити tile provider.
+
+Не робити frontend жорстко залежним від конкретного provider.
+
+---
+
+# 31. Photos / Media
+
+Користувач може додавати:
+
+* avatar;
+* help request images;
+* chat images.
+
+Файли зберігати НЕ в PostgreSQL.
+
+Використовувати:
+
+```text
+S3-compatible object storage
+```
+
+Backend генерує presigned upload URL.
+
+Flow:
+
+```text
+Frontend
+   ↓
+POST /media/upload-url
+   ↓
+Backend
+   ↓
+presigned URL
+   ↓
+S3
+```
+
+Після upload frontend повідомляє backend.
+
+---
+
+# 32. Thank You
+
+Після завершення допомоги:
+
+```text
+Допомогу отримано ❤️
+
+Подякувати Остапу?
+
+[ ❤️ Подякувати ]
+```
+
+Thank You не є обов'язковим.
+
+Можна додати короткий текст:
+
+```text
+Дякую!
+```
+
+або custom message.
+
+---
+
+# 33. ThankYou model
+
+```python
+class ThankYou(models.Model):
+    id = UUIDField(primary_key=True)
+
+    from_user = ForeignKey(
+        User,
+        related_name="given_thanks",
+    )
+
+    to_user = ForeignKey(
+        User,
+        related_name="received_thanks",
+    )
+
+    help_request = ForeignKey(
+        HelpRequest,
+    )
+
+    message = TextField(
+        max_length=500,
+        blank=True,
+    )
+
+    created_at = DateTimeField()
+```
+
+Один HelpRequest може мати максимум одну подяку від автора helper'у.
+
+---
+
+# 34. History
+
+Користувач бачить:
+
+```text
+Моя допомога
+
+🛞 Пробите колесо
+✓ Допомога завершена
+2 дні тому
+
+🔧 Потрібен інструмент
+✓ Допомога завершена
+5 днів тому
+```
+
+Tabs:
+
+```text
+Я просив допомогу
+Я допомагав
+```
+
+---
+
+# 35. Home feed
+
+На головному екрані показувати:
+
+```text
+Активна моя допомога
+```
+
+якщо користувач має active request.
+
+Також:
+
+```text
+Допомога поруч
+```
+
+з 3–5 найбільш релевантними запитами.
+
+---
+
+# 36. Search / filters
+
+На першій версії пошук по тексту НЕ є критичним.
+
+Обов'язково:
+
+* category;
+* distance;
+* urgency.
+
+Full text search можна додати пізніше через PostgreSQL Search.
+
+---
+
+# 37. Reports
+
+Користувач може поскаржитися на:
+
+* користувача;
+* Help Request;
+* message.
+
+Report reasons:
+
+```text
+SPAM
+FRAUD
+HARASSMENT
+DANGEROUS
+INAPPROPRIATE
+OTHER
+```
+
+Model:
+
+```python
+class Report(models.Model):
+    id = UUIDField(primary_key=True)
+
+    reporter = ForeignKey(User)
+
+    target_user = ForeignKey(
+        User,
+        null=True,
+        blank=True,
+    )
+
+    help_request = ForeignKey(
+        HelpRequest,
+        null=True,
+        blank=True,
+    )
+
+    message = ForeignKey(
+        Message,
+        null=True,
+        blank=True,
+    )
+
+    reason = CharField(...)
+
+    description = TextField(
+        max_length=1000,
+        blank=True,
+    )
+
+    status = CharField(...)
+
+    created_at = DateTimeField()
+```
+
+---
+
+# 38. Blocking
+
+User може заблокувати іншого користувача.
+
+```python
+class UserBlock(models.Model):
+    blocker = ForeignKey(User)
+
+    blocked = ForeignKey(User)
+
+    created_at = DateTimeField()
+```
+
+Unique constraint:
+
+```text
+(blocker, blocked)
+```
+
+Blocked users:
+
+* не бачать requests один одного;
+* не отримують notifications;
+* не можуть писати один одному;
+* не можуть створювати interaction.
+
+---
+
+# 39. Safety
+
+На першій версії обов'язково:
+
+* block;
+* report;
+* hide exact location;
+* verified email;
+* notification controls;
+* emergency warning;
+* basic abuse protection.
+
+НЕ дозволяти:
+
+* публічну точну адресу користувача;
+* публічний номер телефону;
+* відкритий список усіх користувачів.
+
+---
+
+# 40. Emergency disclaimer
+
+При виборі:
+
+```text
+🚨 Терміново
+```
+
+показати:
+
+> Якщо існує загроза життю, здоров'ю або майну — зверніться до відповідних екстрених служб. Цей сервіс створений для взаємодопомоги між людьми і не замінює екстрені служби.
+
+Користувач повинен підтвердити:
+
+```text
+[Зрозуміло]
+```
+
+---
+
+# 41. Backend architecture
+
+Використати:
+
+```text
+Django
+Django REST Framework
+Django Channels
+Celery
+Redis
+PostgreSQL
+PostGIS
+```
+
+Структура:
+
+```text
+backend/
+├── config/
+│   ├── settings/
+│   ├── urls.py
+│   ├── asgi.py
+│   └── celery.py
+│
+├── apps/
+│   ├── users/
+│   ├── help_requests/
+│   ├── interactions/
+│   ├── conversations/
+│   ├── notifications/
+│   ├── media/
+│   ├── reputation/
+│   ├── moderation/
+│   └── locations/
+│
+├── common/
+│   ├── models/
+│   ├── permissions/
+│   ├── exceptions/
+│   ├── pagination/
+│   └── utils/
+│
+├── manage.py
+└── requirements/
+```
+
+---
+
+# 42. Django app responsibilities
+
+## users
+
+* User;
+* Profile;
+* capabilities;
+* authentication;
+* preferences.
+
+## help_requests
+
+* HelpRequest;
+* categories;
+* statuses;
+* geographic search.
+
+## interactions
+
+* HelpResponse;
+* selection;
+* completion.
+
+## conversations
+
+* Conversation;
+* Message;
+* WebSocket consumers.
+
+## notifications
+
+* PushSubscription;
+* Notification;
+* notification service.
+
+## media
+
+* Media;
+* upload URLs;
+* S3 integration.
+
+## reputation
+
+* ThankYou;
+* statistics.
+
+## moderation
+
+* Report;
+* Block.
+
+## locations
+
+* geographic utilities;
+* nearby users;
+* availability.
+
+---
+
+# 43. API versioning
+
+Все API:
+
+```text
+/api/v1/
+```
+
+---
+
+# 44. API endpoints
+
+## Authentication
+
+```http
+POST /api/v1/auth/register/
+POST /api/v1/auth/login/
+POST /api/v1/auth/logout/
+POST /api/v1/auth/refresh/
+POST /api/v1/auth/verify-email/
+POST /api/v1/auth/google/
+```
+
+---
+
+# 45. Current user
+
+```http
+GET /api/v1/me/
+PATCH /api/v1/me/
+```
+
+---
+
+# 46. Capabilities
+
+```http
+GET /api/v1/capabilities/
+GET /api/v1/me/capabilities/
+PUT /api/v1/me/capabilities/
+```
+
+---
+
+# 47. Help Requests
+
+```http
+POST /api/v1/help-requests/
+GET /api/v1/help-requests/
+GET /api/v1/help-requests/{id}/
+PATCH /api/v1/help-requests/{id}/
+DELETE /api/v1/help-requests/{id}/
+```
+
+Query params:
+
+```text
+lat
+lng
+radius
+category
+urgency
+status
+```
+
+---
+
+# 48. Help request actions
+
+```http
+POST /api/v1/help-requests/{id}/respond/
+POST /api/v1/help-requests/{id}/cancel/
+POST /api/v1/help-requests/{id}/complete/
+POST /api/v1/help-requests/{id}/select-helper/
+```
+
+---
+
+# 49. Responses
+
+```http
+GET /api/v1/help-requests/{id}/responses/
+GET /api/v1/help-responses/{id}/
+POST /api/v1/help-responses/{id}/accept/
+POST /api/v1/help-responses/{id}/reject/
+POST /api/v1/help-responses/{id}/cancel/
+```
+
+---
+
+# 50. Conversations
+
+```http
+GET /api/v1/conversations/
+GET /api/v1/conversations/{id}/
+GET /api/v1/conversations/{id}/messages/
+POST /api/v1/conversations/{id}/messages/
+POST /api/v1/conversations/{id}/read/
+```
+
+WebSocket:
+
+```text
+/ws/conversations/{conversation_id}/
+```
+
+---
+
+# 51. Notifications
+
+```http
+GET /api/v1/notifications/
+POST /api/v1/push-subscriptions/
+DELETE /api/v1/push-subscriptions/{id}/
+POST /api/v1/notifications/{id}/read/
+```
+
+---
+
+# 52. Preferences
+
+```http
+GET /api/v1/me/preferences/
+PATCH /api/v1/me/preferences/
+```
+
+Fields:
+
+```text
+notification_radius
+enabled_categories
+push_enabled
+email_enabled
+```
+
+---
+
+# 53. Availability
+
+```http
+POST /api/v1/availability/
+GET /api/v1/availability/
+DELETE /api/v1/availability/
+```
+
+---
+
+# 54. Profile
+
+```http
+GET /api/v1/users/{id}/
+```
+
+Показувати тільки public information.
+
+---
+
+# 55. Thank You
+
+```http
+POST /api/v1/help-requests/{id}/thank-you/
+GET /api/v1/users/{id}/thanks/
+```
+
+---
+
+# 56. Reports
+
+```http
+POST /api/v1/reports/
+```
+
+---
+
+# 57. Blocks
+
+```http
+GET /api/v1/blocks/
+POST /api/v1/blocks/
+DELETE /api/v1/blocks/{user_id}/
+```
+
+---
+
+# 58. Media
+
+```http
+POST /api/v1/media/upload-url/
+POST /api/v1/media/confirm/
+DELETE /api/v1/media/{id}/
+```
+
+---
+
+# 59. API conventions
+
+Використовувати:
+
+```text
+UUID
+ISO 8601 datetime
+pagination
+consistent errors
+HTTP status codes
+OpenAPI schema
+```
+
+API response:
+
+```json
+{
+  "id": "uuid",
+  "created_at": "2026-10-01T12:00:00Z"
+}
+```
+
+Error format:
+
+```json
+{
+  "code": "VALIDATION_ERROR",
+  "message": "Invalid request",
+  "details": {
+    "field": [
+      "This field is required."
+    ]
+  }
+}
+```
+
+---
+
+# 60. Permissions
+
+Застосувати DRF permissions.
+
+Правила:
+
+### HelpRequest
+
+Автор може:
+
+* edit;
+* cancel;
+* complete;
+* select helper.
+
+Інші користувачі:
+
+* view;
+* respond.
+
+### Conversation
+
+Доступ тільки учасникам.
+
+### Message
+
+Create тільки учасниками.
+
+### Profile
+
+Public fields доступні всім authenticated users.
+
+Private fields — тільки owner.
+
+---
+
+# 61. Business rules
+
+## Rule 1
+
+Не можна створити HelpRequest без valid location.
+
+## Rule 2
+
+Користувач не може відповідати на власний request.
+
+## Rule 3
+
+Не можна respond на:
+
+```text
+CANCELLED
+COMPLETED
+EXPIRED
+```
+
+## Rule 4
+
+У request може бути тільки один selected helper.
+
+## Rule 5
+
+Після selection request переходить:
+
+```text
+ACTIVE → IN_PROGRESS
+```
+
+## Rule 6
+
+Після completion:
+
+```text
+IN_PROGRESS → COMPLETED
+```
+
+## Rule 7
+
+Complete може тільки автор request.
+
+## Rule 8
+
+ThankYou можна створити тільки після COMPLETED.
+
+## Rule 9
+
+ThankYou може створити тільки автор request для selected helper.
+
+## Rule 10
+
+Користувач не може створити більше одного active response на один request.
+
+---
+
+# 62. Expiration
+
+HelpRequest повинен мати `expires_at`.
+
+Default:
+
+```text
+NOW + 24 HOURS
+```
+
+Для urgency:
+
+```text
+NOW:
+6 hours
+
+TODAY:
+24 hours
+
+WHENEVER:
+72 hours
+```
+
+Celery periodic task:
+
+```text
+expire_help_requests
+```
+
+Вона знаходить:
+
+```text
+status = ACTIVE
+expires_at < now
+```
+
+і переводить у:
+
+```text
+EXPIRED
+```
+
+---
+
+# 63. Celery tasks
+
+Обов'язкові background tasks:
+
+```text
+send_nearby_help_notifications
+send_push_notification
+expire_help_requests
+expire_availability
+cleanup_expired_media
+cleanup_invalid_push_subscriptions
+```
+
+---
+
+# 64. Redis
+
+Redis використовується для:
+
+* Celery broker;
+* Celery result backend;
+* Django Channels channel layer;
+* rate limiting;
+* caching.
+
+Не зберігати primary business data тільки в Redis.
+
+---
+
+# 65. Database indexes
+
+Обов'язково індекси:
+
+```text
+HelpRequest.status
+HelpRequest.category
+HelpRequest.urgency
+HelpRequest.created_at
+HelpRequest.expires_at
+HelpResponse.help_request
+HelpResponse.helper
+Message.conversation
+Message.created_at
+Notification.user
+Notification.created_at
+```
+
+Для location:
+
+```text
+GIST(location)
+```
+
+Для common filters використовувати composite indexes, якщо EXPLAIN покаже необхідність.
+
+---
+
+# 66. Transactions
+
+Critical operations виконувати в:
+
+```python
+transaction.atomic()
+```
+
+Особливо:
+
+```text
+select-helper
+complete-request
+accept-response
+```
+
+При selection helper необхідно запобігти race condition.
+
+Використати:
+
+```python
+select_for_update()
+```
+
+щоб два користувачі не могли одночасно стати selected helper.
+
+---
+
+# 67. Concurrency
+
+Наприклад:
+
+User A:
+
+```text
+POST /help-request/1/select-helper
+```
+
+User B:
+
+```text
+POST /help-request/1/select-helper
+```
+
+Database transaction повинна гарантувати, що тільки один selection стане successful.
+
+---
+
+# 68. Frontend
+
+Stack:
+
+```text
+React
+TypeScript
+Vite
+React Router
+TanStack Query
+Zustand
+React Hook Form
+Zod
+MapLibre GL JS
+Workbox
+```
+
+Не використовувати Next.js.
+
+Для PWA достатньо Vite + React.
+
+---
+
+# 69. Frontend structure
+
+```text
+frontend/
+├── src/
+│   ├── app/
+│   ├── pages/
+│   │   ├── Home/
+│   │   ├── CreateHelp/
+│   │   ├── Nearby/
+│   │   ├── HelpRequest/
+│   │   ├── Conversations/
+│   │   ├── Chat/
+│   │   ├── Profile/
+│   │   └── Settings/
+│   │
+│   ├── features/
+│   │   ├── auth/
+│   │   ├── help/
+│   │   ├── chat/
+│   │   ├── notifications/
+│   │   ├── location/
+│   │   └── profile/
+│   │
+│   ├── components/
+│   ├── hooks/
+│   ├── api/
+│   ├── stores/
+│   ├── types/
+│   ├── utils/
+│   └── styles/
+│
+├── public/
+│   ├── icons/
+│   ├── manifest.webmanifest
+│   └── service-worker
+│
+└── package.json
+```
+
+---
+
+# 70. PWA
+
+PWA повинна підтримувати:
+
+* install;
+* standalone mode;
+* service worker;
+* Web Push;
+* offline shell;
+* app icons;
+* splash behavior;
+* manifest.
+
+Manifest:
+
+```text
+name
+short_name
+description
+start_url
+display: standalone
+theme_color
+background_color
+icons
+```
+
+---
+
+# 71. Offline behavior
+
+Повністю offline система НЕ потрібна.
+
+Але frontend повинен мати cached application shell.
+
+При відсутності internet:
+
+```text
+Немає підключення до інтернету.
+Деякі функції тимчасово недоступні.
+```
+
+Не дозволяти створювати HelpRequest offline.
+
+---
+
+# 72. Mobile-first UI
+
+Основна ширина:
+
+```text
+360–430px
+```
+
+Desktop повинен підтримуватися, але mobile є primary.
+
+Navigation:
+
+```text
+Bottom navigation
+```
+
+На desktop:
+
+```text
+sidebar / top navigation
+```
+
+---
+
+# 73. Основні frontend pages
+
+```text
+/auth/login
+/auth/register
+
+/
+/nearby
+/help/create
+/help/:id
+
+/chats
+/chats/:id
+
+/profile
+/profile/:id
+
+/settings
+/settings/notifications
+/settings/privacy
+```
+
+---
+
+# 74. Home page
+
+Компоненти:
+
+```text
+LocationHeader
+EmergencyHelpButton
+NearbyHelpButton
+NearbyRequestsPreview
+AvailabilityToggle
+BottomNavigation
+```
+
+---
+
+# 75. Create Help page
+
+Wizard:
+
+```text
+Category
+↓
+Description
+↓
+Location
+↓
+Urgency
+↓
+Reward
+↓
+Photos
+↓
+Confirmation
+```
+
+Не робити форму на одному величезному екрані.
+
+На mobile — step-by-step.
+
+---
+
+# 76. Help Request page
+
+Показує:
+
+```text
+category
+title
+description
+urgency
+distance
+created time
+author
+photos
+responses
+status
+```
+
+Якщо request чужий:
+
+```text
+[ Можу допомогти ]
+```
+
+Якщо request власний:
+
+```text
+[ Скасувати ]
+[ Завершити ]
+```
+
+---
+
+# 77. Nearby page
+
+Два режими:
+
+```text
+LIST
+MAP
+```
+
+Toggle:
+
+```text
+☷ Список | 🗺 Карта
+```
+
+---
+
+# 78. Chat UX
+
+Chat повинен нагадувати звичайний mobile messenger.
+
+Підтримати:
+
+* message bubbles;
+* timestamp;
+* read;
+* image preview;
+* send;
+* optimistic UI;
+* reconnect WebSocket.
+
+При втраті WebSocket:
+
+```text
+reconnecting...
+```
+
+Після reconnect:
+
+* refetch latest messages;
+* відновити connection.
+
+---
+
+# 79. State management
+
+Server state:
+
+**TanStack Query**
+
+Local UI state:
+
+**Zustand**
+
+Form state:
+
+**React Hook Form + Zod**
+
+Не зберігати всі API entities у глобальному Zustand.
+
+---
+
+# 80. Authentication frontend
+
+Access token + refresh token.
+
+Access token зберігати максимально безпечно.
+
+Якщо архітектура дозволяє — перевага HttpOnly Secure cookie.
+
+Не зберігати authentication token у localStorage без необхідності.
+
+---
+
+# 81. Security
+
+Backend:
+
+* CSRF;
+* CORS;
+* rate limiting;
+* authentication;
+* permission checks;
+* input validation;
+* file validation;
+* image size limits;
+* MIME validation;
+* SQL injection protection через ORM;
+* XSS protection;
+* secure headers.
+
+Production:
+
+```text
+HTTPS only
+Secure cookies
+HttpOnly
+SameSite
+```
+
+---
+
+# 82. Rate limits
+
+Приклади:
+
+```text
+login:
+5 requests / minute / IP
+
+register:
+5 / hour / IP
+
+create HelpRequest:
+10 / hour / user
+
+respond:
+30 / hour / user
+
+messages:
+60 / minute / user
+```
+
+Значення винести в settings.
+
+---
+
+# 83. Anti-abuse
+
+Не дозволяти:
+
+* масове створення requests;
+* масове відправлення responses;
+* spam messages;
+* notification abuse.
+
+У майбутньому можна додати trust score, але не робити його blocker для MVP.
+
+---
+
+# 84. Admin
+
+Використати Django Admin.
+
+Admin повинен дозволяти:
+
+### Users
+
+* list;
+* search;
+* deactivate;
+* view reports;
+* view activity.
+
+### HelpRequests
+
+* search;
+* filter;
+* view;
+* cancel;
+* moderate.
+
+### Reports
+
+* list;
+* filter;
+* change status.
+
+### Messages
+
+Тільки доступ для moderation/debug, без зайвого exposure.
+
+---
+
+# 85. User deactivation
+
+Користувач може:
+
+```text
+Deactivate account
+```
+
+При deactivation:
+
+* logout;
+* push subscriptions disabled;
+* active availability disabled;
+* active requests handled according to business rules.
+
+Не видаляти historical interactions одразу.
+
+---
+
+# 86. Privacy settings
+
+```text
+Показувати моє ім'я
+Показувати avatar
+Push notifications
+Email notifications
+Location permission
+```
+
+Exact location не є public profile field.
+
+---
+
+# 87. Internationalization
+
+Перша версія:
+
+**Українська.**
+
+Архітектура повинна бути готова до:
+
+```text
+English
+Polish
+```
+
+Не hardcode UI strings у компонентах.
+
+Використовувати i18n систему.
+
+---
+
+# 88. Design system
+
+Створити базові reusable components:
+
+```text
+Button
+IconButton
+Input
+Textarea
+Select
+Modal
+BottomSheet
+Card
+Badge
+Avatar
+Map
+Tabs
+Toast
+Skeleton
+EmptyState
+ErrorState
+Loader
+```
+
+Не дублювати стилі по pages.
+
+---
+
+# 89. Loading states
+
+Кожен API screen повинен мати:
+
+```text
+loading
+success
+empty
+error
+```
+
+Не показувати blank screen.
+
+---
+
+# 90. Empty states
+
+Наприклад:
+
+```text
+Поруч зараз немає запитів.
+
+Але це не означає, що допомога не потрібна.
+
+Увімкніть повідомлення — ми повідомимо вас,
+коли комусь поруч знадобиться допомога.
+```
+
+---
+
+# 91. Main product metrics
+
+Backend повинен збирати:
+
+```text
+help_requests_created
+help_requests_completed
+help_requests_cancelled
+help_requests_expired
+
+help_responses_created
+help_responses_accepted
+
+time_to_first_response
+time_to_completion
+
+thanks_created
+
+push_sent
+push_opened
+```
+
+---
+
+# 92. Основні KPI
+
+### Help Success Rate
+
+```text
+completed requests / total requests
+```
+
+### Time To Help
+
+```text
+time(request_created → first accepted response)
+```
+
+### Response Rate
+
+```text
+requests_with_response / active requests
+```
+
+### Repeat Helper Rate
+
+Кількість користувачів, які допомогли більше одного разу.
+
+---
+
+# 93. Analytics
+
+Не потрібно будувати складну аналітичну систему в першій версії.
+
+Достатньо backend events.
+
+Створити abstraction:
+
+```python
+analytics.track(
+    user_id=user.id,
+    event="help_request_created",
+    properties={...},
+)
+```
+
+У development можна логувати.
+
+У production можна підключити PostHog або іншу систему пізніше.
+
+---
+
+# 94. Logging
+
+Structured logging.
+
+Log:
+
+```text
+request_id
+user_id
+endpoint
+status_code
+duration
+exception
+```
+
+Не логувати:
+
+* passwords;
+* tokens;
+* push auth secrets;
+* exact private location без необхідності;
+* private messages у звичайних application logs.
+
+---
+
+# 95. Error handling
+
+Backend:
+
+* централізований exception handler;
+* predictable error codes.
+
+Frontend:
+
+* global API error handling;
+* toast для transient errors;
+* inline errors для forms.
+
+---
+
+# 96. Observability
+
+Production-ready мінімум:
+
+```text
+structured logs
+health check
+readiness check
+liveness check
+basic metrics
+```
+
+Endpoints:
+
+```text
+/health/live/
+/health/ready/
+```
+
+Readiness перевіряє:
+
+* PostgreSQL;
+* Redis.
+
+---
+
+# 97. Docker
+
+Backend:
+
+```text
+Dockerfile
+docker-compose.yml
+docker-compose.dev.yml
+```
+
+Services:
+
+```text
+backend
+frontend
+postgres
+redis
+celery
+celery-beat
+```
+
+Nginx/Traefik можна додати як reverse proxy.
+
+---
+
+# 98. Local development
+
+Одна команда:
+
+```bash
+docker compose up
+```
+
+повинна запускати весь development environment.
+
+README повинен містити:
+
+```bash
+git clone
+cp .env.example .env
+docker compose up
+```
+
+---
+
+# 99. Environment variables
+
+Backend:
+
+```text
+DJANGO_SECRET_KEY
+DJANGO_DEBUG
+DJANGO_ALLOWED_HOSTS
+
+DATABASE_URL
+
+REDIS_URL
+
+CELERY_BROKER_URL
+
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_STORAGE_BUCKET_NAME
+AWS_REGION
+
+VAPID_PUBLIC_KEY
+VAPID_PRIVATE_KEY
+VAPID_SUBJECT
+
+GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET
+
+CORS_ALLOWED_ORIGINS
+```
+
+Не commit secrets.
+
+Створити:
+
+```text
+.env.example
+```
+
+---
+
+# 100. Database migrations
+
+Django migrations.
+
+CI повинен перевіряти:
+
+```bash
+python manage.py makemigrations --check
+python manage.py migrate
+```
+
+---
+
+# 101. Testing
+
+Backend testing:
+
+```text
+pytest
+pytest-django
+```
+
+Потрібні:
+
+### Unit tests
+
+* serializers;
+* services;
+* validators;
+* permissions;
+* geospatial helpers.
+
+### Integration tests
+
+* create request;
+* nearby search;
+* response;
+* select helper;
+* chat;
+* completion;
+* thank you;
+* notifications.
+
+### Concurrency tests
+
+Обов'язково протестувати simultaneous helper selection.
+
+---
+
+# 102. Frontend testing
+
+Використовувати:
+
+```text
+Vitest
+React Testing Library
+Playwright
+```
+
+E2E сценарії:
+
+1. register;
+2. login;
+3. create request;
+4. another user sees request;
+5. helper responds;
+6. author accepts;
+7. chat;
+8. complete;
+9. thank you.
+
+---
+
+# 103. PWA testing
+
+Перевірити:
+
+### Android
+
+* Chrome;
+* install;
+* push;
+* location;
+* camera.
+
+### iPhone
+
+* Safari;
+* Add to Home Screen;
+* standalone mode;
+* push permissions;
+* location.
+
+### Desktop
+
+* Chrome;
+* Firefox;
+* Safari;
+* Edge.
+
+---
+
+# 104. Push compatibility
+
+Push implementation повинна мати graceful degradation.
+
+Якщо browser не підтримує push:
+
+```text
+Push notifications недоступні у цьому браузері.
+```
+
+Основний функціонал при цьому продовжує працювати.
+
+---
+
+# 105. API documentation
+
+Автоматично генерувати OpenAPI.
+
+Використати:
+
+```text
+drf-spectacular
+```
+
+Endpoints:
+
+```text
+/api/docs/
+/api/schema/
+```
+
+Swagger UI повинен бути доступний тільки відповідно до production security policy.
+
+---
+
+# 106. Frontend API client
+
+Не викликати fetch/axios напряму в компонентах.
+
+Створити:
+
+```text
+api/
+  auth.ts
+  users.ts
+  helpRequests.ts
+  responses.ts
+  conversations.ts
+  notifications.ts
+  media.ts
+```
+
+React components працюють через hooks:
+
+```text
+useHelpRequests()
+useCreateHelpRequest()
+useHelpRequest()
+useRespondToHelp()
+useConversations()
+useMessages()
+```
+
+---
+
+# 107. Domain logic
+
+Не класти складну business logic у:
+
+```text
+Django views
+DRF serializers
+React components
+```
+
+Використовувати service layer.
+
+Наприклад:
+
+```text
+help_requests/services/create_request.py
+help_requests/services/respond.py
+help_requests/services/select_helper.py
+help_requests/services/complete_request.py
+notifications/services/nearby_notifications.py
+```
+
+Serializer:
+
+```text
+validation + serialization
+```
+
+Service:
+
+```text
+business logic
+```
+
+Model:
+
+```text
+domain invariants / simple behavior
+```
+
+---
+
+# 108. Nearby notification service
+
+Основна функція:
+
+```python
+notify_users_about_help_request(help_request)
+```
+
+Алгоритм:
+
+```text
+1. Get request location
+2. Determine radius
+3. Query users via PostGIS
+4. Filter categories
+5. Filter active notification preferences
+6. Exclude author
+7. Exclude blocked users
+8. Exclude users without push subscription
+9. Create Notification records
+10. Queue push jobs
+```
+
+---
+
+# 109. Notification architecture
+
+Не відправляти push synchronously в HTTP request.
+
+Wrong:
+
+```text
+POST /help-request
+    ↓
+send 1000 pushes
+    ↓
+HTTP response
+```
+
+Correct:
+
+```text
+POST /help-request
+    ↓
+create request
+    ↓
+queue notification task
+    ↓
+HTTP response
+
+Celery
+    ↓
+find users
+    ↓
+send pushes
+```
+
+---
+
+# 110. Idempotency
+
+Critical operations повинні бути idempotent.
+
+Наприклад:
+
+```text
+POST /select-helper
+```
+
+повторний запит не повинен ламати state.
+
+Push tasks також повинні мати захист від дублювання.
+
+---
+
+# 111. Database constraints
+
+Додати database-level constraints там, де можливо.
+
+Наприклад:
+
+```text
+unique active response per user/request
+unique thank-you per request
+unique block pair
+```
+
+---
+
+# 112. Security of media
+
+Upload validation:
+
+```text
+allowed MIME:
+image/jpeg
+image/png
+image/webp
+```
+
+Reject:
+
+```text
+svg
+html
+js
+exe
+```
+
+Перевіряти реальний MIME type, а не тільки extension.
+
+---
+
+# 113. Image processing
+
+Після upload:
+
+* validate;
+* resize;
+* generate thumbnail;
+* strip unnecessary metadata;
+* store optimized version.
+
+Не завантажувати 20MB original image у frontend.
+
+---
+
+# 114. User location handling
+
+Frontend отримує:
+
+```javascript
+navigator.geolocation.getCurrentPosition(...)
+```
+
+Передає:
+
+```json
+{
+  "latitude": 49.8397,
+  "longitude": 24.0297,
+  "accuracy": 20
+}
+```
+
+Backend перевіряє:
+
+* latitude range;
+* longitude range;
+* accuracy sanity.
+
+Не довіряти frontend blind.
+
+---
+
+# 115. Location update
+
+Не потрібно постійно трекати користувача.
+
+Система використовує location:
+
+* при створенні request;
+* при відкритті nearby;
+* при availability;
+* при необхідності notification matching.
+
+Не реалізовувати continuous background GPS tracking у першій версії.
+
+---
+
+# 116. Availability location
+
+Коли користувач натискає:
+
+**«Я можу допомогти зараз»**
+
+frontend отримує актуальну location.
+
+Backend зберігає:
+
+```text
+location
+expires_at
+```
+
+Location availability оновлюється тільки при явній взаємодії користувача або періодичному foreground update.
+
+---
+
+# 117. UX of notification
+
+Push не повинен містити приватні дані.
+
+Наприклад:
+
+Добре:
+
+```text
+🆘 Комусь поруч потрібна допомога
+Проблема з автомобілем
+1.2 км від вас
+```
+
+Не:
+
+```text
+🆘 Іван Петренко
+вул. Шевченка 31, квартира 52
+телефон...
+```
+
+---
+
+# 118. Deep links
+
+Push notification повинна відкривати:
+
+```text
+/help/{id}
+```
+
+або:
+
+```text
+/chat/{id}
+```
+
+PWA повинна коректно обробляти deep links навіть після cold start.
+
+---
+
+# 119. Notification click
+
+Service Worker:
+
+```text
+notificationclick
+```
+
+повинен:
+
+1. знайти існуюче app window;
+2. focus;
+3. navigate;
+4. або відкрити нове.
+
+---
+
+# 120. SEO
+
+SEO не є основною метою.
+
+Приватні Help Requests НЕ повинні індексуватися.
+
+Landing page може бути indexable.
+
+---
+
+# 121. Landing page
+
+До login:
+
+```text
+Допомога поруч.
+
+Потрібна допомога?
+Повідом людей поруч.
+
+Можеш допомогти?
+Отримуй запити від людей поблизу.
+
+[Спробувати]
+```
+
+CTA:
+
+**«Приєднатися»**
+
+---
+
+# 122. First launch onboarding
+
+Після registration:
+
+```text
+Крок 1
+📍 Дозвольте доступ до геолокації
+
+Крок 2
+🔔 Увімкніть notifications
+
+Крок 3
+🤝 З чим ви можете допомагати?
+
+☑ Авто
+☑ Дім
+☑ Речі
+☑ Тварини
+☑ Люди
+
+[Готово]
+```
+
+Onboarding можна пропустити, крім критичних permission flows.
+
+---
+
+# 123. No forced payment
+
+У першій версії:
+
+**НЕ реалізовувати payment system.**
+
+Reward field тільки інформативний.
+
+Не:
+
+```text
+Stripe
+Fondy
+WayForPay
+LiqPay
+```
+
+Усе це залишити для наступної версії.
+
+---
+
+# 124. Monetization
+
+Monetization НЕ є частиною першої версії.
+
+Архітектура повинна дозволяти в майбутньому:
+
+```text
+optional paid help
+donations
+premium
+business accounts
+partner integrations
+```
+
+Але вони не повинні впливати на core mutual-aid flow.
+
+---
+
+# 125. Core product loop
+
+Повинен працювати такий end-to-end flow:
+
+```text
+User A
+  ↓
+"Потрібна допомога"
+  ↓
+Create HelpRequest
+  ↓
+PostGIS finds nearby users
+  ↓
+Celery
+  ↓
+Push notifications
+  ↓
+User B receives notification
+  ↓
+opens request
+  ↓
+"Можу допомогти"
+  ↓
+User A selects User B
+  ↓
+Conversation created
+  ↓
+Chat
+  ↓
+Help happens
+  ↓
+User A completes request
+  ↓
+Thank You
+  ↓
+User B reputation increases
+```
+
+Це є **головним acceptance flow першої версії**.
+
+---
+
+# 126. Acceptance Criteria
+
+Версія вважається готовою, якщо:
+
+### Authentication
+
+* користувач може зареєструватися;
+* підтвердити email;
+* увійти;
+* вийти;
+* відновити password.
+
+### Help
+
+* створити HelpRequest;
+* вказати location;
+* category;
+* urgency;
+* description;
+* photos;
+* reward preference;
+* request потрапляє в nearby search.
+
+### Discovery
+
+* інший користувач бачить nearby request;
+* працює distance;
+* працюють filters;
+* працює map.
+
+### Notifications
+
+* nearby user отримує push;
+* notification веде на request;
+* category filters працюють;
+* radius працює;
+* spam protection працює.
+
+### Interaction
+
+* helper може respond;
+* author бачить responses;
+* author може select helper;
+* helper отримує notification.
+
+### Chat
+
+* conversation створюється;
+* realtime messages працюють;
+* reconnect працює;
+* read status працює.
+
+### Completion
+
+* author може complete;
+* helper бачить completion;
+* author може thank helper;
+* статистика оновлюється.
+
+### Safety
+
+* можна block;
+* можна report;
+* exact location прихована;
+* emergency warning показується.
+
+### PWA
+
+* app installable;
+* service worker працює;
+* push працює;
+* app opens standalone.
+
+---
+
+# 127. UX quality requirements
+
+Система повинна бути максимально простою.
+
+Основна дія:
+
+```text
+Попросити допомогу
+```
+
+повинна займати приблизно:
+
+**30–60 секунд.**
+
+Не змушувати користувача заповнювати:
+
+* довгі профілі;
+* непотрібні поля;
+* payment details;
+* складні форми.
+
+---
+
+# 128. Performance requirements
+
+Target:
+
+```text
+API p95 < 500 ms
+```
+
+для стандартних CRUD requests без external dependencies.
+
+Nearby query:
+
+```text
+p95 < 500 ms
+```
+
+при нормальному dataset.
+
+Frontend initial load:
+
+```text
+LCP < 2.5 sec
+```
+
+на нормальному mobile connection.
+
+---
+
+# 129. Scalability
+
+Не оптимізувати передчасно під мільйони користувачів.
+
+Architecture повинна спочатку нормально працювати для:
+
+```text
+1 city
+10k users
+1k active requests
+```
+
+Пізніше масштабування:
+
+```text
+multiple backend instances
+Redis
+PostgreSQL replicas
+Celery workers
+object storage
+```
+
+---
+
+# 130. No microservices
+
+Першу версію реалізувати як:
+
+**modular monolith.**
+
+Не створювати окремі:
+
+```text
+notification-service
+chat-service
+location-service
+user-service
+```
+
+як microservices.
+
+Це створить зайву складність.
+
+Внутрішні Django apps повинні мати чіткі boundaries, щоб за потреби пізніше їх можна було виділити.
+
+---
+
+# 131. Code quality
+
+Backend:
+
+```text
+ruff
+black
+mypy
+pytest
+```
+
+Frontend:
+
+```text
+eslint
+prettier
+typescript strict
+vitest
+playwright
+```
+
+CI повинен запускати:
+
+```text
+lint
+typecheck
+tests
+build
+```
+
+---
+
+# 132. Git
+
+Branches:
+
+```text
+main
+develop
+feature/*
+fix/*
+```
+
+PR повинен проходити CI.
+
+Commit messages бажано:
+
+```text
+feat:
+fix:
+refactor:
+test:
+docs:
+chore:
+```
+
+---
+
+# 133. CI/CD
+
+Pipeline:
+
+```text
+install
+lint
+typecheck
+test
+build
+docker build
+```
+
+Production deployment повинен виконувати migrations окремим controlled step.
+
+Не запускати небезпечні migrations неконтрольовано при старті кожного контейнера.
+
+---
+
+# 134. Environment separation
+
+Мінімум:
+
+```text
+development
+staging
+production
+```
+
+Окремі:
+
+* DB;
+* Redis;
+* storage;
+* secrets;
+* push credentials.
+
+---
+
+# 135. Seed data
+
+Створити management command:
+
+```bash
+python manage.py seed_demo_data
+```
+
+Вона створює:
+
+* demo users;
+* capabilities;
+* help requests;
+* conversations;
+* messages.
+
+Це потрібно для локальної демонстрації.
+
+---
+
+# 136. Fixtures
+
+Не залежати тільки від production-like seed.
+
+Створити factories через:
+
+```text
+factory_boy
+```
+
+для tests.
+
+---
+
+# 137. README
+
+README повинен містити:
+
+```text
+1. Project overview
+2. Architecture
+3. Requirements
+4. Local setup
+5. Environment variables
+6. Docker
+7. Database
+8. Migrations
+9. Running tests
+10. Running frontend
+11. Running backend
+12. PWA development
+13. Web Push setup
+14. S3 setup
+15. Deployment
+```
+
+---
+
+# 138. Architecture documentation
+
+Створити:
+
+```text
+docs/
+├── architecture.md
+├── api.md
+├── database.md
+├── notifications.md
+├── realtime.md
+├── security.md
+└── deployment.md
+```
+
+---
+
+# 139. Database ERD
+
+Створити документацію з основними entities:
+
+```text
+User
+ │
+ ├── Profile
+ ├── Capability
+ ├── PushSubscription
+ ├── Availability
+ ├── Notification
+ ├── HelpRequest
+ │       │
+ │       ├── HelpResponse
+ │       ├── Conversation
+ │       │       └── Message
+ │       └── ThankYou
+ │
+ ├── Report
+ └── UserBlock
+```
+
+---
+
+# 140. Initial database entities
+
+Мінімальний список:
+
+```text
+User
+Profile
+Capability
+UserCapability
+
+HelpRequest
+HelpResponse
+
+Conversation
+ConversationParticipant
+Message
+
+PushSubscription
+Notification
+NotificationPreference
+
+Availability
+
+Media
+
+ThankYou
+
+Report
+UserBlock
+```
+
+---
+
+# 141. Important implementation principle
+
+Не створювати надмірно складну domain architecture.
+
+Для цього проекту достатньо:
+
+```text
+Django Models
+        ↓
+Services
+        ↓
+DRF API
+```
+
+і:
+
+```text
+React
+   ↓
+TanStack Query
+   ↓
+REST API
+```
+
+Realtime:
+
+```text
+React
+   ↓
+WebSocket
+   ↓
+Django Channels
+```
+
+Notifications:
+
+```text
+Django
+   ↓
+Celery
+   ↓
+Web Push
+```
+
+---
+
+# 142. First implementation order
+
+AI coding agent повинен реалізовувати проект у такому порядку.
+
+## Phase 1 — Foundation
+
+1. Repository structure
+2. Docker
+3. Django
+4. PostgreSQL/PostGIS
+5. Redis
+6. Celery
+7. React/Vite
+8. PWA
+9. Environment config
+10. CI
+
+## Phase 2 — Authentication
+
+1. User
+2. Registration
+3. Login
+4. Email verification
+5. Google OAuth
+6. Profile
+
+## Phase 3 — Help Requests
+
+1. Models
+2. Categories
+3. Create API
+4. List API
+5. Detail API
+6. Update/cancel
+7. Geolocation
+8. PostGIS nearby search
+
+## Phase 4 — Interaction
+
+1. HelpResponse
+2. Select helper
+3. State transitions
+4. Transactions
+5. Permissions
+
+## Phase 5 — Notifications
+
+1. PushSubscription
+2. Service Worker
+3. VAPID
+4. Celery
+5. Nearby matching
+6. Push notification
+7. Notification center
+
+## Phase 6 — Realtime
+
+1. Conversation
+2. Message
+3. Channels
+4. WebSocket
+5. Reconnect
+6. Read state
+
+## Phase 7 — Map
+
+1. MapLibre
+2. markers
+3. approximate locations
+4. filters
+5. radius
+
+## Phase 8 — Reputation
+
+1. Complete help
+2. ThankYou
+3. statistics
+4. profile history
+
+## Phase 9 — Safety
+
+1. Report
+2. Block
+3. privacy
+4. emergency warning
+5. abuse prevention
+
+## Phase 10 — Polish
+
+1. mobile UX
+2. loading states
+3. errors
+4. animations
+5. accessibility
+6. responsive desktop
+7. PWA install
+8. browser testing
+
+---
+
+# 143. AI coding agent instructions
+
+AI coding agent MUST:
+
+1. Не ставити питання, якщо відповідь випливає з цього ТЗ.
+2. Не змінювати основний architecture stack без явної необхідності.
+3. Не створювати microservices.
+4. Не додавати payment систему.
+5. Не додавати features, яких немає в ТЗ, якщо вони не потрібні для реалізації.
+6. Не переносити business logic у frontend.
+7. Не переносити складну business logic у DRF serializers/views.
+8. Використовувати service layer.
+9. Писати tests разом з feature.
+10. Не залишати TODO замість реалізації без крайньої необхідності.
+11. Не робити mock замість реальної реалізації production-critical functionality.
+12. Не hardcode secrets.
+13. Не hardcode coordinates.
+14. Не hardcode URLs.
+15. Не зберігати uploaded images у PostgreSQL.
+16. Не використовувати polling там, де потрібен WebSocket.
+17. Не використовувати frontend filtering замість PostGIS для nearby search.
+18. Не реалізовувати continuous location tracking.
+19. Не показувати exact location неавторизованим учасникам.
+20. Не створювати duplicate business logic.
+
+---
+
+# 144. AI implementation behavior
+
+Перед початком:
+
+1. Проаналізувати repository.
+2. Якщо repository порожній — створити project structure.
+3. Якщо частина project вже існує — не переписувати її без необхідності.
+4. Визначити, які частини ТЗ вже реалізовані.
+5. Реалізовувати missing functionality.
+6. Після кожного logical feature запускати tests.
+7. Виправляти failing tests.
+8. Оновлювати README/documentation.
+9. Не завершувати feature з failing tests.
+
+---
+
+# 145. Definition of Done
+
+Feature вважається Done тільки якщо:
+
+```text
+[ ] backend implementation
+[ ] frontend implementation
+[ ] API integration
+[ ] validation
+[ ] permissions
+[ ] error handling
+[ ] loading state
+[ ] tests
+[ ] documentation
+```
+
+Для realtime:
+
+```text
+[ ] reconnect
+[ ] offline handling
+[ ] duplicate prevention
+```
+
+Для notifications:
+
+```text
+[ ] subscription
+[ ] permission handling
+[ ] backend delivery
+[ ] click handling
+[ ] invalid subscription cleanup
+```
+
+---
+
+# 146. Product principle
+
+Найважливіше правило продукту:
+
+> **Користувач повинен отримувати реальну користь навіть без грошей.**
+
+Система повинна оптимізувати не кількість транзакцій, а:
+
+```text
+людина попросила допомогу
+        ↓
+люди поруч дізналися
+        ↓
+хтось відгукнувся
+        ↓
+допомога відбулася
+```
+
+Головна одиниця цінності:
+
+**успішно надана допомога.**
+
+---
+
+# 147. Final product loop
+
+```text
+                    ┌──────────────────┐
+                    │      Користувач  │
+                    └────────┬─────────┘
+                             │
+               ┌─────────────┴─────────────┐
+               │                           │
+               ▼                           ▼
+       ПОТРІБНА ДОПОМОГА             МОЖУ ДОПОМОГТИ
+               │                           │
+               ▼                           ▼
+         Help Request              Nearby Requests
+               │                           │
+               └─────────────┬─────────────┘
+                             │
+                             ▼
+                    Push Notification
+                             │
+                             ▼
+                      «Можу допомогти»
+                             │
+                             ▼
+                       Chat / Contact
+                             │
+                             ▼
+                       Help happens
+                             │
+                             ▼
+                         Completed
+                             │
+                             ▼
+                         ❤️ Дякую
+                             │
+                             ▼
+                         Reputation
+                             │
+                             ▼
+                  Local trust network grows
+```
+
+---
+
+# 148. Перший реліз
+
+Перший production release повинен містити:
+
+* React PWA;
+* Django REST API;
+* PostgreSQL/PostGIS;
+* authentication;
+* profiles;
+* capabilities;
+* Help Requests;
+* geospatial search;
+* map;
+* nearby requests;
+* push notifications;
+* notification preferences;
+* «Я можу допомогти зараз»;
+* Help Responses;
+* helper selection;
+* realtime chat;
+* photos;
+* completion;
+* thank you;
+* history;
+* reports;
+* blocking;
+* Django Admin;
+* tests;
+* CI;
+* Docker;
+* API documentation;
+* health checks;
+* production logging;
+* Ukrainian localization.
+
+**Не включати в перший реліз:**
+
+* payments;
+* commissions;
+* subscriptions;
+* advertising;
+* native iOS app;
+* native Android app;
+* microservices;
+* continuous GPS tracking;
+* complex rating system;
+* AI matching;
+* cryptocurrency;
+* marketplace bidding.
+
+---
+
+# 149. Головний критерій успіху першої версії
+
+Новий користувач повинен мати можливість:
+
+**зареєструватися → дозволити location → створити запит → отримати відгук від людини поруч → поспілкуватися → отримати допомогу → завершити запит → подякувати.**
+
+Інший користувач повинен мати можливість:
+
+**зареєструватися → вибрати, з чим може допомагати → отримати push про проблему поруч → відкрити запит → запропонувати допомогу → поспілкуватися → допомогти → отримати подяку.**
+
+Якщо ці два сценарії працюють швидко, безпечно та надійно — основна функціональність першої версії реалізована.
+

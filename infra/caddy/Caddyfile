@@ -1,0 +1,5 @@
+# TLS termination in front of the frontend Nginx (which proxies /api, /ws, /admin, /r to Django).
+{$DOMAIN} {
+	encode zstd gzip
+	reverse_proxy frontend:80
+}

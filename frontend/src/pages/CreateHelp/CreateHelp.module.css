@@ -1,0 +1,76 @@
+.progress {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-surface-2);
+  overflow: hidden;
+}
+.progressBar {
+  height: 100%;
+  background: var(--color-primary);
+  transition: width var(--transition);
+}
+.footer {
+  position: sticky;
+  bottom: calc(var(--nav-height) + var(--safe-bottom));
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+  background: linear-gradient(transparent, var(--color-bg) 30%);
+}
+.footer > * {
+  flex: 1;
+}
+@media (min-width: 1024px) {
+  .footer {
+    bottom: 0;
+  }
+}
+.summary {
+  display: grid;
+  gap: var(--space-2);
+}
+.summary dt {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+.summary dd {
+  margin: 0 0 var(--space-2);
+}
+.warning {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-warning-soft);
+  font-size: var(--text-sm);
+}
+.rewardBox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+.checks {
+  display: grid;
+  gap: var(--space-2);
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.check input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--color-primary);
+}
+.error {
+  color: var(--color-danger);
+  font-size: var(--text-sm);
+}

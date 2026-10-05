@@ -1,0 +1,54 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+}
+.map {
+  position: absolute;
+  inset: 0;
+}
+.markerRoot {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.marker {
+  width: 36px;
+  height: 36px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border: 2px solid #fff;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+}
+.marker span {
+  transform: rotate(45deg);
+  font-size: 16px;
+}
+.approx {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px dashed currentColor;
+  background: color-mix(in srgb, currentColor 18%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.me {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #2b7cff;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 6px rgb(43 124 255 / 0.25);
+}

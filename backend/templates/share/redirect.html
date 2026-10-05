@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{{ title }} — Poruch</title>
+    <meta name="description" content="{{ description }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Poruch" />
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:description" content="{{ description }}" />
+    <meta property="og:url" content="{{ share_url }}" />
+    <meta name="twitter:card" content="summary" />
+    <meta http-equiv="refresh" content="0; url={{ app_url }}" />
+  </head>
+  <body>
+    <p><a href="{{ app_url }}">{{ title }}</a></p>
+    {{ app_url|json_script:"app-url" }}
+    <script>window.location.replace(JSON.parse(document.getElementById("app-url").textContent));</script>
+  </body>
+</html>
