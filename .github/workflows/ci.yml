@@ -97,21 +97,25 @@ jobs:
     needs: [backend, frontend]
     steps:
       - uses: actions/checkout@v4
-      - name: Start stack
-        run: |
-          cp .env.example .env
-          docker compose up -d --build --wait --wait-timeout 300 postgres redis s3 mailpit backend celery frontend
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: frontend/package-lock.json
-      - name: Run Playwright
+      # Install before the stack starts: the frontend container bind-mounts ./frontend and would
+      # otherwise create frontend/node_modules as root, so npm ci on the runner gets EACCES.
+      - name: Install Playwright
         working-directory: frontend
         run: |
           npm ci
           npx playwright install --with-deps chromium
-          npx playwright test
+      - name: Start stack
+        run: |
+          cp .env.example .env
+          docker compose up -d --build --wait --wait-timeout 300 postgres redis s3 mailpit backend celery frontend
+      - name: Run Playwright
+        working-directory: frontend
+        run: npx playwright test
       - name: Stack logs on failure
         if: failure()
         run: docker compose logs --tail 200 backend celery
