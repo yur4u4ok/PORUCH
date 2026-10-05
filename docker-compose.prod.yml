@@ -23,6 +23,8 @@ services:
     image: postgis/postgis:16-3.4
     env_file: .env.production
     volumes: [pgdata:/var/lib/postgresql/data]
+    # Only on the server's loopback: reachable through an SSH tunnel (DBeaver etc.), never from the internet.
+    ports: ["127.0.0.1:5432:5432"]
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
