@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
         includeAssets: ["icons/favicon.svg", "icons/apple-touch-icon.png"],
         manifest: {
           id: "/",
-          name: "Poruch — локальна мережа взаємодопомоги",
+          name: "Poruch",
           short_name: "Poruch",
           description: "Попроси допомогу в людей поруч або допоможи сам.",
           lang: "uk",
