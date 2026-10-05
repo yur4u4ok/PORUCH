@@ -9,6 +9,15 @@
 * `backend/Dockerfile` target `production`: Python 3.12 slim + GDAL, non-root user, `collectstatic` під час збірки, Daphne (`config.asgi:application`, HTTP + WebSocket), healthcheck `/health/live/`.
 * `frontend/Dockerfile` target `production`: збірка Vite → Nginx (статика PWA, `no-cache` для `sw.js`/manifest, immutable assets, reverse-proxy `/api`, `/ws`, `/admin`, `/static`, `/health`).
 
+## Поточний production
+
+* Сервер Hetzner (Ubuntu), домен `poruch-app.duckdns.org`, код у `/opt/poruch`.
+* HTTPS — контейнер Caddy (Let's Encrypt, автопродовження), далі Nginx фронтенду → Django.
+* Фото — Cloudflare R2 (завантаження через presigned PUT: R2 не підтримує presigned POST). CORS bucket'а дозволяє `https://poruch-app.duckdns.org`.
+* Налаштування — лише на сервері: `/opt/poruch/.env.production` (права 600, у git не потрапляє).
+* Оновлення: `scripts/deploy.sh` (копіює код, збирає образи, міграції, перезапуск, перевірка здоров'я).
+* Файрвол ufw: відкриті лише 22, 80, 443.
+
 ## Docker Compose (один сервер)
 
 ```bash
@@ -19,7 +28,7 @@ docker compose -f docker-compose.prod.yml --env-file .env.production up -d
 docker compose -f docker-compose.prod.yml --env-file .env.production exec backend python manage.py createsuperuser
 ```
 
-TLS термінується на зовнішньому балансувальнику/проксі (Traefik, Caddy, хмарний LB), який передає `X-Forwarded-Proto`.
+TLS термінує контейнер `caddy` (потрібна змінна `DOMAIN` у `.env.production`). Nginx фронтенду зберігає `X-Forwarded-Proto` від Caddy. `DJANGO_ALLOWED_HOSTS` має містити й `localhost` для healthcheck.
 
 ### Обов'язкові production-змінні
 
