@@ -1,6 +1,7 @@
 # Production-like stack (single host). For Kubernetes use the same images and commands.
 #   docker compose -f docker-compose.prod.yml --env-file .env.production run --rm migrate
 #   docker compose -f docker-compose.prod.yml --env-file .env.production up -d
+#   (DOMAIN must be set in .env.production; Caddy issues the HTTPS certificate)
 # Object storage is external (AWS S3 / R2 / MinIO cluster) and configured via AWS_* variables.
 name: poruch-prod
 
@@ -73,10 +74,24 @@ services:
     image: poruch-frontend:latest
     environment:
       BACKEND_UPSTREAM: http://backend:8000
-    ports: ["80:80"]
     restart: unless-stopped
     depends_on: [backend]
+
+  # HTTPS: obtains and renews a Let's Encrypt certificate for $DOMAIN automatically.
+  caddy:
+    image: caddy:2-alpine
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN in .env.production}
+    ports: ["80:80", "443:443", "443:443/udp"]
+    volumes:
+      - ./infra/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddydata:/data
+      - caddyconfig:/config
+    restart: unless-stopped
+    depends_on: [frontend]
 
 volumes:
   pgdata:
   redisdata:
+  caddydata:
+  caddyconfig:

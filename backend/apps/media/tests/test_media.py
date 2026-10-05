@@ -35,9 +35,10 @@ def test_upload_url_validation(auth_client, s3):
     assert request_upload(auth_client, size=11 * 1024 * 1024).status_code == 400
     response = request_upload(auth_client)
     assert response.status_code == 201
-    assert "url" in response.data["upload"] and "fields" in response.data["upload"]
-    conditions = response.data["upload"]["fields"]
-    assert conditions["Content-Type"] == "image/jpeg"
+    upload = response.data["upload"]
+    assert upload["method"] == "PUT" and upload["headers"]["Content-Type"] == "image/jpeg"
+    # Type and exact size are signed: a different file cannot reuse the URL.
+    assert "content-length" in upload["url"].lower() and "content-type" in upload["url"].lower()
 
 
 def test_confirm_processes_image(auth_client, s3):

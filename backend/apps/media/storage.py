@@ -33,14 +33,18 @@ def bucket() -> str:
     return settings.AWS_STORAGE_BUCKET_NAME
 
 
-def presigned_post(key: str, content_type: str, max_bytes: int) -> dict:
-    return public_client().generate_presigned_post(
-        Bucket=bucket(),
-        Key=key,
-        Fields={"Content-Type": content_type},
-        Conditions=[{"Content-Type": content_type}, ["content-length-range", 1, max_bytes]],
+def presigned_put(key: str, content_type: str, size: int) -> dict:
+    """Presigned PUT (works on AWS S3, Cloudflare R2 and SeaweedFS; R2 has no presigned POST).
+
+    Content-Type and the exact declared size are part of the signature, so the browser cannot
+    upload another type or a bigger file with this URL.
+    """
+    url = public_client().generate_presigned_url(
+        "put_object",
+        Params={"Bucket": bucket(), "Key": key, "ContentType": content_type, "ContentLength": size},
         ExpiresIn=settings.MEDIA_PRESIGNED_TTL,
     )
+    return {"url": url, "method": "PUT", "headers": {"Content-Type": content_type}}
 
 
 def presigned_get(key: str) -> str:

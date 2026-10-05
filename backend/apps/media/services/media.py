@@ -34,7 +34,7 @@ def create_upload(user: User, *, kind: str, content_type: str, size: int) -> tup
         declared_size=size,
         original_key=key,
     )
-    upload = storage.presigned_post(key, content_type, settings.MEDIA_MAX_UPLOAD_BYTES)
+    upload = storage.presigned_put(key, content_type, size)
     return media, upload
 
 
