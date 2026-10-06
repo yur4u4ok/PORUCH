@@ -1,95 +1,29 @@
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 
+import { API_BASE } from "@/api/client";
 import { usePublicConfig } from "@/features/profile/hooks";
+import { consumeAfterAuth } from "@/utils/afterAuth";
 
 import styles from "./GoogleButton.module.css";
-import { useGoogleLogin } from "./hooks";
-
-const GIS_SRC = "https://accounts.google.com/gsi/client";
-
-interface CodeClient {
-  requestCode: () => void;
-}
-
-interface GoogleIdentity {
-  accounts: {
-    oauth2: {
-      initCodeClient: (options: {
-        client_id: string;
-        scope: string;
-        ux_mode: "popup";
-        callback: (response: { code?: string; error?: string }) => void;
-      }) => CodeClient;
-    };
-  };
-}
-
-declare global {
-  interface Window {
-    google?: GoogleIdentity;
-  }
-}
-
-function loadScript(): Promise<void> {
-  if (window.google) return Promise.resolve();
-  return new Promise((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>(`script[src="${GIS_SRC}"]`);
-    const script = existing ?? document.createElement("script");
-    script.src = GIS_SRC;
-    script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error("gis"));
-    if (!existing) document.head.appendChild(script);
-  });
-}
 
 /**
- * Our own button (same look as the rest of the app) that opens Google's account popup.
- * Google returns a one-time code; the backend exchanges it and verifies the ID token.
+ * Google sign-in by full-page redirect: the backend sends the user to Google's account chooser and
+ * back with session cookies. A popup cannot report back from an installed PWA (it opens in a
+ * separate browser), which left users stuck on the sign-up page.
  * Rendered only when GOOGLE_CLIENT_ID is configured.
  */
-export function GoogleButton({ redirectTo = "/" }: { redirectTo?: string }) {
+export function GoogleButton({ redirectTo }: { redirectTo?: string }) {
   const { data: config } = usePublicConfig();
   const { t } = useTranslation();
-  const login = useGoogleLogin();
-  const navigate = useNavigate();
-  const clientId = config?.google_client_id;
-  const [client, setClient] = useState<CodeClient | null>(null);
+  if (!config?.google_client_id) return null;
 
-  useEffect(() => {
-    if (!clientId) return;
-    let cancelled = false;
-    loadScript()
-      .then(() => {
-        if (cancelled || !window.google) return;
-        setClient(
-          window.google.accounts.oauth2.initCodeClient({
-            client_id: clientId,
-            scope: "openid email profile",
-            ux_mode: "popup",
-            callback: ({ code }) => {
-              if (code) login.mutate(code, { onSuccess: () => navigate(redirectTo, { replace: true }) });
-            },
-          }),
-        );
-      })
-      .catch(() => undefined);
-    return () => {
-      cancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clientId]);
+  const start = () => {
+    const next = consumeAfterAuth(redirectTo ?? "/");
+    window.location.assign(`${API_BASE}/auth/google/start/?${new URLSearchParams({ next })}`);
+  };
 
-  if (!clientId) return null;
   return (
-    <button
-      type="button"
-      className={styles.button}
-      onClick={() => client?.requestCode()}
-      disabled={!client || login.isPending}
-    >
+    <button type="button" className={styles.button} onClick={start}>
       <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden>
         <path
           fill="#EA4335"

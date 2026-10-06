@@ -150,8 +150,11 @@ def _verify_google_credential(credential: str) -> dict:
 GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token"
 
 
-def exchange_google_code(code: str) -> str:
-    """Popup code flow: trade the one-time code for an ID token (verified as usual afterwards)."""
+def exchange_google_code(code: str, redirect_uri: str = "postmessage") -> str:
+    """Trade a one-time authorization code for an ID token (verified as usual afterwards).
+
+    redirect_uri must equal the one used to obtain the code ("postmessage" for the GIS popup).
+    """
     import requests
 
     if not settings.GOOGLE_CLIENT_ID or not settings.GOOGLE_CLIENT_SECRET:
@@ -163,7 +166,7 @@ def exchange_google_code(code: str) -> str:
                 "code": code,
                 "client_id": settings.GOOGLE_CLIENT_ID,
                 "client_secret": settings.GOOGLE_CLIENT_SECRET,
-                "redirect_uri": "postmessage",  # required value for the GIS popup flow
+                "redirect_uri": redirect_uri,
                 "grant_type": "authorization_code",
             },
             timeout=10,
