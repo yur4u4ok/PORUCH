@@ -529,7 +529,8 @@
   "share": {
     "button": "Teilen",
     "title": "Anfrage teilen",
-    "text": "Hilfe gesucht: {{title}}",
+    "headline": "Jemand in der Nähe braucht Hilfe!",
+    "cta": "Kannst du helfen? Antworte in Poruch 👇",
     "why": "Das Netzwerk wächst noch. Schick die Anfrage in den Hauschat oder an Freunde – dann kommt die Hilfe schneller.",
     "copy": "Link kopieren",
     "copied": "Link kopiert",

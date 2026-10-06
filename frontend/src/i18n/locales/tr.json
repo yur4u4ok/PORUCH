@@ -529,7 +529,8 @@
   "share": {
     "button": "Paylaş",
     "title": "İsteği paylaş",
-    "text": "Yardım gerekiyor: {{title}}",
+    "headline": "Yakında birinin yardıma ihtiyacı var!",
+    "cta": "Yardım edebilir misin? Poruch'ta yanıt ver 👇",
     "why": "Ağ hâlâ büyüyor. İsteği apartman grubuna ya da arkadaşlarına gönder — yardım daha hızlı gelir.",
     "copy": "Bağlantıyı kopyala",
     "copied": "Bağlantı kopyalandı",
