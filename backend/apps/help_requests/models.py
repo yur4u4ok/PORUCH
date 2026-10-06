@@ -38,6 +38,8 @@ class HelpRequest(TimeStampedModel):
     place_name = models.CharField(max_length=120, blank=True, default="")
 
     urgency = models.CharField(max_length=10, choices=Urgency.choices, db_index=True)
+    # When help is needed, for urgency SCHEDULED ("у визначений час"); null otherwise.
+    needed_at = models.DateTimeField(null=True, blank=True)
 
     reward_type = models.CharField(max_length=10, choices=RewardType.choices, default=RewardType.NONE)
     reward_amount = models.DecimalField(

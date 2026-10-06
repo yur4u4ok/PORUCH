@@ -16,6 +16,7 @@ const request = {
   urgency: "NOW",
   reward_type: "NONE",
   place_name: "",
+  needed_at: null,
   reward_amount: null,
   reward_currency: "UAH",
   reward_options: [],

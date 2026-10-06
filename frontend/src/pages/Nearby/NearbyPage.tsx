@@ -14,10 +14,10 @@ import { useSyncNotificationLocation } from "@/features/location/useSyncNotifica
 import { PushToggle } from "@/features/notifications/PushToggle";
 import { usePublicConfig } from "@/features/profile/hooks";
 import { useNearbyFilters } from "@/stores/nearbyFiltersStore";
-import type { LatLng, Urgency } from "@/types/api";
+import type { LatLng } from "@/types/api";
 import { cityName } from "@/utils/city";
 import { fallbackCenter, usePlace } from "@/features/location/place";
-import { CATEGORY_ORDER, URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
+import { CATEGORY_ORDER, URGENCIES, URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
 import { DEFAULT_RADII } from "@/utils/radius";
 
 const ZOOM_BY_RADIUS: Record<number, number> = {
@@ -203,7 +203,7 @@ export default function NearbyPage() {
         <div className="stack-sm">
           <strong>{t("nearby.urgency")}</strong>
           <div className="row wrap">
-            {(["NOW", "TODAY", "WHENEVER"] as Urgency[]).map((u) => (
+            {URGENCIES.map((u) => (
               <Button
                 key={u}
                 size="sm"

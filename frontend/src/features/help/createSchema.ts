@@ -12,7 +12,9 @@ export const createHelpSchema = z
     location: z
       .object({ latitude: z.number(), longitude: z.number(), accuracy: z.number().nullable().optional() })
       .nullable(),
-    urgency: z.enum(["NOW", "TODAY", "WHENEVER"]),
+    urgency: z.enum(["NOW", "TODAY", "WHENEVER", "SCHEDULED"]),
+    /** "YYYY-MM-DDTHH:mm" in the user's local time (datetime-local input); for SCHEDULED only. */
+    needed_at: z.string(),
     reward_type: z.enum(["NONE", "WILLING", "UNSURE"]),
     reward_amount: z
       .string()
@@ -24,6 +26,18 @@ export const createHelpSchema = z
     emergency_acknowledged: z.boolean(),
   })
   .refine((v) => v.location !== null, { path: ["location"], message: "create.locationError" })
+  .refine((v) => v.urgency !== "SCHEDULED" || v.needed_at !== "", {
+    path: ["needed_at"],
+    message: "create.neededAtRequired",
+  })
+  .refine(
+    (v) =>
+      v.urgency !== "SCHEDULED" || !v.needed_at || new Date(v.needed_at).getTime() > Date.now() + 14 * 60_000,
+    {
+      path: ["needed_at"],
+      message: "create.neededAtTooSoon",
+    },
+  )
   .refine(
     (v) =>
       v.reward_type !== "WILLING" ||
@@ -38,7 +52,7 @@ export const STEP_FIELDS: (keyof CreateHelpForm)[][] = [
   ["category"],
   ["title", "description"],
   ["location"],
-  ["urgency"],
+  ["urgency", "needed_at"],
   ["reward_type", "reward_amount", "reward_options"],
   [],
   [],

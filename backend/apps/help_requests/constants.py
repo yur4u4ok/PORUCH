@@ -63,9 +63,10 @@ class Urgency(models.TextChoices):
     NOW = "NOW", "Зараз"
     TODAY = "TODAY", "Сьогодні"
     WHENEVER = "WHENEVER", "Коли буде можливість"
+    SCHEDULED = "SCHEDULED", "У визначений час"
 
 
-URGENCY_RANK = {Urgency.NOW: 0, Urgency.TODAY: 1, Urgency.WHENEVER: 2}
+URGENCY_RANK = {Urgency.NOW: 0, Urgency.TODAY: 1, Urgency.SCHEDULED: 2, Urgency.WHENEVER: 3}
 
 
 class RewardType(models.TextChoices):

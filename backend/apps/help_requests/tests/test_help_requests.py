@@ -34,6 +34,38 @@ def nearby(client, lat=LVIV[0], lng=LVIV[1], **params):
     return client.get(LIST_URL, query)
 
 
+class TestScheduled:
+    """Urgency SCHEDULED: help needed at a chosen date and time."""
+
+    def test_scheduled_request_keeps_time_and_expires_after_it(self, auth_client, lviv):
+        when = (timezone.now() + timedelta(days=2)).replace(microsecond=0)
+        response = auth_client.post(
+            LIST_URL, payload(lviv, urgency="SCHEDULED", needed_at=when.isoformat()), format="json"
+        )
+        assert response.status_code == 201, response.data
+        hr = HelpRequest.objects.get(id=response.data["id"])
+        assert hr.needed_at == when
+        assert hr.expires_at == when + timedelta(hours=2)
+        assert response.data["needed_at"] is not None
+
+    @pytest.mark.parametrize(
+        "needed_at",
+        [None, timedelta(minutes=5), timedelta(days=31), -timedelta(hours=1)],
+        ids=["missing", "too-soon", "too-far", "past"],
+    )
+    def test_invalid_time_is_rejected(self, auth_client, lviv, needed_at):
+        when = None if needed_at is None else (timezone.now() + needed_at).isoformat()
+        response = auth_client.post(LIST_URL, payload(lviv, urgency="SCHEDULED", needed_at=when), format="json")
+        assert response.status_code == 400
+        assert "needed_at" in response.data["details"]
+
+    def test_needed_at_is_ignored_for_other_urgencies(self, auth_client, lviv):
+        when = (timezone.now() + timedelta(days=1)).isoformat()
+        response = auth_client.post(LIST_URL, payload(lviv, urgency="TODAY", needed_at=when), format="json")
+        assert response.status_code == 201
+        assert response.data["needed_at"] is None
+
+
 class TestCreate:
     def test_create_request(self, auth_client, lviv):
         response = auth_client.post(LIST_URL, payload(lviv), format="json")

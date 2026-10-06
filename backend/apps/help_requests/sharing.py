@@ -52,6 +52,7 @@ class SharePreviewSerializer(serializers.Serializer):
     title = serializers.CharField(allow_null=True)
     description = serializers.CharField(allow_null=True)
     urgency = serializers.CharField(allow_null=True)
+    needed_at = serializers.DateTimeField(allow_null=True)
     reward_type = serializers.CharField(allow_null=True)
     reward_amount = serializers.DecimalField(max_digits=10, decimal_places=2, allow_null=True)
     reward_currency = serializers.CharField()
@@ -83,6 +84,7 @@ def preview_data(help_request: HelpRequest) -> dict:
             "title": None,
             "description": None,
             "urgency": None,
+            "needed_at": None,
             "reward_type": None,
             "reward_amount": None,
             "reward_options": [],
@@ -94,6 +96,7 @@ def preview_data(help_request: HelpRequest) -> dict:
         "title": help_request.title,
         "description": help_request.description,
         "urgency": help_request.urgency,
+        "needed_at": help_request.needed_at,
         "reward_type": help_request.reward_type,
         "reward_amount": help_request.reward_amount,
         "reward_options": help_request.reward_options,

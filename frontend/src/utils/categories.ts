@@ -36,16 +36,30 @@ export const SUBCATEGORY_EMOJI: Record<string, string> = {
   CARRY_HEAVY: "🏋️",
 };
 
-export const URGENCY_EMOJI: Record<Urgency, string> = { NOW: "🔴", TODAY: "🟡", WHENEVER: "🟢" };
+export const URGENCY_EMOJI: Record<Urgency, string> = {
+  NOW: "🔴",
+  TODAY: "🟡",
+  SCHEDULED: "📅",
+  WHENEVER: "🟢",
+};
+
+/** Order shown in forms and filters. */
+export const URGENCIES: Urgency[] = ["NOW", "TODAY", "SCHEDULED", "WHENEVER"];
 
 export const URGENCY_COLOR: Record<Urgency, string> = {
   NOW: "var(--color-urgent-now)",
   TODAY: "var(--color-urgent-today)",
   WHENEVER: "var(--color-urgent-whenever)",
+  SCHEDULED: "var(--color-urgent-scheduled)",
 };
 
 /** Raw colors for MapLibre DOM markers (CSS vars resolve too, but keep explicit for contrast). */
-export const URGENCY_HEX: Record<Urgency, string> = { NOW: "#b54708", TODAY: "#a87a12", WHENEVER: "#1f7a4d" };
+export const URGENCY_HEX: Record<Urgency, string> = {
+  NOW: "#b54708",
+  TODAY: "#a87a12",
+  WHENEVER: "#1f7a4d",
+  SCHEDULED: "#2f5f9e",
+};
 
 export function requestEmoji(category: Category, subcategory?: string | null): string {
   return (subcategory && SUBCATEGORY_EMOJI[subcategory]) || CATEGORY_EMOJI[category];

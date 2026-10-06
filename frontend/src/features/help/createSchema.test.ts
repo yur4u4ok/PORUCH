@@ -9,6 +9,7 @@ const valid = {
   description: "Пробите колесо",
   location: { latitude: 49.84, longitude: 24.03, accuracy: 10 },
   urgency: "NOW",
+  needed_at: "",
   reward_type: "NONE",
   reward_amount: "",
   reward_options: [],
@@ -26,6 +27,16 @@ describe("createHelpSchema", () => {
   it("requires location", () => {
     const result = createHelpSchema.safeParse({ ...valid, location: null });
     expect(result.success).toBe(false);
+  });
+  it("requires a future date and time for SCHEDULED", () => {
+    const inHours = (h: number) => new Date(Date.now() + h * 3600_000).toISOString().slice(0, 16);
+    expect(createHelpSchema.safeParse({ ...valid, urgency: "SCHEDULED" }).success).toBe(false);
+    expect(
+      createHelpSchema.safeParse({ ...valid, urgency: "SCHEDULED", needed_at: inHours(-1) }).success,
+    ).toBe(false);
+    expect(
+      createHelpSchema.safeParse({ ...valid, urgency: "SCHEDULED", needed_at: inHours(24) }).success,
+    ).toBe(true);
   });
   it("validates optional reward amount", () => {
     expect(
