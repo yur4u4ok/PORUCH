@@ -49,7 +49,7 @@ def test_short_link_renders_open_graph_and_redirects(settings):
     settings.FRONTEND_URL = "https://poruch.app"
     hr = HelpRequestFactory(title="Пробите колесо", reward_type="WILLING", reward_amount=500, place_name="Львів")
     html = Client().get(f"/r/{hr.share_code}").content.decode()
-    assert 'property="og:title" content="Потрібна допомога: Пробите колесо"' in html
+    assert 'property="og:title" content="🆘 Потрібна допомога: Пробите колесо"' in html
     assert "500 грн" in html and "Львів" in html
     assert f"https://poruch.app/share/{hr.share_code}" in html
     assert 'property="og:image" content="https://poruch.app/og-image.png"' in html

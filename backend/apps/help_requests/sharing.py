@@ -4,10 +4,13 @@ Only what the author already shows to everyone nearby is exposed: no author name
 no exact location, no photos. Closed requests only say that they are inactive.
 """
 
+from typing import TYPE_CHECKING
+
 from django.conf import settings
 from django.http import Http404
 from django.shortcuts import render
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.permissions import AllowAny
@@ -20,14 +23,25 @@ from common import analytics
 from common.throttling import SharePreviewThrottle
 from common.utils.money import format_money
 
+if TYPE_CHECKING:  # dev-only stubs package
+    from django_stubs_ext import StrOrPromise
+
 
 def share_url(help_request: HelpRequest) -> str:
     return f"{settings.SHARE_BASE_URL.rstrip('/')}/r/{help_request.share_code}"
 
 
+# Same wording and emoji as the app (the model choice labels are older internal names).
+REWARD_PHRASES: dict[str, "StrOrPromise"] = {
+    RewardType.NONE: _lazy("❤️ Без оплати"),
+    RewardType.UNSURE: _lazy("🍫 За символічну подяку"),
+}
+
+
 def reward_text(help_request: HelpRequest) -> str:
     if help_request.reward_type != RewardType.WILLING:
-        return str(RewardType(help_request.reward_type).label)
+        phrase = REWARD_PHRASES.get(help_request.reward_type) or RewardType(help_request.reward_type).label
+        return str(phrase)
     labels = dict(RewardOption.choices)
     parts = (
         [format_money(help_request.reward_amount, help_request.reward_currency)] if help_request.reward_amount else []
@@ -123,10 +137,26 @@ def share_redirect(request, code):
     data = preview_data(help_request)
     city = data["place"]
     if data["active"]:
-        title = _("Потрібна допомога: {title}").format(title=help_request.title)
-        description = " · ".join(filter(None, [city, reward_text(help_request), help_request.description[:140]]))
+        from apps.notifications.services.texts import URGENCY_PHRASES
+
+        title = _("🆘 Потрібна допомога: {title}").format(title=help_request.title)
+        facts = " · ".join(
+            filter(
+                None,
+                [
+                    f"📍 {city}" if city else "",
+                    str(URGENCY_PHRASES.get(help_request.urgency, "")),
+                    (
+                        f"🎁 {reward_text(help_request)}"
+                        if help_request.reward_type == RewardType.WILLING
+                        else reward_text(help_request)
+                    ),
+                ],
+            )
+        )
+        description = f"{facts}\n{help_request.description[:140]}\n🤝 " + _("Можеш допомогти? Відгукнись у Poruch")
     else:
-        title = _("Запит уже неактивний")
+        title = _("✅ Запит уже неактивний")
         description = _("Poruch — локальна мережа взаємодопомоги")
     app_url = f"{settings.FRONTEND_URL.rstrip('/')}/share/{code}"
     return render(

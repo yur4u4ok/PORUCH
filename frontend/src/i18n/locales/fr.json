@@ -529,7 +529,8 @@
   "share": {
     "button": "Partager",
     "title": "Partager la demande",
-    "text": "Besoin d'aide : {{title}}",
+    "headline": "Quelqu'un à proximité a besoin d'aide !",
+    "cta": "Vous pouvez aider ? Répondez dans Poruch 👇",
     "why": "Le réseau grandit encore. Envoyez la demande au groupe de votre immeuble ou à vos amis : l'aide arrivera plus vite.",
     "copy": "Copier le lien",
     "copied": "Lien copié",

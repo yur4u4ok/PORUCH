@@ -529,7 +529,8 @@
   "share": {
     "button": "Share",
     "title": "Share request",
-    "text": "Help needed: {{title}}",
+    "headline": "Someone nearby needs help!",
+    "cta": "Can you help? Respond in Poruch 👇",
     "why": "The network is still growing. Send the request to your building chat or friends — help will come faster.",
     "copy": "Copy link",
     "copied": "Link copied",

@@ -1,3 +1,4 @@
+import type { TFunction } from "i18next";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router";
@@ -36,8 +37,8 @@ import { useBlockUser } from "@/features/profile/hooks";
 import { useLocationStore } from "@/stores/locationStore";
 import { toast } from "@/stores/toastStore";
 import type { HelpRequest, OfferType } from "@/types/api";
-import { URGENCY_HEX, requestEmoji } from "@/utils/categories";
-import { currencySymbol, formatDistance, timeAgo, timeLeft } from "@/utils/format";
+import { URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
+import { currencySymbol, formatDateTime, formatDistance, timeAgo, timeLeft } from "@/utils/format";
 import { agreedSummary, offerSummary, rewardSummary } from "@/utils/reward";
 import { emergencyVars } from "@/utils/emergency";
 
@@ -319,6 +320,25 @@ function HelperActions({ request }: { request: HelpRequest }) {
   );
 }
 
+/** Message sent with the link: a few short lines that read well in Telegram/Viber/WhatsApp. */
+function shareMessage(request: HelpRequest, t: TFunction): string {
+  const when =
+    request.urgency === "SCHEDULED" && request.needed_at
+      ? formatDateTime(request.needed_at)
+      : t(`urgency.${request.urgency}`);
+  const details = [
+    request.place_name ? `📍 ${request.place_name}` : null,
+    `${URGENCY_EMOJI[request.urgency]} ${when}`,
+    `🎁 ${rewardSummary(request, t)}`,
+  ].filter(Boolean);
+  return [
+    `🆘 ${t("share.headline")}`,
+    `${requestEmoji(request.category, request.subcategory)} ${request.title}`,
+    details.join(" · "),
+    `🤝 ${t("share.cta")}`,
+  ].join("\n");
+}
+
 export default function HelpRequestPage() {
   const { id = "" } = useParams();
   const { t } = useTranslation();
@@ -448,17 +468,7 @@ export default function HelpRequestPage() {
 
       {request.is_author ? <AuthorActions request={request} /> : <HelperActions request={request} />}
 
-      {request.share_url && (
-        <ShareButton
-          url={request.share_url}
-          text={[
-            t("share.text", { title: request.title }),
-            request.reward_type === "WILLING" ? rewardSummary(request, t) : null,
-          ]
-            .filter(Boolean)
-            .join(" · ")}
-        />
-      )}
+      {request.share_url && <ShareButton url={request.share_url} text={shareMessage(request, t)} />}
 
       {!request.is_author && (
         <div className={styles.secondaryActions}>

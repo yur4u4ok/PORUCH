@@ -541,7 +541,8 @@
   "share": {
     "button": "Udostępnij",
     "title": "Udostępnij prośbę",
-    "text": "Potrzebna pomoc: {{title}}",
+    "headline": "Ktoś w pobliżu potrzebuje pomocy!",
+    "cta": "Możesz pomóc? Odpowiedz w Poruch 👇",
     "why": "Sieć dopiero rośnie. Wyślij prośbę na czat bloku lub znajomym – pomoc przyjdzie szybciej.",
     "copy": "Kopiuj link",
     "copied": "Link skopiowany",

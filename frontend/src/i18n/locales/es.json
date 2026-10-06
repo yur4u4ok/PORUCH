@@ -529,7 +529,8 @@
   "share": {
     "button": "Compartir",
     "title": "Compartir petición",
-    "text": "Se necesita ayuda: {{title}}",
+    "headline": "¡Alguien cerca necesita ayuda!",
+    "cta": "¿Puedes ayudar? Responde en Poruch 👇",
     "why": "La red todavía está creciendo. Envía la petición al chat de tu edificio o a tus amigos: la ayuda llegará antes.",
     "copy": "Copiar enlace",
     "copied": "Enlace copiado",
