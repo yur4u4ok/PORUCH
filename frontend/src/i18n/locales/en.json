@@ -107,7 +107,9 @@
     "newPassword": "New password",
     "setPassword": "Set password",
     "passwordChanged": "Password changed. You can log in now.",
-    "terms": "By signing up, you agree to help safely and respectfully."
+    "terms": "By signing up, you agree to help safely and respectfully.",
+    "googleFailed": "Couldn't sign in with Google. Please try again.",
+    "googleInactive": "This account has been deactivated."
   },
   "validation": {
     "required": "Required field",
@@ -217,6 +219,7 @@
     "NOW": "Now",
     "TODAY": "Today",
     "WHENEVER": "Whenever possible",
+    "SCHEDULED": "At a specific time",
     "NOW_long": "Help needed now"
   },
   "reward": {
@@ -285,7 +288,12 @@
     "photoWrongType": "Only JPEG, PNG, WEBP are supported",
     "photoUploadFailed": "Couldn't upload the photo",
     "locationUpdated": "Pin moved to your current location",
-    "locationDenied": "No access to location. Allow it in your browser settings or move the pin manually."
+    "locationDenied": "No access to location. Allow it in your browser settings or move the pin manually.",
+    "neededAtLabel": "When help is needed",
+    "neededAtHint": "From 15 minutes to 30 days ahead",
+    "neededAtRequired": "Choose the date and time",
+    "neededAtTooSoon": "Choose a time at least 15 minutes from now",
+    "neededAtTime": "Time"
   },
   "nearby": {
     "title": "Help nearby",
@@ -552,5 +560,49 @@
     "sent": "Message sent",
     "replyNote": "We'll reply to {{email}}.",
     "another": "Write another"
+  },
+  "install": {
+    "title": "Install Poruch as an app",
+    "why": "Poruch works best as an app on your home screen.",
+    "benefits": [
+      "🔔 Notifications arrive even when the app is closed",
+      "⚡ Opens with one tap, full screen",
+      "📍 Finds you and people nearby faster"
+    ],
+    "button": "Install",
+    "howTo": "How to install:",
+    "steps": {
+      "ios": [
+        "Tap Share ⬆️ at the bottom of Safari",
+        "Choose “Add to Home Screen” (scroll the list if you don't see it)",
+        "Tap “Add” — Poruch appears with your apps"
+      ],
+      "ios-other-browser": [
+        "Tap Share ⬆️ in the address bar",
+        "Choose “Add to Home Screen”; if it's missing, open the site in Safari",
+        "Tap “Add”"
+      ],
+      "android": [
+        "Open the browser menu ⋮ in the top right",
+        "Choose “Install app” or “Add to Home screen”",
+        "Confirm — Poruch appears with your apps"
+      ],
+      "desktop": [
+        "Click the install icon ⊕ in the address bar (or menu ⋮ → “Install Poruch”)",
+        "Confirm the installation"
+      ]
+    },
+    "later": "Later",
+    "thanks": "Poruch installed ❤️",
+    "cardTitle": "Install the app",
+    "cardText": "Get notifications even when it's closed",
+    "cardButton": "How?"
+  },
+  "legal": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "updated": "Current version: {{date}}",
+    "englishOnly": "This document is available in Ukrainian and English",
+    "agree": "You also accept the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
   }
 }

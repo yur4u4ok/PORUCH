@@ -57,6 +57,13 @@ export default function LandingPage() {
         </ul>
       </section>
       <p className={`muted ${styles.notice}`}>⚠️ {t("emergency.short", emergencyVars())}</p>
+      <nav
+        className={`muted ${styles.notice}`}
+        style={{ display: "flex", gap: 16, justifyContent: "center" }}
+      >
+        <Link to="/privacy">{t("legal.privacy")}</Link>
+        <Link to="/terms">{t("legal.terms")}</Link>
+      </nav>
     </main>
   );
 }

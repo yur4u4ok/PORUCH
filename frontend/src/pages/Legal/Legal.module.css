@@ -1,0 +1,48 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-10);
+}
+
+.doc {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  line-height: 1.6;
+}
+
+.doc h1 {
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.doc h2 {
+  font-size: var(--text-lg);
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.doc ul {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-2) 0;
+  padding-left: var(--space-5);
+}
+
+.doc p {
+  margin: var(--space-2) 0;
+}
+
+.intro {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}

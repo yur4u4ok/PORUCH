@@ -29,6 +29,7 @@ const VerifyEmailPage = lazy(() => auth().then((m) => ({ default: m.VerifyEmailP
 const VerifyPendingPage = lazy(() => auth().then((m) => ({ default: m.VerifyPendingPage })));
 const ForgotPasswordPage = lazy(() => auth().then((m) => ({ default: m.ForgotPasswordPage })));
 const ResetPasswordPage = lazy(() => auth().then((m) => ({ default: m.ResetPasswordPage })));
+const LegalPage = lazy(() => import("@/pages/Legal/LegalPage"));
 const SupportPage = lazy(() => import("@/pages/Support/SupportPage"));
 const settings = () => import("@/pages/Settings/SettingsPages");
 const SettingsPage = lazy(() => settings().then((m) => ({ default: m.SettingsPage })));
@@ -83,6 +84,9 @@ export const router = createBrowserRouter([
   { path: "/auth/forgot-password", element: page(<ForgotPasswordPage />) },
   { path: "/auth/reset-password", element: page(<ResetPasswordPage />) },
   { path: "/auth/verify-email", element: page(<VerifyEmailPage />) },
+  // Public legal pages (linked from Google's OAuth consent screen and sign-up).
+  { path: "/privacy", element: page(<LegalPage kind="privacy" />) },
+  { path: "/terms", element: page(<LegalPage kind="terms" />) },
   // Public: shared request links work without an account.
   { path: "/share/:code", element: page(<SharePage />) },
   { path: "/r/:code", element: <ShortShareRedirect /> },

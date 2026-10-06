@@ -18,6 +18,7 @@ import {
   useUpdatePreferences,
 } from "@/features/profile/hooks";
 import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
+import { InstallCard } from "@/features/pwa/InstallPrompt";
 import { RegionSettings } from "@/features/profile/RegionSettings";
 import { ThemeSwitcher } from "@/features/profile/ThemeSwitcher";
 import { toast } from "@/stores/toastStore";
@@ -30,6 +31,7 @@ export function SettingsPage() {
   return (
     <main className="page stack">
       <PageHeader title={t("settings.title")} />
+      <InstallCard />
       <Card className="stack-sm">
         <strong>{t("settings.language")}</strong>
         <LanguageSwitcher />
@@ -45,6 +47,8 @@ export function SettingsPage() {
       <Card to="/settings/notifications">🔔 {t("settings.notifications")}</Card>
       <Card to="/settings/privacy">🔒 {t("settings.privacy")}</Card>
       <Card to="/support">💬 {t("support.title")}</Card>
+      <Card to="/privacy">📄 {t("legal.privacy")}</Card>
+      <Card to="/terms">📄 {t("legal.terms")}</Card>
       <p className="muted" style={{ fontSize: 13 }}>
         ⚠️ {t("settings.about", emergencyVars())}
       </p>
