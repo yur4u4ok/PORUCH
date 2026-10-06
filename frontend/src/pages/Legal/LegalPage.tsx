@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
@@ -16,6 +17,14 @@ export default function LegalPage({ kind }: { kind: LegalKind }) {
   const lang = i18n.language === "uk" ? "uk" : "en";
   const doc = LEGAL[kind][lang];
   const other: LegalKind = kind === "privacy" ? "terms" : "privacy";
+
+  useEffect(() => {
+    const previous = document.title;
+    document.title = `${doc.title} — ${BRAND}`;
+    return () => {
+      document.title = previous;
+    };
+  }, [doc.title]);
 
   return (
     <main className={styles.page}>

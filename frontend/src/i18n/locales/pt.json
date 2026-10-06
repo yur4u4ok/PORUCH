@@ -109,7 +109,8 @@
     "passwordChanged": "Palavra-passe alterada. Já pode entrar.",
     "terms": "Ao criar conta, compromete-se a ajudar com segurança e respeito.",
     "googleFailed": "Não foi possível entrar com o Google. Tente de novo.",
-    "googleInactive": "Esta conta foi desativada."
+    "googleInactive": "Esta conta foi desativada.",
+    "checkSpam": "Não vê o email? Aguarde um minuto e verifique as pastas Spam e Promoções. Se estiver lá, marque-o como «Não é spam» para que os próximos cheguem à caixa de entrada."
   },
   "validation": {
     "required": "Campo obrigatório",

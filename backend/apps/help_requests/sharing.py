@@ -132,5 +132,11 @@ def share_redirect(request, code):
     return render(
         request,
         "share/redirect.html",
-        {"title": title, "description": description, "app_url": app_url, "share_url": share_url(help_request)},
+        {
+            "title": title,
+            "description": description,
+            "app_url": app_url,
+            "share_url": share_url(help_request),
+            "image_url": f"{settings.FRONTEND_URL.rstrip('/')}/og-image.png",
+        },
     )

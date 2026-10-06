@@ -87,6 +87,7 @@ services:
       target: production
       args:
         VITE_MAP_STYLE_URL: ${VITE_MAP_STYLE_URL:-}
+        VITE_SITE_URL: ${FRONTEND_URL:?set FRONTEND_URL in .env.production}
     image: poruch-frontend:latest
     environment:
       BACKEND_UPSTREAM: http://backend:8000

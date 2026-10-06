@@ -109,7 +109,8 @@
     "passwordChanged": "Password changed. You can log in now.",
     "terms": "By signing up, you agree to help safely and respectfully.",
     "googleFailed": "Couldn't sign in with Google. Please try again.",
-    "googleInactive": "This account has been deactivated."
+    "googleInactive": "This account has been deactivated.",
+    "checkSpam": "Can't see the email? Wait a minute and check your Spam and Promotions folders. If it's there, mark it “Not spam” so future emails reach your inbox."
   },
   "validation": {
     "required": "Required field",

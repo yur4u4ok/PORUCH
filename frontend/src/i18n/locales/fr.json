@@ -109,7 +109,8 @@
     "passwordChanged": "Mot de passe modifié. Vous pouvez vous connecter.",
     "terms": "En vous inscrivant, vous vous engagez à aider en toute sécurité et avec respect.",
     "googleFailed": "Connexion avec Google impossible. Réessayez.",
-    "googleInactive": "Ce compte a été désactivé."
+    "googleInactive": "Ce compte a été désactivé.",
+    "checkSpam": "Vous ne voyez pas l'email ? Attendez une minute et vérifiez les dossiers Spam et Promotions. S'il y est, marquez-le « Non spam » pour que les suivants arrivent dans votre boîte de réception."
   },
   "validation": {
     "required": "Champ obligatoire",

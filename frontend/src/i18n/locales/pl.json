@@ -119,7 +119,8 @@
     "passwordChanged": "Hasło zmienione. Możesz się zalogować.",
     "terms": "Rejestrując się, zobowiązujesz się pomagać bezpiecznie i z szacunkiem.",
     "googleFailed": "Nie udało się zalogować przez Google. Spróbuj ponownie.",
-    "googleInactive": "To konto zostało dezaktywowane."
+    "googleInactive": "To konto zostało dezaktywowane.",
+    "checkSpam": "Nie widzisz wiadomości? Poczekaj minutę i sprawdź foldery Spam i Oferty. Jeśli tam jest, oznacz ją jako „To nie spam”, żeby kolejne trafiały do skrzynki odbiorczej."
   },
   "validation": {
     "required": "Pole wymagane",

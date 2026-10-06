@@ -52,6 +52,7 @@ def test_short_link_renders_open_graph_and_redirects(settings):
     assert 'property="og:title" content="Потрібна допомога: Пробите колесо"' in html
     assert "500 грн" in html and "Львів" in html
     assert f"https://poruch.app/share/{hr.share_code}" in html
+    assert 'property="og:image" content="https://poruch.app/og-image.png"' in html
     assert 'name="robots" content="noindex, nofollow"' in html
 
 

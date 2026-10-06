@@ -80,3 +80,27 @@ def test_format_money_by_currency():
     assert format_money(10, "EUR") == "10 €"
     assert format_money(12, "USD") == "$12"
     assert format_money("12.50", "GBP") == "£12.5"
+
+
+def test_service_email_is_multipart_with_reply_to_and_absolute_links(settings, django_capture_on_commit_callbacks):
+    from django.core import mail
+
+    from common.emails import send_service_email
+
+    settings.CELERY_TASK_ALWAYS_EAGER = True
+    settings.FRONTEND_URL = "https://poruch.test"
+    settings.SUPPORT_EMAIL = "support@poruch.test"
+    with django_capture_on_commit_callbacks(execute=True):
+        send_service_email(
+            "user@example.com",
+            "Нове повідомлення",
+            heading="Нове повідомлення",
+            paragraphs=["Вам написали в чаті"],
+            button_text="Відкрити",
+            button_url="/chats/42",
+        )
+    sent = mail.outbox[-1]
+    assert sent.reply_to == ["support@poruch.test"]
+    assert "https://poruch.test/chats/42" in sent.body  # relative links do not work in mail
+    html, mime = sent.alternatives[0]
+    assert mime == "text/html" and 'href="https://poruch.test/chats/42"' in html
