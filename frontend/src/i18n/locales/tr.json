@@ -107,7 +107,9 @@
     "newPassword": "Yeni şifre",
     "setPassword": "Şifreyi kaydet",
     "passwordChanged": "Şifre değiştirildi. Artık giriş yapabilirsin.",
-    "terms": "Kayıt olarak güvenli ve saygılı bir şekilde yardım etmeyi kabul edersin."
+    "terms": "Kayıt olarak güvenli ve saygılı bir şekilde yardım etmeyi kabul edersin.",
+    "googleFailed": "Google ile giriş yapılamadı. Tekrar dene.",
+    "googleInactive": "Bu hesap devre dışı bırakıldı."
   },
   "validation": {
     "required": "Zorunlu alan",
@@ -217,6 +219,7 @@
     "NOW": "Şimdi",
     "TODAY": "Bugün",
     "WHENEVER": "Mümkün olduğunda",
+    "SCHEDULED": "Belirli bir saatte",
     "NOW_long": "Şimdi yardım gerek"
   },
   "reward": {
@@ -285,7 +288,12 @@
     "photoWrongType": "Yalnızca JPEG, PNG ve WEBP desteklenir",
     "photoUploadFailed": "Fotoğraf yüklenemedi",
     "locationUpdated": "İşaret şu anki konumuna taşındı",
-    "locationDenied": "Konum erişimi yok. Tarayıcı ayarlarından izin ver ya da işareti elle taşı."
+    "locationDenied": "Konum erişimi yok. Tarayıcı ayarlarından izin ver ya da işareti elle taşı.",
+    "neededAtLabel": "Yardım ne zaman gerekli",
+    "neededAtHint": "15 dakika ile 30 gün arası önceden",
+    "neededAtRequired": "Tarih ve saati seç",
+    "neededAtTooSoon": "Şu andan en az 15 dakika sonrasını seç",
+    "neededAtTime": "Saat"
   },
   "nearby": {
     "title": "Yakında yardım",
@@ -552,5 +560,49 @@
     "sent": "Mesaj gönderildi",
     "replyNote": "{{email}} adresine yanıt vereceğiz.",
     "another": "Bir tane daha yaz"
+  },
+  "install": {
+    "title": "Poruch'u uygulama olarak yükle",
+    "why": "Poruch, ana ekranda bir uygulama olarak en iyi şekilde çalışır.",
+    "benefits": [
+      "🔔 Uygulama kapalıyken bile bildirim gelir",
+      "⚡ Tek dokunuşla, tam ekran açılır",
+      "📍 Seni ve yakındakileri daha hızlı bulur"
+    ],
+    "button": "Yükle",
+    "howTo": "Nasıl yüklenir:",
+    "steps": {
+      "ios": [
+        "Safari'nin altındaki Paylaş ⬆️ simgesine dokun",
+        "“Ana Ekrana Ekle”yi seç (görmüyorsan listeyi kaydır)",
+        "“Ekle”ye dokun — Poruch uygulamalarının arasında görünür"
+      ],
+      "ios-other-browser": [
+        "Adres çubuğundaki Paylaş ⬆️ simgesine dokun",
+        "“Ana Ekrana Ekle”yi seç; yoksa siteyi Safari'de aç",
+        "“Ekle”ye dokun"
+      ],
+      "android": [
+        "Sağ üstteki tarayıcı menüsünü ⋮ aç",
+        "“Uygulamayı yükle” veya “Ana ekrana ekle”yi seç",
+        "Onayla — Poruch uygulamalarının arasında görünür"
+      ],
+      "desktop": [
+        "Adres çubuğundaki yükleme simgesine ⊕ tıkla (veya menü ⋮ → “Poruch'u yükle”)",
+        "Yüklemeyi onayla"
+      ]
+    },
+    "later": "Sonra",
+    "thanks": "Poruch yüklendi ❤️",
+    "cardTitle": "Uygulamayı yükle",
+    "cardText": "Kapalıyken bile bildirim al",
+    "cardButton": "Nasıl?"
+  },
+  "legal": {
+    "privacy": "Gizlilik Politikası",
+    "terms": "Kullanım Koşulları",
+    "updated": "Geçerli sürüm: {{date}}",
+    "englishOnly": "Bu belge Ukraynaca ve İngilizce olarak mevcuttur",
+    "agree": "Ayrıca <terms>Kullanım Koşulları</terms> ile <privacy>Gizlilik Politikası</privacy>'nı kabul edersin."
   }
 }

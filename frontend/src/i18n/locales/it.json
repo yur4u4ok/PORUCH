@@ -107,7 +107,9 @@
     "newPassword": "Nuova password",
     "setPassword": "Imposta password",
     "passwordChanged": "Password cambiata. Ora puoi accedere.",
-    "terms": "Registrandoti, ti impegni ad aiutare in modo sicuro e rispettoso."
+    "terms": "Registrandoti, ti impegni ad aiutare in modo sicuro e rispettoso.",
+    "googleFailed": "Accesso con Google non riuscito. Riprova.",
+    "googleInactive": "Questo account è stato disattivato."
   },
   "validation": {
     "required": "Campo obbligatorio",
@@ -217,6 +219,7 @@
     "NOW": "Adesso",
     "TODAY": "Oggi",
     "WHENEVER": "Quando possibile",
+    "SCHEDULED": "A un'ora precisa",
     "NOW_long": "Serve aiuto adesso"
   },
   "reward": {
@@ -285,7 +288,12 @@
     "photoWrongType": "Sono supportati solo JPEG, PNG e WEBP",
     "photoUploadFailed": "Impossibile caricare la foto",
     "locationUpdated": "Segnaposto spostato sulla tua posizione attuale",
-    "locationDenied": "Nessun accesso alla posizione. Consentilo nelle impostazioni del browser o sposta il segnaposto a mano."
+    "locationDenied": "Nessun accesso alla posizione. Consentilo nelle impostazioni del browser o sposta il segnaposto a mano.",
+    "neededAtLabel": "Quando serve aiuto",
+    "neededAtHint": "Da 15 minuti a 30 giorni prima",
+    "neededAtRequired": "Scegli data e ora",
+    "neededAtTooSoon": "Scegli un orario almeno 15 minuti da adesso",
+    "neededAtTime": "Ora"
   },
   "nearby": {
     "title": "Aiuto vicino",
@@ -552,5 +560,49 @@
     "sent": "Messaggio inviato",
     "replyNote": "Ti risponderemo a {{email}}.",
     "another": "Scrivine un altro"
+  },
+  "install": {
+    "title": "Installa Poruch come app",
+    "why": "Poruch funziona meglio come app nella schermata Home.",
+    "benefits": [
+      "🔔 Le notifiche arrivano anche con l'app chiusa",
+      "⚡ Si apre con un tocco, a schermo intero",
+      "📍 Trova te e le persone vicine più in fretta"
+    ],
+    "button": "Installa",
+    "howTo": "Come installarla:",
+    "steps": {
+      "ios": [
+        "Tocca Condividi ⬆️ in basso in Safari",
+        "Scegli «Aggiungi alla schermata Home» (scorri se non lo vedi)",
+        "Tocca «Aggiungi»: Poruch compare tra le app"
+      ],
+      "ios-other-browser": [
+        "Tocca Condividi ⬆️ nella barra degli indirizzi",
+        "Scegli «Aggiungi alla schermata Home»; se manca, apri il sito in Safari",
+        "Tocca «Aggiungi»"
+      ],
+      "android": [
+        "Apri il menu del browser ⋮ in alto a destra",
+        "Scegli «Installa app» o «Aggiungi a schermata Home»",
+        "Conferma: Poruch compare tra le app"
+      ],
+      "desktop": [
+        "Fai clic sull'icona di installazione ⊕ nella barra degli indirizzi (o menu ⋮ → «Installa Poruch»)",
+        "Conferma l'installazione"
+      ]
+    },
+    "later": "Più tardi",
+    "thanks": "Poruch installata ❤️",
+    "cardTitle": "Installa l'app",
+    "cardText": "Notifiche anche con l'app chiusa",
+    "cardButton": "Come?"
+  },
+  "legal": {
+    "privacy": "Informativa sulla privacy",
+    "terms": "Termini di servizio",
+    "updated": "Versione in vigore: {{date}}",
+    "englishOnly": "Questo documento è disponibile in ucraino e in inglese",
+    "agree": "Accetti anche i <terms>Termini di servizio</terms> e l'<privacy>Informativa sulla privacy</privacy>."
   }
 }

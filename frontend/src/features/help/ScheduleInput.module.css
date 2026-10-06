@@ -1,0 +1,27 @@
+.field {
+  composes: field from "../../components/ui/Field.module.css";
+}
+.label {
+  composes: label from "../../components/ui/Field.module.css";
+}
+.hint {
+  composes: hint from "../../components/ui/Field.module.css";
+}
+.error {
+  composes: error from "../../components/ui/Field.module.css";
+}
+.control {
+  composes: control from "../../components/ui/Field.module.css";
+  cursor: pointer;
+}
+.control:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Date takes the room it needs; time is a short list next to it. */
+.row {
+  display: grid;
+  grid-template-columns: 1fr minmax(110px, 0.7fr);
+  gap: var(--space-2);
+}

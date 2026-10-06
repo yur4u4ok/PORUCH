@@ -19,6 +19,7 @@ URGENCY_PHRASES = {
     Urgency.NOW: _("🔴 Потрібна допомога зараз"),
     Urgency.TODAY: _("🟡 Сьогодні"),
     Urgency.WHENEVER: _("🟢 Коли буде можливість"),
+    Urgency.SCHEDULED: _("📅 У визначений час"),
 }
 
 

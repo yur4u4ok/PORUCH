@@ -19,6 +19,7 @@ class HelpRequestCreateSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=1000)
     location = LocationInputSerializer()
     urgency = serializers.ChoiceField(choices=Urgency.choices)
+    needed_at = serializers.DateTimeField(required=False, allow_null=True)
     reward_type = serializers.ChoiceField(choices=RewardType.choices, default=RewardType.NONE)
     reward_amount = serializers.DecimalField(
         max_digits=10, decimal_places=2, required=False, allow_null=True, min_value=0
@@ -106,6 +107,7 @@ class HelpRequestSerializer(serializers.ModelSerializer):
             "description",
             "place_name",
             "urgency",
+            "needed_at",
             "reward_type",
             "reward_amount",
             "reward_currency",

@@ -2,6 +2,8 @@
 name: poruch
 
 x-backend: &backend
+  # One image for backend, celery and celery-beat (CI builds it once with a layer cache).
+  image: poruch-backend-dev
   build:
     context: ./backend
     target: dev
@@ -75,6 +77,7 @@ services:
     command: celery -A config beat -l info --schedule /tmp/celerybeat-schedule
 
   frontend:
+    image: poruch-frontend-dev
     build:
       context: ./frontend
       target: dev

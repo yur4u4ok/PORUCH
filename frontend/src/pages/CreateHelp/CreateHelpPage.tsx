@@ -14,6 +14,7 @@ import { CategoryGrid, EmergencyDisclaimer, OptionTiles, UrgencyBadge } from "@/
 import { createHelpSchema, STEP_FIELDS, type CreateHelpForm } from "@/features/help/createSchema";
 import { useCreateHelpRequest } from "@/features/help/hooks";
 import { PhotoUploader } from "@/features/help/PhotoUploader";
+import { ScheduleInput } from "@/features/help/ScheduleInput";
 import { fallbackCenter as approximateCenter, placeNameFor, usePlace } from "@/features/location/place";
 import { useGeolocation } from "@/features/location/useGeolocation";
 import { usePublicConfig } from "@/features/profile/hooks";
@@ -21,12 +22,18 @@ import { useOnline } from "@/hooks/useOnline";
 import { useFieldError } from "@/hooks/useFieldError";
 import { toast } from "@/stores/toastStore";
 import type { Category, Media } from "@/types/api";
-import { CATEGORY_EMOJI, URGENCY_EMOJI } from "@/utils/categories";
+import { CATEGORY_EMOJI, URGENCIES, URGENCY_EMOJI } from "@/utils/categories";
 import { currencySymbol, region } from "@/utils/format";
 import { REWARD_OPTION_EMOJI, REWARD_OPTIONS, rewardSummary } from "@/utils/reward";
 import { emergencyVars } from "@/utils/emergency";
 
 import styles from "./CreateHelp.module.css";
+
+/** "YYYY-MM-DDTHH:mm" in local time (the form value of needed_at). */
+function toLocalInput(date: Date): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
 
 const STEP_TITLES = [
   "create.stepCategory",
@@ -42,6 +49,11 @@ export default function CreateHelpPage() {
   const { t, i18n } = useTranslation();
   const { currency } = region();
   const fe = useFieldError();
+  // Allowed range for "at a specific time" (the server checks the same: 15 min … 30 days ahead).
+  const [scheduleBounds] = useState(() => ({
+    min: toLocalInput(new Date(Date.now() + 15 * 60_000)),
+    max: toLocalInput(new Date(Date.now() + 30 * 24 * 3600_000)),
+  }));
   const navigate = useNavigate();
   const online = useOnline();
   const { data: me } = useMe();
@@ -62,6 +74,7 @@ export default function CreateHelpPage() {
         description: "",
         location: null,
         urgency: "NOW",
+        needed_at: "",
         reward_type: "NONE",
         reward_amount: "",
         reward_options: [],
@@ -136,6 +149,9 @@ export default function CreateHelpPage() {
         description: form.description,
         location: form.location!,
         urgency: form.urgency,
+        // datetime-local is the user's local time; send an absolute instant.
+        needed_at:
+          form.urgency === "SCHEDULED" && form.needed_at ? new Date(form.needed_at).toISOString() : null,
         reward_type: form.reward_type,
         reward_amount:
           form.reward_type === "WILLING" && form.reward_amount ? form.reward_amount.replace(",", ".") : null,
@@ -160,6 +176,7 @@ export default function CreateHelpPage() {
               location: 2,
               latitude: 2,
               reward_amount: 4,
+              needed_at: 3,
             };
             const first = Object.keys(fieldErrors).find((k) => k in map);
             Object.entries(fieldErrors).forEach(([k, msg]) => {
@@ -290,19 +307,40 @@ export default function CreateHelpPage() {
       )}
 
       {step === 3 && (
-        <Controller
-          control={control}
-          name="urgency"
-          render={({ field }) => (
-            <OptionTiles
-              value={field.value}
-              onChange={field.onChange}
-              options={(["NOW", "TODAY", "WHENEVER"] as const)
-                .filter((u) => values.category !== "URGENT" || u === "NOW")
-                .map((u) => ({ value: u, icon: URGENCY_EMOJI[u], label: t(`urgency.${u}`) }))}
+        <div className="stack">
+          <Controller
+            control={control}
+            name="urgency"
+            render={({ field }) => (
+              <OptionTiles
+                value={field.value}
+                onChange={field.onChange}
+                options={URGENCIES.filter((u) => values.category !== "URGENT" || u === "NOW").map((u) => ({
+                  value: u,
+                  icon: URGENCY_EMOJI[u],
+                  label: t(`urgency.${u}`),
+                }))}
+              />
+            )}
+          />
+          {values.urgency === "SCHEDULED" && (
+            <Controller
+              control={control}
+              name="needed_at"
+              render={({ field }) => (
+                <ScheduleInput
+                  value={field.value}
+                  onChange={field.onChange}
+                  minDate={scheduleBounds.min.slice(0, 10)}
+                  maxDate={scheduleBounds.max.slice(0, 10)}
+                  label={t("create.neededAtLabel")}
+                  hint={t("create.neededAtHint")}
+                  error={fe(formState.errors.needed_at?.message)}
+                />
+              )}
             />
           )}
-        />
+        </div>
       )}
 
       {step === 4 && (
@@ -387,7 +425,10 @@ export default function CreateHelpPage() {
             <dd style={{ whiteSpace: "pre-wrap" }}>{values.description}</dd>
             <dt>{t("nearby.urgency")}</dt>
             <dd>
-              <UrgencyBadge urgency={values.urgency} />
+              <UrgencyBadge
+                urgency={values.urgency}
+                neededAt={values.needed_at ? new Date(values.needed_at).toISOString() : null}
+              />
             </dd>
             <dt>{t("request.rewardInfo")}</dt>
             <dd>

@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { BRAND } from "@/app/brand";
 import { BrandMark } from "@/components/layout/BrandMark";
@@ -53,6 +53,8 @@ export function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = (location.state as { from?: string } | null)?.from ?? peekAfterAuth() ?? "/";
+  const [params] = useSearchParams();
+  const googleError = params.get("error");
   const login = useLogin();
   const { register, handleSubmit, setError, formState } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
@@ -75,6 +77,11 @@ export function LoginPage() {
         <BrandMark />
       </Link>
       <h1>{t("auth.loginTitle")}</h1>
+      {googleError && (
+        <p role="alert" style={{ color: "var(--color-danger)" }}>
+          {t(googleError === "inactive" ? "auth.googleInactive" : "auth.googleFailed")}
+        </p>
+      )}
       <form className="stack" onSubmit={onSubmit} noValidate>
         <Input
           label={t("auth.email")}
@@ -158,7 +165,11 @@ export function RegisterPage() {
           {t("auth.register")}
         </Button>
         <p className="muted" style={{ fontSize: 13 }}>
-          {t("auth.terms")}
+          {t("auth.terms")}{" "}
+          <Trans
+            i18nKey="legal.agree"
+            components={{ terms: <Link to="/terms" />, privacy: <Link to="/privacy" /> }}
+          />
         </p>
       </form>
       <div className={styles.divider}>{t("auth.or")}</div>

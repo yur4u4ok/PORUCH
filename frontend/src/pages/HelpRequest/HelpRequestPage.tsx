@@ -360,7 +360,7 @@ export default function HelpRequestPage() {
           <h1 style={{ fontSize: "var(--text-xl)" }}>{request.title}</h1>
           <div className={styles.meta}>
             <StatusBadge status={request.status} />
-            <UrgencyBadge urgency={request.urgency} />
+            <UrgencyBadge urgency={request.urgency} neededAt={request.needed_at} />
             {request.distance_m != null && (
               <span>📍 {t("common.fromYou", { distance: formatDistance(request.distance_m) })}</span>
             )}

@@ -69,7 +69,7 @@ export default function SharePage() {
               <div className="stack-sm">
                 <h1 style={{ fontSize: "var(--text-xl)" }}>{data.title}</h1>
                 <div className="row wrap muted" style={{ fontSize: 14 }}>
-                  {data.urgency && <UrgencyBadge urgency={data.urgency} />}
+                  {data.urgency && <UrgencyBadge urgency={data.urgency} neededAt={data.needed_at} />}
                   {data.place && <span>📍 {data.place}</span>}
                   <span>{timeAgo(data.created_at)}</span>
                 </div>

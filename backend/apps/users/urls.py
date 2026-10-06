@@ -1,6 +1,6 @@
 from django.urls import path
 
-from apps.users import views
+from apps.users import google_oauth, views
 
 auth_urlpatterns = [
     path("csrf/", views.CsrfView.as_view(), name="auth-csrf"),
@@ -11,6 +11,8 @@ auth_urlpatterns = [
     path("verify-email/", views.VerifyEmailView.as_view(), name="auth-verify-email"),
     path("verify-email/resend/", views.ResendVerificationView.as_view(), name="auth-verify-email-resend"),
     path("google/", views.GoogleAuthView.as_view(), name="auth-google"),
+    path("google/start/", google_oauth.google_start, name="auth-google-start"),
+    path("google/callback/", google_oauth.google_callback, name="auth-google-callback"),
     path("password-reset/", views.PasswordResetView.as_view(), name="auth-password-reset"),
     path("password-reset/confirm/", views.PasswordResetConfirmView.as_view(), name="auth-password-reset-confirm"),
 ]

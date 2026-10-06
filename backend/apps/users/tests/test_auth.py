@@ -181,3 +181,56 @@ def test_google_popup_code_is_exchanged_for_id_token(api_client, settings):
 
 def test_google_auth_requires_credential_or_code(api_client):
     assert api_client.post(reverse("auth-google"), {}, format="json").status_code == 400
+
+
+class TestGoogleRedirectFlow:
+    """Full-page redirect sign-in (installed PWAs cannot use the popup)."""
+
+    @pytest.fixture(autouse=True)
+    def google(self, settings):
+        settings.GOOGLE_CLIENT_ID = "client-id"
+        settings.GOOGLE_CLIENT_SECRET = "secret"
+        settings.FRONTEND_URL = "https://poruch.test"
+
+    def start(self, client, next_path="/help/42"):
+        response = client.get("/api/v1/auth/google/start/", {"next": next_path})
+        assert response.status_code == 302 and response["Location"].startswith("https://accounts.google.com/")
+        from urllib.parse import parse_qs, urlparse
+
+        query = parse_qs(urlparse(response["Location"]).query)
+        assert query["redirect_uri"] == ["https://poruch.test/api/v1/auth/google/callback/"]
+        return query["state"][0]
+
+    def test_callback_signs_in_and_returns_to_next(self, client):
+        state = self.start(client)
+        claims = {"sub": "g-900", "email": "pwa@example.com", "email_verified": True, "given_name": "Pwa"}
+        with (
+            mock.patch("apps.users.services.accounts.exchange_google_code", return_value="id-token") as exchange,
+            mock.patch("apps.users.services.accounts._verify_google_credential", return_value=claims),
+        ):
+            response = client.get("/api/v1/auth/google/callback/", {"code": "c", "state": state})
+        assert response.status_code == 302 and response["Location"] == "https://poruch.test/help/42"
+        assert exchange.call_args.kwargs["redirect_uri"] == "https://poruch.test/api/v1/auth/google/callback/"
+        assert len(settings_cookie_names(response)) == 2  # access + refresh cookies set
+        assert User.objects.filter(email="pwa@example.com").exists()
+
+    def test_forged_state_is_rejected(self, client):
+        self.start(client)
+        response = client.get("/api/v1/auth/google/callback/", {"code": "c", "state": "forged"})
+        assert response["Location"] == "https://poruch.test/auth/login?error=google"
+
+    def test_next_cannot_point_to_another_site(self, client):
+        state = self.start(client, next_path="//evil.example/steal")
+        claims = {"sub": "g-901", "email": "x@example.com", "email_verified": True}
+        with (
+            mock.patch("apps.users.services.accounts.exchange_google_code", return_value="t"),
+            mock.patch("apps.users.services.accounts._verify_google_credential", return_value=claims),
+        ):
+            response = client.get("/api/v1/auth/google/callback/", {"code": "c", "state": state})
+        assert response["Location"] == "https://poruch.test/"
+
+
+def settings_cookie_names(response):
+    from django.conf import settings
+
+    return {name for name in response.cookies if name in (settings.AUTH_COOKIE_ACCESS, settings.AUTH_COOKIE_REFRESH)}

@@ -21,6 +21,23 @@ def expiration_for(urgency: str, now=None):
     return now + timedelta(hours=hours)
 
 
+SCHEDULE_MIN_LEAD = timedelta(minutes=15)
+SCHEDULE_MAX_AHEAD = timedelta(days=30)
+SCHEDULE_GRACE = timedelta(hours=2)  # the request stays visible a bit after the agreed time
+
+
+def validate_needed_at(urgency: str, needed_at, now):
+    if urgency != Urgency.SCHEDULED:
+        return None
+    if needed_at is None:
+        raise ValidationFailed(details={"needed_at": [_("Вкажіть дату й час.")]})
+    if needed_at < now + SCHEDULE_MIN_LEAD:
+        raise ValidationFailed(details={"needed_at": [_("Оберіть час щонайменше через 15 хвилин.")]})
+    if needed_at > now + SCHEDULE_MAX_AHEAD:
+        raise ValidationFailed(details={"needed_at": [_("Не пізніше ніж через 30 днів.")]})
+    return needed_at
+
+
 def derive_title(description: str) -> str:
     first_line = description.strip().splitlines()[0] if description.strip() else ""
     return first_line[:117] + "..." if len(first_line) > 120 else first_line
@@ -66,6 +83,7 @@ def create_help_request(
     reward_amount: Decimal | None = None,
     reward_options: list[str] | None = None,
     reward_currency: str = DEFAULT_CURRENCY,
+    needed_at=None,
     place_name: str = "",
     title: str | None = None,
     subcategory: str | None = None,
@@ -94,6 +112,7 @@ def create_help_request(
     photos = get_ready_media_list(author, photo_ids, kind="HELP_REQUEST")
     amount, options = validate_reward(reward_type, reward_amount, reward_options)
     now = timezone.now()
+    needed_at = validate_needed_at(urgency, needed_at, now)
     help_request = HelpRequest.objects.create(
         author=author,
         category=category,
@@ -108,7 +127,8 @@ def create_help_request(
         reward_options=options,
         reward_currency=reward_currency,
         place_name=place_name.strip()[:120],
-        expires_at=expiration_for(urgency, now),
+        needed_at=needed_at,
+        expires_at=needed_at + SCHEDULE_GRACE if needed_at else expiration_for(urgency, now),
     )
     if photos:
         help_request.photos.set(photos)

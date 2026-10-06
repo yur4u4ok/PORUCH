@@ -1,5 +1,5 @@
 from django.conf import settings
-from rest_framework.response import Response
+from django.http import HttpResponseBase
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
@@ -12,7 +12,8 @@ def _cookie_kwargs() -> dict:
     }
 
 
-def set_auth_cookies(response: Response, refresh: RefreshToken) -> Response:
+# Any Django/DRF response (API Response, redirect after Google sign-in…); the same type is returned.
+def set_auth_cookies[R: HttpResponseBase](response: R, refresh: RefreshToken) -> R:
     jwt = settings.SIMPLE_JWT
     response.set_cookie(
         settings.AUTH_COOKIE_ACCESS,
@@ -31,7 +32,7 @@ def set_auth_cookies(response: Response, refresh: RefreshToken) -> Response:
     return response
 
 
-def clear_auth_cookies(response: Response) -> Response:
+def clear_auth_cookies[R: HttpResponseBase](response: R) -> R:
     response.delete_cookie(
         settings.AUTH_COOKIE_ACCESS,
         path="/",

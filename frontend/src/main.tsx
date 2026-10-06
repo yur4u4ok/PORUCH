@@ -1,4 +1,6 @@
 import "@/i18n";
+// Before React: the browser may offer installation (beforeinstallprompt) right after load.
+import "@/features/pwa/install";
 import "@/styles/global.css";
 
 import { StrictMode } from "react";

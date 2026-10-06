@@ -45,17 +45,6 @@ export function useRegister() {
   });
 }
 
-export function useGoogleLogin() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: (code: string) => authApi.google({ code }),
-    onSuccess: (me) => {
-      qc.clear();
-      qc.setQueryData(queryKeys.me, me);
-    },
-  });
-}
-
 export function useLogout() {
   const qc = useQueryClient();
   return useMutation({

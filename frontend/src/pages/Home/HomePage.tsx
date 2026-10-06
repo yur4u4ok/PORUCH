@@ -13,6 +13,7 @@ import { usePreferences } from "@/features/profile/hooks";
 
 import { cityName } from "@/utils/city";
 import { usePlace } from "@/features/location/place";
+import { InstallCard } from "@/features/pwa/InstallPrompt";
 import { emergencyVars } from "@/utils/emergency";
 
 import styles from "./Home.module.css";
@@ -163,6 +164,7 @@ export default function HomePage() {
   return (
     <main className="page stack">
       <LocationHeader />
+      <InstallCard />
       <EmergencyHelpButton />
       <NearbyHelpButton />
       <Link to="/nearby?view=map" className={styles.mapLink}>

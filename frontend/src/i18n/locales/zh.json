@@ -102,7 +102,9 @@
     "newPassword": "新密码",
     "setPassword": "设置密码",
     "passwordChanged": "密码已修改，现在可以登录了。",
-    "terms": "注册即表示你同意以安全、尊重的方式互相帮助。"
+    "terms": "注册即表示你同意以安全、尊重的方式互相帮助。",
+    "googleFailed": "无法使用 Google 登录，请重试。",
+    "googleInactive": "该账号已被停用。"
   },
   "validation": {
     "required": "必填项",
@@ -212,6 +214,7 @@
     "NOW": "现在",
     "TODAY": "今天",
     "WHENEVER": "方便时",
+    "SCHEDULED": "指定时间",
     "NOW_long": "现在就需要帮助"
   },
   "reward": {
@@ -280,7 +283,12 @@
     "photoWrongType": "仅支持 JPEG、PNG、WEBP",
     "photoUploadFailed": "照片上传失败",
     "locationUpdated": "标记已移到你的当前位置",
-    "locationDenied": "无法访问位置。请在浏览器设置中允许，或手动拖动标记。"
+    "locationDenied": "无法访问位置。请在浏览器设置中允许，或手动拖动标记。",
+    "neededAtLabel": "需要帮助的时间",
+    "neededAtHint": "15 分钟后至 30 天内",
+    "neededAtRequired": "请选择日期和时间",
+    "neededAtTooSoon": "请选择至少 15 分钟之后的时间",
+    "neededAtTime": "时间"
   },
   "nearby": {
     "title": "附近互助",
@@ -546,5 +554,42 @@
     "sent": "已发送",
     "replyNote": "我们会回复到 {{email}}。",
     "another": "再写一条"
+  },
+  "install": {
+    "title": "将 Poruch 安装为应用",
+    "why": "把 Poruch 放到主屏幕上作为应用使用，体验最好。",
+    "benefits": ["🔔 关闭应用也能收到通知", "⚡ 一点即开，全屏显示", "📍 更快定位你和附近的人"],
+    "button": "安装",
+    "howTo": "安装方法：",
+    "steps": {
+      "ios": [
+        "点按 Safari 底部的“分享” ⬆️",
+        "选择“添加到主屏幕”（看不到就往下滑）",
+        "点按“添加”，Poruch 就会出现在应用中"
+      ],
+      "ios-other-browser": [
+        "点按地址栏中的“分享” ⬆️",
+        "选择“添加到主屏幕”；如果没有，请用 Safari 打开网站",
+        "点按“添加”"
+      ],
+      "android": [
+        "打开右上角的浏览器菜单 ⋮",
+        "选择“安装应用”或“添加到主屏幕”",
+        "确认后，Poruch 就会出现在应用中"
+      ],
+      "desktop": ["点击地址栏中的安装图标 ⊕（或菜单 ⋮ →“安装 Poruch”）", "确认安装"]
+    },
+    "later": "以后再说",
+    "thanks": "Poruch 已安装 ❤️",
+    "cardTitle": "安装应用",
+    "cardText": "关闭时也能收到通知",
+    "cardButton": "怎么装？"
+  },
+  "legal": {
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "updated": "当前版本：{{date}}",
+    "englishOnly": "本文件提供乌克兰语和英语版本",
+    "agree": "同时，你也接受<terms>服务条款</terms>和<privacy>隐私政策</privacy>。"
   }
 }

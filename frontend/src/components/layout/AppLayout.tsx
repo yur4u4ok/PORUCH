@@ -6,6 +6,7 @@ import { BRAND } from "@/app/brand";
 import { NavLink, Outlet, useNavigate, useSearchParams } from "react-router";
 
 import { IconButton } from "@/components/ui";
+import { InstallPrompt } from "@/features/pwa/InstallPrompt";
 
 import { BrandMark } from "./BrandMark";
 import { PullToRefresh } from "./PullToRefresh";
@@ -73,6 +74,7 @@ export function AppLayout() {
     <div className={styles.shell}>
       <PushDeepLinkTracker />
       <PullToRefresh />
+      <InstallPrompt />
       <nav className={styles.sidebar} aria-label={BRAND}>
         <NavLink to="/" className={styles.brand}>
           <BrandMark inverse />

@@ -14,17 +14,25 @@ import type {
   Urgency,
 } from "@/types/api";
 import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCY_EMOJI, requestEmoji } from "@/utils/categories";
-import { formatDistance, formatRadius, timeAgo } from "@/utils/format";
+import { formatDateTime, formatDistance, formatRadius, timeAgo } from "@/utils/format";
 import { emergencyVars } from "@/utils/emergency";
 
 import styles from "./components.module.css";
 
-export function UrgencyBadge({ urgency }: { urgency: Urgency }) {
+export function UrgencyBadge({ urgency, neededAt }: { urgency: Urgency; neededAt?: string | null }) {
   const { t } = useTranslation();
-  const tone = urgency === "NOW" ? "danger" : urgency === "TODAY" ? "warning" : "success";
+  const tone =
+    urgency === "NOW"
+      ? "danger"
+      : urgency === "TODAY"
+        ? "warning"
+        : urgency === "SCHEDULED"
+          ? "info"
+          : "success";
   return (
     <Badge tone={tone}>
-      {URGENCY_EMOJI[urgency]} {t(`urgency.${urgency}`)}
+      {URGENCY_EMOJI[urgency]}{" "}
+      {urgency === "SCHEDULED" && neededAt ? formatDateTime(neededAt) : t(`urgency.${urgency}`)}
     </Badge>
   );
 }
@@ -68,7 +76,7 @@ export function HelpRequestCard({
             {showStatus ? (
               <StatusBadge status={request.status} />
             ) : (
-              <UrgencyBadge urgency={request.urgency} />
+              <UrgencyBadge urgency={request.urgency} neededAt={request.needed_at} />
             )}
             {request.distance_m != null && (
               <span>📍 {t("common.fromYou", { distance: formatDistance(request.distance_m) })}</span>

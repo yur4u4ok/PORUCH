@@ -117,7 +117,9 @@
     "newPassword": "Nowe hasło",
     "setPassword": "Ustaw hasło",
     "passwordChanged": "Hasło zmienione. Możesz się zalogować.",
-    "terms": "Rejestrując się, zobowiązujesz się pomagać bezpiecznie i z szacunkiem."
+    "terms": "Rejestrując się, zobowiązujesz się pomagać bezpiecznie i z szacunkiem.",
+    "googleFailed": "Nie udało się zalogować przez Google. Spróbuj ponownie.",
+    "googleInactive": "To konto zostało dezaktywowane."
   },
   "validation": {
     "required": "Pole wymagane",
@@ -227,6 +229,7 @@
     "NOW": "Teraz",
     "TODAY": "Dzisiaj",
     "WHENEVER": "Kiedy się da",
+    "SCHEDULED": "O określonej porze",
     "NOW_long": "Pomoc potrzebna teraz"
   },
   "reward": {
@@ -295,7 +298,12 @@
     "photoWrongType": "Obsługiwane są tylko JPEG, PNG i WEBP",
     "photoUploadFailed": "Nie udało się przesłać zdjęcia",
     "locationUpdated": "Znacznik przeniesiony na twoją obecną lokalizację",
-    "locationDenied": "Brak dostępu do lokalizacji. Zezwól na nią w ustawieniach przeglądarki lub przesuń znacznik ręcznie."
+    "locationDenied": "Brak dostępu do lokalizacji. Zezwól na nią w ustawieniach przeglądarki lub przesuń znacznik ręcznie.",
+    "neededAtLabel": "Kiedy potrzebna jest pomoc",
+    "neededAtHint": "Od 15 minut do 30 dni naprzód",
+    "neededAtRequired": "Wybierz datę i godzinę",
+    "neededAtTooSoon": "Wybierz godzinę co najmniej 15 minut od teraz",
+    "neededAtTime": "Godzina"
   },
   "nearby": {
     "title": "Pomoc w pobliżu",
@@ -564,5 +572,49 @@
     "sent": "Wiadomość wysłana",
     "replyNote": "Odpowiemy na {{email}}.",
     "another": "Napisz kolejną"
+  },
+  "install": {
+    "title": "Zainstaluj Poruch jako aplikację",
+    "why": "Poruch działa najlepiej jako aplikacja na ekranie głównym.",
+    "benefits": [
+      "🔔 Powiadomienia przychodzą nawet przy zamkniętej aplikacji",
+      "⚡ Otwiera się jednym dotknięciem, na pełnym ekranie",
+      "📍 Szybciej znajduje ciebie i ludzi w pobliżu"
+    ],
+    "button": "Zainstaluj",
+    "howTo": "Jak zainstalować:",
+    "steps": {
+      "ios": [
+        "Stuknij „Udostępnij” ⬆️ na dole Safari",
+        "Wybierz „Do ekranu początkowego” (przewiń listę, jeśli nie widać)",
+        "Stuknij „Dodaj” — Poruch pojawi się wśród aplikacji"
+      ],
+      "ios-other-browser": [
+        "Stuknij „Udostępnij” ⬆️ na pasku adresu",
+        "Wybierz „Do ekranu początkowego”; jeśli go nie ma, otwórz stronę w Safari",
+        "Stuknij „Dodaj”"
+      ],
+      "android": [
+        "Otwórz menu przeglądarki ⋮ w prawym górnym rogu",
+        "Wybierz „Zainstaluj aplikację” lub „Dodaj do ekranu głównego”",
+        "Potwierdź — Poruch pojawi się wśród aplikacji"
+      ],
+      "desktop": [
+        "Kliknij ikonę instalacji ⊕ na pasku adresu (lub menu ⋮ → „Zainstaluj Poruch”)",
+        "Potwierdź instalację"
+      ]
+    },
+    "later": "Później",
+    "thanks": "Poruch zainstalowany ❤️",
+    "cardTitle": "Zainstaluj aplikację",
+    "cardText": "Powiadomienia nawet przy zamkniętej aplikacji",
+    "cardButton": "Jak?"
+  },
+  "legal": {
+    "privacy": "Polityka prywatności",
+    "terms": "Warunki korzystania",
+    "updated": "Obowiązująca wersja: {{date}}",
+    "englishOnly": "Ten dokument jest dostępny po ukraińsku i angielsku",
+    "agree": "Akceptujesz też <terms>Warunki korzystania</terms> i <privacy>Politykę prywatności</privacy>."
   }
 }

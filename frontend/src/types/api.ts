@@ -3,7 +3,7 @@ export type ISODateTime = string;
 
 export type Category = "AUTO" | "HOME" | "ITEMS" | "ANIMALS" | "PEOPLE" | "DISTRICT" | "URGENT" | "OTHER";
 export type NotificationCategory = Exclude<Category, "OTHER">;
-export type Urgency = "NOW" | "TODAY" | "WHENEVER";
+export type Urgency = "NOW" | "TODAY" | "WHENEVER" | "SCHEDULED";
 export type RewardType = "NONE" | "WILLING" | "UNSURE";
 export type RewardOption = "PIZZA" | "COFFEE" | "RETURN_HELP" | "GIVE_ITEM";
 export type OfferType = "ACCEPT" | "COUNTER" | "FREE";
@@ -141,6 +141,8 @@ export interface HelpRequest {
   description: string;
   place_name: string;
   urgency: Urgency;
+  /** When help is needed (urgency SCHEDULED). */
+  needed_at: ISODateTime | null;
   reward_type: RewardType;
   reward_amount: string | null;
   reward_currency: string;
@@ -248,6 +250,7 @@ export interface SharePreview {
   title: string | null;
   description: string | null;
   urgency: Urgency | null;
+  needed_at: ISODateTime | null;
   reward_type: RewardType | null;
   reward_amount: string | null;
   reward_currency: string;
