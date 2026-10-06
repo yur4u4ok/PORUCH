@@ -7,7 +7,7 @@ export const PASSWORD = "E2e-strong-pass-1";
 export const TEST_LOCATION = { latitude: 49.8429, longitude: 24.0316 };
 
 export async function newUserContext(browser: Browser, offsetMeters = 0): Promise<BrowserContext> {
-  return browser.newContext({
+  const context = await browser.newContext({
     permissions: ["geolocation"],
     geolocation: {
       latitude: TEST_LOCATION.latitude + offsetMeters / 111_320,
@@ -15,6 +15,10 @@ export async function newUserContext(browser: Browser, offsetMeters = 0): Promis
       accuracy: 15,
     },
   });
+  // Test browsers are never "installed", so the install dialog would cover the page:
+  // behave as if the user pressed «Пізніше».
+  await context.addInitScript(() => localStorage.setItem("poruch.installDismissedAt", String(Date.now())));
+  return context;
 }
 
 async function verificationLink(email: string): Promise<string> {

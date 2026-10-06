@@ -87,14 +87,28 @@ jobs:
     needs: [backend, frontend]
     steps:
       - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      # Layer cache in GitHub Actions: dependencies are reinstalled only when requirements change.
       - name: Build backend image
-        run: docker build --target production -t poruch-backend:${{ github.sha }} backend
+        uses: docker/build-push-action@v6
+        with:
+          context: backend
+          target: production
+          tags: poruch-backend:${{ github.sha }}
+          cache-from: type=gha,scope=prod-backend
+          cache-to: type=gha,mode=max,scope=prod-backend
       - name: Build frontend image
-        run: docker build --target production -t poruch-frontend:${{ github.sha }} frontend
+        uses: docker/build-push-action@v6
+        with:
+          context: frontend
+          target: production
+          tags: poruch-frontend:${{ github.sha }}
+          cache-from: type=gha,scope=prod-frontend
+          cache-to: type=gha,mode=max,scope=prod-frontend
 
+  # Independent of the other jobs: runs in parallel with them.
   e2e:
     runs-on: ubuntu-24.04
-    needs: [backend, frontend]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -104,15 +118,33 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       # Install before the stack starts: the frontend container bind-mounts ./frontend and would
       # otherwise create frontend/node_modules as root, so npm ci on the runner gets EACCES.
-      - name: Install Playwright
+      - name: Install npm packages
         working-directory: frontend
-        run: |
-          npm ci
-          npx playwright install --with-deps chromium
-      - name: Start stack
+        run: npm ci
+      - name: Cache Playwright browser
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('frontend/package-lock.json') }}
+      - name: Install Playwright browser
+        if: steps.pw-cache.outputs.cache-hit != 'true'
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
+      - name: Install Playwright system deps
+        if: steps.pw-cache.outputs.cache-hit == 'true'
+        working-directory: frontend
+        run: npx playwright install-deps chromium
+      - uses: docker/setup-buildx-action@v3
+      - name: Build stack images (cached)
         run: |
           cp .env.example .env
-          docker compose up -d --build --wait --wait-timeout 300 postgres redis s3 mailpit backend celery frontend
+          docker buildx bake --file docker-compose.yml --load \
+            --set "*.cache-from=type=gha,scope=compose" \
+            --set "*.cache-to=type=gha,mode=max,scope=compose" \
+            backend frontend
+      - name: Start stack
+        run: docker compose up -d --no-build --wait --wait-timeout 300 postgres redis s3 mailpit backend celery frontend
       - name: Run Playwright
         working-directory: frontend
         run: npx playwright test
