@@ -41,6 +41,9 @@ def send_to_subscription(subscription: PushSubscription, payload: dict) -> bool:
             vapid_private_key=settings.VAPID_PRIVATE_KEY,
             vapid_claims={"sub": settings.VAPID_SUBJECT},
             ttl=settings.PUSH_TTL_SECONDS,
+            # Without "high", Android/FCM treats pushes as low priority: delayed while the phone
+            # sleeps and shown without a heads-up popup when the app is closed.
+            headers={"Urgency": "high"},
             timeout=10,
         )
     except WebPushException as exc:

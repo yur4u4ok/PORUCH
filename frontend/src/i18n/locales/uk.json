@@ -100,7 +100,7 @@
     "forgot": "Забули пароль?",
     "or": "або",
     "google": "Увійти через Google",
-    "invalidCredentials": "Невірний email або пароль",
+    "invalidCredentials": "Неправильний email або пароль",
     "verifyTitle": "Підтвердіть email",
     "verifyText": "Ми надіслали лист на {{email}}. Перейдіть за посиланням у листі, щоб продовжити.",
     "verifyResend": "Надіслати лист ще раз",

@@ -140,3 +140,17 @@ def test_cleanup_expired_media(user, s3):
     Media.objects.filter(pk=attached.pk).update(created_at=timezone.now() - timedelta(days=2))
     assert cleanup_expired_media() == 1
     assert set(Media.objects.values_list("id", flat=True)) == {fresh.id, attached.id}
+
+
+def test_phone_mpo_jpeg_is_accepted(auth_client, s3):
+    """Samsung/Android "motion" photos are MPO (multi-frame JPEG) and must upload like any photo."""
+    main, extra = Image.new("RGB", (2400, 1600), (10, 120, 100)), Image.new("RGB", (640, 480), (0, 0, 0))
+    buf = io.BytesIO()
+    main.save(buf, format="MPO", save_all=True, append_images=[extra])
+    assert Image.open(io.BytesIO(buf.getvalue())).format == "MPO"
+
+    data = request_upload(auth_client, size=len(buf.getvalue()), kind="CHAT").data
+    s3.upload(Media.objects.get(id=data["media_id"]).original_key, buf.getvalue(), "image/jpeg")
+    response = auth_client.post("/api/v1/media/confirm/", {"media_id": data["media_id"]}, format="json")
+    assert response.status_code == 200, response.data
+    assert (response.data["width"], response.data["height"]) == (1600, 1067)

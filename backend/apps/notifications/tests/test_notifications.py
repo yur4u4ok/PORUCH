@@ -143,6 +143,14 @@ class TestPushDelivery:
         sub.refresh_from_db()
         assert sub.last_used_at is not None
 
+    def test_push_is_high_urgency(self, monkeypatch):
+        """Low-priority pushes are delayed and shown without a popup on Android when the app is closed."""
+        sent = {}
+        monkeypatch.setattr("apps.notifications.services.push.webpush", lambda **kwargs: sent.update(kwargs))
+        sub = PushSubscriptionFactory()
+        deliver(Notification.objects.create(user=sub.user, type="NEW_MESSAGE", title="t").id)
+        assert sent["headers"] == {"Urgency": "high"}
+
     def test_gone_subscription_deleted(self, monkeypatch):
         sub = PushSubscriptionFactory()
 

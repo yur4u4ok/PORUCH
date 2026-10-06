@@ -30,7 +30,7 @@ describe("auth pages", () => {
     await userEvent.type(await screen.findByLabelText("Email"), "a@b.com");
     await userEvent.type(screen.getByLabelText("Пароль"), "secret123");
     await userEvent.click(screen.getByRole("button", { name: "Увійти" }));
-    expect(await screen.findByText("Невірний email або пароль")).toBeInTheDocument();
+    expect(await screen.findByText("Неправильний email або пароль")).toBeInTheDocument();
   });
 
   it("register validates password length", async () => {

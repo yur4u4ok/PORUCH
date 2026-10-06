@@ -426,7 +426,13 @@ export default function HelpRequestPage() {
               : `📍 ${t("request.exactLocation")}`}
           </span>
           {!request.location.approximate && (
-            <a href={`geo:${request.location.latitude},${request.location.longitude}`}>
+            // Universal Maps URL: opens the Maps app on Android/iPhone, the website elsewhere
+            // (geo: links only worked on some Android phones).
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${request.location.latitude},${request.location.longitude}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {t("request.openInMaps")}
             </a>
           )}

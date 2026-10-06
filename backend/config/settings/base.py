@@ -86,8 +86,17 @@ TEMPLATES = [
 # --- Database -------------------------------------------------------------
 DATABASES = {"default": env.db("DATABASE_URL", engine="django.contrib.gis.db.backends.postgis")}
 DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.postgis"
-DATABASES["default"]["CONN_MAX_AGE"] = env.int("DATABASE_CONN_MAX_AGE", default=60)
-DATABASES["default"]["CONN_HEALTH_CHECKS"] = True
+# ASGI: persistent per-thread connections (CONN_MAX_AGE > 0) leak under async views, so connections
+# are either opened per request (dev, tests) or taken from a psycopg pool (production, DATABASE_POOL).
+DATABASES["default"]["CONN_MAX_AGE"] = 0
+if env.bool("DATABASE_POOL", default=False):
+    DATABASES["default"].setdefault("OPTIONS", {})["pool"] = {
+        "min_size": env.int("DATABASE_POOL_MIN", default=2),
+        "max_size": env.int("DATABASE_POOL_MAX", default=10),
+        "timeout": 10,
+    }
+else:
+    DATABASES["default"]["CONN_HEALTH_CHECKS"] = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # --- Redis / cache / channels ---------------------------------------------

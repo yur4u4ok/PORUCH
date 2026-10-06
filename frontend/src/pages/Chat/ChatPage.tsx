@@ -18,7 +18,7 @@ import { ReportDialog } from "@/features/help/components";
 import { usePublicConfig } from "@/features/profile/hooks";
 import { toast } from "@/stores/toastStore";
 import type { Message } from "@/types/api";
-import { validateImageFile } from "@/utils/files";
+import { uploadErrorMessage, validateImageFile } from "@/utils/files";
 import { formatTime } from "@/utils/format";
 
 import styles from "./Chat.module.css";
@@ -138,21 +138,24 @@ export default function ChatPage() {
 
   const onAttach = async (file: File | undefined) => {
     if (!file) return;
+    const maxBytes = config?.max_upload_bytes ?? 10 * 1024 * 1024;
+    const mb = Math.round(maxBytes / (1024 * 1024));
     const problem = validateImageFile(
       file,
       config?.allowed_image_types ?? ["image/jpeg", "image/png", "image/webp"],
-      config?.max_upload_bytes ?? 10 * 1024 * 1024,
+      maxBytes,
     );
     if (problem) {
-      toast.error(problem === "type" ? t("create.photoWrongType") : t("create.photoTooLarge", { mb: 10 }));
+      toast.error(problem === "type" ? t("create.photoWrongType") : t("create.photoTooLarge", { mb }));
       return;
     }
     setUploading(true);
     try {
       const media = await mediaApi.upload(file, "CHAT");
       sendText("", media.id);
-    } catch {
-      toast.error(t("create.photoUploadFailed"));
+    } catch (error) {
+      const [key, params] = uploadErrorMessage(error, mb);
+      toast.error(t(key, params));
     } finally {
       setUploading(false);
     }
