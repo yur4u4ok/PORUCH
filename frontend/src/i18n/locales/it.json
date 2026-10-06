@@ -109,7 +109,8 @@
     "passwordChanged": "Password cambiata. Ora puoi accedere.",
     "terms": "Registrandoti, ti impegni ad aiutare in modo sicuro e rispettoso.",
     "googleFailed": "Accesso con Google non riuscito. Riprova.",
-    "googleInactive": "Questo account è stato disattivato."
+    "googleInactive": "Questo account è stato disattivato.",
+    "checkSpam": "Non vedi l'email? Aspetta un minuto e controlla le cartelle Spam e Promozioni. Se è lì, segnala che «Non è spam», così le prossime arriveranno nella posta in arrivo."
   },
   "validation": {
     "required": "Campo obbligatorio",

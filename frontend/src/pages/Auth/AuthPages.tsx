@@ -47,6 +47,16 @@ function applyServerErrors<T extends Record<string, unknown>>(
   }
 }
 
+/** New senders often land in spam/promotions: tell people where else to look. */
+function SpamHint() {
+  const { t } = useTranslation();
+  return (
+    <p className="muted" style={{ fontSize: 14 }}>
+      📬 {t("auth.checkSpam")}
+    </p>
+  );
+}
+
 export function LoginPage() {
   const { t } = useTranslation();
   const fe = useFieldError();
@@ -201,6 +211,7 @@ export function VerifyPendingPage() {
     <main className={styles.authPage}>
       <h1>📧 {t("auth.verifyTitle")}</h1>
       <p>{t("auth.verifyText", { email: me?.email ?? "" })}</p>
+      <SpamHint />
       <Button onClick={() => void refetch()} loading={isFetching} block>
         {t("auth.iVerified")}
       </Button>
@@ -272,7 +283,10 @@ export function ForgotPasswordPage() {
     <main className={styles.authPage}>
       <h1>{t("auth.resetTitle")}</h1>
       {sent ? (
-        <Card>{t("auth.resetSent")}</Card>
+        <Card className="stack-sm">
+          <span>{t("auth.resetSent")}</span>
+          <SpamHint />
+        </Card>
       ) : (
         <form className="stack" onSubmit={onSubmit} noValidate>
           <p className="muted">{t("auth.resetText")}</p>

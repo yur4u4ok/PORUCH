@@ -1,6 +1,7 @@
 """Create in-app notifications and queue Web Push delivery (never synchronously)."""
 
 from django.db import IntegrityError, transaction
+from django.utils.translation import gettext as _
 
 from apps.notifications.models import Notification, NotificationPreference, NotificationType
 from apps.users.models import User
@@ -45,10 +46,17 @@ def notify(
     if push and (prefs is None or prefs.push_enabled):
         queue_push(notification)
     if prefs and prefs.email_enabled and type in EMAIL_TYPES:
-        from apps.users.tasks import send_email
+        from common.emails import send_service_email
 
-        text = f"{body}\n\n{url}" if url else body
-        transaction.on_commit(lambda: send_email.delay(user.email, title, text))
+        send_service_email(
+            user.email,
+            title,
+            heading=title,
+            paragraphs=[body] if body else [],
+            button_text=_("Відкрити в Poruch"),
+            button_url=url or "/",
+            note=_("Сповіщення на пошту можна вимкнути в налаштуваннях застосунку."),
+        )
     return notification
 
 

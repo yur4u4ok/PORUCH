@@ -15,8 +15,8 @@ from django.utils.translation import gettext as _
 
 from apps.locations.models import City
 from apps.users.models import Profile, SocialAccount, User
-from apps.users.tasks import send_email
 from common import analytics
+from common.emails import send_service_email
 from common.exceptions import Conflict, DomainError, ValidationFailed
 
 logger = logging.getLogger(__name__)
@@ -74,12 +74,19 @@ def make_email_verification_token(user: User) -> str:
 def send_verification_email(user: User) -> None:
     token = make_email_verification_token(user)
     link = _frontend_url("/auth/verify-email", token=token)
-    body = _(
-        "Вітаємо у Poruch!\n\nПідтвердіть свою електронну адресу, перейшовши за посиланням:\n{link}\n\n"
-        "Якщо ви не реєструвалися — просто проігноруйте цей лист."
-    ).format(link=link)
-    subject = _("Підтвердження email — Poruch")
-    transaction.on_commit(lambda: send_email.delay(user.email, subject, body))
+    send_service_email(
+        user.email,
+        _("Підтвердіть email у Poruch"),
+        heading=_("Вітаємо у Poruch!"),
+        paragraphs=[
+            _(
+                "Залишився один крок: підтвердьте свою електронну адресу, щоб просити про допомогу й допомагати людям поруч."
+            )
+        ],
+        button_text=_("Підтвердити email"),
+        button_url=link,
+        note=_("Посилання дійсне 3 дні. Якщо ви не реєструвалися в Poruch — просто проігноруйте цей лист."),
+    )
 
 
 def verify_email(token: str) -> User:
@@ -107,11 +114,16 @@ def request_password_reset(email: str) -> None:
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     token = default_token_generator.make_token(user)
     link = _frontend_url("/auth/reset-password", uid=uid, token=token)
-    body = _(
-        "Ви запросили відновлення пароля в Poruch.\n\nЩоб встановити новий пароль, перейдіть за посиланням:\n"
-        "{link}\n\nЯкщо це були не ви — проігноруйте цей лист."
-    ).format(link=link)
-    send_email.delay(user.email, _("Відновлення пароля — Poruch"), body)
+    send_service_email(
+        user.email,
+        _("Відновлення пароля в Poruch"),
+        heading=_("Новий пароль"),
+        paragraphs=[_("Ви запросили відновлення пароля в Poruch. Натисніть кнопку, щоб встановити новий.")],
+        button_text=_("Встановити новий пароль"),
+        button_url=link,
+        note=_("Якщо це були не ви — проігноруйте цей лист, ваш пароль не зміниться."),
+        on_commit=False,
+    )
 
 
 def confirm_password_reset(*, uid: str, token: str, password: str) -> User:

@@ -109,7 +109,8 @@
     "passwordChanged": "Contraseña cambiada. Ya puedes iniciar sesión.",
     "terms": "Al registrarte, te comprometes a ayudar de forma segura y respetuosa.",
     "googleFailed": "No se pudo iniciar sesión con Google. Inténtalo de nuevo.",
-    "googleInactive": "Esta cuenta está desactivada."
+    "googleInactive": "Esta cuenta está desactivada.",
+    "checkSpam": "¿No ves el correo? Espera un minuto y revisa las carpetas de Spam y Promociones. Si está ahí, márcalo como «No es spam» para que los siguientes lleguen a tu bandeja de entrada."
   },
   "validation": {
     "required": "Campo obligatorio",

@@ -104,7 +104,8 @@
     "passwordChanged": "密码已修改，现在可以登录了。",
     "terms": "注册即表示你同意以安全、尊重的方式互相帮助。",
     "googleFailed": "无法使用 Google 登录，请重试。",
-    "googleInactive": "该账号已被停用。"
+    "googleInactive": "该账号已被停用。",
+    "checkSpam": "没看到邮件？请等一分钟，再查看垃圾邮件和推广邮件文件夹。如果在那里，请标记为“非垃圾邮件”，以后的邮件就会进入收件箱。"
   },
   "validation": {
     "required": "必填项",

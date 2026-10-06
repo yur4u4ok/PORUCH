@@ -109,7 +109,8 @@
     "passwordChanged": "Passwort geändert. Du kannst dich jetzt anmelden.",
     "terms": "Mit der Registrierung sagst du zu, sicher und respektvoll zu helfen.",
     "googleFailed": "Anmeldung mit Google fehlgeschlagen. Bitte versuche es erneut.",
-    "googleInactive": "Dieses Konto wurde deaktiviert."
+    "googleInactive": "Dieses Konto wurde deaktiviert.",
+    "checkSpam": "Keine E-Mail da? Warte eine Minute und sieh im Spam- und im Werbung-Ordner nach. Liegt sie dort, markiere sie als „Kein Spam“, damit die nächsten im Posteingang landen."
   },
   "validation": {
     "required": "Pflichtfeld",

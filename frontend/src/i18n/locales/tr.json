@@ -109,7 +109,8 @@
     "passwordChanged": "Şifre değiştirildi. Artık giriş yapabilirsin.",
     "terms": "Kayıt olarak güvenli ve saygılı bir şekilde yardım etmeyi kabul edersin.",
     "googleFailed": "Google ile giriş yapılamadı. Tekrar dene.",
-    "googleInactive": "Bu hesap devre dışı bırakıldı."
+    "googleInactive": "Bu hesap devre dışı bırakıldı.",
+    "checkSpam": "E-postayı göremiyor musun? Bir dakika bekle ve Spam ile Promosyonlar klasörlerine bak. Oradaysa “Spam değil” olarak işaretle, sonrakiler gelen kutuna düşsün."
   },
   "validation": {
     "required": "Zorunlu alan",
