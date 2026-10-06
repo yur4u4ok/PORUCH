@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /$
-Disallow: /help/
-Disallow: /chats/
-Disallow: /profile/
-Disallow: /api/

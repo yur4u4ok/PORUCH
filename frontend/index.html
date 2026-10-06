@@ -13,7 +13,14 @@
     <meta name="apple-mobile-web-app-title" content="Poruch" />
     <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <style>
+      /* Static landing copy for crawlers without JavaScript; hidden as soon as JS runs. */
+      .js .seo-fallback {
+        display: none;
+      }
+    </style>
     <script>
+      document.documentElement.classList.add("js");
       try {
         var t = localStorage.getItem("poruch.theme");
         if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
