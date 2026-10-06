@@ -1,0 +1,39 @@
+.indicator {
+  position: fixed;
+  top: env(safe-area-inset-top, 0);
+  left: 50%;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.15);
+  font-size: 20px;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.indicator span {
+  display: inline-block;
+  transition: transform 0.1s;
+}
+
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spin {
+    animation: none;
+  }
+}

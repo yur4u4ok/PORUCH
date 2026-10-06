@@ -8,6 +8,7 @@ import { NavLink, Outlet, useNavigate, useSearchParams } from "react-router";
 import { IconButton } from "@/components/ui";
 
 import { BrandMark } from "./BrandMark";
+import { PullToRefresh } from "./PullToRefresh";
 import { useConversations } from "@/features/chat/hooks";
 import { useMarkNotificationRead, useUnreadCount } from "@/features/notifications/hooks";
 import { useOnline } from "@/hooks/useOnline";
@@ -71,6 +72,7 @@ export function AppLayout() {
   return (
     <div className={styles.shell}>
       <PushDeepLinkTracker />
+      <PullToRefresh />
       <nav className={styles.sidebar} aria-label={BRAND}>
         <NavLink to="/" className={styles.brand}>
           <BrandMark inverse />

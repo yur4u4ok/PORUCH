@@ -9,7 +9,9 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 
 from common.exceptions import ValidationFailed
 
-FORMAT_TO_MIME = {"JPEG": "image/jpeg", "PNG": "image/png", "WEBP": "image/webp"}
+# MPO = JPEG with extra frames (Samsung/Android "motion" photos, some iPhone exports): Pillow
+# reports it as its own format, but every phone shows it as an ordinary JPEG. First frame is used.
+FORMAT_TO_MIME = {"JPEG": "image/jpeg", "MPO": "image/jpeg", "PNG": "image/png", "WEBP": "image/webp"}
 MAX_PIXELS = 40_000_000
 
 
@@ -60,6 +62,7 @@ def _encode(img: Image.Image, max_dim: int) -> tuple[bytes, int, int]:
 def process_image(data: bytes) -> ProcessedImage:
     detect_mime(data)
     with Image.open(io.BytesIO(data)) as img:
+        img.seek(0)  # multi-frame (MPO): the main picture
         if img.width * img.height > MAX_PIXELS:
             raise ValidationFailed(
                 "Image too large", code="INVALID_FILE", details={"file": ["Зображення занадто велике."]}

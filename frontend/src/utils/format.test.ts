@@ -105,3 +105,19 @@ describe("validateImageFile", () => {
 it("generates uuids", () => {
   expect(uuid()).toMatch(/^[0-9a-f-]{36}$/);
 });
+
+describe("uploadErrorMessage", () => {
+  it("explains why an upload failed", async () => {
+    const { ApiError } = await import("@/api/client");
+    const { uploadErrorMessage } = await import("./files");
+    expect(uploadErrorMessage(new ApiError(400, { details: { size: ["x"] } }), 10)).toEqual([
+      "create.photoTooLarge",
+      { mb: 10 },
+    ]);
+    expect(uploadErrorMessage(new ApiError(400, { code: "INVALID_FILE" }), 10)).toEqual([
+      "create.photoWrongType",
+    ]);
+    expect(uploadErrorMessage(new ApiError(0, {}), 10)).toEqual(["errors.NETWORK_ERROR"]);
+    expect(uploadErrorMessage(new Error("boom"), 10)).toEqual(["create.photoUploadFailed"]);
+  });
+});

@@ -6,7 +6,7 @@ import { usePublicConfig } from "@/features/profile/hooks";
 import { toast } from "@/stores/toastStore";
 import type { Media, MediaKind } from "@/types/api";
 
-import { validateImageFile } from "@/utils/files";
+import { uploadErrorMessage, validateImageFile } from "@/utils/files";
 
 import styles from "./PhotoUploader.module.css";
 
@@ -47,8 +47,9 @@ export function PhotoUploader({
         const media = await mediaApi.upload(file, kind);
         next = [...next, media];
         onChange(next);
-      } catch {
-        toast.error(t("create.photoUploadFailed"));
+      } catch (error) {
+        const [key, params] = uploadErrorMessage(error, mb);
+        toast.error(t(key, params));
       } finally {
         setUploading((n) => n - 1);
       }

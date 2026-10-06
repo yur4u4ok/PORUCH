@@ -38,15 +38,18 @@ self.addEventListener("push", (event) => {
     data = { title: "Poruch", body: event.data?.text() };
   }
   const title = data.title || "Poruch";
-  event.waitUntil(
-    self.registration.showNotification(title, {
-      body: data.body ?? "",
-      icon: "/icons/icon-192.png",
-      badge: "/icons/icon-192.png",
-      tag: data.tag,
-      data: { url: data.url || "/" },
-    }),
-  );
+  // renotify/vibrate are supported by browsers but missing from TypeScript's DOM types.
+  const options: NotificationOptions & { renotify?: boolean; vibrate?: number[] } = {
+    body: data.body ?? "",
+    icon: "/icons/icon-192.png",
+    badge: "/icons/icon-192.png",
+    tag: data.tag,
+    // Same tag (e.g. several messages in one chat) would otherwise replace silently: no sound, no popup.
+    renotify: Boolean(data.tag),
+    vibrate: [120, 60, 120],
+    data: { url: data.url || "/" },
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
 });
 
 self.addEventListener("notificationclick", (event) => {
