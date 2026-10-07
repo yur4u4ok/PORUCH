@@ -3,7 +3,8 @@
     "slogan": "Hilfe von Menschen in der Nähe",
     "offline": "Keine Internetverbindung. Einige Funktionen sind vorübergehend nicht verfügbar.",
     "updateReady": "Eine neue Version der App ist verfügbar",
-    "reload": "Aktualisieren"
+    "reload": "Aktualisieren",
+    "updateHint": "Möglicherweise gibt es eine neue Version der App. Lade die Seite neu."
   },
   "nav": {
     "home": "Start",

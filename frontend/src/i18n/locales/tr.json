@@ -3,7 +3,8 @@
     "slogan": "Yakınındaki insanlardan yardım",
     "offline": "İnternet bağlantısı yok. Bazı özellikler geçici olarak kullanılamıyor.",
     "updateReady": "Uygulamanın yeni bir sürümü var",
-    "reload": "Güncelle"
+    "reload": "Güncelle",
+    "updateHint": "Uygulamanın yeni bir sürümü olabilir. Sayfayı yenile."
   },
   "nav": {
     "home": "Ana sayfa",

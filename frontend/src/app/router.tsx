@@ -38,6 +38,8 @@ const NotificationSettingsPage = lazy(() =>
 );
 const PrivacySettingsPage = lazy(() => settings().then((m) => ({ default: m.PrivacySettingsPage })));
 
+import { RouteError } from "./RouteError";
+
 const page = (node: ReactNode) => <Suspense fallback={<Loader />}>{node}</Suspense>;
 
 /** "/" shows the landing page to guests and the app to signed-in users. */
@@ -66,60 +68,66 @@ function LegacyChatRedirect() {
 
 export const router = createBrowserRouter([
   {
-    path: "/auth/login",
-    element: page(
-      <GuestOnly>
-        <LoginPage />
-      </GuestOnly>,
-    ),
-  },
-  {
-    path: "/auth/register",
-    element: page(
-      <GuestOnly>
-        <RegisterPage />
-      </GuestOnly>,
-    ),
-  },
-  { path: "/auth/forgot-password", element: page(<ForgotPasswordPage />) },
-  { path: "/auth/reset-password", element: page(<ResetPasswordPage />) },
-  { path: "/auth/verify-email", element: page(<VerifyEmailPage />) },
-  // Public legal pages (linked from Google's OAuth consent screen and sign-up).
-  { path: "/privacy", element: page(<LegalPage kind="privacy" />) },
-  { path: "/terms", element: page(<LegalPage kind="terms" />) },
-  // Public: shared request links work without an account.
-  { path: "/share/:code", element: page(<SharePage />) },
-  { path: "/r/:code", element: <ShortShareRedirect /> },
-  {
-    element: <RequireAuth allowUnverified allowOnboarding />,
-    children: [{ path: "/auth/verify-pending", element: page(<VerifyPendingPage />) }],
-  },
-  {
-    element: <RequireAuth allowOnboarding />,
-    children: [{ path: "/onboarding", element: page(<OnboardingPage />) }],
-  },
-  {
-    path: "/",
-    element: <RootGate />,
+    // Pathless parent: one friendly error screen (and stale-chunk reload) for every page.
+    errorElement: <RouteError />,
     children: [
       {
-        element: <AppLayout />,
+        path: "/auth/login",
+        element: page(
+          <GuestOnly>
+            <LoginPage />
+          </GuestOnly>,
+        ),
+      },
+      {
+        path: "/auth/register",
+        element: page(
+          <GuestOnly>
+            <RegisterPage />
+          </GuestOnly>,
+        ),
+      },
+      { path: "/auth/forgot-password", element: page(<ForgotPasswordPage />) },
+      { path: "/auth/reset-password", element: page(<ResetPasswordPage />) },
+      { path: "/auth/verify-email", element: page(<VerifyEmailPage />) },
+      // Public legal pages (linked from Google's OAuth consent screen and sign-up).
+      { path: "/privacy", element: page(<LegalPage kind="privacy" />) },
+      { path: "/terms", element: page(<LegalPage kind="terms" />) },
+      // Public: shared request links work without an account.
+      { path: "/share/:code", element: page(<SharePage />) },
+      { path: "/r/:code", element: <ShortShareRedirect /> },
+      {
+        element: <RequireAuth allowUnverified allowOnboarding />,
+        children: [{ path: "/auth/verify-pending", element: page(<VerifyPendingPage />) }],
+      },
+      {
+        element: <RequireAuth allowOnboarding />,
+        children: [{ path: "/onboarding", element: page(<OnboardingPage />) }],
+      },
+      {
+        path: "/",
+        element: <RootGate />,
         children: [
-          { index: true, element: page(<HomePage />) },
-          { path: "nearby", element: page(<NearbyPage />) },
-          { path: "help/create", element: page(<CreateHelpPage />) },
-          { path: "help/:id", element: page(<HelpRequestPage />) },
-          { path: "chats", element: page(<ConversationsPage />) },
-          { path: "chats/:id", element: page(<ChatPage />) },
-          { path: "chat/:id", element: <LegacyChatRedirect /> },
-          { path: "profile", element: page(<ProfilePage />) },
-          { path: "profile/:id", element: page(<PublicProfilePage />) },
-          { path: "notifications", element: page(<NotificationsPage />) },
-          { path: "settings", element: page(<SettingsPage />) },
-          { path: "settings/notifications", element: page(<NotificationSettingsPage />) },
-          { path: "settings/privacy", element: page(<PrivacySettingsPage />) },
-          { path: "support", element: page(<SupportPage />) },
-          { path: "*", element: page(<NotFoundPage />) },
+          {
+            element: <AppLayout />,
+            children: [
+              { index: true, element: page(<HomePage />) },
+              { path: "nearby", element: page(<NearbyPage />) },
+              { path: "help/create", element: page(<CreateHelpPage />) },
+              { path: "help/:id", element: page(<HelpRequestPage />) },
+              { path: "chats", element: page(<ConversationsPage />) },
+              { path: "chats/:id", element: page(<ChatPage />) },
+              { path: "chat/:id", element: <LegacyChatRedirect /> },
+              { path: "profile", element: page(<ProfilePage />) },
+              { path: "profile/:id", element: page(<PublicProfilePage />) },
+              { path: "notifications", element: page(<NotificationsPage />) },
+              { path: "settings", element: page(<SettingsPage />) },
+              { path: "settings/notifications", element: page(<NotificationSettingsPage />) },
+              { path: "settings/privacy", element: page(<PrivacySettingsPage />) },
+              { path: "support", element: page(<SupportPage />) },
+              { path: "*", element: page(<NotFoundPage />) },
+            ],
+          },
         ],
       },
     ],

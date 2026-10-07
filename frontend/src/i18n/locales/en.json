@@ -3,7 +3,8 @@
     "slogan": "Help from people nearby",
     "offline": "No internet connection. Some features are temporarily unavailable.",
     "updateReady": "A new version of the app is available",
-    "reload": "Update"
+    "reload": "Update",
+    "updateHint": "A new version of the app may be available. Reload the page."
   },
   "nav": {
     "home": "Home",

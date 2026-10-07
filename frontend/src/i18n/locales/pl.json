@@ -3,7 +3,8 @@
     "slogan": "Pomoc od ludzi obok",
     "offline": "Brak połączenia z internetem. Niektóre funkcje są chwilowo niedostępne.",
     "updateReady": "Dostępna jest nowa wersja aplikacji",
-    "reload": "Aktualizuj"
+    "reload": "Aktualizuj",
+    "updateHint": "Możliwe, że jest nowa wersja aplikacji. Odśwież stronę."
   },
   "nav": {
     "home": "Start",

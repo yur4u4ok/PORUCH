@@ -3,7 +3,8 @@
     "slogan": "来自身边人的帮助",
     "offline": "没有网络连接。部分功能暂时无法使用。",
     "updateReady": "应用有新版本可用",
-    "reload": "更新"
+    "reload": "更新",
+    "updateHint": "可能有新版本，请刷新页面。"
   },
   "nav": {
     "home": "首页",

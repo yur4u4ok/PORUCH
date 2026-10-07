@@ -3,7 +3,8 @@
     "slogan": "L'aide des gens d'à côté",
     "offline": "Pas de connexion internet. Certaines fonctions sont momentanément indisponibles.",
     "updateReady": "Une nouvelle version de l'app est disponible",
-    "reload": "Mettre à jour"
+    "reload": "Mettre à jour",
+    "updateHint": "Une nouvelle version de l'app est peut-être disponible. Rechargez la page."
   },
   "nav": {
     "home": "Accueil",
