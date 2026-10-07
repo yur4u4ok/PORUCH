@@ -48,9 +48,8 @@
 .badge-count {
   min-width: 20px;
   justify-content: center;
-  background: var(--color-accent);
-  color: var(--color-text);
-  color: #fff;
+  background: var(--color-text);
+  color: var(--color-bg);
 }
 .avatar {
   flex-shrink: 0;

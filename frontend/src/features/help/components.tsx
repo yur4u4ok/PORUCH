@@ -3,7 +3,7 @@ import { useState, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 
-import { Badge, Button, Chip, Modal, Select, Textarea } from "@/components/ui";
+import { Button, Chip, Modal, Select, Textarea } from "@/components/ui";
 import { useReport } from "@/features/profile/hooks";
 import { toast } from "@/stores/toastStore";
 import type {
@@ -20,39 +20,32 @@ import { emergencyVars } from "@/utils/emergency";
 
 import styles from "./components.module.css";
 
+/** Solid, high-contrast labels: they must read on white cards and on the yellow notice alike. */
 export function UrgencyBadge({ urgency, neededAt }: { urgency: Urgency; neededAt?: string | null }) {
   const { t } = useTranslation();
-  const tone =
-    urgency === "NOW"
-      ? "danger"
-      : urgency === "TODAY"
-        ? "warning"
-        : urgency === "SCHEDULED"
-          ? "info"
-          : "success";
   return (
-    <Badge tone={tone}>
+    <span className={styles.pill} style={{ background: URGENCY_HEX[urgency] }}>
       {URGENCY_EMOJI[urgency]}{" "}
       {urgency === "SCHEDULED" && neededAt ? formatDateTime(neededAt) : t(`urgency.${urgency}`)}
-    </Badge>
+    </span>
   );
 }
 
+const STATUS_COLOR: Record<HelpRequestStatus, string> = {
+  ACTIVE: "var(--color-primary)",
+  IN_PROGRESS: "#6a4c9c",
+  COMPLETED: "#1f7a4d",
+  CANCELLED: "#4b5856",
+  EXPIRED: "#4b5856",
+};
+
 export function StatusBadge({ status }: { status: HelpRequestStatus }) {
   const { t } = useTranslation();
-  const tone =
-    status === "ACTIVE"
-      ? "info"
-      : status === "IN_PROGRESS"
-        ? "warning"
-        : status === "COMPLETED"
-          ? "success"
-          : "neutral";
   return (
-    <Badge tone={tone}>
+    <span className={styles.pill} style={{ background: STATUS_COLOR[status] ?? "#4b5856" }}>
       {status === "COMPLETED" ? "✓ " : ""}
       {t(`status.${status}`)}
-    </Badge>
+    </span>
   );
 }
 
