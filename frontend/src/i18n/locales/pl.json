@@ -382,7 +382,8 @@
     "peopleStillNeeded_one": "potrzeba jeszcze {{count}} osoby",
     "peopleStillNeeded_few": "potrzeba jeszcze {{count}} osób",
     "peopleStillNeeded_many": "potrzeba jeszcze {{count}} osób",
-    "peopleStillNeeded_other": "potrzeba jeszcze {{count}} osoby"
+    "peopleStillNeeded_other": "potrzeba jeszcze {{count}} osoby",
+    "showOnMap": "Wróć do prośby"
   },
   "thanks": {
     "received": "Pomoc otrzymana ❤️",

@@ -382,7 +382,8 @@
     "peopleStillNeeded_one": "потрібна ще {{count}} людина",
     "peopleStillNeeded_few": "потрібно ще {{count}} людини",
     "peopleStillNeeded_many": "потрібно ще {{count}} людей",
-    "peopleStillNeeded_other": "потрібно ще {{count}} людини"
+    "peopleStillNeeded_other": "потрібно ще {{count}} людини",
+    "showOnMap": "До оголошення"
   },
   "thanks": {
     "received": "Допомогу отримано ❤️",

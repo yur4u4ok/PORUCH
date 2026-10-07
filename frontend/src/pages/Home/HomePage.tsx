@@ -39,6 +39,21 @@ function EmergencyHelpButton() {
   );
 }
 
+function NearbyHelpButton() {
+  const { t } = useTranslation();
+  return (
+    <Link to="/nearby" className={styles.helpButton}>
+      <span className={styles.helpIcon} aria-hidden>
+        🤝
+      </span>
+      <span>
+        <strong>{t("home.someoneNeeds")}</strong>
+        <small>{t("home.someoneNeedsSub")}</small>
+      </span>
+    </Link>
+  );
+}
+
 function HomeSection({
   title,
   hint,
@@ -110,9 +125,7 @@ export default function HomePage() {
       <LocationHeader />
       <InstallCard />
       <EmergencyHelpButton />
-      <Link to="/nearby?view=map" className={styles.mapLink}>
-        🗺 {t("home.nearbyMap")}
-      </Link>
+      <NearbyHelpButton />
       <MyActiveHelp />
       <NotificationLocationSync />
       <p className="muted" style={{ fontSize: 13 }}>

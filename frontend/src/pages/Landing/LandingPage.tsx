@@ -5,7 +5,6 @@ import { BrandMark } from "@/components/layout/BrandMark";
 import { Button } from "@/components/ui";
 import { InstallCard } from "@/features/pwa/InstallPrompt";
 import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
-import { emergencyVars } from "@/utils/emergency";
 
 import styles from "./Landing.module.css";
 
@@ -57,7 +56,6 @@ export default function LandingPage() {
           ))}
         </ul>
       </details>
-      <p className={`muted ${styles.notice}`}>⚠️ {t("emergency.short", emergencyVars())}</p>
       <nav
         className={`muted ${styles.notice}`}
         style={{ display: "flex", gap: 16, justifyContent: "center" }}

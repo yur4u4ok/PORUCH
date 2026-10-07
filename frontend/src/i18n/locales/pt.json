@@ -366,7 +366,8 @@
     "helpersProgress": "{{count}} de {{needed}} escolhidas",
     "selectedHelpers": "Quem ajuda",
     "peopleStillNeeded_one": "falta {{count}} pessoa",
-    "peopleStillNeeded_other": "faltam {{count}} pessoas"
+    "peopleStillNeeded_other": "faltam {{count}} pessoas",
+    "showOnMap": "Voltar ao pedido"
   },
   "thanks": {
     "received": "Ajuda recebida ❤️",

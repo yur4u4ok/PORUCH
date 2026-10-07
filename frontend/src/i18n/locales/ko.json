@@ -358,7 +358,8 @@
     "rewardInfo": "감사 표시",
     "helpersProgress": "{{needed}}명 중 {{count}}명 선택",
     "selectedHelpers": "도우미",
-    "peopleStillNeeded_other": "{{count}}명 더 필요"
+    "peopleStillNeeded_other": "{{count}}명 더 필요",
+    "showOnMap": "요청 위치로"
   },
   "thanks": {
     "received": "도움을 받았어요 ❤️",

@@ -358,7 +358,8 @@
     "rewardInfo": "お礼",
     "helpersProgress": "{{needed}}人中{{count}}人を選択",
     "selectedHelpers": "手伝う人",
-    "peopleStillNeeded_other": "あと{{count}}人必要"
+    "peopleStillNeeded_other": "あと{{count}}人必要",
+    "showOnMap": "依頼の場所へ"
   },
   "thanks": {
     "received": "助けてもらいました ❤️",

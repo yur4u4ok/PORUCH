@@ -366,7 +366,8 @@
     "helpersProgress": "{{needed}} में से {{count}} चुने गए",
     "selectedHelpers": "मददगार",
     "peopleStillNeeded_one": "{{count}} और व्यक्ति चाहिए",
-    "peopleStillNeeded_other": "{{count}} और लोग चाहिए"
+    "peopleStillNeeded_other": "{{count}} और लोग चाहिए",
+    "showOnMap": "अनुरोध पर लौटें"
   },
   "thanks": {
     "received": "मदद मिल गई ❤️",

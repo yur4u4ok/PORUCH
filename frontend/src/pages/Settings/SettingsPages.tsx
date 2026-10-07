@@ -26,7 +26,6 @@ import { RegionSettings } from "@/features/profile/RegionSettings";
 import { ThemeSwitcher } from "@/features/profile/ThemeSwitcher";
 import type { NotificationCategory } from "@/types/api";
 import { DEFAULT_RADII } from "@/utils/radius";
-import { emergencyVars } from "@/utils/emergency";
 
 export function SettingsPage() {
   const { t } = useTranslation();
@@ -51,9 +50,6 @@ export function SettingsPage() {
       <Card to="/support">💬 {t("support.title")}</Card>
       <Card to="/privacy">📄 {t("legal.privacy")}</Card>
       <Card to="/terms">📄 {t("legal.terms")}</Card>
-      <p className="muted" style={{ fontSize: 13 }}>
-        ⚠️ {t("settings.about", emergencyVars())}
-      </p>
     </main>
   );
 }

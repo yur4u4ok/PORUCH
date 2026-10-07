@@ -358,7 +358,8 @@
     "rewardInfo": "答谢",
     "helpersProgress": "已选择 {{count}} / {{needed}}",
     "selectedHelpers": "帮手",
-    "peopleStillNeeded_other": "还需要 {{count}} 人"
+    "peopleStillNeeded_other": "还需要 {{count}} 人",
+    "showOnMap": "回到求助位置"
   },
   "thanks": {
     "received": "已获得帮助 ❤️",

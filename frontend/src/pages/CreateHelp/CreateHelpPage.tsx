@@ -26,7 +26,6 @@ import type { Category, Media, Urgency } from "@/types/api";
 import { CATEGORY_EMOJI, URGENCIES, URGENCY_EMOJI } from "@/utils/categories";
 import { currencySymbol, region } from "@/utils/format";
 import { REWARD_OPTION_EMOJI, REWARD_OPTIONS, rewardSummary } from "@/utils/reward";
-import { emergencyVars } from "@/utils/emergency";
 
 import styles from "./CreateHelp.module.css";
 
@@ -241,9 +240,6 @@ export default function CreateHelpPage() {
                 ))}
               </div>
             </div>
-          )}
-          {values.category === "URGENT" && (
-            <div className={styles.warning}>🚨 {t("emergency.short", emergencyVars())}</div>
           )}
         </div>
       )}

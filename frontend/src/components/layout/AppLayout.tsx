@@ -31,11 +31,13 @@ function useNavEntries(): NavEntry[] {
   const { t } = useTranslation();
   const { data: conversations } = useConversations();
   const unreadChats = conversations?.results.reduce((sum, c) => sum + c.unread_count, 0) ?? 0;
+  const { data: unread = 0 } = useUnreadCount(true);
   return [
     { to: "/", icon: "🏠", label: t("nav.home"), end: true },
     { to: "/nearby", icon: "🗺", label: t("nav.nearby") },
     { to: "/help/create", icon: "+", label: t("nav.help"), create: true },
     { to: "/chats", icon: "💬", label: t("nav.chats"), badge: unreadChats },
+    { to: "/notifications", icon: "🔔", label: t("nav.notifications"), badge: unread },
     { to: "/profile", icon: "👤", label: t("nav.profile"), end: true },
   ];
 }
@@ -87,7 +89,6 @@ export function AppLayout() {
         </NavLink>
         {[
           ...entries.map((e) => (e.create ? { ...e, icon: "❤️" } : e)),
-          { to: "/notifications", icon: "🔔", label: t("nav.notifications"), badge: unread },
           { to: "/settings", icon: "⚙️", label: t("nav.settings") },
         ].map((entry) => (
           <NavLink

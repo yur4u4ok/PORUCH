@@ -25,7 +25,12 @@ export default defineConfig(({ mode }) => {
         injectRegister: false,
         injectManifest: { globPatterns: ["**/*.{js,css,html,svg,png,woff2}"] },
         devOptions: { enabled: true, type: "module", navigateFallback: "index.html" },
-        includeAssets: ["icons/favicon.svg", "icons/apple-touch-icon.png"],
+        includeAssets: [
+          "favicon.ico",
+          "icons/favicon.svg",
+          "icons/favicon-48.png",
+          "icons/apple-touch-icon.png",
+        ],
         manifest: {
           id: "/",
           name: "Poruch",
@@ -39,6 +44,13 @@ export default defineConfig(({ mode }) => {
           theme_color: "#0E5A54",
           background_color: "#F3F6F5",
           categories: ["social", "lifestyle"],
+          // Lets Chrome answer navigator.getInstalledRelatedApps() — hides «install» once installed.
+          related_applications: [
+            {
+              platform: "webapp",
+              url: `${env.VITE_SITE_URL || "http://localhost:5173"}/manifest.webmanifest`,
+            },
+          ],
           icons: [
             { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
             { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },

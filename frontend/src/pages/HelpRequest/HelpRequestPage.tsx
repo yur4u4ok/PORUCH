@@ -50,7 +50,6 @@ import {
   timeLeft,
 } from "@/utils/format";
 import { agreedSummary, offerSummary, rewardSummary } from "@/utils/reward";
-import { emergencyVars } from "@/utils/emergency";
 
 import styles from "./HelpRequest.module.css";
 
@@ -473,6 +472,8 @@ export default function HelpRequestPage() {
   const query = useHelpRequest(id, position);
   const [reportOpen, setReportOpen] = useState(false);
   const [blockOpen, setBlockOpen] = useState(false);
+  // Bumped to rebuild the map on the request's spot after the user has panned away.
+  const [mapKey, setMapKey] = useState(0);
   const block = useBlockUser();
   const navigate = useNavigate();
 
@@ -554,6 +555,7 @@ export default function HelpRequestPage() {
 
       <section className="stack-sm">
         <LazyMap
+          key={mapKey}
           center={request.location}
           zoom={request.location.approximate ? 14 : 16}
           height={200}
@@ -570,11 +572,16 @@ export default function HelpRequestPage() {
           me={position}
           ariaLabel={request.location.approximate ? t("request.approxLocation") : t("request.exactLocation")}
         />
-        <div className="row-between">
-          <span className="muted" style={{ fontSize: 13 }}>
-            {request.location.approximate
-              ? `◌ ${t("request.approxLocation")}`
-              : `📍 ${t("request.exactLocation")}`}
+        <div className={styles.mapFooter}>
+          <span className={styles.mapFooterLeft}>
+            <span className="muted" style={{ fontSize: 13 }}>
+              {request.location.approximate
+                ? `◌ ${t("request.approxLocation")}`
+                : `📍 ${t("request.exactLocation")}`}
+            </span>
+            <Button variant="soft" size="sm" onClick={() => setMapKey((k) => k + 1)}>
+              🎯 {t("request.showOnMap")}
+            </Button>
           </span>
           {!request.location.approximate && (
             // Universal Maps URL: opens the Maps app on Android/iPhone, the website elsewhere
@@ -610,10 +617,6 @@ export default function HelpRequestPage() {
             ⛔ {t("request.block")}
           </Button>
         </div>
-      )}
-
-      {(request.category === "URGENT" || request.urgency === "NOW") && (
-        <div className={styles.warning}>⚠️ {t("emergency.short", emergencyVars())}</div>
       )}
 
       <ReportDialog

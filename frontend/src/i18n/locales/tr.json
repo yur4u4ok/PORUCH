@@ -366,7 +366,8 @@
     "helpersProgress": "{{needed}} kişiden {{count}} seçildi",
     "selectedHelpers": "Yardım edenler",
     "peopleStillNeeded_one": "{{count}} kişi daha gerekiyor",
-    "peopleStillNeeded_other": "{{count}} kişi daha gerekiyor"
+    "peopleStillNeeded_other": "{{count}} kişi daha gerekiyor",
+    "showOnMap": "Talebe dön"
   },
   "thanks": {
     "received": "Yardım alındı ❤️",
