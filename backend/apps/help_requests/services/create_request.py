@@ -135,9 +135,7 @@ def create_help_request(
         expires_at=(
             needed_at + SCHEDULE_GRACE
             if needed_at
-            else now + timedelta(hours=active_hours)
-            if active_hours
-            else expiration_for(urgency, now)
+            else now + timedelta(hours=active_hours) if active_hours else expiration_for(urgency, now)
         ),
     )
     if photos:
