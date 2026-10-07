@@ -32,11 +32,11 @@
 .stripTab span {
   font-size: 22px;
 }
-/* The chosen tab is «torn off»: yellow notice paper with an ink edge. */
+/* The chosen tab: the app's own teal, same as chosen chips and the active menu tab. */
 .stripTab[aria-pressed="true"] {
-  color: var(--color-text);
-  background: color-mix(in srgb, var(--color-notice) 35%, transparent);
-  border-bottom-color: var(--color-text);
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+  border-bottom-color: var(--color-primary);
   border-radius: 10px 10px 0 0;
 }
 .stripTab:focus-visible {
