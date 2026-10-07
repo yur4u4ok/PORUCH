@@ -11,6 +11,11 @@ describe("detectPlatform", () => {
     expect(detectPlatform(IPHONE_SAFARI.replace("Version/18.0", "CriOS/130.0"))).toBe("ios-other-browser");
     expect(detectPlatform(`${IPHONE_SAFARI} Instagram 350.0`)).toBe("in-app");
     expect(detectPlatform(`${IPHONE_SAFARI} [FBAN/FBIOS;FBAV/480.0]`)).toBe("in-app");
+    expect(
+      detectPlatform(
+        "Mozilla/5.0 (Linux; Android 15) AppleWebKit/537.36 Chrome/130.0 Mobile Telegram-Android/11.2",
+      ),
+    ).toBe("in-app");
   });
 
   it("recognises Android and desktop", () => {

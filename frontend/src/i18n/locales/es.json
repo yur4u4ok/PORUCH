@@ -575,9 +575,8 @@
     "howTo": "Cómo instalarla:",
     "steps": {
       "ios": [
-        "Abre Poruch en Safari (si la web se abrió dentro de Telegram u otra app, toca primero «Abrir en Safari»)",
-        "Toca Compartir ⬆️, abajo en la pantalla o en el menú «⋯»",
-        "Elige «Añadir a pantalla de inicio». ¿No aparece? Toca «Más» o baja hasta «Editar acciones…» y activa «Añadir a pantalla de inicio». Desactiva también la navegación privada",
+        "Toca Compartir ⬆️, abajo o en el menú «⋯»",
+        "Elige «Añadir a pantalla de inicio»",
         "Toca «Añadir»: Poruch aparecerá con tus apps"
       ],
       "ios-other-browser": [
@@ -599,6 +598,31 @@
         "Confirma la instalación"
       ]
     },
+    "troubleTitle": "¿No se puede instalar?",
+    "trouble": {
+      "ios": [
+        "La web debe estar abierta en la app Safari. Telegram, Instagram y otras abren las páginas en un visor integrado desde el que no se puede instalar. Copia la dirección (botón de abajo) y pégala en Safari.",
+        "Cómo saber que estás en Safari: el menú Compartir tiene «Añadir marcador» y «Buscar en la página».",
+        "¿No aparece «Añadir a pantalla de inicio»? Baja en el menú Compartir hasta «Editar acciones…» y actívalo.",
+        "Desactiva la navegación privada de Safari (barra de direcciones oscura)."
+      ],
+      "ios-other-browser": [
+        "Si el menú Compartir no tiene «Añadir a pantalla de inicio», abre la web en Safari: copia la dirección de abajo y pégala allí.",
+        "Una página abierta desde Telegram o Instagram es un visor integrado y no permite instalar.",
+        "Se necesita iOS 16.4 o posterior: Ajustes → General → Información."
+      ],
+      "in-app": ["Copia la dirección con el botón de abajo y pégala en Safari (iPhone) o Chrome (Android)."],
+      "android": [
+        "La web debe estar abierta en Chrome. En Telegram, Instagram y otras apps toca ⋮ → «Abrir en Chrome».",
+        "¿No aparece «Instalar aplicación»? Actualiza Chrome en Google Play o copia la dirección de abajo y ábrela en Chrome."
+      ],
+      "desktop": [
+        "Chrome y Edge permiten instalar. En Safari para Mac: Archivo → Añadir al Dock.",
+        "Firefox no permite instalar: abre la web en Chrome o Edge."
+      ]
+    },
+    "copyLink": "Copiar dirección",
+    "copied": "Dirección copiada",
     "later": "Más tarde",
     "thanks": "Poruch instalada ❤️",
     "cardTitle": "Instala la app",

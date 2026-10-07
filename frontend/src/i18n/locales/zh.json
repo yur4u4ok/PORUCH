@@ -565,9 +565,8 @@
     "howTo": "安装方法：",
     "steps": {
       "ios": [
-        "请直接用 Safari 打开 Poruch（如果是在 Telegram 等应用里打开的，先点按“在 Safari 中打开”）",
         "点按屏幕底部或“⋯”菜单中的“分享” ⬆️",
-        "选择“添加到主屏幕”。列表里没有？点按“更多”，或滑到底部“编辑操作…”，打开“添加到主屏幕”。另外请关闭 Safari 无痕浏览",
+        "选择“添加到主屏幕”",
         "点按“添加”，Poruch 就会出现在应用中"
       ],
       "ios-other-browser": [
@@ -586,6 +585,31 @@
       ],
       "desktop": ["点击地址栏中的安装图标 ⊕（或菜单 ⋮ →“安装 Poruch”）", "确认安装"]
     },
+    "troubleTitle": "无法安装？",
+    "trouble": {
+      "ios": [
+        "网站必须在 Safari 应用中打开。Telegram、Instagram 等会用内置浏览器打开页面，无法安装。请用下方按钮复制网址，粘贴到 Safari 中打开。",
+        "如何确认在 Safari 中：分享菜单里有“添加书签”和“在页面上查找”。",
+        "Safari 里没有“添加到主屏幕”？把分享菜单滑到“编辑操作…”，打开该项。",
+        "请关闭 Safari 无痕浏览（地址栏为深色时）。"
+      ],
+      "ios-other-browser": [
+        "如果分享菜单里没有“添加到主屏幕”，请复制下方网址，在 Safari 中打开。",
+        "从 Telegram 或 Instagram 打开的页面是内置浏览器，无法安装。",
+        "需要 iOS 16.4 或更高版本：设置 → 通用 → 关于本机。"
+      ],
+      "in-app": ["用下方按钮复制网址，粘贴到 Safari（iPhone）或 Chrome（Android）中打开。"],
+      "android": [
+        "网站必须在 Chrome 中打开。在 Telegram、Instagram 等应用中点按 ⋮ →“在 Chrome 中打开”。",
+        "没有“安装应用”？请在 Google Play 更新 Chrome，或复制下方网址在 Chrome 中打开。"
+      ],
+      "desktop": [
+        "Chrome 和 Edge 支持安装。Mac 上的 Safari：文件 → 添加到程序坞。",
+        "Firefox 不支持安装，请用 Chrome 或 Edge 打开。"
+      ]
+    },
+    "copyLink": "复制网址",
+    "copied": "网址已复制",
     "later": "以后再说",
     "thanks": "Poruch 已安装 ❤️",
     "cardTitle": "安装应用",

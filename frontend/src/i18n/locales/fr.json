@@ -575,9 +575,8 @@
     "howTo": "Comment l'installer :",
     "steps": {
       "ios": [
-        "Ouvrez Poruch dans Safari (si le site s'est ouvert dans Telegram ou une autre app, touchez d'abord « Ouvrir dans Safari »)",
-        "Touchez Partager ⬆️, en bas de l'écran ou dans le menu « ⋯ »",
-        "Choisissez « Sur l'écran d'accueil ». Absent ? Touchez « Plus » ou faites défiler jusqu'à « Modifier les actions… » et activez « Sur l'écran d'accueil ». Désactivez aussi la navigation privée",
+        "Touchez Partager ⬆️, en bas ou dans le menu « ⋯ »",
+        "Choisissez « Sur l'écran d'accueil »",
         "Touchez « Ajouter » : Poruch apparaît avec vos apps"
       ],
       "ios-other-browser": [
@@ -599,6 +598,33 @@
         "Confirmez l'installation"
       ]
     },
+    "troubleTitle": "Impossible d'installer ?",
+    "trouble": {
+      "ios": [
+        "Le site doit être ouvert dans l'app Safari. Telegram, Instagram et d'autres ouvrent les pages dans un lecteur intégré qui ne permet pas d'installer. Copiez l'adresse (bouton ci-dessous) et collez-la dans Safari.",
+        "Pour vérifier que vous êtes dans Safari : le menu Partager propose « Ajouter un signet » et « Rechercher dans la page ».",
+        "Pas de « Sur l'écran d'accueil » dans Safari ? Faites défiler le menu Partager jusqu'à « Modifier les actions… » et activez-le.",
+        "Désactivez la navigation privée de Safari (barre d'adresse sombre)."
+      ],
+      "ios-other-browser": [
+        "Si le menu Partager n'a pas « Sur l'écran d'accueil », ouvrez le site dans Safari : copiez l'adresse ci-dessous et collez-la.",
+        "Une page ouverte depuis Telegram ou Instagram est un lecteur intégré qui ne permet pas d'installer.",
+        "iOS 16.4 ou ultérieur est requis : Réglages → Général → Informations."
+      ],
+      "in-app": [
+        "Copiez l'adresse avec le bouton ci-dessous et collez-la dans Safari (iPhone) ou Chrome (Android)."
+      ],
+      "android": [
+        "Le site doit être ouvert dans Chrome. Dans Telegram, Instagram et autres, touchez ⋮ → « Ouvrir dans Chrome ».",
+        "Pas d'« Installer l'application » ? Mettez Chrome à jour sur Google Play, ou copiez l'adresse ci-dessous et ouvrez-la dans Chrome."
+      ],
+      "desktop": [
+        "Chrome et Edge permettent l'installation. Dans Safari sur Mac : Fichier → Ajouter au Dock.",
+        "Firefox ne permet pas d'installer : ouvrez le site dans Chrome ou Edge."
+      ]
+    },
+    "copyLink": "Copier l'adresse",
+    "copied": "Adresse copiée",
     "later": "Plus tard",
     "thanks": "Poruch installée ❤️",
     "cardTitle": "Installer l'app",

@@ -575,9 +575,8 @@
     "howTo": "Nasıl yüklenir:",
     "steps": {
       "ios": [
-        "Poruch'u doğrudan Safari'de aç (site Telegram ya da başka bir uygulamada açıldıysa önce “Safari'de Aç”a dokun)",
-        "Paylaş ⬆️ simgesine dokun — ekranın altında ya da “⋯” menüsünde",
-        "“Ana Ekrana Ekle”yi seç. Listede yok mu? “Diğer”e dokun ya da “Eylemleri Düzenle…”ye kadar kaydırıp “Ana Ekrana Ekle”yi aç. Safari'nin gizli modunu da kapat",
+        "Paylaş ⬆️ simgesine dokun — altta ya da “⋯” menüsünde",
+        "“Ana Ekrana Ekle”yi seç",
         "“Ekle”ye dokun — Poruch uygulamalarının arasında görünür"
       ],
       "ios-other-browser": [
@@ -599,6 +598,33 @@
         "Yüklemeyi onayla"
       ]
     },
+    "troubleTitle": "Yüklenemiyor mu?",
+    "trouble": {
+      "ios": [
+        "Site Safari uygulamasında açık olmalı. Telegram, Instagram ve diğerleri sayfaları yükleme yapamayan yerleşik bir görüntüleyicide açar. Adresi kopyala (aşağıdaki düğme) ve Safari'ye yapıştır.",
+        "Safari'de olduğunu anlamak için: Paylaş menüsünde “Yer İmi Ekle” ve “Sayfada Bul” vardır.",
+        "Safari'de “Ana Ekrana Ekle” yok mu? Paylaş menüsünü “Eylemleri Düzenle…”ye kadar kaydır ve aç.",
+        "Safari'nin gizli modunu kapat (koyu adres çubuğu)."
+      ],
+      "ios-other-browser": [
+        "Paylaş menüsünde “Ana Ekrana Ekle” yoksa siteyi Safari'de aç: aşağıdaki adresi kopyalayıp oraya yapıştır.",
+        "Telegram ya da Instagram'dan açılan sayfa yerleşik bir görüntüleyicidir, yükleme yapamaz.",
+        "iOS 16.4 veya üstü gerekir: Ayarlar → Genel → Hakkında."
+      ],
+      "in-app": [
+        "Aşağıdaki düğmeyle adresi kopyala ve Safari'ye (iPhone) ya da Chrome'a (Android) yapıştır."
+      ],
+      "android": [
+        "Site Chrome'da açık olmalı. Telegram, Instagram ve diğer uygulamalarda ⋮ → “Chrome'da aç”a dokun.",
+        "“Uygulamayı yükle” yok mu? Chrome'u Google Play'den güncelle ya da aşağıdaki adresi kopyalayıp Chrome'da aç."
+      ],
+      "desktop": [
+        "Chrome ve Edge yüklemeyi destekler. Mac'te Safari: Dosya → Dock'a Ekle.",
+        "Firefox yükleme yapamaz — siteyi Chrome ya da Edge'de aç."
+      ]
+    },
+    "copyLink": "Adresi kopyala",
+    "copied": "Adres kopyalandı",
     "later": "Sonra",
     "thanks": "Poruch yüklendi ❤️",
     "cardTitle": "Uygulamayı yükle",

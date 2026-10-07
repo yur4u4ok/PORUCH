@@ -41,8 +41,9 @@ export function isStandalone(): boolean {
 }
 
 export function detectPlatform(ua = navigator.userAgent): Platform {
-  // Instagram/Facebook/TikTok open links in their own browser, which cannot install apps.
-  if (/Instagram|FBAN|FBAV|FB_IAB|BytedanceWebview|musical_ly|Line\//.test(ua)) return "in-app";
+  // Instagram/Facebook/TikTok (and Telegram on Android) open links in their own browser, which
+  // cannot install apps. Telegram on iPhone uses Safari's viewer and cannot be told apart.
+  if (/Instagram|FBAN|FBAV|FB_IAB|BytedanceWebview|musical_ly|Line\/|Telegram/.test(ua)) return "in-app";
   // iPadOS reports itself as a Mac; touch points tell them apart.
   const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
   if (ios) return /CriOS|FxiOS|EdgiOS|OPiOS/.test(ua) ? "ios-other-browser" : "ios";

@@ -575,9 +575,8 @@
     "howTo": "How to install:",
     "steps": {
       "ios": [
-        "Open Poruch in Safari itself (if the site opened inside Telegram or another app, first tap “Open in Safari”)",
         "Tap Share ⬆️ — at the bottom of the screen or in the “⋯” menu",
-        "Choose “Add to Home Screen”. Not in the list? Tap “More” or scroll down to “Edit Actions…” and turn on “Add to Home Screen”. Also turn off Safari Private Browsing",
+        "Choose “Add to Home Screen”",
         "Tap “Add” — Poruch appears with your apps"
       ],
       "ios-other-browser": [
@@ -599,6 +598,33 @@
         "Confirm the installation"
       ]
     },
+    "troubleTitle": "Can't install?",
+    "trouble": {
+      "ios": [
+        "The site must be open in the Safari app. Telegram, Instagram and others open pages in a built-in viewer that can't install apps. Copy the address (button below) and paste it into Safari.",
+        "How to check you're in Safari: the Share menu has “Add Bookmark” and “Find on Page”.",
+        "No “Add to Home Screen” in Safari? Scroll the Share menu to “Edit Actions…” and turn it on.",
+        "Turn off Safari Private Browsing (dark address bar)."
+      ],
+      "ios-other-browser": [
+        "If the Share menu has no “Add to Home Screen”, open the site in Safari: copy the address below and paste it there.",
+        "A page opened from Telegram or Instagram is a built-in viewer and can't install apps.",
+        "iOS 16.4 or later is required: Settings → General → About."
+      ],
+      "in-app": [
+        "Copy the address with the button below and paste it into Safari (iPhone) or Chrome (Android)."
+      ],
+      "android": [
+        "The site must be open in Chrome. In Telegram, Instagram and other apps tap ⋮ → “Open in Chrome”.",
+        "No “Install app” item? Update Chrome in Google Play, or copy the address below and open it in Chrome."
+      ],
+      "desktop": [
+        "Chrome and Edge support installing. In Safari on Mac: File → Add to Dock.",
+        "Firefox can't install apps — open the site in Chrome or Edge."
+      ]
+    },
+    "copyLink": "Copy address",
+    "copied": "Address copied",
     "later": "Later",
     "thanks": "Poruch installed ❤️",
     "cardTitle": "Install the app",

@@ -587,9 +587,8 @@
     "howTo": "Jak zainstalować:",
     "steps": {
       "ios": [
-        "Otwórz Poruch w samym Safari (jeśli strona otworzyła się w Telegramie lub innej aplikacji, najpierw stuknij „Otwórz w Safari”)",
-        "Stuknij „Udostępnij” ⬆️ — na dole ekranu lub w menu „⋯”",
-        "Wybierz „Do ekranu początkowego”. Nie ma na liście? Stuknij „Więcej” lub przewiń do „Edytuj czynności…” i włącz „Do ekranu początkowego”. Wyłącz też tryb prywatny Safari",
+        "Stuknij „Udostępnij” ⬆️ — na dole lub w menu „⋯”",
+        "Wybierz „Do ekranu początkowego”",
         "Stuknij „Dodaj” — Poruch pojawi się wśród aplikacji"
       ],
       "ios-other-browser": [
@@ -611,6 +610,31 @@
         "Potwierdź instalację"
       ]
     },
+    "troubleTitle": "Nie da się zainstalować?",
+    "trouble": {
+      "ios": [
+        "Strona musi być otwarta w aplikacji Safari. Telegram, Instagram i inne otwierają strony we wbudowanej przeglądarce, z której nie da się instalować. Skopiuj adres (przycisk poniżej) i wklej go w Safari.",
+        "Jak sprawdzić, że to Safari: w menu „Udostępnij” są „Dodaj zakładkę” i „Znajdź na stronie”.",
+        "Brak „Do ekranu początkowego”? Przewiń menu „Udostępnij” do „Edytuj czynności…” i włącz tę opcję.",
+        "Wyłącz tryb prywatny Safari (ciemny pasek adresu)."
+      ],
+      "ios-other-browser": [
+        "Jeśli w menu „Udostępnij” nie ma „Do ekranu początkowego”, otwórz stronę w Safari: skopiuj adres poniżej i wklej go tam.",
+        "Strona otwarta z Telegrama lub Instagrama to wbudowana przeglądarka, z której nie da się instalować.",
+        "Wymagany jest iOS 16.4 lub nowszy: Ustawienia → Ogólne → To urządzenie."
+      ],
+      "in-app": ["Skopiuj adres przyciskiem poniżej i wklej go w Safari (iPhone) lub Chrome (Android)."],
+      "android": [
+        "Strona musi być otwarta w Chrome. W Telegramie, Instagramie i innych stuknij ⋮ → „Otwórz w Chrome”.",
+        "Brak „Zainstaluj aplikację”? Zaktualizuj Chrome w Google Play albo skopiuj adres poniżej i otwórz go w Chrome."
+      ],
+      "desktop": [
+        "Instalację obsługują Chrome i Edge. W Safari na Macu: Plik → Dodaj do Docka.",
+        "Firefox nie obsługuje instalacji — otwórz stronę w Chrome lub Edge."
+      ]
+    },
+    "copyLink": "Kopiuj adres",
+    "copied": "Adres skopiowany",
     "later": "Później",
     "thanks": "Poruch zainstalowany ❤️",
     "cardTitle": "Zainstaluj aplikację",

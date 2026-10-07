@@ -575,9 +575,8 @@
     "howTo": "Come installarla:",
     "steps": {
       "ios": [
-        "Apri Poruch direttamente in Safari (se il sito si è aperto in Telegram o in un'altra app, tocca prima «Apri in Safari»)",
-        "Tocca Condividi ⬆️, in basso nello schermo o nel menu «⋯»",
-        "Scegli «Aggiungi alla schermata Home». Non c'è? Tocca «Altro» o scorri fino a «Modifica azioni…» e attiva «Aggiungi alla schermata Home». Disattiva anche la navigazione privata",
+        "Tocca Condividi ⬆️, in basso o nel menu «⋯»",
+        "Scegli «Aggiungi alla schermata Home»",
         "Tocca «Aggiungi»: Poruch compare tra le app"
       ],
       "ios-other-browser": [
@@ -599,6 +598,33 @@
         "Conferma l'installazione"
       ]
     },
+    "troubleTitle": "Non riesci a installare?",
+    "trouble": {
+      "ios": [
+        "Il sito deve essere aperto nell'app Safari. Telegram, Instagram e altre aprono le pagine in un visualizzatore integrato da cui non si può installare. Copia l'indirizzo (pulsante qui sotto) e incollalo in Safari.",
+        "Come capire se sei in Safari: il menu Condividi ha «Aggiungi segnalibro» e «Trova nella pagina».",
+        "Manca «Aggiungi alla schermata Home»? Scorri il menu Condividi fino a «Modifica azioni…» e attivalo.",
+        "Disattiva la navigazione privata di Safari (barra degli indirizzi scura)."
+      ],
+      "ios-other-browser": [
+        "Se nel menu Condividi manca «Aggiungi alla schermata Home», apri il sito in Safari: copia l'indirizzo qui sotto e incollalo lì.",
+        "Una pagina aperta da Telegram o Instagram è un visualizzatore integrato e non permette di installare.",
+        "Serve iOS 16.4 o successivo: Impostazioni → Generali → Info."
+      ],
+      "in-app": [
+        "Copia l'indirizzo con il pulsante qui sotto e incollalo in Safari (iPhone) o Chrome (Android)."
+      ],
+      "android": [
+        "Il sito deve essere aperto in Chrome. In Telegram, Instagram e altre app tocca ⋮ → «Apri in Chrome».",
+        "Manca «Installa app»? Aggiorna Chrome da Google Play oppure copia l'indirizzo qui sotto e aprilo in Chrome."
+      ],
+      "desktop": [
+        "Chrome ed Edge permettono l'installazione. In Safari su Mac: File → Aggiungi al Dock.",
+        "Firefox non permette di installare: apri il sito in Chrome o Edge."
+      ]
+    },
+    "copyLink": "Copia indirizzo",
+    "copied": "Indirizzo copiato",
     "later": "Più tardi",
     "thanks": "Poruch installata ❤️",
     "cardTitle": "Installa l'app",

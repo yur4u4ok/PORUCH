@@ -575,9 +575,8 @@
     "howTo": "So installierst du sie:",
     "steps": {
       "ios": [
-        "Öffne Poruch direkt in Safari (wurde die Seite in Telegram oder einer anderen App geöffnet, tippe zuerst auf „In Safari öffnen“)",
-        "Tippe auf Teilen ⬆️ – unten auf dem Bildschirm oder im Menü „⋯“",
-        "Wähle „Zum Home-Bildschirm“. Nicht in der Liste? Tippe auf „Mehr“ oder scrolle zu „Aktionen bearbeiten …“ und aktiviere „Zum Home-Bildschirm“. Schalte auch das private Surfen aus",
+        "Tippe auf Teilen ⬆️ – unten oder im Menü „⋯“",
+        "Wähle „Zum Home-Bildschirm“",
         "Tippe auf „Hinzufügen“ – Poruch erscheint bei deinen Apps"
       ],
       "ios-other-browser": [
@@ -599,6 +598,33 @@
         "Bestätige die Installation"
       ]
     },
+    "troubleTitle": "Installation klappt nicht?",
+    "trouble": {
+      "ios": [
+        "Die Seite muss in der Safari-App geöffnet sein. Telegram, Instagram & Co. öffnen Seiten in einem eingebauten Viewer, der nichts installieren kann. Kopiere die Adresse (Button unten) und füge sie in Safari ein.",
+        "So erkennst du Safari: Im Teilen-Menü gibt es „Lesezeichen hinzufügen“ und „Auf Seite suchen“.",
+        "Kein „Zum Home-Bildschirm“ in Safari? Scrolle im Teilen-Menü zu „Aktionen bearbeiten …“ und aktiviere es.",
+        "Schalte das private Surfen in Safari aus (dunkle Adressleiste)."
+      ],
+      "ios-other-browser": [
+        "Fehlt „Zum Home-Bildschirm“ im Teilen-Menü, öffne die Seite in Safari: Kopiere die Adresse unten und füge sie dort ein.",
+        "Eine aus Telegram oder Instagram geöffnete Seite ist ein eingebauter Viewer und kann nichts installieren.",
+        "Erforderlich ist iOS 16.4 oder neuer: Einstellungen → Allgemein → Info."
+      ],
+      "in-app": [
+        "Kopiere die Adresse mit dem Button unten und füge sie in Safari (iPhone) oder Chrome (Android) ein."
+      ],
+      "android": [
+        "Die Seite muss in Chrome geöffnet sein. In Telegram, Instagram & Co. tippe auf ⋮ → „In Chrome öffnen“.",
+        "Kein „App installieren“? Aktualisiere Chrome in Google Play oder kopiere die Adresse unten und öffne sie in Chrome."
+      ],
+      "desktop": [
+        "Chrome und Edge können installieren. In Safari auf dem Mac: Ablage → Zum Dock hinzufügen.",
+        "Firefox kann nicht installieren – öffne die Seite in Chrome oder Edge."
+      ]
+    },
+    "copyLink": "Adresse kopieren",
+    "copied": "Adresse kopiert",
     "later": "Später",
     "thanks": "Poruch installiert ❤️",
     "cardTitle": "App installieren",
