@@ -23,7 +23,7 @@ test("help request end-to-end flow", async ({ browser }) => {
   await registerAndOnboard(helper, "Помічник", helperEmail);
 
   // 3. Author creates a request through the wizard
-  await author.getByRole("link", { name: /^Потрібна допомога/ }).click();
+  await author.getByRole("link", { name: "Попросити допомогу" }).click();
   await author.getByRole("radio", { name: /Автомобіль/ }).click();
   await author.getByRole("button", { name: "Пробите колесо" }).click();
   await author.getByRole("button", { name: "Далі" }).click();
