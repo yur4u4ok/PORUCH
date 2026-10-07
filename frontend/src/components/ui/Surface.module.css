@@ -80,10 +80,12 @@
   font-size: var(--text-sm);
   font-weight: 500;
 }
+/* Chosen chips are filled, so the choice is obvious at a glance. */
 .chipActive {
   border-color: var(--color-primary);
-  background: var(--color-primary-soft);
-  color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 700;
 }
 .tabs {
   display: flex;

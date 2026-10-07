@@ -32,9 +32,12 @@
 .stripTab span {
   font-size: 22px;
 }
+/* The chosen tab is «torn off»: yellow notice paper with an ink edge. */
 .stripTab[aria-pressed="true"] {
-  color: var(--color-text);
-  border-bottom-color: var(--color-text);
+  color: var(--color-notice-ink);
+  background: var(--color-notice);
+  border-bottom-color: var(--color-notice-ink);
+  border-radius: 10px 10px 0 0;
 }
 .stripTab:focus-visible {
   outline: 3px solid var(--color-primary);
