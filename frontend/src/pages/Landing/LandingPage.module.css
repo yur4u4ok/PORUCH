@@ -1,0 +1,225 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  max-width: 980px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4) var(--space-8);
+}
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/* ── Hero: two notices on the wall, the ways in right under them ───────────── */
+.hero {
+  display: grid;
+  gap: var(--space-6);
+}
+.wall {
+  display: grid;
+  gap: var(--space-6);
+  padding-top: var(--space-3);
+}
+.paper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  border-radius: 4px;
+  box-shadow: 0 14px 26px -16px rgb(24 51 48 / 0.45);
+}
+.paper p {
+  font-size: var(--text-md);
+  font-weight: 600;
+  opacity: 0.8;
+}
+.ask {
+  background: var(--color-notice);
+  color: var(--color-notice-ink);
+  transform: rotate(-1deg);
+}
+.offer {
+  margin-left: var(--space-6);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  transform: rotate(0.8deg);
+}
+.paperTitle {
+  font-size: clamp(24px, 6.6vw, 32px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.tape {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 84px;
+  height: 22px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: rgb(255 255 255 / 0.6);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.15);
+}
+.offer .tape {
+  background:
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.18) 0 2px, transparent 2px 6px),
+    rgb(214 192 140 / 0.85);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.join,
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform var(--transition);
+}
+.join {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  box-shadow: 0 10px 22px -12px var(--color-primary);
+}
+.join:hover {
+  background: var(--color-primary-hover);
+}
+.login {
+  border: 2px solid var(--color-primary);
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+.login:hover {
+  background: var(--color-primary-soft);
+}
+.join:active,
+.login:active {
+  transform: scale(0.98);
+}
+.join:focus-visible,
+.login:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 3px;
+}
+.free {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* ── Below the fold ────────────────────────────────────────────────────────── */
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.blockTitle {
+  font-size: var(--text-xl);
+}
+/* a real sequence, so numbered */
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+  display: grid;
+  gap: var(--space-4);
+}
+.steps li {
+  counter-increment: step;
+  position: relative;
+  min-height: 36px;
+  padding: 6px 0 0 52px;
+  font-weight: 600;
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+/* the line linking the steps */
+.steps li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 40px;
+  bottom: calc(-1 * var(--space-4) + 4px);
+  border-left: 2px dashed var(--color-border);
+}
+.trust {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-3);
+}
+.trust li {
+  position: relative;
+  padding-left: 32px;
+}
+.trust li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 13px;
+  font-weight: 800;
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* ── Wide screens: notices left, the ways in right ─────────────────────────── */
+@media (min-width: 860px) {
+  .page {
+    padding-top: var(--space-6);
+  }
+  .hero {
+    grid-template-columns: 1.15fr 1fr;
+    align-items: center;
+    gap: var(--space-8);
+    min-height: 60vh;
+  }
+  .block {
+    max-width: 640px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .join:active,
+  .login:active {
+    transform: none;
+  }
+}

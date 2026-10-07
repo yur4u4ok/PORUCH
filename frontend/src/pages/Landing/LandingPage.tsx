@@ -2,67 +2,79 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
 import { BrandMark } from "@/components/layout/BrandMark";
-import { Button } from "@/components/ui";
 import { InstallCard } from "@/features/pwa/InstallPrompt";
 import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
 
-import styles from "./Landing.module.css";
+import styles from "./LandingPage.module.css";
 
+/**
+ * Signed-out start page. The same picture as the home screen inside the app: notices on the wall
+ * of a building entrance — a yellow one asking for help and a white one offering it — and right
+ * under them the two ways in.
+ */
 export default function LandingPage() {
   const { t } = useTranslation();
+  const steps = ["step1", "step2", "step3", "step4"] as const;
   return (
-    <main className={styles.hero}>
-      <div className="row-between">
-        <BrandMark size="lg" />
+    <main className={styles.page}>
+      <header className={styles.top}>
+        <BrandMark />
         <LanguageSwitcher compact />
-      </div>
-      <div className={styles.duo}>
-        <section className={`${styles.panel} ${styles.panelNeed}`}>
-          <h2>🆘 {t("landing.needHelpTitle")}</h2>
-          <p>{t("landing.needHelpText")}</p>
-        </section>
-        <section className={`${styles.panel} ${styles.panelCan}`}>
-          <h2>🤝 {t("landing.canHelpTitle")}</h2>
-          <p>{t("landing.canHelpText")}</p>
-        </section>
-      </div>
-      <div className="stack-sm">
-        <Link to="/auth/register">
-          <Button size="lg" block>
+      </header>
+
+      <div className={styles.hero}>
+        <div className={styles.wall} aria-label={t("app.slogan")}>
+          <section className={`${styles.paper} ${styles.ask}`}>
+            <span className={styles.tape} aria-hidden />
+            <h1 className={styles.paperTitle}>{t("landing.needHelpTitle")}</h1>
+            <p>{t("landing.needHelpText")}</p>
+          </section>
+          <section className={`${styles.paper} ${styles.offer}`}>
+            <span className={styles.tape} aria-hidden />
+            <h2 className={styles.paperTitle}>{t("landing.canHelpTitle")}</h2>
+            <p>{t("landing.canHelpText")}</p>
+          </section>
+        </div>
+
+        <div className={styles.actions}>
+          <Link to="/auth/register" className={styles.join}>
             {t("landing.join")}
-          </Button>
-        </Link>
-        <Link to="/auth/login">
-          <Button variant="secondary" block>
+          </Link>
+          <Link to="/auth/login" className={styles.login}>
             {t("landing.login")}
-          </Button>
-        </Link>
+          </Link>
+          <p className={styles.free}>{t("landing.notMarketplace")}</p>
+        </div>
       </div>
+
       <InstallCard />
-      <details className={styles.fold}>
-        <summary>{t("landing.how")}</summary>
+
+      <section className={styles.block} aria-labelledby="how">
+        <h2 id="how" className={styles.blockTitle}>
+          {t("landing.how")}
+        </h2>
         <ol className={styles.steps}>
-          <li>{t("landing.step1")}</li>
-          <li>{t("landing.step2")}</li>
-          <li>{t("landing.step3")}</li>
-          <li>{t("landing.step4")}</li>
+          {steps.map((key) => (
+            <li key={key}>{t(`landing.${key}`)}</li>
+          ))}
         </ol>
-      </details>
-      <details className={`${styles.fold} ${styles.trust}`}>
-        <summary>{t("landing.trustTitle")}</summary>
-        <ul>
+      </section>
+
+      <section className={styles.block} aria-labelledby="trust">
+        <h2 id="trust" className={styles.blockTitle}>
+          {t("landing.trustTitle")}
+        </h2>
+        <ul className={styles.trust}>
           {(t("landing.trust", { returnObjects: true }) as string[]).map((item) => (
             <li key={item}>{item}</li>
           ))}
         </ul>
-      </details>
-      <nav
-        className={`muted ${styles.notice}`}
-        style={{ display: "flex", gap: 16, justifyContent: "center" }}
-      >
+      </section>
+
+      <footer className={styles.footer}>
         <Link to="/privacy">{t("legal.privacy")}</Link>
         <Link to="/terms">{t("legal.terms")}</Link>
-      </nav>
+      </footer>
     </main>
   );
 }
