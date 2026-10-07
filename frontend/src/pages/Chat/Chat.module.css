@@ -50,6 +50,7 @@
 }
 /* One message: the bubble, its reactions and (when tapped) the action bar, aligned to its side. */
 .row {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -272,8 +273,12 @@
   border-color: var(--color-primary);
   background: var(--color-primary-soft);
 }
+/* Shown on hover with a mouse (and for keyboard focus); on touch screens a tap on the message opens it. */
 .actions {
-  display: flex;
+  position: absolute;
+  top: calc(100% - 6px);
+  z-index: 5;
+  display: none;
   flex-wrap: wrap;
   align-items: center;
   gap: 2px;
@@ -328,4 +333,23 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--color-text-muted);
+}
+.actionsOpen {
+  display: flex;
+}
+.rowMine .actions {
+  right: 0;
+}
+.row:not(.rowMine) .actions {
+  left: 0;
+}
+.row:hover,
+.row:focus-within {
+  z-index: 6;
+}
+@media (hover: hover) {
+  .row:hover .actions,
+  .row:focus-within .actions {
+    display: flex;
+  }
 }

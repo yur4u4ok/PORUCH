@@ -145,8 +145,12 @@ function MessageBubble({
           ))}
         </div>
       )}
-      {selected && (
-        <div className={styles.actions} role="toolbar" aria-label={t("chat.actions")}>
+      {!local && !message.failed && (
+        <div
+          className={clsx(styles.actions, selected && styles.actionsOpen)}
+          role="toolbar"
+          aria-label={t("chat.actions")}
+        >
           {REACTIONS.map((emoji) => (
             <button
               key={emoji}
