@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
@@ -5,6 +6,7 @@ import { BrandMark } from "@/components/layout/BrandMark";
 import { InstallCard } from "@/features/pwa/InstallPrompt";
 import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
 import { ThemeToggle } from "@/features/profile/ThemeSwitcher";
+import { applyTheme, useThemeStore } from "@/stores/themeStore";
 
 import styles from "./LandingPage.module.css";
 
@@ -14,6 +16,13 @@ import styles from "./LandingPage.module.css";
  * under them the two ways in.
  */
 export default function LandingPage() {
+  // The landing is dark unless the person picked a theme; the app itself follows the system.
+  const theme = useThemeStore((s) => s.theme);
+  useEffect(() => {
+    if (theme !== "system") return;
+    applyTheme("dark");
+    return () => applyTheme("system");
+  }, [theme]);
   const { t } = useTranslation();
   const steps = ["step1", "step2", "step3", "step4"] as const;
   return (
@@ -21,7 +30,7 @@ export default function LandingPage() {
       <header className={styles.top}>
         <BrandMark />
         <div className={styles.topControls}>
-          <ThemeToggle />
+          <ThemeToggle fallback="dark" />
           <LanguageSwitcher compact />
         </div>
       </header>

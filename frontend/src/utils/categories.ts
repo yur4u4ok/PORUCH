@@ -19,7 +19,7 @@ export const CATEGORY_EMOJI: Record<Category, string> = {
   PEOPLE: "👨",
   DISTRICT: "📍",
   URGENT: "🚨",
-  OTHER: "✨",
+  OTHER: "🧩",
 };
 
 export const SUBCATEGORY_EMOJI: Record<string, string> = {
