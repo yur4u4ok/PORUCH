@@ -189,6 +189,18 @@ class MeView(APIView):
         return Response(_me(request.user))
 
 
+class EmailChangeView(APIView):
+    permission_classes = [IsAuthenticatedUser]
+    throttle_classes = [RegisterThrottle]
+
+    @extend_schema(request=s.EmailChangeSerializer, responses=s.MeSerializer)
+    def post(self, request):
+        ser = s.EmailChangeSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        accounts.request_email_change(request.user, ser.validated_data["email"], ser.validated_data.get("password"))
+        return Response(_me(request.user))
+
+
 class DeactivateView(APIView):
     permission_classes = [IsAuthenticatedUser]
 

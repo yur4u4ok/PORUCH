@@ -20,7 +20,13 @@ PASSWORD = "Very-strong-Pa55"
 def register(client, email="new@example.com", password=PASSWORD):
     return client.post(
         reverse("auth-register"),
-        {"email": email, "password": password, "display_name": "Остап", "age_confirmed": True},
+        {
+            "email": email,
+            "password": password,
+            "display_name": "Остап",
+            "phone": "067 123 45 67",
+            "age_confirmed": True,
+        },
         format="json",
     )
 
@@ -246,3 +252,46 @@ def settings_cookie_names(response):
     from django.conf import settings
 
     return {name for name in response.cookies if name in (settings.AUTH_COOKIE_ACCESS, settings.AUTH_COOKIE_REFRESH)}
+
+
+class TestContacts:
+    def test_phone_is_normalized_and_encrypted_at_rest(self, api_client):
+        response = register(api_client, email="phone@example.com")
+        assert response.data["phone"] == "+380671234567"
+        user = User.objects.get(email="phone@example.com")
+        assert "380671234567" not in user.phone_encrypted  # not stored in clear text
+        assert user.phone_hash
+
+    def test_invalid_phone_rejected(self, api_client):
+        response = api_client.post(
+            reverse("auth-register"),
+            {"email": "x@example.com", "password": PASSWORD, "display_name": "X", "phone": "12", "age_confirmed": True},
+            format="json",
+        )
+        assert response.status_code == 400 and "phone" in response.data["details"]
+
+    def test_change_phone_in_profile(self, auth_client):
+        response = auth_client.patch(reverse("me"), {"phone": "+48 512 345 678"}, format="json")
+        assert response.status_code == 200 and response.data["phone"] == "+48512345678"
+        response = auth_client.patch(reverse("me"), {"phone": ""}, format="json")
+        assert response.data["phone"] is None
+
+    def test_email_changes_only_after_confirming_new_inbox(self, auth_client, user):
+        user.set_password(PASSWORD)
+        user.save()
+        response = auth_client.post(
+            reverse("me-email"), {"email": "wrong@example.com", "password": "nope"}, format="json"
+        )
+        assert response.status_code == 400
+        response = auth_client.post(
+            reverse("me-email"), {"email": "New@Example.com", "password": PASSWORD}, format="json"
+        )
+        assert response.status_code == 200 and response.data["pending_email"] == "new@example.com"
+        user.refresh_from_db()
+        assert user.email != "new@example.com"  # not yet
+        assert mail.outbox[-1].to == ["new@example.com"]
+        token = unquote(re.search(r"token=([^\s\"&]+)", mail.outbox[-1].body).group(1))
+        api_client = APIClient()
+        assert api_client.post(reverse("auth-verify-email"), {"token": token}, format="json").status_code == 200
+        user.refresh_from_db()
+        assert user.email == "new@example.com" and user.pending_email == ""

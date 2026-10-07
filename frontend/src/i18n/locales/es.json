@@ -123,14 +123,17 @@
     "logoutTitle": "¿Cerrar sesión?",
     "logoutText": "Tendrás que volver a iniciar sesión para usar Poruch.",
     "showPassword": "Mostrar contraseña",
-    "hidePassword": "Ocultar contraseña"
+    "hidePassword": "Ocultar contraseña",
+    "phone": "Número de teléfono",
+    "phoneHint": "Solo lo verán las personas con quienes acuerdes la ayuda."
   },
   "validation": {
     "required": "Campo obligatorio",
     "email": "Email no válido",
     "minPassword": "Al menos 8 caracteres",
     "max": "Máximo {{max}} caracteres",
-    "amount": "Importe no válido"
+    "amount": "Importe no válido",
+    "phone": "Número de teléfono no válido"
   },
   "onboarding": {
     "step": "Paso {{current}} de {{total}}",
@@ -446,7 +449,20 @@
     "customItemsPlaceholder": "Por ejemplo: bicicleta, tienda de campaña",
     "customItemsAdd": "Añadir",
     "customItemsHint": "Hasta 10 cosas, de 40 caracteres cada una",
-    "renameHint": "Toca para cambiar tu nombre"
+    "renameHint": "Toca para cambiar tu nombre",
+    "contacts": "Contactos",
+    "change": "Cambiar",
+    "addPhone": "Añadir",
+    "noPhone": "Sin indicar",
+    "changePhone": "Número de teléfono",
+    "phoneSaved": "Número guardado",
+    "changeEmail": "Cambiar email",
+    "changeEmailText": "Enviaremos un enlace a la nueva dirección. El email cambiará cuando lo abras.",
+    "newEmail": "Nueva dirección",
+    "sendConfirmation": "Enviar confirmación",
+    "emailSent": "Correo enviado a {{email}}. Abre el enlace.",
+    "emailPending": "Pendiente de confirmar: {{email}}",
+    "contactsPrivacy": "Tu teléfono y email solo los ven quienes eliges como ayudantes y los autores que te eligen."
   },
   "settings": {
     "title": "Ajustes",

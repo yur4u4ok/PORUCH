@@ -93,6 +93,11 @@ export interface Me {
   helped_count: number;
   thanks_received_count: number;
   has_password: boolean;
+  /** E.164, e.g. +380671234567; null if not given (e.g. signed up with Google). */
+  phone: string | null;
+  phone_verified: boolean;
+  /** A new email waiting for confirmation from that inbox ("" if none). */
+  pending_email: string;
 }
 
 export interface Preferences {
@@ -145,10 +150,17 @@ export interface ResponseBrief extends AgreedTerms {
 }
 
 /** A helper the author chose (visible to the author only). */
+/** Shared only between an author and the helpers they accepted. */
+export interface Contact {
+  email: string;
+  phone: string | null;
+}
+
 export interface ChosenHelper extends AgreedTerms {
   user: PublicUser;
   response_id: UUID;
   conversation_id: UUID | null;
+  contact: Contact;
 }
 
 export interface HelpRequest {
@@ -184,6 +196,8 @@ export interface HelpRequest {
   helpers_needed: number;
   helpers_count: number;
   helpers: ChosenHelper[];
+  /** The author's contacts — only for a helper the author accepted. */
+  author_contact: Contact | null;
   conversation_id: UUID | null;
   can_respond: boolean;
   thanked: boolean | null;

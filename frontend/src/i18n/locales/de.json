@@ -123,14 +123,17 @@
     "logoutTitle": "Abmelden?",
     "logoutText": "Um Poruch zu nutzen, musst du dich erneut anmelden.",
     "showPassword": "Passwort anzeigen",
-    "hidePassword": "Passwort verbergen"
+    "hidePassword": "Passwort verbergen",
+    "phone": "Telefonnummer",
+    "phoneHint": "Nur Personen, mit denen du Hilfe vereinbarst, sehen sie."
   },
   "validation": {
     "required": "Pflichtfeld",
     "email": "Ungültige E-Mail",
     "minPassword": "Mindestens 8 Zeichen",
     "max": "Höchstens {{max}} Zeichen",
-    "amount": "Ungültiger Betrag"
+    "amount": "Ungültiger Betrag",
+    "phone": "Ungültige Telefonnummer"
   },
   "onboarding": {
     "step": "Schritt {{current}} von {{total}}",
@@ -446,7 +449,20 @@
     "customItemsPlaceholder": "Zum Beispiel: Fahrrad, Zelt",
     "customItemsAdd": "Hinzufügen",
     "customItemsHint": "Bis zu 10 Dinge, je 40 Zeichen",
-    "renameHint": "Tippen, um den Namen zu ändern"
+    "renameHint": "Tippen, um den Namen zu ändern",
+    "contacts": "Kontakte",
+    "change": "Ändern",
+    "addPhone": "Hinzufügen",
+    "noPhone": "Nicht angegeben",
+    "changePhone": "Telefonnummer",
+    "phoneSaved": "Nummer gespeichert",
+    "changeEmail": "E-Mail ändern",
+    "changeEmailText": "Wir senden einen Link an die neue Adresse. Die E-Mail ändert sich, sobald du ihn öffnest.",
+    "newEmail": "Neue Adresse",
+    "sendConfirmation": "Bestätigung senden",
+    "emailSent": "E-Mail an {{email}} gesendet. Öffne den Link darin.",
+    "emailPending": "Wartet auf Bestätigung: {{email}}",
+    "contactsPrivacy": "Telefon und E-Mail sehen nur Helfer, die du auswählst, und Autoren, die dich auswählen."
   },
   "settings": {
     "title": "Einstellungen",

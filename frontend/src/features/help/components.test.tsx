@@ -38,6 +38,7 @@ const request = {
   helpers_needed: 1,
   helpers_count: 0,
   helpers: [],
+  author_contact: null,
   conversation_id: null,
   can_respond: true,
   thanked: null,

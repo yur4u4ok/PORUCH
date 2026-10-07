@@ -117,14 +117,17 @@
     "logoutTitle": "로그아웃할까요?",
     "logoutText": "Poruch를 사용하려면 다시 로그인해야 해요.",
     "showPassword": "비밀번호 보기",
-    "hidePassword": "비밀번호 숨기기"
+    "hidePassword": "비밀번호 숨기기",
+    "phone": "전화번호",
+    "phoneHint": "도움을 약속한 사람만 볼 수 있어요."
   },
   "validation": {
     "required": "필수 항목입니다",
     "email": "올바르지 않은 이메일",
     "minPassword": "8자 이상",
     "max": "최대 {{max}}자",
-    "amount": "올바르지 않은 금액"
+    "amount": "올바르지 않은 금액",
+    "phone": "잘못된 전화번호"
   },
   "onboarding": {
     "step": "{{total}}단계 중 {{current}}단계",
@@ -438,7 +441,20 @@
     "customItemsPlaceholder": "예: 자전거, 텐트",
     "customItemsAdd": "추가",
     "customItemsHint": "최대 10개, 각 40자까지",
-    "renameHint": "탭해서 이름 바꾸기"
+    "renameHint": "탭해서 이름 바꾸기",
+    "contacts": "연락처",
+    "change": "변경",
+    "addPhone": "추가",
+    "noPhone": "미입력",
+    "changePhone": "전화번호",
+    "phoneSaved": "번호를 저장했어요",
+    "changeEmail": "이메일 변경",
+    "changeEmailText": "새 주소로 링크를 보내요. 링크를 열면 이메일이 바뀌어요.",
+    "newEmail": "새 주소",
+    "sendConfirmation": "확인 메일 보내기",
+    "emailSent": "{{email}}(으)로 보냈어요. 링크를 열어 주세요.",
+    "emailPending": "확인 대기 중: {{email}}",
+    "contactsPrivacy": "전화번호와 이메일은 내가 고른 도우미와 나를 고른 요청자에게만 보여요."
   },
   "settings": {
     "title": "설정",

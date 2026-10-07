@@ -117,14 +117,17 @@
     "logoutTitle": "要退出登录吗？",
     "logoutText": "之后需要重新登录才能使用 Poruch。",
     "showPassword": "显示密码",
-    "hidePassword": "隐藏密码"
+    "hidePassword": "隐藏密码",
+    "phone": "手机号码",
+    "phoneHint": "只有与你约定帮助的人才能看到。"
   },
   "validation": {
     "required": "必填项",
     "email": "邮箱格式不正确",
     "minPassword": "至少 8 个字符",
     "max": "最多 {{max}} 个字符",
-    "amount": "金额无效"
+    "amount": "金额无效",
+    "phone": "手机号码无效"
   },
   "onboarding": {
     "step": "第 {{current}} 步，共 {{total}} 步",
@@ -438,7 +441,20 @@
     "customItemsPlaceholder": "例如：自行车、帐篷",
     "customItemsAdd": "添加",
     "customItemsHint": "最多 10 项，每项 40 个字符",
-    "renameHint": "点按以修改名字"
+    "renameHint": "点按以修改名字",
+    "contacts": "联系方式",
+    "change": "修改",
+    "addPhone": "添加",
+    "noPhone": "未填写",
+    "changePhone": "手机号码",
+    "phoneSaved": "号码已保存",
+    "changeEmail": "修改邮箱",
+    "changeEmailText": "我们会向新地址发送链接，打开后邮箱即更改。",
+    "newEmail": "新地址",
+    "sendConfirmation": "发送确认",
+    "emailSent": "已发送至 {{email}}，请打开其中的链接。",
+    "emailPending": "等待确认：{{email}}",
+    "contactsPrivacy": "你的电话和邮箱仅对你选中的帮助者和选中你的发布者可见。"
   },
   "settings": {
     "title": "设置",

@@ -388,3 +388,30 @@ class TestCounterOffer:
     def test_only_the_author_can_counter(self, make_client):
         hr, helper, author, offer = self._offer(make_client)
         assert helper.post(f"/api/v1/help-responses/{offer}/counter/", {"amount": "1"}).status_code == 403
+
+
+class TestContactsAfterAcceptance:
+    def test_phone_and_email_only_between_author_and_accepted_helper(self, make_client, no_push):
+        from apps.users.phone import set_phone
+
+        hr = HelpRequestFactory()
+        set_phone(hr.author, "+380671112233")
+        hr.author.save()
+        author = make_client(hr.author)
+        chosen, other = make_client(), make_client()
+        set_phone(chosen.user, "+380502223344")
+        chosen.user.save()
+        offer = respond(chosen, hr).data["id"]
+        respond(other, hr)
+
+        # Before choosing, nobody sees anyone's contacts.
+        assert chosen.get(f"{URL}{hr.id}/").data["author_contact"] is None
+
+        author.post(f"{URL}{hr.id}/select-helper/", {"response_id": offer}, format="json")
+        assert chosen.get(f"{URL}{hr.id}/").data["author_contact"] == {
+            "email": hr.author.email,
+            "phone": "+380671112233",
+        }
+        assert other.get(f"{URL}{hr.id}/").data["author_contact"] is None
+        helper = author.get(f"{URL}{hr.id}/").data["helpers"][0]
+        assert helper["contact"] == {"email": chosen.user.email, "phone": "+380502223344"}

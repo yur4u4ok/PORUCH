@@ -43,6 +43,10 @@ def update_profile(user: User, data: dict) -> Profile:
         fields.append("avatar")
     if fields:
         profile.save(update_fields=fields)
+    if "phone" in data:
+        from apps.users.phone import set_phone
+
+        user.save(update_fields=set_phone(user, data["phone"], data.get("phone_region")))
     return profile
 
 

@@ -74,6 +74,15 @@ export function usePublicProfile(id: string) {
   return useQuery({ queryKey: queryKeys.profile(id), queryFn: () => usersApi.profile(id) });
 }
 
+export function useChangeEmail() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: usersApi.changeEmail,
+    onSuccess: (me) => qc.setQueryData(queryKeys.me, me),
+    meta: { inlineErrors: true },
+  });
+}
+
 export function useThanks(id: string | undefined) {
   return useInfiniteQuery({
     queryKey: queryKeys.thanks(id ?? ""),

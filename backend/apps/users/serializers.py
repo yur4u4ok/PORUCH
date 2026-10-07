@@ -58,6 +58,14 @@ class MeSerializer(serializers.Serializer):
     helped_count = serializers.IntegerField(source="profile.helped_count", read_only=True)
     thanks_received_count = serializers.IntegerField(source="profile.thanks_received_count", read_only=True)
     has_password = serializers.SerializerMethodField()
+    phone = serializers.SerializerMethodField()
+    phone_verified = serializers.BooleanField(read_only=True)
+    pending_email = serializers.EmailField(read_only=True)
+
+    def get_phone(self, user: User) -> str | None:
+        from apps.users.phone import get_phone
+
+        return get_phone(user)
 
     def get_avatar(self, user: User) -> dict | None:
         avatar = user.profile.avatar
@@ -77,6 +85,14 @@ class MeUpdateSerializer(serializers.Serializer):
     custom_items = serializers.ListField(
         child=serializers.CharField(max_length=40, allow_blank=True), required=False, max_length=10
     )
+    phone = serializers.CharField(max_length=32, required=False, allow_blank=True)
+    # ISO country used to read a number typed without «+code» (the user's region in the app).
+    phone_region = serializers.CharField(max_length=2, required=False)
+
+
+class EmailChangeSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length=254)
+    password = serializers.CharField(max_length=128, required=False, allow_blank=True)
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -84,6 +100,8 @@ class RegisterSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, min_length=8, max_length=128)
     display_name = serializers.CharField(max_length=50)
     city_id = serializers.UUIDField(required=False, allow_null=True)
+    phone = serializers.CharField(max_length=32)
+    phone_region = serializers.CharField(max_length=2, required=False)
     # Terms of Service: users must be at least 16.
     age_confirmed = serializers.BooleanField()
 

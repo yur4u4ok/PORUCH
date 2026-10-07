@@ -123,14 +123,17 @@
     "logoutTitle": "Çıkış yapılsın mı?",
     "logoutText": "Poruch'u kullanmak için yeniden giriş yapmanız gerekecek.",
     "showPassword": "Şifreyi göster",
-    "hidePassword": "Şifreyi gizle"
+    "hidePassword": "Şifreyi gizle",
+    "phone": "Telefon numarası",
+    "phoneHint": "Yalnızca yardım konusunda anlaştığınız kişiler görür."
   },
   "validation": {
     "required": "Zorunlu alan",
     "email": "Geçersiz e-posta",
     "minPassword": "En az 8 karakter",
     "max": "En fazla {{max}} karakter",
-    "amount": "Geçersiz tutar"
+    "amount": "Geçersiz tutar",
+    "phone": "Geçersiz telefon numarası"
   },
   "onboarding": {
     "step": "Adım {{current}} / {{total}}",
@@ -446,7 +449,20 @@
     "customItemsPlaceholder": "Örneğin: bisiklet, çadır",
     "customItemsAdd": "Ekle",
     "customItemsHint": "En fazla 10 eşya, her biri 40 karakter",
-    "renameHint": "Adını değiştirmek için dokun"
+    "renameHint": "Adını değiştirmek için dokun",
+    "contacts": "İletişim",
+    "change": "Değiştir",
+    "addPhone": "Ekle",
+    "noPhone": "Belirtilmemiş",
+    "changePhone": "Telefon numarası",
+    "phoneSaved": "Numara kaydedildi",
+    "changeEmail": "E-postayı değiştir",
+    "changeEmailText": "Yeni adrese bir bağlantı göndereceğiz. Açtığınızda e-posta değişir.",
+    "newEmail": "Yeni adres",
+    "sendConfirmation": "Onay gönder",
+    "emailSent": "{{email}} adresine e-posta gönderildi. Bağlantıyı açın.",
+    "emailPending": "Onay bekleniyor: {{email}}",
+    "contactsPrivacy": "Telefon ve e-postanızı yalnızca seçtiğiniz yardımcılar ve sizi seçen yazarlar görür."
   },
   "settings": {
     "title": "Ayarlar",

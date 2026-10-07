@@ -123,14 +123,17 @@
     "logoutTitle": "लॉग आउट करें?",
     "logoutText": "Poruch इस्तेमाल करने के लिए फिर से लॉग इन करना होगा।",
     "showPassword": "पासवर्ड दिखाएँ",
-    "hidePassword": "पासवर्ड छिपाएँ"
+    "hidePassword": "पासवर्ड छिपाएँ",
+    "phone": "फ़ोन नंबर",
+    "phoneHint": "इसे केवल वे लोग देखेंगे जिनसे आप मदद तय करेंगे।"
   },
   "validation": {
     "required": "ज़रूरी फ़ील्ड",
     "email": "अमान्य ईमेल",
     "minPassword": "कम से कम 8 अक्षर",
     "max": "अधिकतम {{max}} अक्षर",
-    "amount": "अमान्य राशि"
+    "amount": "अमान्य राशि",
+    "phone": "अमान्य फ़ोन नंबर"
   },
   "onboarding": {
     "step": "चरण {{current}} / {{total}}",
@@ -446,7 +449,20 @@
     "customItemsPlaceholder": "जैसे: साइकिल, टेंट",
     "customItemsAdd": "जोड़ें",
     "customItemsHint": "अधिकतम 10 चीज़ें, हर एक 40 अक्षर तक",
-    "renameHint": "नाम बदलने के लिए टैप करें"
+    "renameHint": "नाम बदलने के लिए टैप करें",
+    "contacts": "संपर्क",
+    "change": "बदलें",
+    "addPhone": "जोड़ें",
+    "noPhone": "नहीं दिया",
+    "changePhone": "फ़ोन नंबर",
+    "phoneSaved": "नंबर सहेजा गया",
+    "changeEmail": "ईमेल बदलें",
+    "changeEmailText": "हम नए पते पर लिंक भेजेंगे। उसे खोलते ही ईमेल बदल जाएगा।",
+    "newEmail": "नया पता",
+    "sendConfirmation": "पुष्टि भेजें",
+    "emailSent": "{{email}} पर ईमेल भेजा गया। उसमें दिया लिंक खोलें।",
+    "emailPending": "पुष्टि की प्रतीक्षा: {{email}}",
+    "contactsPrivacy": "आपका फ़ोन और ईमेल केवल आपके चुने मददगारों और आपको चुनने वाले लेखकों को दिखता है।"
   },
   "settings": {
     "title": "सेटिंग्स",

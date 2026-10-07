@@ -39,7 +39,7 @@ import { PersonRow } from "@/features/profile/PersonRow";
 import { useBlockUser } from "@/features/profile/hooks";
 import { useLocationStore } from "@/stores/locationStore";
 import { toast } from "@/stores/toastStore";
-import type { HelpRequest, HelpResponse, OfferType } from "@/types/api";
+import type { Contact, HelpRequest, HelpResponse, OfferType } from "@/types/api";
 import { URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
 import {
   currencySymbol,
@@ -264,6 +264,7 @@ function AuthorActions({ request }: { request: HelpRequest }) {
           {request.helpers.map((helper) => (
             <div key={helper.response_id} className="stack-sm">
               <PersonRow user={helper.user} />
+              <ContactLinks contact={helper.contact} />
               {agreedSummary(request, t, helper) && (
                 <span className="muted">
                   🤝 {t("offer.agreed", { terms: agreedSummary(request, t, helper) })}
@@ -465,6 +466,22 @@ function shareMessage(request: HelpRequest, t: TFunction): string {
   ].join("\n");
 }
 
+/** Phone and email of the other side — shown only once the author has accepted the helper. */
+function ContactLinks({ contact }: { contact: Contact }) {
+  return (
+    <div className={styles.contacts}>
+      {contact.phone && (
+        <a href={`tel:${contact.phone}`} className={styles.contact}>
+          📞 {contact.phone}
+        </a>
+      )}
+      <a href={`mailto:${contact.email}`} className={styles.contact}>
+        📧 {contact.email}
+      </a>
+    </div>
+  );
+}
+
 export default function HelpRequestPage() {
   const { id = "" } = useParams();
   const { t } = useTranslation();
@@ -602,6 +619,7 @@ export default function HelpRequestPage() {
         <Card className="stack-sm">
           <strong>{t("request.author")}</strong>
           <PersonRow user={request.author} />
+          {request.author_contact && <ContactLinks contact={request.author_contact} />}
         </Card>
       )}
 

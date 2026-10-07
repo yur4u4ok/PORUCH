@@ -123,14 +123,17 @@
     "logoutTitle": "Log out?",
     "logoutText": "You'll need to log in again to use Poruch.",
     "showPassword": "Show password",
-    "hidePassword": "Hide password"
+    "hidePassword": "Hide password",
+    "phone": "Phone number",
+    "phoneHint": "Only people you agree to help with (or who help you) will see it."
   },
   "validation": {
     "required": "Required field",
     "email": "Invalid email",
     "minPassword": "At least 8 characters",
     "max": "Maximum {{max}} characters",
-    "amount": "Invalid amount"
+    "amount": "Invalid amount",
+    "phone": "Invalid phone number"
   },
   "onboarding": {
     "step": "Step {{current}} of {{total}}",
@@ -446,7 +449,20 @@
     "customItemsPlaceholder": "For example: bicycle, tent",
     "customItemsAdd": "Add",
     "customItemsHint": "Up to 10 items, 40 characters each",
-    "renameHint": "Tap to change your name"
+    "renameHint": "Tap to change your name",
+    "contacts": "Contacts",
+    "change": "Change",
+    "addPhone": "Add",
+    "noPhone": "Not set",
+    "changePhone": "Phone number",
+    "phoneSaved": "Number saved",
+    "changeEmail": "Change email",
+    "changeEmailText": "We'll send a link to the new address. Your email changes once you open it.",
+    "newEmail": "New address",
+    "sendConfirmation": "Send confirmation",
+    "emailSent": "Email sent to {{email}}. Open the link in it.",
+    "emailPending": "Waiting for confirmation: {{email}}",
+    "contactsPrivacy": "Your phone and email are shown only to helpers you choose and to authors who choose you."
   },
   "settings": {
     "title": "Settings",

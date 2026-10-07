@@ -79,6 +79,13 @@ class HelpRequestListQuerySerializer(serializers.Serializer):
         return attrs
 
 
+def contact_of(user) -> dict:
+    """Phone and email, shared only between an author and the helpers they accepted."""
+    from apps.users.phone import get_phone
+
+    return {"email": user.email, "phone": get_phone(user)}
+
+
 class ResponseBriefSerializer(serializers.Serializer):
     id = serializers.UUIDField()
     status = serializers.CharField()
@@ -105,6 +112,7 @@ class HelpRequestSerializer(serializers.ModelSerializer):
     share_url = serializers.SerializerMethodField()
     helpers = serializers.SerializerMethodField()
     helpers_count = serializers.SerializerMethodField()
+    author_contact = serializers.SerializerMethodField()
 
     class Meta:
         model = HelpRequest
@@ -140,6 +148,7 @@ class HelpRequestSerializer(serializers.ModelSerializer):
             "helpers_needed",
             "helpers_count",
             "helpers",
+            "author_contact",
             "conversation_id",
             "can_respond",
             "thanked",
@@ -200,9 +209,14 @@ class HelpRequestSerializer(serializers.ModelSerializer):
                 "conversation_id": conversations.get(r.helper_id),
                 "agreed_offer_type": r.agreed_offer_type,
                 "agreed_amount": str(r.agreed_amount) if r.agreed_amount is not None else None,
+                "contact": contact_of(r.helper),
             }
             for r in self._accepted(obj)
         ]
+
+    def get_author_contact(self, obj) -> dict | None:
+        """The author's phone and email — only for helpers the author has accepted."""
+        return contact_of(obj.author) if self._viewer_is_helper(obj) else None
 
     def get_selected_helper(self, obj) -> dict | None:
         if obj.author_id == self._viewer.pk and obj.selected_helper_id:

@@ -123,14 +123,17 @@
     "logoutTitle": "Se déconnecter ?",
     "logoutText": "Vous devrez vous reconnecter pour utiliser Poruch.",
     "showPassword": "Afficher le mot de passe",
-    "hidePassword": "Masquer le mot de passe"
+    "hidePassword": "Masquer le mot de passe",
+    "phone": "Numéro de téléphone",
+    "phoneHint": "Seules les personnes avec qui vous convenez d’une aide le verront."
   },
   "validation": {
     "required": "Champ obligatoire",
     "email": "Email invalide",
     "minPassword": "Au moins 8 caractères",
     "max": "{{max}} caractères maximum",
-    "amount": "Montant invalide"
+    "amount": "Montant invalide",
+    "phone": "Numéro de téléphone invalide"
   },
   "onboarding": {
     "step": "Étape {{current}} sur {{total}}",
@@ -446,7 +449,20 @@
     "customItemsPlaceholder": "Par exemple : vélo, tente",
     "customItemsAdd": "Ajouter",
     "customItemsHint": "Jusqu'à 10 objets, 40 caractères chacun",
-    "renameHint": "Touchez pour changer votre nom"
+    "renameHint": "Touchez pour changer votre nom",
+    "contacts": "Contacts",
+    "change": "Modifier",
+    "addPhone": "Ajouter",
+    "noPhone": "Non renseigné",
+    "changePhone": "Numéro de téléphone",
+    "phoneSaved": "Numéro enregistré",
+    "changeEmail": "Changer d’e-mail",
+    "changeEmailText": "Nous enverrons un lien à la nouvelle adresse. L’e-mail changera dès que vous l’ouvrirez.",
+    "newEmail": "Nouvelle adresse",
+    "sendConfirmation": "Envoyer la confirmation",
+    "emailSent": "E-mail envoyé à {{email}}. Ouvrez le lien qu’il contient.",
+    "emailPending": "En attente de confirmation : {{email}}",
+    "contactsPrivacy": "Votre téléphone et votre e-mail ne sont visibles que par les aidants choisis et les auteurs qui vous choisissent."
   },
   "settings": {
     "title": "Réglages",

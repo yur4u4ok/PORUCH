@@ -7,6 +7,8 @@ export interface RegisterInput {
   email: string;
   password: string;
   display_name: string;
+  phone: string;
+  phone_region?: string;
   city_id?: string | null;
 }
 

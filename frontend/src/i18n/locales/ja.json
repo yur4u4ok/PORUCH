@@ -117,14 +117,17 @@
     "logoutTitle": "ログアウトしますか？",
     "logoutText": "Poruchを使うには再度ログインが必要です。",
     "showPassword": "パスワードを表示",
-    "hidePassword": "パスワードを隠す"
+    "hidePassword": "パスワードを隠す",
+    "phone": "電話番号",
+    "phoneHint": "助け合いが決まった相手にだけ表示されます。"
   },
   "validation": {
     "required": "必須項目です",
     "email": "メールアドレスが正しくありません",
     "minPassword": "8文字以上",
     "max": "{{max}}文字以内",
-    "amount": "金額が正しくありません"
+    "amount": "金額が正しくありません",
+    "phone": "電話番号が正しくありません"
   },
   "onboarding": {
     "step": "ステップ {{current}} / {{total}}",
@@ -438,7 +441,20 @@
     "customItemsPlaceholder": "例：自転車、テント",
     "customItemsAdd": "追加",
     "customItemsHint": "最大10個、各40文字まで",
-    "renameHint": "タップして名前を変更"
+    "renameHint": "タップして名前を変更",
+    "contacts": "連絡先",
+    "change": "変更",
+    "addPhone": "追加",
+    "noPhone": "未設定",
+    "changePhone": "電話番号",
+    "phoneSaved": "番号を保存しました",
+    "changeEmail": "メールを変更",
+    "changeEmailText": "新しいアドレスにリンクを送ります。開くとメールが変更されます。",
+    "newEmail": "新しいアドレス",
+    "sendConfirmation": "確認を送信",
+    "emailSent": "{{email}} に送信しました。リンクを開いてください。",
+    "emailPending": "確認待ち: {{email}}",
+    "contactsPrivacy": "電話とメールは、あなたが選んだ手伝う人と、あなたを選んだ依頼者にだけ表示されます。"
   },
   "settings": {
     "title": "設定",

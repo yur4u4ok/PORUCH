@@ -135,14 +135,17 @@
     "logoutTitle": "Wylogować się?",
     "logoutText": "Aby korzystać z Poruch, trzeba będzie zalogować się ponownie.",
     "showPassword": "Pokaż hasło",
-    "hidePassword": "Ukryj hasło"
+    "hidePassword": "Ukryj hasło",
+    "phone": "Numer telefonu",
+    "phoneHint": "Zobaczą go tylko osoby, z którymi umówisz się na pomoc."
   },
   "validation": {
     "required": "Pole wymagane",
     "email": "Nieprawidłowy e-mail",
     "minPassword": "Co najmniej 8 znaków",
     "max": "Maksymalnie {{max}} znaków",
-    "amount": "Nieprawidłowa kwota"
+    "amount": "Nieprawidłowa kwota",
+    "phone": "Nieprawidłowy numer telefonu"
   },
   "onboarding": {
     "step": "Krok {{current}} z {{total}}",
@@ -462,7 +465,20 @@
     "customItemsPlaceholder": "Na przykład: rower, namiot",
     "customItemsAdd": "Dodaj",
     "customItemsHint": "Do 10 rzeczy, po 40 znaków",
-    "renameHint": "Stuknij, aby zmienić imię"
+    "renameHint": "Stuknij, aby zmienić imię",
+    "contacts": "Kontakty",
+    "change": "Zmień",
+    "addPhone": "Dodaj",
+    "noPhone": "Nie podano",
+    "changePhone": "Numer telefonu",
+    "phoneSaved": "Numer zapisany",
+    "changeEmail": "Zmień e-mail",
+    "changeEmailText": "Wyślemy link na nowy adres. E-mail zmieni się po jego otwarciu.",
+    "newEmail": "Nowy adres",
+    "sendConfirmation": "Wyślij potwierdzenie",
+    "emailSent": "Wysłano wiadomość na {{email}}. Otwórz link.",
+    "emailPending": "Czeka na potwierdzenie: {{email}}",
+    "contactsPrivacy": "Telefon i e-mail widzą tylko pomocnicy, których wybierzesz, i autorzy, którzy wybiorą ciebie."
   },
   "settings": {
     "title": "Ustawienia",

@@ -18,6 +18,7 @@ import {
 } from "@/components/ui";
 import { useMe } from "@/features/auth/hooks";
 import { useLogoutConfirm } from "@/features/auth/LogoutConfirm";
+import { ContactsCard } from "@/features/profile/ContactsCard";
 import { HelpRequestCard } from "@/features/help/components";
 import { useHelpHistory } from "@/features/help/hooks";
 import { useThanks, useUpdateMe } from "@/features/profile/hooks";
@@ -193,6 +194,8 @@ export default function ProfilePage() {
           {me.email_verified ? `✓ ${t("profile.verified")}` : t("profile.notVerified")}
         </span>
       </div>
+
+      <ContactsCard me={me} />
 
       <History />
       <ThanksList userId={me.id} />
