@@ -26,7 +26,7 @@ import { toast } from "@/stores/toastStore";
 import type { Category, Media, Urgency } from "@/types/api";
 import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCIES, URGENCY_EMOJI } from "@/utils/categories";
 import { currencySymbol, region } from "@/utils/format";
-import { REWARD_OPTION_EMOJI, REWARD_OPTIONS, rewardSummary } from "@/utils/reward";
+import { REWARD_OPTION_EMOJI, REWARD_OPTIONS, REWARD_TYPE_EMOJI, rewardSummary } from "@/utils/reward";
 
 import styles from "./CreateHelp.module.css";
 
@@ -410,9 +410,9 @@ export default function CreateHelpPage() {
                 value={field.value}
                 onChange={field.onChange}
                 options={[
-                  { value: "NONE", icon: "❤️", label: t("reward.NONE") },
-                  { value: "WILLING", icon: "💰", label: t("reward.WILLING") },
-                  { value: "UNSURE", icon: "🍫", label: t("reward.UNSURE") },
+                  { value: "NONE", icon: REWARD_TYPE_EMOJI.NONE, label: t("reward.NONE") },
+                  { value: "WILLING", icon: REWARD_TYPE_EMOJI.WILLING, label: t("reward.WILLING") },
+                  { value: "UNSURE", icon: REWARD_TYPE_EMOJI.UNSURE, label: t("reward.UNSURE") },
                 ]}
               />
             )}

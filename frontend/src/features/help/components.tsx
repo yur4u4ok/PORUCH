@@ -17,7 +17,7 @@ import type {
 import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
 import { formatDateTime, formatDistance, formatRadius, timeAgo } from "@/utils/format";
 import { emergencyVars } from "@/utils/emergency";
-import { rewardSummary } from "@/utils/reward";
+import { REWARD_TYPE_EMOJI, rewardSummary } from "@/utils/reward";
 
 import styles from "./components.module.css";
 
@@ -90,10 +90,8 @@ export function HelpRequestCard({
           </div>
           <div className={styles.reward}>
             {request.reward_type === "WILLING"
-              ? `💰 ${[t("reward.WILLING"), rewardSummary(request, t)].filter(Boolean).join(": ")}`
-              : request.reward_type === "UNSURE"
-                ? `🙂 ${t("reward.UNSURE")}`
-                : `🤝 ${t("reward.NONE")}`}
+              ? `${REWARD_TYPE_EMOJI.WILLING} ${[t("reward.WILLING"), rewardSummary(request, t)].filter(Boolean).join(": ")}`
+              : `${REWARD_TYPE_EMOJI[request.reward_type]} ${t(`reward.${request.reward_type}`)}`}
           </div>
         </div>
       </div>

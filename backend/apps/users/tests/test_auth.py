@@ -297,6 +297,15 @@ class TestContacts:
         user.refresh_from_db()
         assert user.email == "new@example.com" and user.pending_email == ""
 
+    def test_email_change_unlinks_old_google_account(self, auth_client, user):
+        user.set_password(PASSWORD)
+        user.save()
+        SocialAccount.objects.create(user=user, provider="google", uid="old-google")
+        auth_client.post(reverse("me-email"), {"email": "fresh@example.com", "password": PASSWORD}, format="json")
+        token = unquote(re.search(r"token=([^\s\"&]+)", mail.outbox[-1].body).group(1))
+        APIClient().post(reverse("auth-verify-email"), {"token": token}, format="json")
+        assert not SocialAccount.objects.filter(user=user).exists()
+
 
 class TestPasswordChange:
     def test_requires_current_password_and_keeps_this_session(self, auth_client, user):

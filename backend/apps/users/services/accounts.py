@@ -118,6 +118,10 @@ def verify_email(token: str) -> User:
             raise Conflict(_("Користувач з таким email вже існує."), code="EMAIL_TAKEN")
         user.email, user.pending_email, user.email_verified = new_email, "", True
         user.save(update_fields=["email", "pending_email", "email_verified"])
+        # The Google account of the old address no longer signs in here; the Google account of the new
+        # one links itself on the next «Continue with Google». Kept only if it is the sole way in.
+        if user.has_usable_password():
+            SocialAccount.objects.filter(user=user, provider="google").delete()
         return user
     if not user.email_verified:
         user.email_verified = True
