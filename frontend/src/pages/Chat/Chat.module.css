@@ -279,7 +279,8 @@
   top: calc(100% - 6px);
   z-index: 5;
   display: none;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  max-width: calc(100vw - 2 * var(--space-3));
   align-items: center;
   gap: 2px;
   padding: 4px;
@@ -290,8 +291,10 @@
 }
 .actionEmoji,
 .actionText {
-  min-width: 36px;
+  flex-shrink: 0;
+  min-width: 32px;
   min-height: 36px;
+  white-space: nowrap;
   border: 0;
   border-radius: var(--radius-full);
   background: none;
@@ -303,7 +306,7 @@
   font-size: 20px;
 }
 .actionText {
-  padding: 0 10px;
+  padding: 0 8px;
   font-size: 14px;
   font-weight: 700;
 }
@@ -351,5 +354,62 @@
   .row:hover .actions,
   .row:focus-within .actions {
     display: flex;
+  }
+}
+.actionsAbove {
+  top: auto;
+  bottom: calc(100% - 6px);
+}
+/* «Олена друкує…» on the partner's side, right above the input */
+.typing {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+.typingDots {
+  display: inline-flex;
+  gap: 3px;
+}
+.typingDots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: typingDot 1.2s infinite ease-in-out;
+}
+.typingDots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.typingDots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes typingDot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .typingDots span {
+    animation: none;
+  }
+}
+/* On narrow phones the reply button is just «↩» so the bar fits in one row. */
+@media (max-width: 479px) {
+  .actionLabel {
+    display: none;
   }
 }

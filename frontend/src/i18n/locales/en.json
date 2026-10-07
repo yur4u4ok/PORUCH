@@ -415,7 +415,8 @@
     "you": "You",
     "reply": "Reply",
     "replyingTo": "Replying to {{name}}",
-    "actions": "Message actions"
+    "actions": "Message actions",
+    "typingName": "{{name}} is typing…"
   },
   "notifications": {
     "title": "Notifications",

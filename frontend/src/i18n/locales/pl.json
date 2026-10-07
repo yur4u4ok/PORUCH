@@ -431,7 +431,8 @@
     "you": "Ty",
     "reply": "Odpowiedz",
     "replyingTo": "Odpowiedź dla {{name}}",
-    "actions": "Działania na wiadomości"
+    "actions": "Działania na wiadomości",
+    "typingName": "{{name}} pisze…"
   },
   "notifications": {
     "title": "Powiadomienia",

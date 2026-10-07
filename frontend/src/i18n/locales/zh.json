@@ -407,7 +407,8 @@
     "you": "你",
     "reply": "回复",
     "replyingTo": "回复 {{name}}",
-    "actions": "消息操作"
+    "actions": "消息操作",
+    "typingName": "{{name}} 正在输入…"
   },
   "notifications": {
     "title": "通知",

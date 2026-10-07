@@ -40,6 +40,7 @@ function MessageBubble({
   onReply,
   onReact,
   onJump,
+  actionsAbove,
 }: {
   message: Message;
   mine: boolean;
@@ -53,6 +54,8 @@ function MessageBubble({
   onReply: (m: Message) => void;
   onReact: (m: Message, emoji: string) => void;
   onJump: (id: string) => void;
+  /** Near the bottom of the chat the bar opens upwards, so it never drops under the input. */
+  actionsAbove?: boolean;
 }) {
   const { t } = useTranslation();
   if (message.message_type === "SYSTEM") return <div className={styles.system}>{message.text}</div>;
@@ -147,7 +150,11 @@ function MessageBubble({
       )}
       {!local && !message.failed && (
         <div
-          className={clsx(styles.actions, selected && styles.actionsOpen)}
+          className={clsx(
+            styles.actions,
+            selected && styles.actionsOpen,
+            actionsAbove && styles.actionsAbove,
+          )}
           role="toolbar"
           aria-label={t("chat.actions")}
         >
@@ -165,9 +172,10 @@ function MessageBubble({
           <button
             type="button"
             className={styles.actionText}
+            aria-label={t("chat.reply")}
             onClick={() => (onReply(message), onSelect(null))}
           >
-            ↩ {t("chat.reply")}
+            ↩<span className={styles.actionLabel}> {t("chat.reply")}</span>
           </button>
           {!mine && (
             <button
@@ -230,7 +238,7 @@ export default function ChatPage() {
 
   useLayoutEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight });
-  }, [ordered.length]);
+  }, [ordered.length, otherTyping]);
 
   const sendText = (value: string, attachmentId?: string, clientId = newClientId()) => {
     send.mutate({
@@ -304,9 +312,8 @@ export default function ChatPage() {
 
   const other = conversation.data.other_participant;
   const name = other?.display_name ?? t("common.anonymous");
-  const statusLine = otherTyping
-    ? t("chat.typing")
-    : otherOnline || conversation.data.other_online
+  const statusLine =
+    otherOnline || conversation.data.other_online
       ? t("chat.online")
       : t("chat.aboutRequest", { title: conversation.data.help_request.title });
 
@@ -358,10 +365,11 @@ export default function ChatPage() {
         ) : messages.isError ? (
           <ErrorState onRetry={() => void messages.refetch()} />
         ) : (
-          ordered.map((message) => (
+          ordered.map((message, index) => (
             <MessageBubble
               key={message.client_id ?? message.id}
               message={message}
+              actionsAbove={index >= ordered.length - 2}
               mine={message.sender_id === me?.id}
               onRetry={(m) => sendText(m.text, m.attachment?.id, m.client_id ?? newClientId())}
               onReport={setReportMessage}
@@ -378,6 +386,16 @@ export default function ChatPage() {
               onJump={jumpTo}
             />
           ))
+        )}
+        {otherTyping && (
+          <div className={styles.typing} role="status">
+            <span className={styles.typingDots} aria-hidden>
+              <span />
+              <span />
+              <span />
+            </span>
+            {t("chat.typingName", { name })}
+          </div>
         )}
       </div>
       {conversation.data.is_open && replyTo && (

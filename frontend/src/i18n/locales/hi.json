@@ -415,7 +415,8 @@
     "you": "आप",
     "reply": "जवाब दें",
     "replyingTo": "{{name}} को जवाब",
-    "actions": "संदेश क्रियाएँ"
+    "actions": "संदेश क्रियाएँ",
+    "typingName": "{{name}} लिख रहे हैं…"
   },
   "notifications": {
     "title": "सूचनाएँ",

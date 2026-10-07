@@ -431,7 +431,8 @@
     "you": "Ви",
     "reply": "Відповісти",
     "replyingTo": "Відповідь для {{name}}",
-    "actions": "Дії з повідомленням"
+    "actions": "Дії з повідомленням",
+    "typingName": "{{name}} друкує…"
   },
   "notifications": {
     "title": "Сповіщення",

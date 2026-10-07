@@ -415,7 +415,8 @@
     "you": "Sen",
     "reply": "Yanıtla",
     "replyingTo": "{{name}} adlı kişiye yanıt",
-    "actions": "Mesaj işlemleri"
+    "actions": "Mesaj işlemleri",
+    "typingName": "{{name}} yazıyor…"
   },
   "notifications": {
     "title": "Bildirimler",

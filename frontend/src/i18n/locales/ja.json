@@ -407,7 +407,8 @@
     "you": "あなた",
     "reply": "返信",
     "replyingTo": "{{name}}さんへの返信",
-    "actions": "メッセージの操作"
+    "actions": "メッセージの操作",
+    "typingName": "{{name}}さんが入力中…"
   },
   "notifications": {
     "title": "通知",
