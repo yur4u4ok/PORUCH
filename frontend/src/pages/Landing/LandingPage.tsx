@@ -41,23 +41,23 @@ export default function LandingPage() {
           </Button>
         </Link>
       </div>
-      <section className="stack-sm">
-        <h3>{t("landing.how")}</h3>
+      <details className={styles.fold}>
+        <summary>{t("landing.how")}</summary>
         <ol className={styles.steps}>
           <li>{t("landing.step1")}</li>
           <li>{t("landing.step2")}</li>
           <li>{t("landing.step3")}</li>
           <li>{t("landing.step4")}</li>
         </ol>
-      </section>
-      <section className={styles.trust} aria-labelledby="trust-title">
-        <h3 id="trust-title">{t("landing.trustTitle")}</h3>
+      </details>
+      <details className={`${styles.fold} ${styles.trust}`}>
+        <summary>{t("landing.trustTitle")}</summary>
         <ul>
           {(t("landing.trust", { returnObjects: true }) as string[]).map((item) => (
             <li key={item}>{item}</li>
           ))}
         </ul>
-      </section>
+      </details>
       <p className={`muted ${styles.notice}`}>⚠️ {t("emergency.short", emergencyVars())}</p>
       <nav
         className={`muted ${styles.notice}`}

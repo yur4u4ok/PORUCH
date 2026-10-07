@@ -64,6 +64,7 @@
 :root[data-theme="dark"] {
   color-scheme: dark;
   --color-bg: #0f1a19;
+  --color-overlay: rgb(0 0 0 / 0.72);
   --color-surface: #162523;
   --color-surface-2: #1e302d;
   --color-border: #2c4440;
@@ -86,6 +87,7 @@
   :root:not([data-theme="light"]) {
     color-scheme: dark;
     --color-bg: #0f1a19;
+    --color-overlay: rgb(0 0 0 / 0.72);
     --color-surface: #162523;
     --color-surface-2: #1e302d;
     --color-border: #2c4440;

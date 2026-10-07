@@ -10,6 +10,8 @@
   animation: fade 150ms ease;
 }
 .modal {
+  /* Visible edge against the dimmed page, especially in the dark theme. */
+  border: 1.5px solid color-mix(in srgb, var(--color-primary) 60%, var(--color-border));
   width: 100%;
   max-width: 440px;
   max-height: calc(100vh - 48px);
@@ -27,6 +29,8 @@
   padding: 0;
 }
 .sheet {
+  /* Visible edge against the dimmed page, especially in the dark theme. */
+  border: 1.5px solid color-mix(in srgb, var(--color-primary) 60%, var(--color-border));
   width: 100%;
   max-width: 560px;
   max-height: 88vh;

@@ -95,3 +95,39 @@
   align-items: center;
   justify-content: center;
 }
+
+/* «Як це працює» / «Чому тут безпечно»: folded by default so the page stays short. */
+.fold {
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+.fold summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+.fold summary::-webkit-details-marker {
+  display: none;
+}
+.fold summary::after {
+  content: "▾";
+  color: var(--color-primary);
+  transition: transform 0.15s;
+}
+.fold[open] summary::after {
+  transform: rotate(180deg);
+}
+.fold[open] summary {
+  margin-bottom: var(--space-3);
+}
+.fold.trust {
+  background: var(--color-primary-soft);
+  border-color: transparent;
+}
