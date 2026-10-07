@@ -34,9 +34,9 @@
 }
 /* The chosen tab is «torn off»: yellow notice paper with an ink edge. */
 .stripTab[aria-pressed="true"] {
-  color: var(--color-notice-ink);
-  background: var(--color-notice);
-  border-bottom-color: var(--color-notice-ink);
+  color: var(--color-text);
+  background: color-mix(in srgb, var(--color-notice) 35%, transparent);
+  border-bottom-color: var(--color-text);
   border-radius: 10px 10px 0 0;
 }
 .stripTab:focus-visible {

@@ -80,12 +80,13 @@
   font-size: var(--text-sm);
   font-weight: 500;
 }
-/* Chosen chips are filled, so the choice is obvious at a glance. */
+/* Chosen chips: a firm outline and bold text on a light tint — clear, but not loud. */
 .chipActive {
   border-color: var(--color-primary);
-  background: var(--color-primary);
-  color: var(--color-on-primary);
-  font-weight: 700;
+  box-shadow: inset 0 0 0 1px var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-text);
+  font-weight: 800;
 }
 .tabs {
   display: flex;
