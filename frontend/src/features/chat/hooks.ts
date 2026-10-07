@@ -56,7 +56,16 @@ export function upsertMessage(data: MessagesData | undefined, message: Message):
     results: page.results.map((m) => {
       if (m.id === message.id || (message.client_id && m.client_id === message.client_id)) {
         replaced = true;
-        return { ...m, ...message, pending: false, failed: false };
+        // Keep the local photo preview until the server's copy arrives.
+        const attachment = message.attachment ?? m.attachment;
+        return {
+          ...m,
+          ...message,
+          attachment,
+          pending: message.pending ?? false,
+          failed: false,
+          uploading: false,
+        };
       }
       return m;
     }),
@@ -119,6 +128,51 @@ export function useSendMessage(conversationId: string, myId: string | undefined)
     },
     meta: { inlineErrors: true },
   });
+}
+
+/**
+ * A photo appears in the chat the moment it is picked (local preview, «uploading»), so the sender sees
+ * at once where it goes. Returns helpers to drop it (upload failed) — sending then replaces it.
+ */
+export function useLocalPhotoMessage(conversationId: string, myId: string | undefined) {
+  const qc = useQueryClient();
+  const key = queryKeys.messages(conversationId);
+  const add = (clientId: string, previewUrl: string) =>
+    qc.setQueryData<MessagesData>(key, (data) =>
+      upsertMessage(data, {
+        id: `local-${clientId}`,
+        conversation_id: conversationId,
+        sender_id: myId ?? null,
+        text: "",
+        message_type: "IMAGE",
+        attachment: {
+          id: clientId,
+          url: previewUrl,
+          thumbnail_url: previewUrl,
+          width: null,
+          height: null,
+          status: "PENDING",
+        },
+        client_id: clientId,
+        created_at: new Date().toISOString(),
+        read_at: null,
+        pending: true,
+        uploading: true,
+      }),
+    );
+  const remove = (clientId: string) =>
+    qc.setQueryData<MessagesData>(
+      key,
+      (data) =>
+        data && {
+          ...data,
+          pages: data.pages.map((p) => ({
+            ...p,
+            results: p.results.filter((m) => m.client_id !== clientId),
+          })),
+        },
+    );
+  return { add, remove };
 }
 
 export function newClientId(): string {

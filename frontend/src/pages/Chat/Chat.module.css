@@ -90,6 +90,7 @@
   text-align: right;
 }
 .imageButton {
+  position: relative;
   display: block;
   padding: 0;
   border: 0;
@@ -172,4 +173,32 @@
 .requestLink span {
   font-size: 22px;
   line-height: 1;
+}
+/* A photo still uploading: dimmed, with a spinner and a label over it. */
+.uploading {
+  position: absolute;
+  inset: 0 0 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border-radius: 12px;
+  background: rgb(0 0 0 / 0.45);
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+.uploadingSpin {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgb(255 255 255 / 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: chatSpin 0.8s linear infinite;
+}
+@keyframes chatSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -231,6 +231,8 @@ export interface Message {
   /** client-only optimistic state */
   pending?: boolean;
   failed?: boolean;
+  /** client-only: the photo is still being uploaded (shown from a local preview) */
+  uploading?: boolean;
 }
 
 export interface Conversation {

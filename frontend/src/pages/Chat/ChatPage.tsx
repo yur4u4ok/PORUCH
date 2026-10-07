@@ -8,6 +8,7 @@ import { Avatar, Button, ErrorState, IconButton, Lightbox, Loader } from "@/comp
 import { useMe } from "@/features/auth/hooks";
 import {
   newClientId,
+  useLocalPhotoMessage,
   useConversation,
   useMarkConversationRead,
   useMessages,
@@ -71,6 +72,12 @@ function MessageBubble({
             src={message.attachment.thumbnail_url ?? message.attachment.url}
             alt=""
           />
+          {message.uploading && (
+            <span className={styles.uploading} role="status">
+              <span className={styles.uploadingSpin} aria-hidden />
+              {t("create.uploading")}
+            </span>
+          )}
         </button>
       )}
       {message.text}
@@ -96,6 +103,7 @@ export default function ChatPage() {
   const { status, otherTyping, otherOnline, notifyTyping } = useConversationSocket(id, me?.id);
   const [text, setText] = useState("");
   const [uploading, setUploading] = useState(false);
+  const localPhoto = useLocalPhotoMessage(id, me?.id);
   const [reportMessage, setReportMessage] = useState<Message | null>(null);
   const [openImage, setOpenImage] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
@@ -161,11 +169,17 @@ export default function ChatPage() {
       toast.error(problem === "type" ? t("create.photoWrongType") : t("create.photoTooLarge", { mb }));
       return;
     }
+    // Show it in the chat right away, then upload; sending replaces the preview with the real photo.
+    const clientId = newClientId();
+    const preview = URL.createObjectURL(file);
+    localPhoto.add(clientId, preview);
     setUploading(true);
     try {
       const media = await mediaApi.upload(file, "CHAT");
-      sendText("", media.id);
+      sendText("", media.id, clientId);
     } catch (error) {
+      localPhoto.remove(clientId);
+      URL.revokeObjectURL(preview);
       const [key, params] = uploadErrorMessage(error, mb);
       toast.error(t(key, params));
     } finally {
