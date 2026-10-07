@@ -17,7 +17,6 @@ export default function LandingPage() {
         <BrandMark size="lg" />
         <LanguageSwitcher compact />
       </div>
-      <h1 className={styles.title}>{t("landing.title")}</h1>
       <div className={styles.duo}>
         <section className={`${styles.panel} ${styles.panelNeed}`}>
           <h2>🆘 {t("landing.needHelpTitle")}</h2>
@@ -28,7 +27,6 @@ export default function LandingPage() {
           <p>{t("landing.canHelpText")}</p>
         </section>
       </div>
-      <InstallCard />
       <div className="stack-sm">
         <Link to="/auth/register">
           <Button size="lg" block>
@@ -41,6 +39,7 @@ export default function LandingPage() {
           </Button>
         </Link>
       </div>
+      <InstallCard />
       <details className={styles.fold}>
         <summary>{t("landing.how")}</summary>
         <ol className={styles.steps}>

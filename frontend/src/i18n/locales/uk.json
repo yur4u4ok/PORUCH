@@ -63,7 +63,6 @@
     "minutes_other": "{{count}} хвилини"
   },
   "landing": {
-    "title": "Допомога поруч.",
     "needHelpTitle": "Потрібна допомога?",
     "needHelpText": "Повідом людей поруч.",
     "canHelpTitle": "Можеш допомогти?",

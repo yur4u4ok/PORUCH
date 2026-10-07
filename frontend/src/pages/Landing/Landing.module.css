@@ -7,14 +7,6 @@
   margin: 0 auto;
   padding: var(--space-8) var(--space-5) var(--space-8);
 }
-.title {
-  font-family: var(--font-display);
-  font-size: 40px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--color-primary);
-  letter-spacing: -0.02em;
-}
 .duo {
   display: grid;
   gap: var(--space-3);
@@ -128,6 +120,9 @@
   margin-bottom: var(--space-3);
 }
 .fold.trust {
+  /* .trust is a grid with its own padding; as a fold it must match «Як це працює» exactly. */
+  display: block;
+  padding: var(--space-4) var(--space-5);
   background: var(--color-primary-soft);
   border-color: transparent;
 }

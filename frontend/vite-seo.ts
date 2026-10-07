@@ -11,7 +11,6 @@ import { readFileSync } from "node:fs";
 import type { Plugin } from "vite";
 
 interface Landing {
-  title: string;
   needHelpTitle: string;
   needHelpText: string;
   canHelpTitle: string;
@@ -92,7 +91,7 @@ export function seo(siteUrl: string): Plugin {
   const fallback = `<div class="seo-fallback">
       <header><strong>Poruch</strong> — <em>${esc(uk.app.slogan)}</em></header>
       <main>
-        <h1>${esc(l.title)}</h1>
+        <h1>${esc(title)}</h1>
         <section><h2>${esc(l.needHelpTitle)}</h2><p>${esc(l.needHelpText)}</p></section>
         <section><h2>${esc(l.canHelpTitle)}</h2><p>${esc(l.canHelpText)}</p></section>
         <p><a href="/auth/register">${esc(l.join)}</a> · <a href="/auth/login">${esc(l.login)}</a></p>

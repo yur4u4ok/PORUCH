@@ -48,7 +48,6 @@
     "minutes_other": "{{count}}분"
   },
   "landing": {
-    "title": "도움은 가까이에.",
     "needHelpTitle": "도움이 필요하세요?",
     "needHelpText": "가까운 이웃에게 알리세요.",
     "canHelpTitle": "도와줄 수 있나요?",

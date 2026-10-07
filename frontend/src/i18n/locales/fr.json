@@ -53,7 +53,6 @@
     "minutes_other": "{{count}} minutes"
   },
   "landing": {
-    "title": "De l'aide tout près.",
     "needHelpTitle": "Besoin d'aide ?",
     "needHelpText": "Prévenez les gens autour de vous.",
     "canHelpTitle": "Vous pouvez aider ?",

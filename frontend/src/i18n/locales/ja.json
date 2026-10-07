@@ -48,7 +48,6 @@
     "minutes_other": "{{count}}分"
   },
   "landing": {
-    "title": "助けは、すぐそばに。",
     "needHelpTitle": "助けが必要ですか？",
     "needHelpText": "近くの人に知らせましょう。",
     "canHelpTitle": "手を貸せますか？",

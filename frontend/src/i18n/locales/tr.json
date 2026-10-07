@@ -53,7 +53,6 @@
     "minutes_other": "{{count}} dakika"
   },
   "landing": {
-    "title": "Yardım hemen yanında.",
     "needHelpTitle": "Yardıma mı ihtiyacın var?",
     "needHelpText": "Yakınındaki insanlara haber ver.",
     "canHelpTitle": "Yardım edebilir misin?",
