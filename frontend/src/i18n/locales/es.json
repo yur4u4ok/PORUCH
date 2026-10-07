@@ -696,9 +696,7 @@
         "Una página abierta desde Telegram o Instagram es un visor integrado y no permite instalar.",
         "Se necesita iOS 16.4 o posterior: Ajustes → General → Información."
       ],
-      "in-app": [
-        "Copia la dirección con el botón de abajo y pégala en Safari (iPhone) o Chrome (Android)."
-      ],
+      "in-app": ["Copia la dirección con el botón de abajo y pégala en Safari (iPhone) o Chrome (Android)."],
       "android": [
         "La web debe estar abierta en Chrome. En Telegram, Instagram y otras apps toca ⋮ → «Abrir en Chrome».",
         "¿No aparece «Instalar aplicación»? Actualiza Chrome en Google Play o copia la dirección de abajo y ábrela en Chrome."
