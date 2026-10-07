@@ -96,3 +96,11 @@
 .iconButton:hover {
   background: var(--color-surface-2);
 }
+.soft {
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+.soft:hover:not(:disabled) {
+  filter: brightness(0.96);
+}

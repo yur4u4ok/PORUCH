@@ -16,10 +16,9 @@ export function SelectAll<T extends string>({
   const everything = all.length > 0 && all.every((item) => selected.includes(item));
   return (
     <Button
-      variant="ghost"
-      size="sm"
+      variant="soft"
       onClick={() => onChange(everything ? [] : [...all])}
-      style={{ alignSelf: "flex-start" }}
+      style={{ alignSelf: "flex-start", fontWeight: 700 }}
     >
       {everything ? `☐ ${t("common.selectNone")}` : `☑ ${t("common.selectAll")}`}
     </Button>
