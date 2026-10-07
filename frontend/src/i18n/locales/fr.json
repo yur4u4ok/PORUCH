@@ -416,7 +416,8 @@
     "reply": "Répondre",
     "replyingTo": "Réponse à {{name}}",
     "actions": "Actions du message",
-    "typingName": "{{name}} écrit…"
+    "typingName": "{{name}} écrit…",
+    "lastSeen": "Vu(e) {{when}}"
   },
   "notifications": {
     "title": "Notifications",

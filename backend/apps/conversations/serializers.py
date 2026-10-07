@@ -70,6 +70,7 @@ class ConversationSerializer(serializers.ModelSerializer):
     unread_count = serializers.IntegerField(read_only=True, default=0)
     is_open = serializers.BooleanField(read_only=True)
     other_online = serializers.SerializerMethodField()
+    other_last_seen = serializers.SerializerMethodField()
 
     class Meta:
         model = Conversation
@@ -81,6 +82,7 @@ class ConversationSerializer(serializers.ModelSerializer):
             "unread_count",
             "is_open",
             "other_online",
+            "other_last_seen",
             "created_at",
             "last_message_at",
         ]
@@ -97,6 +99,13 @@ class ConversationSerializer(serializers.ModelSerializer):
 
         viewer = self.context["request"].user
         return any(presence.is_online(p.user_id) for p in conversation.participants.all() if p.user_id != viewer.pk)
+
+    def get_other_last_seen(self, conversation):
+        viewer = self.context["request"].user
+        for p in conversation.participants.all():
+            if p.user_id != viewer.pk and p.user.last_seen_at:
+                return p.user.last_seen_at.isoformat()
+        return None
 
     def get_last_message(self, conversation) -> dict | None:
         last = getattr(conversation, "last_messages", None)

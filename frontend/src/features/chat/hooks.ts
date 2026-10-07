@@ -35,7 +35,12 @@ export function useConversations() {
 }
 
 export function useConversation(id: string) {
-  return useQuery({ queryKey: queryKeys.conversation(id), queryFn: () => conversationsApi.get(id) });
+  // Polled so «last seen» and a chat closed by the request being completed show up without a reload.
+  return useQuery({
+    queryKey: queryKeys.conversation(id),
+    queryFn: () => conversationsApi.get(id),
+    refetchInterval: 15_000,
+  });
 }
 
 export function useMessages(id: string) {

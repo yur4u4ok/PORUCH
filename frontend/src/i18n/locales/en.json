@@ -416,7 +416,8 @@
     "reply": "Reply",
     "replyingTo": "Replying to {{name}}",
     "actions": "Message actions",
-    "typingName": "{{name}} is typing…"
+    "typingName": "{{name}} is typing…",
+    "lastSeen": "Last seen {{when}}"
   },
   "notifications": {
     "title": "Notifications",

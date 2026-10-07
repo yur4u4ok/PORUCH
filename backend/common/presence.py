@@ -15,6 +15,13 @@ def _key(user_id) -> str:
 
 def touch(user_id) -> None:
     cache.set(_key(user_id), 1, timeout=ONLINE_WINDOW)
+    # Persist «last seen» for the chat header, at most once a minute per user.
+    if cache.add(f"seen-db:{user_id}", 1, timeout=60):
+        from django.utils import timezone
+
+        from apps.users.models import User
+
+        User.objects.filter(pk=user_id).update(last_seen_at=timezone.now())
 
 
 def is_online(user_id) -> bool:

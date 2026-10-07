@@ -225,3 +225,21 @@ def test_helpers_offer_note_opens_the_chat(make_client, no_push):
     assert ordered[0].sender_id == resp.helper_id and ordered[0].text == "Можу підвезти домкрат"
     assert ordered[0].read_at is not None  # the author already saw it on the request page
     assert ordered[1].message_type == "SYSTEM"
+
+
+@pytest.mark.django_db
+def test_completing_request_closes_its_chat(make_client, no_push):
+    from apps.help_requests.services.lifecycle import complete_help_request
+
+    conversation, author, helper = setup_conversation()
+    complete_help_request(author, conversation.help_request_id)
+    response = make_client(helper).post(url(conversation, "messages/"), {"text": "ще тут"}, format="json")
+    assert response.status_code >= 400
+    assert make_client(author).get(url(conversation)).data["is_open"] is False
+
+
+@pytest.mark.django_db
+def test_chat_shows_partner_last_seen(make_client):
+    conversation, author, helper = setup_conversation()
+    make_client(helper).get("/api/v1/conversations/")
+    assert make_client(author).get(url(conversation)).data["other_last_seen"]

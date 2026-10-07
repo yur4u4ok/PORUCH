@@ -408,7 +408,8 @@
     "reply": "回复",
     "replyingTo": "回复 {{name}}",
     "actions": "消息操作",
-    "typingName": "{{name}} 正在输入…"
+    "typingName": "{{name}} 正在输入…",
+    "lastSeen": "最后在线 {{when}}"
   },
   "notifications": {
     "title": "通知",
@@ -642,7 +643,11 @@
   "install": {
     "title": "将 Poruch 安装为应用",
     "why": "把 Poruch 放到主屏幕上作为应用使用，体验最好。",
-    "benefits": ["🔔 关闭应用也能收到通知", "⚡ 一点即开，全屏显示", "📍 更快定位你和附近的人"],
+    "benefits": [
+      "🔔 关闭应用也能收到通知",
+      "⚡ 一点即开，全屏显示",
+      "📍 更快定位你和附近的人"
+    ],
     "button": "安装",
     "howTo": "安装方法：",
     "steps": {
@@ -665,7 +670,10 @@
         "选择“安装应用”或“添加到主屏幕”",
         "确认后，Poruch 就会出现在应用中"
       ],
-      "desktop": ["点击地址栏中的安装图标 ⊕（或菜单 ⋮ →“安装 Poruch”）", "确认安装"]
+      "desktop": [
+        "点击地址栏中的安装图标 ⊕（或菜单 ⋮ →“安装 Poruch”）",
+        "确认安装"
+      ]
     },
     "troubleTitle": "无法安装？",
     "trouble": {
@@ -680,7 +688,9 @@
         "从 Telegram 或 Instagram 打开的页面是内置浏览器，无法安装。",
         "需要 iOS 16.4 或更高版本：设置 → 通用 → 关于本机。"
       ],
-      "in-app": ["用下方按钮复制网址，粘贴到 Safari（iPhone）或 Chrome（Android）中打开。"],
+      "in-app": [
+        "用下方按钮复制网址，粘贴到 Safari（iPhone）或 Chrome（Android）中打开。"
+      ],
       "android": [
         "网站必须在 Chrome 中打开。在 Telegram、Instagram 等应用中点按 ⋮ →“在 Chrome 中打开”。",
         "没有“安装应用”？请在 Google Play 更新 Chrome，或复制下方网址在 Chrome 中打开。"

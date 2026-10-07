@@ -107,7 +107,7 @@ def cancel_help_request(author: User, help_request_id) -> HelpRequest:
 def complete_help_request(author: User, help_request_id) -> HelpRequest:
     """IN_PROGRESS → COMPLETED (author only). Idempotent."""
     from apps.conversations.models import Conversation
-    from apps.conversations.services.conversations import post_system_message
+    from apps.conversations.services.conversations import close_conversations, post_system_message
 
     help_request = _lock_own(author, help_request_id)
     if help_request.status == HelpRequestStatus.COMPLETED:
@@ -131,6 +131,8 @@ def complete_help_request(author: User, help_request_id) -> HelpRequest:
             url=f"/help/{help_request.id}",
             help_request=help_request,
         )
+    # Done means done: the chats of this request become read-only.
+    close_conversations(help_request)
     analytics.track(
         user_id=author.id,
         event="help_requests_completed",

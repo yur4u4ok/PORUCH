@@ -250,6 +250,7 @@ export interface Conversation {
   last_message_at: ISODateTime | null;
   /** In the app right now (any screen). */
   other_online: boolean;
+  other_last_seen: string | null;
 }
 
 export type NotificationType =

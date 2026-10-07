@@ -49,6 +49,8 @@ class User(UUIDModel, AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
     deactivated_at = models.DateTimeField(null=True, blank=True)
+    # Last time the app was open (written at most once a minute, see common/presence.py).
+    last_seen_at = models.DateTimeField(null=True, blank=True)
 
     objects = UserManager()
 

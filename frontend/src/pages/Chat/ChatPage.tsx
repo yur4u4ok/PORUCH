@@ -1,3 +1,4 @@
+import { timeAgo } from "@/utils/format";
 import clsx from "clsx";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -315,7 +316,9 @@ export default function ChatPage() {
   const statusLine =
     otherOnline || conversation.data.other_online
       ? t("chat.online")
-      : t("chat.aboutRequest", { title: conversation.data.help_request.title });
+      : conversation.data.other_last_seen
+        ? t("chat.lastSeen", { when: timeAgo(conversation.data.other_last_seen) })
+        : t("chat.aboutRequest", { title: conversation.data.help_request.title });
 
   return (
     <div className={styles.screen}>

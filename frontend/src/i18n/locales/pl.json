@@ -432,7 +432,8 @@
     "reply": "Odpowiedz",
     "replyingTo": "Odpowiedź dla {{name}}",
     "actions": "Działania na wiadomości",
-    "typingName": "{{name}} pisze…"
+    "typingName": "{{name}} pisze…",
+    "lastSeen": "Ostatnio aktywny(-a) {{when}}"
   },
   "notifications": {
     "title": "Powiadomienia",
@@ -711,7 +712,9 @@
         "Strona otwarta z Telegrama lub Instagrama to wbudowana przeglądarka, z której nie da się instalować.",
         "Wymagany jest iOS 16.4 lub nowszy: Ustawienia → Ogólne → To urządzenie."
       ],
-      "in-app": ["Skopiuj adres przyciskiem poniżej i wklej go w Safari (iPhone) lub Chrome (Android)."],
+      "in-app": [
+        "Skopiuj adres przyciskiem poniżej i wklej go w Safari (iPhone) lub Chrome (Android)."
+      ],
       "android": [
         "Strona musi być otwarta w Chrome. W Telegramie, Instagramie i innych stuknij ⋮ → „Otwórz w Chrome”.",
         "Brak „Zainstaluj aplikację”? Zaktualizuj Chrome w Google Play albo skopiuj adres poniżej i otwórz go w Chrome."

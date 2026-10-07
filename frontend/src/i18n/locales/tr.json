@@ -416,7 +416,8 @@
     "reply": "Yanıtla",
     "replyingTo": "{{name}} adlı kişiye yanıt",
     "actions": "Mesaj işlemleri",
-    "typingName": "{{name}} yazıyor…"
+    "typingName": "{{name}} yazıyor…",
+    "lastSeen": "Son görülme {{when}}"
   },
   "notifications": {
     "title": "Bildirimler",

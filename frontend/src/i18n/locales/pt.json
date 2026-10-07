@@ -416,7 +416,8 @@
     "reply": "Responder",
     "replyingTo": "Respondendo a {{name}}",
     "actions": "Ações da mensagem",
-    "typingName": "{{name}} está digitando…"
+    "typingName": "{{name}} está digitando…",
+    "lastSeen": "Visto por último {{when}}"
   },
   "notifications": {
     "title": "Notificações",
@@ -695,7 +696,9 @@
         "Uma página aberta a partir do Telegram ou do Instagram é um visualizador integrado e não permite instalar.",
         "É preciso iOS 16.4 ou mais recente: Definições → Geral → Informações."
       ],
-      "in-app": ["Copie o endereço com o botão abaixo e cole-o no Safari (iPhone) ou no Chrome (Android)."],
+      "in-app": [
+        "Copie o endereço com o botão abaixo e cole-o no Safari (iPhone) ou no Chrome (Android)."
+      ],
       "android": [
         "O site tem de estar aberto no Chrome. No Telegram, Instagram e outras apps toque em ⋮ → «Abrir no Chrome».",
         "Não aparece «Instalar app»? Atualize o Chrome no Google Play ou copie o endereço abaixo e abra-o no Chrome."

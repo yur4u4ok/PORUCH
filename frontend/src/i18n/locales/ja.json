@@ -408,7 +408,8 @@
     "reply": "返信",
     "replyingTo": "{{name}}さんへの返信",
     "actions": "メッセージの操作",
-    "typingName": "{{name}}さんが入力中…"
+    "typingName": "{{name}}さんが入力中…",
+    "lastSeen": "最終オンライン {{when}}"
   },
   "notifications": {
     "title": "通知",
