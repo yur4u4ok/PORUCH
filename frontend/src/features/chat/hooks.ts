@@ -8,11 +8,23 @@ import {
 
 import { conversationsApi, type SendMessageInput } from "@/api/conversations";
 import { queryKeys } from "@/api/queryKeys";
-import type { Message, Paginated } from "@/types/api";
+import { infiniteList } from "@/api/paging";
+import type { Conversation, Message, Paginated } from "@/types/api";
 import { uuid } from "@/utils/format";
 
 export type MessagesData = InfiniteData<Paginated<Message>, string | null>;
 
+/** Every chat, page by page (the chats screen). */
+export function useAllConversations() {
+  return useInfiniteQuery({
+    queryKey: [...queryKeys.conversations, "~all"],
+    ...infiniteList<Conversation>("/conversations/"),
+    refetchInterval: 15_000,
+    refetchOnWindowFocus: true,
+  });
+}
+
+/** The most recent chats only — enough for the unread badge in the menu. */
 export function useConversations() {
   return useQuery({
     queryKey: queryKeys.conversations,

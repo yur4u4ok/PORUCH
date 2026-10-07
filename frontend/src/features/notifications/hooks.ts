@@ -1,10 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { notificationsApi } from "@/api/notifications";
+import { notificationsApi, type NotificationsPage } from "@/api/notifications";
+import { infiniteList } from "@/api/paging";
 import { queryKeys } from "@/api/queryKeys";
 
 export function useNotifications(enabled = true) {
-  return useQuery({ queryKey: queryKeys.notifications, queryFn: () => notificationsApi.list(), enabled });
+  return useInfiniteQuery({
+    queryKey: queryKeys.notifications,
+    ...infiniteList<NotificationsPage["results"][number], NotificationsPage>("/notifications/"),
+    enabled,
+  });
 }
 
 export function useUnreadCount(enabled: boolean) {

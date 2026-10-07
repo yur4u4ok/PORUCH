@@ -14,3 +14,4 @@ export {
   Tabs,
 } from "./Surface";
 export { Toaster } from "./Toast";
+export { LoadMore } from "./LoadMore";

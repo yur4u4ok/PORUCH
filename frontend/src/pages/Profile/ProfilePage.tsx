@@ -4,7 +4,18 @@ import { Link, useNavigate } from "react-router";
 
 import { mediaApi } from "@/api/media";
 import { PageHeader } from "@/components/layout/AppLayout";
-import { Avatar, Button, Card, EmptyState, ErrorState, Loader, SkeletonList, Tabs } from "@/components/ui";
+import { allResults } from "@/api/paging";
+import {
+  Avatar,
+  Button,
+  Card,
+  EmptyState,
+  ErrorState,
+  Loader,
+  LoadMore,
+  SkeletonList,
+  Tabs,
+} from "@/components/ui";
 import { useLogout, useMe } from "@/features/auth/hooks";
 import { HelpRequestCard } from "@/features/help/components";
 import { useHelpHistory } from "@/features/help/hooks";
@@ -41,11 +52,11 @@ function History() {
           {items.map((r) => (
             <HelpRequestCard key={r.id} request={r} showStatus />
           ))}
-          {history.hasNextPage && (
-            <Button variant="secondary" onClick={() => void history.fetchNextPage()}>
-              {t("nearby.loadMore")}
-            </Button>
-          )}
+          <LoadMore
+            hasNextPage={history.hasNextPage}
+            isFetching={history.isFetchingNextPage}
+            onLoad={() => void history.fetchNextPage()}
+          />
         </>
       )}
     </section>
@@ -55,7 +66,7 @@ function History() {
 export function ThanksList({ userId }: { userId: string }) {
   const { t } = useTranslation();
   const thanks = useThanks(userId);
-  const items = thanks.data?.results ?? [];
+  const items = allResults(thanks.data);
   return (
     <section className="stack-sm">
       <h2>{t("profile.receivedThanks")}</h2>
@@ -74,6 +85,11 @@ export function ThanksList({ userId }: { userId: string }) {
           </Card>
         ))
       )}
+      <LoadMore
+        hasNextPage={thanks.hasNextPage}
+        isFetching={thanks.isFetchingNextPage}
+        onLoad={() => void thanks.fetchNextPage()}
+      />
     </section>
   );
 }

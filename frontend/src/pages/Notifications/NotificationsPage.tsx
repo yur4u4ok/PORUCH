@@ -2,7 +2,8 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
 import { PageHeader } from "@/components/layout/AppLayout";
-import { Button, Card, EmptyState, ErrorState, SkeletonList } from "@/components/ui";
+import { allResults } from "@/api/paging";
+import { Button, Card, EmptyState, ErrorState, LoadMore, SkeletonList } from "@/components/ui";
 import { useMarkAllRead, useMarkNotificationRead, useNotifications } from "@/features/notifications/hooks";
 import { PushToggle } from "@/features/notifications/PushToggle";
 import type { AppNotification } from "@/types/api";
@@ -12,6 +13,8 @@ export default function NotificationsPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const query = useNotifications();
+  const items = allResults(query.data);
+  const unreadCount = query.data?.pages[0]?.unread_count ?? 0;
   const markRead = useMarkNotificationRead();
   const markAll = useMarkAllRead();
 
@@ -25,7 +28,7 @@ export default function NotificationsPage() {
       <PageHeader
         title={t("notifications.title")}
         actions={
-          (query.data?.unread_count ?? 0) > 0 && (
+          unreadCount > 0 && (
             <Button variant="ghost" size="sm" onClick={() => markAll.mutate()}>
               {t("notifications.readAll")}
             </Button>
@@ -37,10 +40,10 @@ export default function NotificationsPage() {
         <SkeletonList count={4} height={72} />
       ) : query.isError ? (
         <ErrorState onRetry={() => void query.refetch()} />
-      ) : query.data.results.length === 0 ? (
+      ) : items.length === 0 ? (
         <EmptyState icon="🔔" title={t("notifications.empty")} />
       ) : (
-        query.data.results.map((n) => (
+        items.map((n) => (
           <Card
             key={n.id}
             role="button"
@@ -63,6 +66,11 @@ export default function NotificationsPage() {
           </Card>
         ))
       )}
+      <LoadMore
+        hasNextPage={query.hasNextPage}
+        isFetching={query.isFetchingNextPage}
+        onLoad={() => void query.fetchNextPage()}
+      />
     </main>
   );
 }

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router";
 
 import { PageHeader } from "@/components/layout/AppLayout";
-import { BottomSheet, Button, EmptyState, ErrorState, SkeletonList, Tabs } from "@/components/ui";
+import { BottomSheet, Button, EmptyState, ErrorState, LoadMore, SkeletonList, Tabs } from "@/components/ui";
 import { LazyMap } from "@/components/ui/LazyMap";
 import type { MapMarker } from "@/components/ui/Map";
 import { useMe } from "@/features/auth/hooks";
@@ -29,6 +29,9 @@ const ZOOM_BY_RADIUS: Record<number, number> = {
   20000: 10,
   30000: 9,
 };
+
+/** Enough for a dense city radius without loading an unbounded number of pins. */
+const MAP_LIMIT = 200;
 
 export default function NearbyPage() {
   const { t, i18n } = useTranslation();
@@ -67,6 +70,12 @@ export default function NearbyPage() {
     [position, filters.radius, filters.categories, filters.urgencies],
   );
   const nearby = useHelpRequests(query);
+  // The map shows everything within the radius at once (up to MAP_LIMIT), not just the first page.
+  const loaded = nearby.data?.pages.reduce((n, p) => n + p.results.length, 0) ?? 0;
+  const { hasNextPage, isFetchingNextPage, fetchNextPage } = nearby;
+  useEffect(() => {
+    if (view === "map" && hasNextPage && !isFetchingNextPage && loaded < MAP_LIMIT) void fetchNextPage();
+  }, [view, hasNextPage, isFetchingNextPage, loaded, fetchNextPage]);
   const requests = useMemo(() => nearby.data?.pages.flatMap((p) => p.results) ?? [], [nearby.data]);
 
   const markers: MapMarker[] = useMemo(
@@ -167,15 +176,11 @@ export default function NearbyPage() {
           {requests.map((request) => (
             <HelpRequestCard key={request.id} request={request} />
           ))}
-          {nearby.hasNextPage && (
-            <Button
-              variant="secondary"
-              onClick={() => void nearby.fetchNextPage()}
-              loading={nearby.isFetchingNextPage}
-            >
-              {t("nearby.loadMore")}
-            </Button>
-          )}
+          <LoadMore
+            hasNextPage={nearby.hasNextPage}
+            isFetching={nearby.isFetchingNextPage}
+            onLoad={() => void nearby.fetchNextPage()}
+          />
         </div>
       )}
 
