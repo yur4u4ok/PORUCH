@@ -1,6 +1,6 @@
 export { Button, IconButton } from "./Button";
 export { Input, Select, Switch, Textarea } from "./Field";
-export { BottomSheet, Modal } from "./Overlay";
+export { BottomSheet, Lightbox, Modal } from "./Overlay";
 export {
   Avatar,
   Badge,

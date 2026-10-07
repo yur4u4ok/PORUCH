@@ -13,6 +13,12 @@
   gap: var(--space-3);
 }
 
+.topControls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
 /* ── Hero: two notices on the wall, the ways in right under them ───────────── */
 .hero {
   display: grid;

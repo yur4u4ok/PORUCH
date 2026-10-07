@@ -41,7 +41,8 @@
     "selectAll": "Tümünü seç",
     "selectNone": "Tümünü kaldır",
     "less": "Azalt",
-    "more": "Artır"
+    "more": "Artır",
+    "previous": "Önceki"
   },
   "time": {
     "justNow": "az önce",
@@ -72,7 +73,7 @@
     "step2": "Yakındaki insanlara bildirim gider",
     "step3": "Biri yanıt verir, ayrıntıları sohbette konuşursunuz",
     "step4": "Yardım aldıktan sonra teşekkür et ❤️",
-    "notMarketplace": "Bu bir hizmet pazarı değil. Komşular komşulara yardım eder; zorunlu ödeme ya da komisyon yok.",
+    "notMarketplace": "Bir hizmet platformu değil, bir dayanışma topluluğu. Yakınındakilere zorunlu ödeme ve komisyon olmadan yardım et.",
     "trustTitle": "Neden güvenli",
     "trust": [
       "Tam adresin gizli kalır. Onu yalnızca yardım etmeyi kabul edenler görür.",

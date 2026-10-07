@@ -89,6 +89,13 @@
   opacity: 0.75;
   text-align: right;
 }
+.imageButton {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
 .image {
   border-radius: 12px;
   max-height: 260px;

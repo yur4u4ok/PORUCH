@@ -41,7 +41,8 @@
     "selectAll": "Zaznacz wszystko",
     "selectNone": "Odznacz wszystko",
     "less": "Mniej",
-    "more": "Więcej"
+    "more": "Więcej",
+    "previous": "Wstecz"
   },
   "time": {
     "justNow": "przed chwilą",
@@ -84,7 +85,7 @@
     "step2": "Ludzie w pobliżu dostają powiadomienie",
     "step3": "Ktoś odpowiada – szczegóły ustalacie na czacie",
     "step4": "Podziękuj, gdy ktoś ci pomoże ❤️",
-    "notMarketplace": "To nie jest rynek usług. Sąsiedzi pomagają sąsiadom – bez obowiązkowych płatności i prowizji.",
+    "notMarketplace": "To nie serwis usług, ale społeczność wzajemnej pomocy. Pomagaj tym, którzy są obok, bez obowiązkowych opłat i prowizji.",
     "trustTitle": "Dlaczego tu jest bezpiecznie",
     "trust": [
       "Twój dokładny adres jest ukryty. Widzą go tylko osoby, które zgodziły się pomóc.",

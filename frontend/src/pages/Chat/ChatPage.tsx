@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router";
 
 import { mediaApi } from "@/api/media";
-import { Avatar, Button, ErrorState, IconButton, Loader } from "@/components/ui";
+import { Avatar, Button, ErrorState, IconButton, Lightbox, Loader } from "@/components/ui";
 import { useMe } from "@/features/auth/hooks";
 import {
   newClientId,
@@ -29,11 +29,13 @@ function MessageBubble({
   mine,
   onRetry,
   onReport,
+  onOpenImage,
 }: {
   message: Message;
   mine: boolean;
   onRetry: (m: Message) => void;
   onReport: (m: Message) => void;
+  onOpenImage: (src: string) => void;
 }) {
   const { t } = useTranslation();
   if (message.message_type === "SYSTEM") return <div className={styles.system}>{message.text}</div>;
@@ -55,13 +57,21 @@ function MessageBubble({
       title={message.failed ? t("chat.failed") : undefined}
     >
       {message.attachment?.url && (
-        <a href={message.attachment.url} target="_blank" rel="noreferrer">
+        <button
+          type="button"
+          className={styles.imageButton}
+          onClick={(e) => {
+            e.stopPropagation();
+            onOpenImage(message.attachment!.url!);
+          }}
+          aria-label={t("chat.image")}
+        >
           <img
             className={styles.image}
             src={message.attachment.thumbnail_url ?? message.attachment.url}
-            alt={t("chat.image")}
+            alt=""
           />
-        </a>
+        </button>
       )}
       {message.text}
       <span className={styles.time}>
@@ -87,6 +97,7 @@ export default function ChatPage() {
   const [text, setText] = useState("");
   const [uploading, setUploading] = useState(false);
   const [reportMessage, setReportMessage] = useState<Message | null>(null);
+  const [openImage, setOpenImage] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const typingRef = useRef<number | undefined>(undefined);
 
@@ -223,6 +234,7 @@ export default function ChatPage() {
               mine={message.sender_id === me?.id}
               onRetry={(m) => sendText(m.text, m.attachment?.id, m.client_id ?? newClientId())}
               onReport={setReportMessage}
+              onOpenImage={setOpenImage}
             />
           ))
         )}
@@ -270,6 +282,11 @@ export default function ChatPage() {
       ) : (
         <div className={styles.closed}>{t("chat.closed")}</div>
       )}
+      <Lightbox
+        images={openImage ? [{ src: openImage, alt: t("chat.image") }] : []}
+        index={openImage ? 0 : null}
+        onClose={() => setOpenImage(null)}
+      />
       <ReportDialog
         open={!!reportMessage}
         onClose={() => setReportMessage(null)}

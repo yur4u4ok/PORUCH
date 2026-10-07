@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { BrandMark } from "@/components/layout/BrandMark";
 import { InstallCard } from "@/features/pwa/InstallPrompt";
 import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
+import { ThemeToggle } from "@/features/profile/ThemeSwitcher";
 
 import styles from "./LandingPage.module.css";
 
@@ -19,7 +20,10 @@ export default function LandingPage() {
     <main className={styles.page}>
       <header className={styles.top}>
         <BrandMark />
-        <LanguageSwitcher compact />
+        <div className={styles.topControls}>
+          <ThemeToggle />
+          <LanguageSwitcher compact />
+        </div>
       </header>
 
       <div className={styles.hero}>

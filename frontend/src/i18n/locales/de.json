@@ -41,7 +41,8 @@
     "selectAll": "Alle auswählen",
     "selectNone": "Alle abwählen",
     "less": "Weniger",
-    "more": "Mehr"
+    "more": "Mehr",
+    "previous": "Zurück"
   },
   "time": {
     "justNow": "gerade eben",
@@ -72,7 +73,7 @@
     "step2": "Menschen in der Nähe werden benachrichtigt",
     "step3": "Jemand meldet sich – Details klärt ihr im Chat",
     "step4": "Bedanke dich, wenn dir geholfen wurde ❤️",
-    "notMarketplace": "Das ist kein Dienstleistungsmarkt. Nachbarn helfen Nachbarn – ohne Pflichtzahlungen oder Gebühren.",
+    "notMarketplace": "Kein Dienstleistungsportal, sondern eine Gemeinschaft gegenseitiger Hilfe. Hilf Menschen in deiner Nähe – ohne Pflichtzahlungen und Gebühren.",
     "trustTitle": "Warum es hier sicher ist",
     "trust": [
       "Deine genaue Adresse bleibt verborgen. Nur wer zugesagt hat zu helfen, kann sie sehen.",

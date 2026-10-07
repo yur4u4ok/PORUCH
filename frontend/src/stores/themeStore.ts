@@ -14,7 +14,7 @@ function read(): ThemePreference {
   }
 }
 
-function resolved(pref: ThemePreference): "light" | "dark" {
+export function resolved(pref: ThemePreference): "light" | "dark" {
   if (pref !== "system") return pref;
   return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }

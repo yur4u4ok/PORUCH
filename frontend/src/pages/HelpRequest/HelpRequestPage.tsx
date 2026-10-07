@@ -12,6 +12,7 @@ import {
   Button,
   Card,
   EmptyState,
+  Lightbox,
   ErrorState,
   Loader,
   Modal,
@@ -491,6 +492,7 @@ export default function HelpRequestPage() {
   const [blockOpen, setBlockOpen] = useState(false);
   // Bumped to rebuild the map on the request's spot after the user has panned away.
   const [mapKey, setMapKey] = useState(0);
+  const [photoIndex, setPhotoIndex] = useState<number | null>(null);
   const block = useBlockUser();
   const navigate = useNavigate();
 
@@ -562,13 +564,28 @@ export default function HelpRequestPage() {
 
         {request.photos.length > 0 && (
           <div className={styles.photos}>
-            {request.photos.map((photo) => (
-              <a key={photo.id} href={photo.url ?? "#"} target="_blank" rel="noreferrer">
-                <img src={photo.thumbnail_url ?? ""} alt={t("request.photos")} loading="lazy" />
-              </a>
+            {request.photos.map((photo, i) => (
+              <button
+                key={photo.id}
+                type="button"
+                className={styles.photoButton}
+                onClick={() => setPhotoIndex(i)}
+                aria-label={t("request.photos")}
+              >
+                <img src={photo.thumbnail_url ?? ""} alt="" loading="lazy" />
+              </button>
             ))}
           </div>
         )}
+        <Lightbox
+          images={request.photos.map((p) => ({
+            src: p.url ?? p.thumbnail_url ?? "",
+            alt: t("request.photos"),
+          }))}
+          index={photoIndex}
+          onIndex={setPhotoIndex}
+          onClose={() => setPhotoIndex(null)}
+        />
       </section>
 
       <section className="stack-sm">

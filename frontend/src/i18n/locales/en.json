@@ -41,7 +41,8 @@
     "selectAll": "Select all",
     "selectNone": "Clear all",
     "less": "Less",
-    "more": "More"
+    "more": "More",
+    "previous": "Previous"
   },
   "time": {
     "justNow": "just now",
@@ -72,7 +73,7 @@
     "step2": "People nearby get notified",
     "step3": "Someone responds — agree on details in chat",
     "step4": "Say thanks after you're helped ❤️",
-    "notMarketplace": "This isn't a service marketplace. Neighbours help neighbours — no mandatory payments or fees.",
+    "notMarketplace": "Not a service marketplace — a mutual-aid community. Help the people around you, with no required payments or fees.",
     "trustTitle": "Why it's safe here",
     "trust": [
       "Your exact address is hidden. Only people who agreed to help can see it.",

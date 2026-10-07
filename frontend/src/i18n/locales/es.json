@@ -41,7 +41,8 @@
     "selectAll": "Seleccionar todo",
     "selectNone": "Quitar todo",
     "less": "Menos",
-    "more": "Más"
+    "more": "Más",
+    "previous": "Anterior"
   },
   "time": {
     "justNow": "ahora mismo",
@@ -72,7 +73,7 @@
     "step2": "La gente cercana recibe un aviso",
     "step3": "Alguien responde y acordáis los detalles en el chat",
     "step4": "Da las gracias cuando te hayan ayudado ❤️",
-    "notMarketplace": "No es un mercado de servicios. Vecinos que ayudan a vecinos, sin pagos obligatorios ni comisiones.",
+    "notMarketplace": "No es un servicio, sino una comunidad de ayuda mutua. Ayuda a quien tienes cerca, sin pagos ni comisiones obligatorias.",
     "trustTitle": "Por qué es seguro",
     "trust": [
       "Tu dirección exacta está oculta. Solo la ve quien ha aceptado ayudarte.",

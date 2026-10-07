@@ -24,7 +24,8 @@
   grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
   gap: var(--space-2);
 }
-.photos a {
+.photos a,
+.photos button {
   aspect-ratio: 1;
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -201,4 +202,11 @@
 }
 .contact:hover {
   border-color: var(--color-primary);
+}
+.photoButton {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
 }
