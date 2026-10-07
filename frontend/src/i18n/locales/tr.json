@@ -119,7 +119,11 @@
     "checkSpam": "E-postayı göremiyor musun? Bir dakika bekle ve Spam ile Promosyonlar klasörlerine bak. Oradaysa “Spam değil” olarak işaretle, sonrakiler gelen kutuna düşsün.",
     "ageConfirm": "En az 16 yaşındayım",
     "ageRequired": "En az 16 yaşında olduğunu onayla",
-    "ageForGoogle": "Google ile devam etmek için önce yukarıda yaşını onayla."
+    "ageForGoogle": "Google ile devam etmek için önce yukarıda yaşını onayla.",
+    "logoutTitle": "Çıkış yapılsın mı?",
+    "logoutText": "Poruch'u kullanmak için yeniden giriş yapmanız gerekecek.",
+    "showPassword": "Şifreyi göster",
+    "hidePassword": "Şifreyi gizle"
   },
   "validation": {
     "required": "Zorunlu alan",

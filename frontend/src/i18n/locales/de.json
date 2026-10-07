@@ -119,7 +119,11 @@
     "checkSpam": "Keine E-Mail da? Warte eine Minute und sieh im Spam- und im Werbung-Ordner nach. Liegt sie dort, markiere sie als „Kein Spam“, damit die nächsten im Posteingang landen.",
     "ageConfirm": "Ich bin mindestens 16 Jahre alt",
     "ageRequired": "Bestätige, dass du mindestens 16 bist",
-    "ageForGoogle": "Um mit Google fortzufahren, bestätige zuerst oben dein Alter."
+    "ageForGoogle": "Um mit Google fortzufahren, bestätige zuerst oben dein Alter.",
+    "logoutTitle": "Abmelden?",
+    "logoutText": "Um Poruch zu nutzen, musst du dich erneut anmelden.",
+    "showPassword": "Passwort anzeigen",
+    "hidePassword": "Passwort verbergen"
   },
   "validation": {
     "required": "Pflichtfeld",

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 
 import { mediaApi } from "@/api/media";
 import { PageHeader } from "@/components/layout/AppLayout";
@@ -16,7 +16,8 @@ import {
   SkeletonList,
   Tabs,
 } from "@/components/ui";
-import { useLogout, useMe } from "@/features/auth/hooks";
+import { useMe } from "@/features/auth/hooks";
+import { useLogoutConfirm } from "@/features/auth/LogoutConfirm";
 import { HelpRequestCard } from "@/features/help/components";
 import { useHelpHistory } from "@/features/help/hooks";
 import { useThanks, useUpdateMe } from "@/features/profile/hooks";
@@ -96,10 +97,9 @@ export function ThanksList({ userId }: { userId: string }) {
 
 export default function ProfilePage() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { data: me, isPending } = useMe();
   const updateMe = useUpdateMe();
-  const logout = useLogout();
+  const logout = useLogoutConfirm();
   const [editName, setEditName] = useState(false);
   const [name, setName] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -198,13 +198,10 @@ export default function ProfilePage() {
       <ThanksList userId={me.id} />
 
       <div className="stack-sm">
-        <Button
-          variant="danger"
-          block
-          onClick={() => logout.mutate(undefined, { onSettled: () => navigate("/", { replace: true }) })}
-        >
+        <Button variant="danger" block onClick={logout.ask}>
           {t("auth.logout")}
         </Button>
+        {logout.dialog}
       </div>
     </main>
   );

@@ -119,7 +119,11 @@
     "checkSpam": "Non vedi l'email? Aspetta un minuto e controlla le cartelle Spam e Promozioni. Se è lì, segnala che «Non è spam», così le prossime arriveranno nella posta in arrivo.",
     "ageConfirm": "Ho almeno 16 anni",
     "ageRequired": "Conferma di avere almeno 16 anni",
-    "ageForGoogle": "Per continuare con Google, conferma prima la tua età qui sopra."
+    "ageForGoogle": "Per continuare con Google, conferma prima la tua età qui sopra.",
+    "logoutTitle": "Uscire dall’account?",
+    "logoutText": "Per usare Poruch dovrai accedere di nuovo.",
+    "showPassword": "Mostra password",
+    "hidePassword": "Nascondi password"
   },
   "validation": {
     "required": "Campo obbligatorio",

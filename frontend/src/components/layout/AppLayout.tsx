@@ -6,7 +6,7 @@ import { BRAND } from "@/app/brand";
 import { NavLink, Outlet, useNavigate, useSearchParams } from "react-router";
 
 import { IconButton } from "@/components/ui";
-import { useLogout } from "@/features/auth/hooks";
+import { useLogoutConfirm } from "@/features/auth/LogoutConfirm";
 import { AttentionSignals } from "@/features/attention/AttentionSignals";
 import { InstallPrompt } from "@/features/pwa/InstallPrompt";
 
@@ -72,8 +72,7 @@ export function AppLayout() {
   const { t } = useTranslation();
   const entries = useNavEntries();
   const { data: unread = 0 } = useUnreadCount(true);
-  const logout = useLogout();
-  const navigate = useNavigate();
+  const logout = useLogoutConfirm();
   const chatBadge = entries.find((e) => e.to === "/chats")?.badge ?? 0;
 
   return (
@@ -107,14 +106,11 @@ export function AppLayout() {
           <span aria-hidden>💬</span>
           {t("support.title")}
         </NavLink>
-        <button
-          type="button"
-          className={styles.sideItem}
-          onClick={() => logout.mutate(undefined, { onSettled: () => navigate("/", { replace: true }) })}
-        >
+        <button type="button" className={styles.sideItem} onClick={logout.ask}>
           <span aria-hidden>🚪</span>
           {t("auth.logout")}
         </button>
+        {logout.dialog}
       </nav>
       <div className={styles.main}>
         <OfflineBanner />

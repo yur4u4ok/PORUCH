@@ -113,7 +113,11 @@
     "checkSpam": "没看到邮件？请等一分钟，再查看垃圾邮件和推广邮件文件夹。如果在那里，请标记为“非垃圾邮件”，以后的邮件就会进入收件箱。",
     "ageConfirm": "我已年满 16 岁",
     "ageRequired": "请确认你已年满 16 岁",
-    "ageForGoogle": "要使用 Google 继续，请先在上方确认年龄。"
+    "ageForGoogle": "要使用 Google 继续，请先在上方确认年龄。",
+    "logoutTitle": "要退出登录吗？",
+    "logoutText": "之后需要重新登录才能使用 Poruch。",
+    "showPassword": "显示密码",
+    "hidePassword": "隐藏密码"
   },
   "validation": {
     "required": "必填项",

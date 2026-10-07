@@ -113,7 +113,11 @@
     "checkSpam": "メールが見当たらない場合は、1分ほど待ってから迷惑メールフォルダやプロモーションタブを確認してください。そこにあれば「迷惑メールではない」に設定すると、次から受信トレイに届きます。",
     "ageConfirm": "16歳以上です",
     "ageRequired": "16歳以上であることを確認してください",
-    "ageForGoogle": "Googleで続けるには、先に上で年齢を確認してください。"
+    "ageForGoogle": "Googleで続けるには、先に上で年齢を確認してください。",
+    "logoutTitle": "ログアウトしますか？",
+    "logoutText": "Poruchを使うには再度ログインが必要です。",
+    "showPassword": "パスワードを表示",
+    "hidePassword": "パスワードを隠す"
   },
   "validation": {
     "required": "必須項目です",

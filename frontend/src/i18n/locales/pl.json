@@ -131,7 +131,11 @@
     "checkSpam": "Nie widzisz wiadomości? Poczekaj minutę i sprawdź foldery Spam i Oferty. Jeśli tam jest, oznacz ją jako „To nie spam”, żeby kolejne trafiały do skrzynki odbiorczej.",
     "ageConfirm": "Mam co najmniej 16 lat",
     "ageRequired": "Potwierdź, że masz co najmniej 16 lat",
-    "ageForGoogle": "Aby kontynuować przez Google, najpierw potwierdź wiek powyżej."
+    "ageForGoogle": "Aby kontynuować przez Google, najpierw potwierdź wiek powyżej.",
+    "logoutTitle": "Wylogować się?",
+    "logoutText": "Aby korzystać z Poruch, trzeba będzie zalogować się ponownie.",
+    "showPassword": "Pokaż hasło",
+    "hidePassword": "Ukryj hasło"
   },
   "validation": {
     "required": "Pole wymagane",

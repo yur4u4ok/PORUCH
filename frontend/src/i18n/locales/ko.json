@@ -113,7 +113,11 @@
     "checkSpam": "메일이 보이지 않나요? 1분 정도 기다린 뒤 스팸함과 프로모션함을 확인해 주세요. 거기 있다면 ‘스팸 아님’으로 표시하면 다음부터 받은편지함으로 와요.",
     "ageConfirm": "만 16세 이상입니다",
     "ageRequired": "만 16세 이상임을 확인해 주세요",
-    "ageForGoogle": "Google로 계속하려면 먼저 위에서 나이를 확인하세요."
+    "ageForGoogle": "Google로 계속하려면 먼저 위에서 나이를 확인하세요.",
+    "logoutTitle": "로그아웃할까요?",
+    "logoutText": "Poruch를 사용하려면 다시 로그인해야 해요.",
+    "showPassword": "비밀번호 보기",
+    "hidePassword": "비밀번호 숨기기"
   },
   "validation": {
     "required": "필수 항목입니다",

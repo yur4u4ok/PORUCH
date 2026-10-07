@@ -119,7 +119,11 @@
     "checkSpam": "Can't see the email? Wait a minute and check your Spam and Promotions folders. If it's there, mark it “Not spam” so future emails reach your inbox.",
     "ageConfirm": "I am at least 16 years old",
     "ageRequired": "Confirm that you are at least 16",
-    "ageForGoogle": "To continue with Google, confirm your age above first."
+    "ageForGoogle": "To continue with Google, confirm your age above first.",
+    "logoutTitle": "Log out?",
+    "logoutText": "You'll need to log in again to use Poruch.",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
   },
   "validation": {
     "required": "Required field",
