@@ -100,7 +100,7 @@ class ConversationSerializer(serializers.ModelSerializer):
         viewer = self.context["request"].user
         return any(presence.is_online(p.user_id) for p in conversation.participants.all() if p.user_id != viewer.pk)
 
-    def get_other_last_seen(self, conversation):
+    def get_other_last_seen(self, conversation) -> str | None:
         viewer = self.context["request"].user
         for p in conversation.participants.all():
             if p.user_id != viewer.pk and p.user.last_seen_at:
