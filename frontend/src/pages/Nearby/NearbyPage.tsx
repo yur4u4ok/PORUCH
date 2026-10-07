@@ -17,8 +17,17 @@ import { shownAsSelected, useNearbyFilters } from "@/stores/nearbyFiltersStore";
 import type { LatLng } from "@/types/api";
 import { cityName } from "@/utils/city";
 import { fallbackCenter, usePlace } from "@/features/location/place";
-import { CATEGORY_ORDER, URGENCIES, URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
+import {
+  CATEGORY_EMOJI,
+  CATEGORY_ORDER,
+  URGENCIES,
+  URGENCY_EMOJI,
+  URGENCY_HEX,
+  requestEmoji,
+} from "@/utils/categories";
 import { DEFAULT_RADII } from "@/utils/radius";
+
+import styles from "./Nearby.module.css";
 
 const ZOOM_BY_RADIUS: Record<number, number> = {
   500: 15,
@@ -104,7 +113,7 @@ export default function NearbyPage() {
   return (
     <main className="page stack">
       <PageHeader
-        title={`🔍 ${t("nearby.title")}`}
+        title={t("nearby.title")}
         actions={
           <Button variant="secondary" size="sm" onClick={() => setFiltersOpen(true)}>
             ⚙️ {t("nearby.filters")}
@@ -121,6 +130,32 @@ export default function NearbyPage() {
           { value: "map", label: `🗺 ${t("nearby.map")}` },
         ]}
       />
+      {/* Quick category filter, like the tear-off tabs on the home screen: one tap shows only that kind. */}
+      <nav className={styles.strip} aria-label={t("nearby.category")}>
+        <button
+          type="button"
+          className={styles.stripTab}
+          aria-pressed={filters.categories.length === 0}
+          onClick={() => filters.setCategories([])}
+        >
+          <span aria-hidden>✳️</span>
+          {t("nearby.all")}
+        </button>
+        {CATEGORY_ORDER.map((c) => (
+          <button
+            key={c}
+            type="button"
+            className={styles.stripTab}
+            aria-pressed={filters.categories.includes(c)}
+            onClick={() =>
+              filters.setCategories(filters.categories.length === 1 && filters.categories[0] === c ? [] : [c])
+            }
+          >
+            <span aria-hidden>{CATEGORY_EMOJI[c]}</span>
+            {t(`categories.${c}`)}
+          </button>
+        ))}
+      </nav>
       <RadiusChips
         radii={config?.radii ?? DEFAULT_RADII}
         value={filters.radius}

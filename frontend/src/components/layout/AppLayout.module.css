@@ -173,8 +173,9 @@
 }
 .headerTitle {
   flex: 1;
-  font-size: var(--text-lg);
-  font-weight: 700;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

@@ -1,8 +1,9 @@
 import clsx from "clsx";
-import { useState, type ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
+import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 
-import { Badge, Button, Card, Chip, Modal, Select, Textarea } from "@/components/ui";
+import { Badge, Button, Chip, Modal, Select, Textarea } from "@/components/ui";
 import { useReport } from "@/features/profile/hooks";
 import { toast } from "@/stores/toastStore";
 import type {
@@ -13,7 +14,7 @@ import type {
   ReportReason,
   Urgency,
 } from "@/types/api";
-import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCY_EMOJI, requestEmoji } from "@/utils/categories";
+import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
 import { formatDateTime, formatDistance, formatRadius, timeAgo } from "@/utils/format";
 import { emergencyVars } from "@/utils/emergency";
 
@@ -63,8 +64,13 @@ export function HelpRequestCard({
   showStatus?: boolean;
 }) {
   const { t } = useTranslation();
+  // A note pinned to the board: the coloured edge on top says how urgent it is.
   return (
-    <Card to={`/help/${request.id}`}>
+    <Link
+      to={`/help/${request.id}`}
+      className={styles.note}
+      style={{ "--urgency": URGENCY_HEX[request.urgency] } as CSSProperties}
+    >
       <div className={styles.card}>
         <div className={styles.emoji} aria-hidden>
           {requestEmoji(request.category, request.subcategory)}
@@ -91,7 +97,7 @@ export function HelpRequestCard({
           </div>
         </div>
       </div>
-    </Card>
+    </Link>
   );
 }
 

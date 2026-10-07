@@ -102,14 +102,47 @@
 }
 
 /* The request itself — title, text, reward, photos — framed apart from the map and actions. */
+/* The request is a notice taped up for the neighbours: white paper for others, the same yellow
+   as the home screen's «Потрібна допомога?» for its own author. */
 .details {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  padding: var(--space-4);
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  margin-top: var(--space-2);
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
   background: var(--color-surface);
+  box-shadow: 0 12px 24px -16px rgb(24 51 48 / 0.35);
+}
+.detailsMine {
+  border-color: transparent;
+  background: var(--color-notice);
+  color: var(--color-notice-ink);
+}
+.detailsMine :global(.muted),
+.detailsMine .meta {
+  color: inherit;
+  opacity: 0.8;
+}
+.tape {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 84px;
+  height: 22px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: color-mix(in srgb, var(--color-surface-2) 70%, transparent);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+}
+.detailsMine .tape {
+  background: rgb(255 255 255 / 0.55);
+}
+/* A helper's reply: a smaller note with a dashed «tear» edge on the left. */
+.reply {
+  border-left: 3px dashed var(--color-border);
+  border-radius: 4px var(--radius-lg) var(--radius-lg) 4px;
 }
 .offerTag {
   align-self: flex-start;

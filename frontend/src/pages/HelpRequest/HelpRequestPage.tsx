@@ -77,7 +77,7 @@ function ResponsesSection({ request }: { request: HelpRequest }) {
         <Card className="muted">{t("request.noResponses")}</Card>
       ) : (
         pending.map((response) => (
-          <Card key={response.id} className="stack-sm">
+          <Card key={response.id} className={clsx("stack-sm", styles.reply)}>
             <PersonRow user={response.helper} />
             {request.reward_type === "WILLING" && (
               <div
@@ -500,7 +500,8 @@ export default function HelpRequestPage() {
   return (
     <main className="page stack">
       <PageHeader title={t(`categories.${request.category}`)} />
-      <section className={styles.details}>
+      <section className={clsx(styles.details, request.is_author && styles.detailsMine)}>
+        <span className={styles.tape} aria-hidden />
         <div className={styles.hero}>
           <span className={styles.emoji} aria-hidden>
             {requestEmoji(request.category, request.subcategory)}

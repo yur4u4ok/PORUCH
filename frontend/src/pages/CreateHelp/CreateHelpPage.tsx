@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
@@ -210,13 +211,20 @@ export default function CreateHelpPage() {
   return (
     <main className="page stack">
       <PageHeader title={t("create.title")} />
-      <div className={styles.progress} aria-hidden>
-        <div
-          className={styles.progressBar}
-          style={{ width: `${((step + 1) / STEP_TITLES.length) * 100}%` }}
-        />
-      </div>
-      <h2>{t(STEP_TITLES[step]!)}</h2>
+      {/* One segment per step: done ones filled, the current one highlighted. */}
+      <ol
+        className={styles.progress}
+        aria-label={t("onboarding.step", { current: step + 1, total: STEP_TITLES.length })}
+      >
+        {STEP_TITLES.map((key, i) => (
+          <li
+            key={key}
+            className={clsx(styles.segment, i < step && styles.segmentDone, i === step && styles.segmentNow)}
+            aria-current={i === step ? "step" : undefined}
+          />
+        ))}
+      </ol>
+      <h2 className={styles.stepTitle}>{t(STEP_TITLES[step]!)}</h2>
 
       {!online && <div className={styles.warning}>📡 {t("create.offline")}</div>}
 

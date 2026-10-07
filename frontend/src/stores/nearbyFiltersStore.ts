@@ -11,6 +11,7 @@ interface NearbyFiltersState {
   view: "list" | "map";
   setRadius: (radius: number) => void;
   toggleCategory: (category: Category) => void;
+  setCategories: (categories: Category[]) => void;
   toggleUrgency: (urgency: Urgency) => void;
   setView: (view: "list" | "map") => void;
   reset: () => void;
@@ -33,6 +34,7 @@ export const useNearbyFilters = create<NearbyFiltersState>((set) => ({
   view: "list",
   setRadius: (radius) => set({ radius }),
   toggleCategory: (category) => set((s) => ({ categories: toggle(s.categories, category, CATEGORY_ORDER) })),
+  setCategories: (categories) => set({ categories }),
   toggleUrgency: (urgency) => set((s) => ({ urgencies: toggle(s.urgencies, urgency, URGENCIES) })),
   setView: (view) => set({ view }),
   reset: () => set({ categories: [], urgencies: [], radius: NEARBY_DEFAULT_RADIUS }),
