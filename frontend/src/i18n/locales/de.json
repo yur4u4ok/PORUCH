@@ -485,7 +485,9 @@
       "3h": "3 Std.",
       "morning": "Bis morgen früh",
       "24h": "24 Std."
-    }
+    },
+    "locationAuto": "Dein Standort für Benachrichtigungen wird automatisch aktualisiert, wenn du die App öffnest.",
+    "locationAutoDenied": "Standort ist im Browser blockiert – erlaube ihn in den Website-Einstellungen, um Anfragen in der Nähe zu erhalten."
   },
   "report": {
     "title": "Melden",

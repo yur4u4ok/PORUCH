@@ -485,7 +485,9 @@
       "3h": "3 h",
       "morning": "Hasta la mañana",
       "24h": "24 h"
-    }
+    },
+    "locationAuto": "Tu ubicación para avisos se actualiza sola cada vez que abres la app.",
+    "locationAutoDenied": "La ubicación está bloqueada en el navegador: permítela en los ajustes del sitio para recibir solicitudes cercanas."
   },
   "report": {
     "title": "Denunciar",

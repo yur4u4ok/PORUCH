@@ -485,7 +485,9 @@
       "3h": "3 sa",
       "morning": "Sabaha kadar",
       "24h": "24 sa"
-    }
+    },
+    "locationAuto": "Bildirim konumunuz uygulamayı her açtığınızda otomatik güncellenir.",
+    "locationAutoDenied": "Konum tarayıcıda engellendi — yakındaki talepleri almak için site ayarlarından izin verin."
   },
   "report": {
     "title": "Şikâyet et",

@@ -501,7 +501,9 @@
       "3h": "3 godz.",
       "morning": "Do rana",
       "24h": "24 godz."
-    }
+    },
+    "locationAuto": "Lokalizacja dla powiadomień aktualizuje się automatycznie, gdy otwierasz aplikację.",
+    "locationAutoDenied": "Lokalizacja jest zablokowana w przeglądarce — zezwól na nią w ustawieniach witryny, aby dostawać prośby w pobliżu."
   },
   "report": {
     "title": "Zgłoś",

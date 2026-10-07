@@ -485,7 +485,9 @@
       "3h": "3 h",
       "morning": "Fino al mattino",
       "24h": "24 h"
-    }
+    },
+    "locationAuto": "La posizione per gli avvisi si aggiorna da sola ogni volta che apri l’app.",
+    "locationAutoDenied": "La posizione è bloccata nel browser: consentila nelle impostazioni del sito per ricevere richieste vicine."
   },
   "report": {
     "title": "Segnala",

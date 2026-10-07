@@ -485,7 +485,9 @@
       "3h": "3 h",
       "morning": "Jusqu’au matin",
       "24h": "24 h"
-    }
+    },
+    "locationAuto": "Votre position pour les alertes se met à jour automatiquement à chaque ouverture de l’app.",
+    "locationAutoDenied": "La localisation est bloquée dans le navigateur — autorisez-la dans les paramètres du site pour recevoir les demandes proches."
   },
   "report": {
     "title": "Signaler",

@@ -24,7 +24,6 @@ import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
 import { InstallCard } from "@/features/pwa/InstallPrompt";
 import { RegionSettings } from "@/features/profile/RegionSettings";
 import { ThemeSwitcher } from "@/features/profile/ThemeSwitcher";
-import { toast } from "@/stores/toastStore";
 import type { NotificationCategory } from "@/types/api";
 import { DEFAULT_RADII } from "@/utils/radius";
 import { emergencyVars } from "@/utils/emergency";
@@ -66,6 +65,11 @@ export function NotificationSettingsPage() {
   const { data: config } = usePublicConfig();
   const update = useUpdatePreferences();
   const { locate, status } = useGeolocation();
+  const [geoState, setGeoState] = useState<string>("granted");
+
+  useEffect(() => {
+    void geolocationPermission().then(setGeoState);
+  }, []);
 
   if (isPending || !prefs) return <Loader />;
 
@@ -76,13 +80,12 @@ export function NotificationSettingsPage() {
     update.mutate({ enabled_categories: next });
   };
 
-  const updateLocation = async () => {
+  const allowLocation = async () => {
     const position = await locate({ force: true });
-    if (position)
-      update.mutate(
-        { location: position },
-        { onSuccess: () => toast.success(t("settings.locationUpdated")) },
-      );
+    if (position) {
+      setGeoState("granted");
+      update.mutate({ location: position });
+    }
   };
 
   return (
@@ -138,9 +141,14 @@ export function NotificationSettingsPage() {
         />
       </Card>
       <Card className="stack-sm">
-        <Button variant="secondary" onClick={updateLocation} loading={status === "locating"}>
-          📍 {t("settings.updateLocation")}
-        </Button>
+        <span className="muted" style={{ fontSize: 14 }}>
+          📍 {geoState === "denied" ? t("settings.locationAutoDenied") : t("settings.locationAuto")}
+        </span>
+        {geoState === "prompt" && (
+          <Button variant="secondary" onClick={allowLocation} loading={status === "locating"}>
+            {t("nearby.allowLocation")}
+          </Button>
+        )}
       </Card>
     </main>
   );

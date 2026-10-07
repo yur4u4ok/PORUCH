@@ -485,7 +485,9 @@
       "3h": "3 h",
       "morning": "Until morning",
       "24h": "24 h"
-    }
+    },
+    "locationAuto": "Your location for notifications updates automatically whenever you open the app.",
+    "locationAutoDenied": "Location is blocked in your browser — allow it in the site settings to get requests nearby."
   },
   "report": {
     "title": "Report",
