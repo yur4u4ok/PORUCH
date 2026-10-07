@@ -3,10 +3,9 @@ import { useTranslation } from "react-i18next";
 import { Navigate, useNavigate, useParams } from "react-router";
 
 import { PageHeader } from "@/components/layout/AppLayout";
-import { Avatar, Button, Card, EmptyState, Loader } from "@/components/ui";
+import { Avatar, Button, EmptyState, Loader } from "@/components/ui";
 import { useMe } from "@/features/auth/hooks";
 import { ConfirmDialog, ReportDialog } from "@/features/help/components";
-import { CapabilityList } from "@/features/profile/CapabilityList";
 import { useBlockUser, usePublicProfile } from "@/features/profile/hooks";
 import { toast } from "@/stores/toastStore";
 
@@ -50,11 +49,6 @@ export default function PublicProfilePage() {
           {user.is_verified && ` · ✓ ${t("profile.verified")}`}
         </span>
       </div>
-      {(user.capabilities.length > 0 || user.custom_items.length > 0) && (
-        <Card>
-          <CapabilityList capabilities={user.capabilities} customItems={user.custom_items} />
-        </Card>
-      )}
       <ThanksList userId={user.id} />
       <div className="row" style={{ justifyContent: "center" }}>
         <Button variant="ghost" size="sm" onClick={() => setReportOpen(true)}>
