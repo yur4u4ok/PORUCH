@@ -42,7 +42,7 @@ export async function registerAndOnboard(page: Page, name: string, email: string
   await page.goto("/auth/register");
   await page.getByLabel("Як до вас звертатися").fill(name);
   await page.getByLabel("Email").fill(email);
-  await page.getByLabel("Номер телефону").fill("067 123 45 67");
+  await page.getByLabel("Номер телефону").fill("+380 67 123 45 67");
   await page.getByLabel("Пароль", { exact: true }).fill(PASSWORD);
   await page.getByRole("checkbox").check(); // «Мені виповнилося 16 років»
   await page.getByRole("button", { name: "Зареєструватися" }).click();
