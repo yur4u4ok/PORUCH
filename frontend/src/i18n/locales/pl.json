@@ -427,7 +427,11 @@
     "image": "📷 Zdjęcie",
     "aboutRequest": "Prośba: {{title}}",
     "loadOlder": "Wcześniejsze wiadomości",
-    "request": "Prośba"
+    "request": "Prośba",
+    "you": "Ty",
+    "reply": "Odpowiedz",
+    "replyingTo": "Odpowiedź dla {{name}}",
+    "actions": "Działania na wiadomości"
   },
   "notifications": {
     "title": "Powiadomienia",
@@ -532,7 +536,13 @@
       "24h": "24 godz."
     },
     "locationAuto": "Lokalizacja dla powiadomień aktualizuje się automatycznie, gdy otwierasz aplikację.",
-    "locationAutoDenied": "Lokalizacja jest zablokowana w przeglądarce — zezwól na nią w ustawieniach witryny, aby dostawać prośby w pobliżu."
+    "locationAutoDenied": "Lokalizacja jest zablokowana w przeglądarce — zezwól na nią w ustawieniach witryny, aby dostawać prośby w pobliżu.",
+    "changePassword": "Zmień hasło",
+    "setPassword": "Ustaw hasło",
+    "currentPassword": "Obecne hasło",
+    "newPassword": "Nowe hasło",
+    "passwordChanged": "Hasło zmienione",
+    "passwordOtherDevices": "Na innych urządzeniach trzeba będzie zalogować się ponownie."
   },
   "report": {
     "title": "Zgłoś",

@@ -411,7 +411,11 @@
     "image": "📷 Photo",
     "aboutRequest": "Demande : {{title}}",
     "loadOlder": "Messages précédents",
-    "request": "Demande"
+    "request": "Demande",
+    "you": "Vous",
+    "reply": "Répondre",
+    "replyingTo": "Réponse à {{name}}",
+    "actions": "Actions du message"
   },
   "notifications": {
     "title": "Notifications",
@@ -516,7 +520,13 @@
       "24h": "24 h"
     },
     "locationAuto": "Votre position pour les alertes se met à jour automatiquement à chaque ouverture de l’app.",
-    "locationAutoDenied": "La localisation est bloquée dans le navigateur — autorisez-la dans les paramètres du site pour recevoir les demandes proches."
+    "locationAutoDenied": "La localisation est bloquée dans le navigateur — autorisez-la dans les paramètres du site pour recevoir les demandes proches.",
+    "changePassword": "Changer le mot de passe",
+    "setPassword": "Définir un mot de passe",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "passwordChanged": "Mot de passe modifié",
+    "passwordOtherDevices": "Vous devrez vous reconnecter sur vos autres appareils."
   },
   "report": {
     "title": "Signaler",

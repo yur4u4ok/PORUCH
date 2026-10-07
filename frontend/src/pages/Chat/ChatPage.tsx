@@ -3,12 +3,14 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router";
 
+import { REACTIONS } from "@/api/conversations";
 import { mediaApi } from "@/api/media";
 import { Avatar, Button, ErrorState, IconButton, Lightbox, Loader } from "@/components/ui";
 import { useMe } from "@/features/auth/hooks";
 import {
   newClientId,
   useLocalPhotoMessage,
+  useReact,
   useConversation,
   useMarkConversationRead,
   useMessages,
@@ -31,61 +33,149 @@ function MessageBubble({
   onRetry,
   onReport,
   onOpenImage,
+  myId,
+  otherName,
+  selected,
+  onSelect,
+  onReply,
+  onReact,
+  onJump,
 }: {
   message: Message;
   mine: boolean;
   onRetry: (m: Message) => void;
   onReport: (m: Message) => void;
   onOpenImage: (src: string) => void;
+  myId: string | undefined;
+  otherName: string;
+  selected: boolean;
+  onSelect: (id: string | null) => void;
+  onReply: (m: Message) => void;
+  onReact: (m: Message, emoji: string) => void;
+  onJump: (id: string) => void;
 }) {
   const { t } = useTranslation();
   if (message.message_type === "SYSTEM") return <div className={styles.system}>{message.text}</div>;
+  const local = message.id.startsWith("local-");
+  const quote = message.reply_to;
+  const reactions = message.reactions ?? [];
   return (
-    <div
-      className={clsx(
-        styles.bubble,
-        mine && styles.mine,
-        message.pending && styles.pending,
-        message.failed && styles.failed,
-      )}
-      onClick={message.failed ? () => onRetry(message) : undefined}
-      onContextMenu={(e) => {
-        if (!mine && !message.id.startsWith("local-")) {
-          e.preventDefault();
-          onReport(message);
+    <div className={clsx(styles.row, mine && styles.rowMine)} id={`m-${message.id}`}>
+      <div
+        className={clsx(
+          styles.bubble,
+          mine && styles.mine,
+          message.pending && styles.pending,
+          message.failed && styles.failed,
+          selected && styles.selected,
+        )}
+        onClick={
+          message.failed
+            ? () => onRetry(message)
+            : local
+              ? undefined
+              : () => onSelect(selected ? null : message.id)
         }
-      }}
-      title={message.failed ? t("chat.failed") : undefined}
-    >
-      {message.attachment?.url && (
-        <button
-          type="button"
-          className={styles.imageButton}
-          onClick={(e) => {
-            e.stopPropagation();
-            onOpenImage(message.attachment!.url!);
-          }}
-          aria-label={t("chat.image")}
-        >
-          <img
-            className={styles.image}
-            src={message.attachment.thumbnail_url ?? message.attachment.url}
-            alt=""
-          />
-          {message.uploading && (
-            <span className={styles.uploading} role="status">
-              <span className={styles.uploadingSpin} aria-hidden />
-              {t("create.uploading")}
+        onContextMenu={(e) => {
+          if (!mine && !message.id.startsWith("local-")) {
+            e.preventDefault();
+            onReport(message);
+          }
+        }}
+        title={message.failed ? t("chat.failed") : undefined}
+      >
+        {quote && (
+          <button
+            type="button"
+            className={styles.quote}
+            onClick={(e) => {
+              e.stopPropagation();
+              onJump(quote.id);
+            }}
+          >
+            <strong>{quote.sender_id === myId ? t("chat.you") : otherName}</strong>
+            <span>
+              {quote.message_type === "IMAGE" && !quote.text ? `📷 ${t("chat.image")}` : quote.text}
             </span>
-          )}
-        </button>
+          </button>
+        )}
+        {message.attachment?.url && (
+          <button
+            type="button"
+            className={styles.imageButton}
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpenImage(message.attachment!.url!);
+            }}
+            aria-label={t("chat.image")}
+          >
+            <img
+              className={styles.image}
+              src={message.attachment.thumbnail_url ?? message.attachment.url}
+              alt=""
+            />
+            {message.uploading && (
+              <span className={styles.uploading} role="status">
+                <span className={styles.uploadingSpin} aria-hidden />
+                {t("create.uploading")}
+              </span>
+            )}
+          </button>
+        )}
+        {message.text}
+        <span className={styles.time}>
+          {formatTime(message.created_at)}
+          {mine && !message.pending && !message.failed && (message.read_at ? ` ✓✓ ${t("chat.read")}` : " ✓")}
+          {message.failed && ` ⚠ ${t("chat.failed")}`}
+        </span>
+      </div>
+      {reactions.length > 0 && (
+        <div className={styles.reactions}>
+          {reactions.map((r) => (
+            <button
+              key={r.emoji}
+              type="button"
+              className={clsx(styles.reaction, myId && r.user_ids.includes(myId) && styles.reactionMine)}
+              onClick={() => onReact(message, r.emoji)}
+              aria-pressed={!!myId && r.user_ids.includes(myId)}
+            >
+              {r.emoji}
+              {r.user_ids.length > 1 && <span>{r.user_ids.length}</span>}
+            </button>
+          ))}
+        </div>
       )}
-      {message.text}
-      <span className={styles.time}>
-        {formatTime(message.created_at)}
-        {mine && !message.pending && !message.failed && (message.read_at ? ` ✓✓ ${t("chat.read")}` : " ✓")}
-        {message.failed && ` ⚠ ${t("chat.failed")}`}
-      </span>
+      {selected && (
+        <div className={styles.actions} role="toolbar" aria-label={t("chat.actions")}>
+          {REACTIONS.map((emoji) => (
+            <button
+              key={emoji}
+              type="button"
+              className={styles.actionEmoji}
+              onClick={() => (onReact(message, emoji), onSelect(null))}
+              aria-label={emoji}
+            >
+              {emoji}
+            </button>
+          ))}
+          <button
+            type="button"
+            className={styles.actionText}
+            onClick={() => (onReply(message), onSelect(null))}
+          >
+            ↩ {t("chat.reply")}
+          </button>
+          {!mine && (
+            <button
+              type="button"
+              className={styles.actionText}
+              onClick={() => (onReport(message), onSelect(null))}
+            >
+              🚩
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -106,6 +196,10 @@ export default function ChatPage() {
   const localPhoto = useLocalPhotoMessage(id, me?.id);
   const [reportMessage, setReportMessage] = useState<Message | null>(null);
   const [openImage, setOpenImage] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [replyTo, setReplyTo] = useState<Message | null>(null);
+  const react = useReact(id);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const typingRef = useRef<number | undefined>(undefined);
 
@@ -135,7 +229,21 @@ export default function ChatPage() {
   }, [ordered.length]);
 
   const sendText = (value: string, attachmentId?: string, clientId = newClientId()) => {
-    send.mutate({ text: value, attachment_id: attachmentId ?? null, client_id: clientId });
+    send.mutate({
+      text: value,
+      attachment_id: attachmentId ?? null,
+      client_id: clientId,
+      reply_to_id: replyTo && !replyTo.id.startsWith("local-") ? replyTo.id : null,
+    });
+    setReplyTo(null);
+  };
+
+  const jumpTo = (messageId: string) => {
+    const el = document.getElementById(`m-${messageId}`);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    el.classList.add(styles.flash!);
+    window.setTimeout(() => el.classList.remove(styles.flash!), 1200);
   };
 
   const onSubmit = () => {
@@ -194,7 +302,7 @@ export default function ChatPage() {
   const name = other?.display_name ?? t("common.anonymous");
   const statusLine = otherTyping
     ? t("chat.typing")
-    : otherOnline
+    : otherOnline || conversation.data.other_online
       ? t("chat.online")
       : t("chat.aboutRequest", { title: conversation.data.help_request.title });
 
@@ -205,7 +313,12 @@ export default function ChatPage() {
           ←
         </IconButton>
         <Link to={other ? `/profile/${other.id}` : "#"}>
-          <Avatar name={name} media={other?.avatar} size={40} />
+          <Avatar
+            name={name}
+            media={other?.avatar}
+            size={40}
+            online={otherOnline || conversation.data.other_online}
+          />
         </Link>
         <div className={styles.topInfo}>
           <div className={styles.topName}>{name}</div>
@@ -249,10 +362,33 @@ export default function ChatPage() {
               onRetry={(m) => sendText(m.text, m.attachment?.id, m.client_id ?? newClientId())}
               onReport={setReportMessage}
               onOpenImage={setOpenImage}
+              myId={me?.id}
+              otherName={name}
+              selected={selectedId === message.id}
+              onSelect={setSelectedId}
+              onReply={(m) => {
+                setReplyTo(m);
+                inputRef.current?.focus();
+              }}
+              onReact={(m, emoji) => react.mutate({ messageId: m.id, emoji })}
+              onJump={jumpTo}
             />
           ))
         )}
       </div>
+      {conversation.data.is_open && replyTo && (
+        <div className={styles.replyBar}>
+          <div className={styles.replyBarText}>
+            <strong>
+              ↩ {t("chat.replyingTo", { name: replyTo.sender_id === me?.id ? t("chat.you") : name })}
+            </strong>
+            <span>{replyTo.text || `📷 ${t("chat.image")}`}</span>
+          </div>
+          <IconButton label={t("common.cancel")} onClick={() => setReplyTo(null)}>
+            ✕
+          </IconButton>
+        </div>
+      )}
       {conversation.data.is_open ? (
         <form
           className={styles.composer}
@@ -275,6 +411,7 @@ export default function ChatPage() {
             />
           </label>
           <textarea
+            ref={inputRef}
             className={styles.input}
             rows={1}
             maxLength={3000}

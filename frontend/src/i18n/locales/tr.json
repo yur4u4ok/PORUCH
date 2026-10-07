@@ -411,7 +411,11 @@
     "image": "📷 Fotoğraf",
     "aboutRequest": "İstek: {{title}}",
     "loadOlder": "Önceki mesajlar",
-    "request": "İstek"
+    "request": "İstek",
+    "you": "Sen",
+    "reply": "Yanıtla",
+    "replyingTo": "{{name}} adlı kişiye yanıt",
+    "actions": "Mesaj işlemleri"
   },
   "notifications": {
     "title": "Bildirimler",
@@ -516,7 +520,13 @@
       "24h": "24 sa"
     },
     "locationAuto": "Bildirim konumunuz uygulamayı her açtığınızda otomatik güncellenir.",
-    "locationAutoDenied": "Konum tarayıcıda engellendi — yakındaki talepleri almak için site ayarlarından izin verin."
+    "locationAutoDenied": "Konum tarayıcıda engellendi — yakındaki talepleri almak için site ayarlarından izin verin.",
+    "changePassword": "Şifreyi değiştir",
+    "setPassword": "Şifre belirle",
+    "currentPassword": "Mevcut şifre",
+    "newPassword": "Yeni şifre",
+    "passwordChanged": "Şifre değiştirildi",
+    "passwordOtherDevices": "Diğer cihazlarda yeniden giriş yapmanız gerekecek."
   },
   "report": {
     "title": "Şikâyet et",

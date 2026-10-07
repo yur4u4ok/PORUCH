@@ -31,7 +31,7 @@ export default function ConversationsPage() {
           return (
             <Card key={conversation.id} to={`/chats/${conversation.id}`}>
               <div className={styles.person}>
-                <Avatar name={name} media={other?.avatar} size={48} />
+                <Avatar name={name} media={other?.avatar} size={48} online={conversation.other_online} />
                 <div className={styles.personInfo}>
                   <div className="row-between">
                     <span className={styles.personName}>{name}</span>

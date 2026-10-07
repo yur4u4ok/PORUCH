@@ -137,3 +137,10 @@
   font-weight: 800;
   white-space: nowrap;
 }
+.reward {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -74,6 +74,15 @@ export function usePublicProfile(id: string) {
   return useQuery({ queryKey: queryKeys.profile(id), queryFn: () => usersApi.profile(id) });
 }
 
+export function useChangePassword() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: usersApi.changePassword,
+    onSuccess: (me) => qc.setQueryData(queryKeys.me, me),
+    meta: { inlineErrors: true },
+  });
+}
+
 export function useChangeEmail() {
   const qc = useQueryClient();
   return useMutation({

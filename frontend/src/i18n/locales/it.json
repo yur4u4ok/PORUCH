@@ -411,7 +411,11 @@
     "image": "📷 Foto",
     "aboutRequest": "Richiesta: {{title}}",
     "loadOlder": "Messaggi precedenti",
-    "request": "Richiesta"
+    "request": "Richiesta",
+    "you": "Tu",
+    "reply": "Rispondi",
+    "replyingTo": "Risposta a {{name}}",
+    "actions": "Azioni sul messaggio"
   },
   "notifications": {
     "title": "Notifiche",
@@ -516,7 +520,13 @@
       "24h": "24 h"
     },
     "locationAuto": "La posizione per gli avvisi si aggiorna da sola ogni volta che apri l’app.",
-    "locationAutoDenied": "La posizione è bloccata nel browser: consentila nelle impostazioni del sito per ricevere richieste vicine."
+    "locationAutoDenied": "La posizione è bloccata nel browser: consentila nelle impostazioni del sito per ricevere richieste vicine.",
+    "changePassword": "Cambia password",
+    "setPassword": "Imposta password",
+    "currentPassword": "Password attuale",
+    "newPassword": "Nuova password",
+    "passwordChanged": "Password cambiata",
+    "passwordOtherDevices": "Sugli altri dispositivi dovrai accedere di nuovo."
   },
   "report": {
     "title": "Segnala",

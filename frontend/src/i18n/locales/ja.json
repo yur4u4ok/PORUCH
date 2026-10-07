@@ -403,7 +403,11 @@
     "image": "📷 写真",
     "aboutRequest": "依頼：{{title}}",
     "loadOlder": "以前のメッセージ",
-    "request": "依頼"
+    "request": "依頼",
+    "you": "あなた",
+    "reply": "返信",
+    "replyingTo": "{{name}}さんへの返信",
+    "actions": "メッセージの操作"
   },
   "notifications": {
     "title": "通知",
@@ -508,7 +512,13 @@
       "24h": "24時間"
     },
     "locationAuto": "通知用の位置情報はアプリを開くたびに自動で更新されます。",
-    "locationAutoDenied": "ブラウザで位置情報がブロックされています。近くの依頼を受け取るにはサイト設定で許可してください。"
+    "locationAutoDenied": "ブラウザで位置情報がブロックされています。近くの依頼を受け取るにはサイト設定で許可してください。",
+    "changePassword": "パスワードを変更",
+    "setPassword": "パスワードを設定",
+    "currentPassword": "現在のパスワード",
+    "newPassword": "新しいパスワード",
+    "passwordChanged": "パスワードを変更しました",
+    "passwordOtherDevices": "他の端末では再ログインが必要です。"
   },
   "report": {
     "title": "通報",

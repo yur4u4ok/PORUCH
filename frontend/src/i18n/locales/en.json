@@ -411,7 +411,11 @@
     "image": "📷 Photo",
     "aboutRequest": "Request: {{title}}",
     "loadOlder": "Earlier messages",
-    "request": "Request"
+    "request": "Request",
+    "you": "You",
+    "reply": "Reply",
+    "replyingTo": "Replying to {{name}}",
+    "actions": "Message actions"
   },
   "notifications": {
     "title": "Notifications",
@@ -516,7 +520,13 @@
       "24h": "24 h"
     },
     "locationAuto": "Your location for notifications updates automatically whenever you open the app.",
-    "locationAutoDenied": "Location is blocked in your browser — allow it in the site settings to get requests nearby."
+    "locationAutoDenied": "Location is blocked in your browser — allow it in the site settings to get requests nearby.",
+    "changePassword": "Change password",
+    "setPassword": "Set a password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "passwordChanged": "Password changed",
+    "passwordOtherDevices": "You'll need to log in again on other devices."
   },
   "report": {
     "title": "Report",

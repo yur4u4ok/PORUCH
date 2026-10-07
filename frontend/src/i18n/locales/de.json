@@ -411,7 +411,11 @@
     "image": "📷 Foto",
     "aboutRequest": "Anfrage: {{title}}",
     "loadOlder": "Frühere Nachrichten",
-    "request": "Anfrage"
+    "request": "Anfrage",
+    "you": "Du",
+    "reply": "Antworten",
+    "replyingTo": "Antwort an {{name}}",
+    "actions": "Nachrichtenaktionen"
   },
   "notifications": {
     "title": "Mitteilungen",
@@ -516,7 +520,13 @@
       "24h": "24 Std."
     },
     "locationAuto": "Dein Standort für Benachrichtigungen wird automatisch aktualisiert, wenn du die App öffnest.",
-    "locationAutoDenied": "Standort ist im Browser blockiert – erlaube ihn in den Website-Einstellungen, um Anfragen in der Nähe zu erhalten."
+    "locationAutoDenied": "Standort ist im Browser blockiert – erlaube ihn in den Website-Einstellungen, um Anfragen in der Nähe zu erhalten.",
+    "changePassword": "Passwort ändern",
+    "setPassword": "Passwort festlegen",
+    "currentPassword": "Aktuelles Passwort",
+    "newPassword": "Neues Passwort",
+    "passwordChanged": "Passwort geändert",
+    "passwordOtherDevices": "Auf anderen Geräten musst du dich erneut anmelden."
   },
   "report": {
     "title": "Melden",

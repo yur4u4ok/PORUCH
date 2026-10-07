@@ -50,6 +50,10 @@ export function useConversationSocket(conversationId: string, myId: string | und
           if (message.sender_id !== myId) setOtherTyping(false);
           break;
         }
+        case "message.updated":
+          // e.g. someone reacted to a message
+          qc.setQueryData<MessagesData>(key, (data) => upsertMessage(data, payload as unknown as Message));
+          break;
         case "message.read":
           // Applies both to my messages read by the other side and to incoming ones I just read.
           qc.setQueryData<MessagesData>(key, (data) =>

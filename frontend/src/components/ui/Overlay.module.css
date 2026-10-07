@@ -78,10 +78,11 @@
     border-radius: var(--radius-lg);
   }
 }
+/* Messages like «Мітку переміщено…» appear at the top, so they never cover buttons, the chat input or the menu. */
 .toasts {
   position: fixed;
   left: 50%;
-  bottom: calc(var(--nav-height) + var(--space-4) + var(--safe-bottom));
+  top: calc(var(--space-3) + env(safe-area-inset-top, 0px));
   transform: translateX(-50%);
   z-index: 200;
   display: flex;
@@ -97,7 +98,7 @@
   background: var(--color-text);
   color: var(--color-bg);
   box-shadow: var(--shadow-md);
-  animation: slideUp 200ms ease;
+  animation: slideDown 200ms ease;
   display: flex;
   justify-content: space-between;
   gap: var(--space-3);
@@ -129,7 +130,7 @@
 }
 @media (min-width: 1024px) {
   .toasts {
-    bottom: var(--space-6);
+    top: var(--space-5);
   }
 }
 
@@ -191,4 +192,10 @@
   color: rgb(255 255 255 / 0.8);
   font-size: var(--text-sm);
   font-weight: 700;
+}
+@keyframes slideDown {
+  from {
+    transform: translateY(-16px);
+    opacity: 0;
+  }
 }

@@ -51,6 +51,8 @@ export const usersApi = {
   me: () => request<Me>("/me/"),
   updateMe: (input: MeUpdate) => http.patch<Me>("/me/", input),
   deactivate: () => http.post<void>("/me/deactivate/"),
+  changePassword: (input: { current_password?: string; new_password: string }) =>
+    http.post<Me>("/me/password/", input),
   changeEmail: (input: { email: string; password?: string }) => http.post<Me>("/me/email/", input),
   capabilities: () => http.get<Capability[]>("/capabilities/"),
   myCapabilities: () => http.get<Capability[]>("/me/capabilities/"),

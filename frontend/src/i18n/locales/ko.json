@@ -403,7 +403,11 @@
     "image": "📷 사진",
     "aboutRequest": "요청: {{title}}",
     "loadOlder": "이전 메시지",
-    "request": "요청"
+    "request": "요청",
+    "you": "나",
+    "reply": "답장",
+    "replyingTo": "{{name}}님에게 답장",
+    "actions": "메시지 작업"
   },
   "notifications": {
     "title": "알림",
@@ -508,7 +512,13 @@
       "24h": "24시간"
     },
     "locationAuto": "알림용 위치는 앱을 열 때마다 자동으로 업데이트됩니다.",
-    "locationAutoDenied": "브라우저에서 위치가 차단되었습니다. 근처 요청을 받으려면 사이트 설정에서 허용하세요."
+    "locationAutoDenied": "브라우저에서 위치가 차단되었습니다. 근처 요청을 받으려면 사이트 설정에서 허용하세요.",
+    "changePassword": "비밀번호 변경",
+    "setPassword": "비밀번호 설정",
+    "currentPassword": "현재 비밀번호",
+    "newPassword": "새 비밀번호",
+    "passwordChanged": "비밀번호를 변경했어요",
+    "passwordOtherDevices": "다른 기기에서는 다시 로그인해야 해요."
   },
   "report": {
     "title": "신고",

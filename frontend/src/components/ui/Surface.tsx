@@ -43,17 +43,34 @@ export function Avatar({
   name,
   media,
   size = 40,
+  online,
 }: {
   name?: string | null;
   media?: Media | null;
   size?: number;
+  /** Green dot in the corner: the person is in the app right now. */
+  online?: boolean;
 }) {
   const { t } = useTranslation();
   const label = name || t("common.anonymous");
   const src = media?.thumbnail_url || media?.url;
-  return (
+  const face = (
     <span className={styles.avatar} style={{ width: size, height: size, fontSize: size * 0.42 }} aria-hidden>
       {src ? <img src={src} alt="" loading="lazy" /> : label.trim().charAt(0).toUpperCase()}
+    </span>
+  );
+  if (online === undefined) return face;
+  return (
+    <span className={styles.avatarWrap}>
+      {face}
+      {online && (
+        <span
+          className={styles.onlineDot}
+          style={{ width: Math.max(10, size * 0.28), height: Math.max(10, size * 0.28) }}
+          role="img"
+          aria-label={t("chat.online")}
+        />
+      )}
     </span>
   );
 }

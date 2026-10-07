@@ -231,6 +231,10 @@ export interface Message {
   /** client-only optimistic state */
   pending?: boolean;
   failed?: boolean;
+  /** The message this one answers (a short preview). */
+  reply_to?: { id: UUID; sender_id: UUID | null; text: string; message_type: MessageType } | null;
+  /** Who reacted with what; the client marks its own from user_ids. */
+  reactions?: { emoji: string; user_ids: UUID[] }[];
   /** client-only: the photo is still being uploaded (shown from a local preview) */
   uploading?: boolean;
 }
@@ -244,6 +248,8 @@ export interface Conversation {
   is_open: boolean;
   created_at: ISODateTime;
   last_message_at: ISODateTime | null;
+  /** In the app right now (any screen). */
+  other_online: boolean;
 }
 
 export type NotificationType =

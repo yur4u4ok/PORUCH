@@ -6,6 +6,7 @@ import { Button, Card } from "@/components/ui";
 import { SelectAll } from "@/features/help/SelectAll";
 import { CategoryChips } from "@/features/help/components";
 import { useGeolocation } from "@/features/location/useGeolocation";
+import { enablePush } from "@/features/notifications/push";
 import { PushToggle } from "@/features/notifications/PushToggle";
 import { usePublicConfig, useUpdateMe, useUpdatePreferences } from "@/features/profile/hooks";
 import type { NotificationCategory } from "@/types/api";
@@ -102,7 +103,15 @@ export default function OnboardingPage() {
               <Button variant="ghost" onClick={() => setStep(step + 1)}>
                 {t("common.skip")}
               </Button>
-              <Button onClick={() => setStep(step + 1)}>{t("common.next")}</Button>
+              <Button
+                onClick={() => {
+                  // On the notifications step «Далі» turns push on (the tap lets the browser ask).
+                  if (step === 2) void enablePush().catch(() => undefined);
+                  setStep(step + 1);
+                }}
+              >
+                {t("common.next")}
+              </Button>
             </>
           ) : (
             <Button onClick={finish} loading={updateMe.isPending}>

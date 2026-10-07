@@ -403,7 +403,11 @@
     "image": "📷 照片",
     "aboutRequest": "求助：{{title}}",
     "loadOlder": "更早的消息",
-    "request": "求助"
+    "request": "求助",
+    "you": "你",
+    "reply": "回复",
+    "replyingTo": "回复 {{name}}",
+    "actions": "消息操作"
   },
   "notifications": {
     "title": "通知",
@@ -508,7 +512,13 @@
       "24h": "24 小时"
     },
     "locationAuto": "每次打开应用时，用于通知的位置会自动更新。",
-    "locationAutoDenied": "浏览器已阻止定位——请在网站设置中允许，以接收附近的求助。"
+    "locationAutoDenied": "浏览器已阻止定位——请在网站设置中允许，以接收附近的求助。",
+    "changePassword": "修改密码",
+    "setPassword": "设置密码",
+    "currentPassword": "当前密码",
+    "newPassword": "新密码",
+    "passwordChanged": "密码已修改",
+    "passwordOtherDevices": "其他设备需要重新登录。"
   },
   "report": {
     "title": "举报",

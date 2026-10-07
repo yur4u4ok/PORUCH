@@ -175,6 +175,18 @@ export function useLocalPhotoMessage(conversationId: string, myId: string | unde
   return { add, remove };
 }
 
+export function useReact(conversationId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ messageId, emoji }: { messageId: string; emoji: string }) =>
+      conversationsApi.react(conversationId, messageId, emoji),
+    onSuccess: (message) =>
+      qc.setQueryData<MessagesData>(queryKeys.messages(conversationId), (data) =>
+        upsertMessage(data, message),
+      ),
+  });
+}
+
 export function newClientId(): string {
   return uuid();
 }
