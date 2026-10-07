@@ -159,7 +159,10 @@
     "noRequests": "No active requests yet.",
     "createOne": "Create one →",
     "noHelping": "You're not helping anyone yet.",
-    "findSomeone": "See who needs help →"
+    "findSomeone": "See who needs help →",
+    "hello": "Hi, {{name}}!",
+    "ask": "Ask for help",
+    "orPick": "Or pick what it's about:"
   },
   "availability": {
     "title": "I can help right now",

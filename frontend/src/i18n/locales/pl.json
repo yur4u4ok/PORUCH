@@ -171,7 +171,10 @@
     "noRequests": "Na razie brak aktywnych próśb.",
     "createOne": "Utwórz prośbę →",
     "noHelping": "Na razie nikomu nie pomagasz.",
-    "findSomeone": "Zobacz, kto potrzebuje pomocy →"
+    "findSomeone": "Zobacz, kto potrzebuje pomocy →",
+    "hello": "Cześć, {{name}}!",
+    "ask": "Poproś o pomoc",
+    "orPick": "Albo od razu wybierz, w czym:"
   },
   "availability": {
     "title": "Mogę teraz pomóc",

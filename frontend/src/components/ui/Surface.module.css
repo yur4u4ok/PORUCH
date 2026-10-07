@@ -3,7 +3,6 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: var(--space-4);
-  box-shadow: var(--shadow-sm);
 }
 .interactive {
   cursor: pointer;

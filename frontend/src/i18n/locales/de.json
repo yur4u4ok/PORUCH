@@ -159,7 +159,10 @@
     "noRequests": "Noch keine aktiven Anfragen.",
     "createOne": "Jetzt erstellen →",
     "noHelping": "Du hilfst gerade niemandem.",
-    "findSomeone": "Schau, wer Hilfe braucht →"
+    "findSomeone": "Schau, wer Hilfe braucht →",
+    "hello": "Hallo, {{name}}!",
+    "ask": "Um Hilfe bitten",
+    "orPick": "Oder gleich wählen, worum es geht:"
   },
   "availability": {
     "title": "Ich kann jetzt helfen",

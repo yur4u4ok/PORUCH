@@ -153,7 +153,10 @@
     "noRequests": "進行中の依頼はまだありません。",
     "createOne": "依頼を作成 →",
     "noHelping": "まだ誰も手伝っていません。",
-    "findSomeone": "助けが必要な人を見る →"
+    "findSomeone": "助けが必要な人を見る →",
+    "hello": "こんにちは、{{name}}さん",
+    "ask": "助けを求める",
+    "orPick": "または内容を選ぶ:"
   },
   "availability": {
     "title": "今すぐ手伝えます",

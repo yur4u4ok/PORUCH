@@ -1,17 +1,21 @@
 :root {
   color-scheme: light;
-  /* Trust palette: deep teal (safety, care), mineral neutrals, one warm sunflower accent. */
-  --color-bg: #f3f6f5;
+  /* «Під'їзд» palette: cool courtyard paper, ink-green text, the brand teal, notice-board yellow
+     for asking and a heart red for helping. */
+  --color-bg: #eef2ed;
   --color-surface: #ffffff;
   --color-surface-2: #e8eeec;
-  --color-border: #d3dedb;
-  --color-text: #17302d;
+  --color-border: #d4ddd5;
+  --color-text: #183330;
   --color-text-muted: #546b67;
   --color-primary: #0e5a54;
   --color-primary-hover: #0a4843;
   --color-primary-soft: #dcefeb;
   --color-on-primary: #ffffff;
   --color-accent: #f2b544;
+  --color-notice: #ffd54a;
+  --color-notice-ink: #2b2410;
+  --color-heart: #d93a2f;
   --color-accent-soft: #fdf0d3;
   --color-help: #1f7a4d;
   --color-help-hover: #18633e;
@@ -45,14 +49,15 @@
   --space-8: 32px;
 
   --font-sans:
-    "Nunito Sans Variable", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-display: var(--font-sans);
+    "Manrope Variable", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Wide, rounded display face (full Cyrillic) — headings only, never body text. */
+  --font-display: "Unbounded Variable", var(--font-sans);
   --text-xs: 12px;
   --text-sm: 14px;
   --text-md: 16px;
   --text-lg: 18px;
-  --text-xl: 22px;
-  --text-2xl: 28px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
 
   --nav-height: 64px;
   --header-height: 56px;
@@ -65,6 +70,8 @@
 :root[data-theme="dark"] {
   color-scheme: dark;
   --color-bg: #0f1a19;
+  --color-notice: #e9bf35;
+  --color-heart: #ef5a4e;
   --color-overlay: rgb(0 0 0 / 0.72);
   --color-sidebar: color-mix(in srgb, #1c3b37 88%, transparent);
   --color-surface: #162523;
@@ -89,6 +96,8 @@
   :root:not([data-theme="light"]) {
     color-scheme: dark;
     --color-bg: #0f1a19;
+    --color-notice: #e9bf35;
+    --color-heart: #ef5a4e;
     --color-overlay: rgb(0 0 0 / 0.72);
     --color-sidebar: color-mix(in srgb, #1c3b37 88%, transparent);
     --color-surface: #162523;

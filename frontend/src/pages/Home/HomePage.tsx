@@ -5,76 +5,88 @@ import { Link } from "react-router";
 import { useMe } from "@/features/auth/hooks";
 import { HelpRequestCard } from "@/features/help/components";
 import { useHelpHistory } from "@/features/help/hooks";
+import { usePlace } from "@/features/location/place";
 import { useGeolocation } from "@/features/location/useGeolocation";
 import { useSyncNotificationLocation } from "@/features/location/useSyncNotificationLocation";
-
-import { cityName } from "@/utils/city";
-import { usePlace } from "@/features/location/place";
 import { InstallCard } from "@/features/pwa/InstallPrompt";
+import type { Category } from "@/types/api";
+import { CATEGORY_EMOJI } from "@/utils/categories";
+import { cityName } from "@/utils/city";
 
 import styles from "./Home.module.css";
 
-function LocationHeader() {
+/** The tear-off tabs at the bottom of the notice: each one starts a request in that category. */
+const TABS: Category[] = ["AUTO", "HOME", "ITEMS", "ANIMALS", "PEOPLE", "OTHER"];
+
+function Greeting() {
   const { t, i18n } = useTranslation();
   const { data: me } = useMe();
   const place = usePlace();
   const name = place?.name ?? (me?.city ? cityName(me.city, i18n.language) : null);
-  return <div className={styles.location}>📍 {name ?? t("home.locationUnknown")}</div>;
-}
-
-function EmergencyHelpButton() {
-  const { t } = useTranslation();
   return (
-    <Link to="/help/create" className={styles.sos}>
-      <span className={styles.sosLight} aria-hidden />
-      <span className={styles.sosIcon} aria-hidden>
-        +
-      </span>
-      <span>
-        <span className={styles.sosTitle}>{t("home.needHelp")}</span>
-        <span className={styles.sosSub}>{t("home.needHelpSub")}</span>
-      </span>
-    </Link>
+    <header className={styles.greeting}>
+      <span className={styles.place}>📍 {name ?? t("home.locationUnknown")}</span>
+      {me?.display_name && <h1 className={styles.hello}>{t("home.hello", { name: me.display_name })}</h1>}
+    </header>
   );
 }
 
-function NearbyHelpButton() {
+/**
+ * The one loud thing on the screen: a yellow notice like the ones taped to a building entrance,
+ * with tear-off tabs. Asking for help is the main action of the app.
+ */
+function AskNotice() {
   const { t } = useTranslation();
   return (
-    <Link to="/nearby" className={styles.helpButton}>
-      <span className={styles.helpIcon} aria-hidden>
-        🤝
+    <section className={styles.notice} aria-labelledby="ask-title">
+      <span className={styles.tape} aria-hidden />
+      <div className={styles.noticeBody}>
+        <h2 id="ask-title" className={styles.noticeTitle}>
+          {t("home.needHelp")}?
+        </h2>
+        <p className={styles.noticeText}>{t("home.needHelpSub")}</p>
+        <Link to="/help/create" className={styles.askButton}>
+          {t("home.ask")}
+        </Link>
+      </div>
+      <p className={styles.tabsHint}>{t("home.orPick")}</p>
+      <nav className={styles.tabs} aria-label={t("home.orPick")}>
+        {TABS.map((category) => (
+          <Link key={category} to={`/help/create?category=${category}`} className={styles.tab}>
+            <span aria-hidden>{CATEGORY_EMOJI[category]}</span>
+            <span className={styles.tabLabel}>{t(`categories.${category}`)}</span>
+          </Link>
+        ))}
+      </nav>
+    </section>
+  );
+}
+
+function NearbyLink() {
+  const { t } = useTranslation();
+  return (
+    <Link to="/nearby" className={styles.nearby}>
+      <span className={styles.nearbyHeart} aria-hidden>
+        ❤️
       </span>
-      <span>
+      <span className={styles.nearbyText}>
         <strong>{t("home.someoneNeeds")}</strong>
         <small>{t("home.someoneNeedsSub")}</small>
       </span>
+      <span className={styles.chevron} aria-hidden>
+        ›
+      </span>
     </Link>
   );
 }
 
-function HomeSection({
-  title,
-  hint,
-  action,
-  children,
-}: {
-  title: string;
-  hint: string;
-  action?: ReactNode;
-  children: ReactNode;
-}) {
+function HomeSection({ title, count, children }: { title: string; count: number; children: ReactNode }) {
   return (
     <section className={styles.section}>
-      <div className="row-between">
-        <div>
-          <h2>{title}</h2>
-          <p className="muted" style={{ fontSize: 14 }}>
-            {hint}
-          </p>
-        </div>
-        {action}
-      </div>
+      <h2 className={styles.sectionTitle}>
+        {title}
+        {count > 0 && <span className={styles.count}>{count}</span>}
+      </h2>
       {children}
     </section>
   );
@@ -89,7 +101,7 @@ function MyActiveHelp() {
   const helping = asHelper.data?.pages[0]?.results ?? [];
   return (
     <>
-      <HomeSection title={t("home.myRequests")} hint={t("home.myRequestsHint")}>
+      <HomeSection title={t("home.myRequests")} count={mine.length}>
         {mine.length > 0
           ? mine.map((request) => <HelpRequestCard key={request.id} request={request} showStatus />)
           : !asAuthor.isPending && (
@@ -98,7 +110,7 @@ function MyActiveHelp() {
               </Link>
             )}
       </HomeSection>
-      <HomeSection title={t("home.imHelping")} hint={t("home.imHelpingHint")}>
+      <HomeSection title={t("home.imHelping")} count={helping.length}>
         {helping.length > 0
           ? helping.map((request) => <HelpRequestCard key={request.id} request={request} showStatus />)
           : !asHelper.isPending && (
@@ -123,11 +135,11 @@ function NotificationLocationSync() {
 
 export default function HomePage() {
   return (
-    <main className="page stack">
-      <LocationHeader />
+    <main className={`page ${styles.home}`}>
+      <Greeting />
+      <AskNotice />
+      <NearbyLink />
       <InstallCard />
-      <EmergencyHelpButton />
-      <NearbyHelpButton />
       <MyActiveHelp />
       <NotificationLocationSync />
     </main>

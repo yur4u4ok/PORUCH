@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 
 import { ApiError } from "@/api/client";
 import { errorMessage } from "@/app/queryClient";
@@ -23,7 +23,7 @@ import { useOnline } from "@/hooks/useOnline";
 import { useFieldError } from "@/hooks/useFieldError";
 import { toast } from "@/stores/toastStore";
 import type { Category, Media, Urgency } from "@/types/api";
-import { CATEGORY_EMOJI, URGENCIES, URGENCY_EMOJI } from "@/utils/categories";
+import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCIES, URGENCY_EMOJI } from "@/utils/categories";
 import { currencySymbol, region } from "@/utils/format";
 import { REWARD_OPTION_EMOJI, REWARD_OPTIONS, rewardSummary } from "@/utils/reward";
 
@@ -63,6 +63,9 @@ export default function CreateHelpPage() {
     max: toLocalInput(new Date(Date.now() + 30 * 24 * 3600_000)),
   }));
   const navigate = useNavigate();
+  // ?category=AUTO from the home screen's tear-off tabs preselects the category.
+  const [searchParams] = useSearchParams();
+  const presetCategory = CATEGORY_ORDER.find((c) => c === searchParams.get("category") && c !== "URGENT");
   const online = useOnline();
   const { data: me } = useMe();
   const { data: config } = usePublicConfig();
@@ -76,7 +79,7 @@ export default function CreateHelpPage() {
     {
       resolver: zodResolver(createHelpSchema),
       defaultValues: {
-        category: undefined,
+        category: presetCategory,
         subcategory: null,
         title: "",
         description: "",

@@ -159,7 +159,10 @@
     "noRequests": "Nessuna richiesta attiva per ora.",
     "createOne": "Creane una →",
     "noHelping": "Per ora non stai aiutando nessuno.",
-    "findSomeone": "Guarda chi ha bisogno di aiuto →"
+    "findSomeone": "Guarda chi ha bisogno di aiuto →",
+    "hello": "Ciao, {{name}}!",
+    "ask": "Chiedi aiuto",
+    "orPick": "Oppure scegli subito di cosa si tratta:"
   },
   "availability": {
     "title": "Posso aiutare ora",

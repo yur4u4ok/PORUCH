@@ -159,7 +159,10 @@
     "noRequests": "Henüz aktif talep yok.",
     "createOne": "Bir talep oluştur →",
     "noHelping": "Henüz kimseye yardım etmiyorsun.",
-    "findSomeone": "Kimin yardıma ihtiyacı var, gör →"
+    "findSomeone": "Kimin yardıma ihtiyacı var, gör →",
+    "hello": "Merhaba, {{name}}!",
+    "ask": "Yardım iste",
+    "orPick": "Ya da konuyu hemen seç:"
   },
   "availability": {
     "title": "Şu an yardım edebilirim",
