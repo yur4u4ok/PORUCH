@@ -16,7 +16,9 @@ export function ShareButton({ url, text }: { url: string; text: string }) {
   const onShare = async () => {
     if (navigator.share) {
       try {
-        await navigator.share({ title: text, text, url });
+        // One text with the link at the end: when `url` is passed separately, several apps
+        // (Telegram among them) keep only the link and drop the message.
+        await navigator.share({ text: message });
         return;
       } catch (error) {
         if ((error as Error).name === "AbortError") return; // user closed the sheet
