@@ -29,8 +29,6 @@ export default defineConfig(({ mode }) => {
           "favicon.ico",
           "icons/favicon.svg",
           "icons/favicon-48.png",
-          "icons/favicon-192.png",
-          "icons/logo-inverse.svg",
           "icons/apple-touch-icon.png",
         ],
         manifest: {
