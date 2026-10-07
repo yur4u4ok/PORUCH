@@ -85,7 +85,7 @@ export function AppLayout() {
         <NavLink to="/" className={styles.brand}>
           <BrandMark inverse />
         </NavLink>
-        {[...entries, { to: "/settings", icon: "⚙️", label: t("nav.settings") }].map((entry) => (
+        {entries.map((entry) => (
           <NavLink
             key={entry.to}
             to={entry.to}

@@ -202,6 +202,12 @@ def mark_read(user: User, conversation_id, up_to=None) -> int:
             conversation.id, "message.read", {"reader_id": str(user.pk), "message_ids": ids, "read_at": now.isoformat()}
         )
     ConversationParticipant.objects.filter(conversation=conversation, user=user).update(last_read_at=now)
+    # Opening the chat also clears its unread «new message» notifications.
+    from apps.notifications.models import Notification
+
+    Notification.objects.filter(user=user, read_at__isnull=True).filter(
+        Q(data__conversation_id=str(conversation.id)) | Q(url=f"/chats/{conversation.id}")
+    ).update(read_at=now)
     return len(ids)
 
 

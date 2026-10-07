@@ -199,6 +199,7 @@ export function useMarkConversationRead(conversationId: string) {
       // Works even if the WebSocket is down: refetch read state and unread counters.
       void qc.invalidateQueries({ queryKey: queryKeys.conversations });
       void qc.invalidateQueries({ queryKey: queryKeys.messages(conversationId) });
+      void qc.invalidateQueries({ queryKey: queryKeys.notifications });
     },
     meta: { inlineErrors: true },
   });

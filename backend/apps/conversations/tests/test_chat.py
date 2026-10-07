@@ -91,6 +91,18 @@ class TestChatApi:
         assert message.read_at is not None
         assert helper_client.get("/api/v1/conversations/").data["results"][0]["unread_count"] == 0
 
+    def test_opening_chat_clears_its_notifications(self, make_client, no_push):
+        conversation, author, helper = setup_conversation()
+        make_client(author).post(url(conversation, "messages/"), {"text": "hi"}, format="json")
+        other = Notification.objects.create(user=helper, type="NEW_MESSAGE", title="x", url="/chats/elsewhere")
+        assert Notification.objects.filter(user=helper, url=f"/chats/{conversation.id}", read_at__isnull=True).exists()
+        make_client(helper).post(url(conversation, "read/"), {}, format="json")
+        assert not Notification.objects.filter(
+            user=helper, url=f"/chats/{conversation.id}", read_at__isnull=True
+        ).exists()
+        other.refresh_from_db()
+        assert other.read_at is None
+
     def test_messages_paginated_newest_first(self, make_client):
         conversation, author, _ = setup_conversation()
         client = make_client(author)
