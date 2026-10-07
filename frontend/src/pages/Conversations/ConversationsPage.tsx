@@ -13,7 +13,7 @@ export default function ConversationsPage() {
   const query = useConversations();
   return (
     <main className="page stack">
-      <PageHeader title={t("chat.title")} back={false} />
+      <PageHeader title={t("chat.title")} />
       {query.isPending ? (
         <SkeletonList count={4} height={76} />
       ) : query.isError ? (

@@ -34,6 +34,13 @@ def nearby(client, lat=LVIV[0], lng=LVIV[1], **params):
     return client.get(LIST_URL, query)
 
 
+def test_author_chooses_how_long_the_request_stays_active(auth_client, lviv):
+    response = auth_client.post(LIST_URL, payload(lviv, urgency="TODAY", active_hours=5), format="json")
+    hr = HelpRequest.objects.get(id=response.data["id"])
+    assert timedelta(hours=4, minutes=59) < hr.expires_at - hr.created_at < timedelta(hours=5, minutes=1)
+    assert auth_client.post(LIST_URL, payload(lviv, active_hours=500), format="json").status_code == 400
+
+
 class TestScheduled:
     """Urgency SCHEDULED: help needed at a chosen date and time."""
 
@@ -284,6 +291,7 @@ class TestHistory:
         me = make_client()
         mine = HelpRequestFactory(author=me.user, status="COMPLETED", selected_helper=UserFactory())
         helped = HelpRequestFactory(selected_helper=me.user, status="IN_PROGRESS")
+        HelpResponse.objects.create(help_request=helped, helper=me.user, status="ACCEPTED")
         responded = HelpRequestFactory()
         HelpResponse.objects.create(help_request=responded, helper=me.user)
         assert [r["id"] for r in me.get(LIST_URL, {"role": "author"}).data["results"]] == [str(mine.id)]

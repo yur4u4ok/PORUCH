@@ -82,6 +82,11 @@ export function HelpRequestCard({
               <span>📍 {t("common.fromYou", { distance: formatDistance(request.distance_m) })}</span>
             )}
             <span>{timeAgo(request.created_at)}</span>
+            {request.helpers_needed > 1 && (
+              <span>
+                👥 {t("request.peopleStillNeeded", { count: request.helpers_needed - request.helpers_count })}
+              </span>
+            )}
             {request.reward_type === "WILLING" && <span>💰</span>}
           </div>
         </div>

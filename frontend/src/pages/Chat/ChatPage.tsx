@@ -19,6 +19,7 @@ import { usePublicConfig } from "@/features/profile/hooks";
 import { toast } from "@/stores/toastStore";
 import type { Message } from "@/types/api";
 import { uploadErrorMessage, validateImageFile } from "@/utils/files";
+import { CATEGORY_EMOJI } from "@/utils/categories";
 import { formatTime } from "@/utils/format";
 
 import styles from "./Chat.module.css";
@@ -185,10 +186,13 @@ export default function ChatPage() {
           <div className={styles.topName}>{name}</div>
           <div className={styles.topStatus}>{statusLine}</div>
         </div>
-        <Link to={`/help/${conversation.data.help_request.id}`}>
-          <Button variant="ghost" size="sm">
-            📄
-          </Button>
+        <Link
+          to={`/help/${conversation.data.help_request.id}`}
+          className={styles.requestLink}
+          title={t("chat.aboutRequest", { title: conversation.data.help_request.title })}
+        >
+          <span aria-hidden>{CATEGORY_EMOJI[conversation.data.help_request.category]}</span>
+          {t("chat.request")}
         </Link>
       </header>
       {(status === "reconnecting" || status === "offline") && (

@@ -1,15 +1,13 @@
-import { useEffect, useMemo, type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
-import { Button, EmptyState, ErrorState, SkeletonList } from "@/components/ui";
 import { useMe } from "@/features/auth/hooks";
 import { AvailabilityToggle } from "@/features/help/AvailabilityToggle";
 import { HelpRequestCard } from "@/features/help/components";
-import { useHelpHistory, useHelpRequests } from "@/features/help/hooks";
+import { useHelpHistory } from "@/features/help/hooks";
 import { useGeolocation } from "@/features/location/useGeolocation";
 import { useSyncNotificationLocation } from "@/features/location/useSyncNotificationLocation";
-import { usePreferences } from "@/features/profile/hooks";
 
 import { cityName } from "@/utils/city";
 import { usePlace } from "@/features/location/place";
@@ -111,52 +109,14 @@ function MyActiveHelp() {
   );
 }
 
-function NearbyRequestsPreview() {
-  const { t } = useTranslation();
-  const { position, status, locate } = useGeolocation();
-  const { data: prefs } = usePreferences();
+/** Keeps the location for nearby notifications fresh when the home screen opens (no UI). */
+function NotificationLocationSync() {
+  const { position, locate } = useGeolocation();
   useEffect(() => {
     void locate();
   }, [locate]);
   useSyncNotificationLocation(position);
-
-  const query = useMemo(
-    () =>
-      position
-        ? { lat: position.latitude, lng: position.longitude, radius: prefs?.notification_radius ?? 3000 }
-        : null,
-    [position, prefs?.notification_radius],
-  );
-  const nearby = useHelpRequests(query);
-  const items = nearby.data?.pages[0]?.results.slice(0, 5) ?? [];
-
-  return (
-    <HomeSection
-      title={t("home.nearbyPreview")}
-      hint={t("home.nearbyPreviewHint")}
-      action={<Link to="/nearby">{t("common.seeAll")}</Link>}
-    >
-      {!position && status !== "locating" ? (
-        <EmptyState
-          icon="📍"
-          title={t("home.enableLocation")}
-          action={
-            <Button variant="secondary" onClick={() => void locate({ force: true })}>
-              {t("nearby.allowLocation")}
-            </Button>
-          }
-        />
-      ) : nearby.isPending ? (
-        <SkeletonList count={3} />
-      ) : nearby.isError ? (
-        <ErrorState onRetry={() => void nearby.refetch()} />
-      ) : items.length === 0 ? (
-        <EmptyState icon="🌤" title={t("nearby.emptyTitle")} text={t("nearby.emptyText")} />
-      ) : (
-        items.map((request) => <HelpRequestCard key={request.id} request={request} />)
-      )}
-    </HomeSection>
-  );
+  return null;
 }
 
 export default function HomePage() {
@@ -172,7 +132,7 @@ export default function HomePage() {
       </Link>
       <AvailabilityToggle />
       <MyActiveHelp />
-      <NearbyRequestsPreview />
+      <NotificationLocationSync />
       <p className="muted" style={{ fontSize: 13 }}>
         ⚠️ {t("emergency.short", emergencyVars())}
       </p>

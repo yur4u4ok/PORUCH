@@ -7,7 +7,8 @@ import { useNavigate } from "react-router";
 import { ApiError } from "@/api/client";
 import { errorMessage } from "@/app/queryClient";
 import { PageHeader } from "@/components/layout/AppLayout";
-import { Button, Card, Chip, Input, Textarea } from "@/components/ui";
+import { Button, Card, Chip, Input, Select, Textarea } from "@/components/ui";
+import { Stepper } from "@/components/ui/Stepper";
 import { LazyMap } from "@/components/ui/LazyMap";
 import { useMe } from "@/features/auth/hooks";
 import { CategoryGrid, EmergencyDisclaimer, OptionTiles, UrgencyBadge } from "@/features/help/components";
@@ -21,7 +22,7 @@ import { usePublicConfig } from "@/features/profile/hooks";
 import { useOnline } from "@/hooks/useOnline";
 import { useFieldError } from "@/hooks/useFieldError";
 import { toast } from "@/stores/toastStore";
-import type { Category, Media } from "@/types/api";
+import type { Category, Media, Urgency } from "@/types/api";
 import { CATEGORY_EMOJI, URGENCIES, URGENCY_EMOJI } from "@/utils/categories";
 import { currencySymbol, region } from "@/utils/format";
 import { REWARD_OPTION_EMOJI, REWARD_OPTIONS, rewardSummary } from "@/utils/reward";
@@ -34,6 +35,14 @@ function toLocalInput(date: Date): string {
   const pad = (n: number) => String(n).padStart(2, "0");
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
+
+/** Choices for how long a request stays open, and the default per urgency. */
+const ACTIVE_HOURS = [1, 2, 3, 6, 12, 24, 48, 72, 168];
+const DEFAULT_ACTIVE_HOURS: Record<Exclude<Urgency, "SCHEDULED">, number> = {
+  NOW: 6,
+  TODAY: 24,
+  WHENEVER: 72,
+};
 
 const STEP_TITLES = [
   "create.stepCategory",
@@ -75,6 +84,8 @@ export default function CreateHelpPage() {
         location: null,
         urgency: "NOW",
         needed_at: "",
+        helpers_needed: 1,
+        active_hours: DEFAULT_ACTIVE_HOURS.NOW,
         reward_type: "NONE",
         reward_amount: "",
         reward_options: [],
@@ -152,6 +163,8 @@ export default function CreateHelpPage() {
         // datetime-local is the user's local time; send an absolute instant.
         needed_at:
           form.urgency === "SCHEDULED" && form.needed_at ? new Date(form.needed_at).toISOString() : null,
+        helpers_needed: form.helpers_needed,
+        active_hours: form.urgency === "SCHEDULED" ? null : form.active_hours,
         reward_type: form.reward_type,
         reward_amount:
           form.reward_type === "WILLING" && form.reward_amount ? form.reward_amount.replace(",", ".") : null,
@@ -255,6 +268,20 @@ export default function CreateHelpPage() {
             error={fe(formState.errors.description?.message)}
             autoFocus
           />
+          <Controller
+            control={control}
+            name="helpers_needed"
+            render={({ field }) => (
+              <Stepper
+                label={t("create.helpersNeeded")}
+                hint={t("create.helpersNeededHint")}
+                value={field.value}
+                min={1}
+                max={10}
+                onChange={field.onChange}
+              />
+            )}
+          />
         </div>
       )}
 
@@ -314,7 +341,10 @@ export default function CreateHelpPage() {
             render={({ field }) => (
               <OptionTiles
                 value={field.value}
-                onChange={field.onChange}
+                onChange={(u) => {
+                  field.onChange(u);
+                  if (u !== "SCHEDULED") setValue("active_hours", DEFAULT_ACTIVE_HOURS[u]);
+                }}
                 options={URGENCIES.filter((u) => values.category !== "URGENT" || u === "NOW").map((u) => ({
                   value: u,
                   icon: URGENCY_EMOJI[u],
@@ -323,6 +353,26 @@ export default function CreateHelpPage() {
               />
             )}
           />
+          {values.urgency !== "SCHEDULED" && (
+            <Controller
+              control={control}
+              name="active_hours"
+              render={({ field }) => (
+                <Select
+                  label={t("create.activeHours")}
+                  hint={t("create.activeHoursHint")}
+                  value={field.value}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                >
+                  {ACTIVE_HOURS.map((h) => (
+                    <option key={h} value={h}>
+                      {h < 24 || h % 24 ? t("time.hours", { count: h }) : t("time.days", { count: h / 24 })}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            />
+          )}
           {values.urgency === "SCHEDULED" && (
             <Controller
               control={control}

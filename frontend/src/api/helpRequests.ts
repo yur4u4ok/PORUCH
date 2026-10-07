@@ -38,6 +38,8 @@ export interface CreateHelpRequestInput {
   location: GeoPosition;
   urgency: Urgency;
   needed_at?: string | null;
+  helpers_needed?: number;
+  active_hours?: number | null;
   reward_type: RewardType;
   reward_amount?: string | null;
   reward_currency?: string;

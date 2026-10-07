@@ -62,7 +62,17 @@ self.addEventListener("push", (event) => {
     vibrate: [120, 60, 120],
     data: { url: data.url || "/" },
   };
-  event.waitUntil(self.registration.showNotification(title, options));
+  event.waitUntil(
+    Promise.all([
+      self.registration.showNotification(title, options),
+      // Tell open pages: they refresh counters and lists right away (no reload needed).
+      self.clients
+        .matchAll({ type: "window", includeUncontrolled: true })
+        .then((windows) =>
+          windows.forEach((w) => w.postMessage({ type: "poruch:push", kind: data.type ?? null })),
+        ),
+    ]),
+  );
 });
 
 self.addEventListener("notificationclick", (event) => {

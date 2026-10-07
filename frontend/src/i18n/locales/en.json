@@ -37,7 +37,11 @@
     "anonymous": "Neighbour",
     "seeAll": "All",
     "fromYou": "{{distance}} away",
-    "since": "Member since {{year}}"
+    "since": "Member since {{year}}",
+    "selectAll": "Select all",
+    "selectNone": "Clear all",
+    "less": "Less",
+    "more": "More"
   },
   "time": {
     "justNow": "just now",
@@ -51,7 +55,9 @@
     "hours_one": "{{count}} hour",
     "hours_other": "{{count}} hours",
     "minutes_one": "{{count}} minute",
-    "minutes_other": "{{count}} minutes"
+    "minutes_other": "{{count}} minutes",
+    "days_one": "{{count}} day",
+    "days_other": "{{count}} days"
   },
   "landing": {
     "needHelpTitle": "Need help?",
@@ -110,7 +116,10 @@
     "terms": "By signing up, you agree to help safely and respectfully.",
     "googleFailed": "Couldn't sign in with Google. Please try again.",
     "googleInactive": "This account has been deactivated.",
-    "checkSpam": "Can't see the email? Wait a minute and check your Spam and Promotions folders. If it's there, mark it “Not spam” so future emails reach your inbox."
+    "checkSpam": "Can't see the email? Wait a minute and check your Spam and Promotions folders. If it's there, mark it “Not spam” so future emails reach your inbox.",
+    "ageConfirm": "I am at least 16 years old",
+    "ageRequired": "Confirm that you are at least 16",
+    "ageForGoogle": "To continue with Google, confirm your age above first."
   },
   "validation": {
     "required": "Required field",
@@ -130,7 +139,8 @@
     "notificationsAllow": "Turn on notifications",
     "notificationsGranted": "Notifications on ✓",
     "categoriesTitle": "What can you help with?",
-    "categoriesText": "We'll only send you relevant requests. You can change this in settings."
+    "categoriesText": "We'll only send you relevant requests. You can change this in settings.",
+    "changeLater": "You can change this later in settings."
   },
   "home": {
     "needHelp": "I need help",
@@ -158,7 +168,7 @@
     "disable": "Turn off",
     "needLocation": "Location is required",
     "explainTitle": "What this mode does",
-    "explain": "While it's on (up to 2 hours), we send you requests from people near your current location, within the chosen radius and categories — even if you're usually somewhere else. When you turn it off or time runs out, you go back to notifications based on your usual settings."
+    "explain": "While it's on (for the time you choose), we send you requests from people near your current location, within the chosen radius and categories — even if you're usually somewhere else. When you turn it off or time runs out, you go back to notifications based on your usual settings."
   },
   "categories": {
     "AUTO": "Car",
@@ -294,7 +304,11 @@
     "neededAtHint": "From 15 minutes to 30 days ahead",
     "neededAtRequired": "Choose the date and time",
     "neededAtTooSoon": "Choose a time at least 15 minutes from now",
-    "neededAtTime": "Time"
+    "neededAtTime": "Time",
+    "helpersNeeded": "How many people are needed",
+    "helpersNeededHint": "Once that many people agree to help, the request closes to others.",
+    "activeHours": "How long the request stays active",
+    "activeHoursHint": "After that, the request closes automatically."
   },
   "nearby": {
     "title": "Help nearby",
@@ -348,7 +362,11 @@
     "blocked": "User blocked",
     "helpers_one": "{{count}} response",
     "helpers_other": "{{count}} responses",
-    "rewardInfo": "Thank-you"
+    "rewardInfo": "Thank-you",
+    "helpersProgress": "{{count}} of {{needed}} chosen",
+    "selectedHelpers": "Helpers",
+    "peopleStillNeeded_one": "{{count}} more person needed",
+    "peopleStillNeeded_other": "{{count}} more people needed"
   },
   "thanks": {
     "received": "Help received ❤️",
@@ -376,7 +394,8 @@
     "closed": "Conversation closed",
     "image": "📷 Photo",
     "aboutRequest": "Request: {{title}}",
-    "loadOlder": "Earlier messages"
+    "loadOlder": "Earlier messages",
+    "request": "Request"
   },
   "notifications": {
     "title": "Notifications",
@@ -414,7 +433,8 @@
     "customItemsLabel": "What else do you have?",
     "customItemsPlaceholder": "For example: bicycle, tent",
     "customItemsAdd": "Add",
-    "customItemsHint": "Up to 10 items, 40 characters each"
+    "customItemsHint": "Up to 10 items, 40 characters each",
+    "renameHint": "Tap to change your name"
   },
   "settings": {
     "title": "Settings",
@@ -453,7 +473,9 @@
     "theme": "Theme",
     "themeLight": "Light",
     "themeDark": "Dark",
-    "themeSystem": "System"
+    "themeSystem": "System",
+    "sound": "Sound for new notifications",
+    "soundHint": "A short chime when the app is open and something new arrives."
   },
   "report": {
     "title": "Report",
@@ -524,7 +546,17 @@
       "FREE": "For free"
     },
     "agreed": "Agreed: {{terms}}",
-    "note": "The platform doesn't handle payments: the arrangement is between you."
+    "note": "The platform doesn't handle payments: the arrangement is between you.",
+    "counterButton": "Offer your amount",
+    "counterLabel": "Your amount, {{currency}}",
+    "counterHint": "You can do this only once — then the helper accepts or declines.",
+    "counterSend": "Send offer",
+    "counterSent": "You offered {{amount}} — waiting for a reply",
+    "authorCounter": "The author offers {{amount}}",
+    "lastStep": "This is the final offer: accept or decline.",
+    "acceptCounter": "Accept",
+    "declineCounter": "Decline",
+    "agreedToast": "Deal! You've been chosen to help."
   },
   "share": {
     "button": "Share",

@@ -43,6 +43,7 @@ export async function registerAndOnboard(page: Page, name: string, email: string
   await page.getByLabel("Як до вас звертатися").fill(name);
   await page.getByLabel("Email").fill(email);
   await page.getByLabel("Пароль").fill(PASSWORD);
+  await page.getByRole("checkbox").check(); // «Мені виповнилося 16 років»
   await page.getByRole("button", { name: "Зареєструватися" }).click();
   await expect(page.getByRole("heading", { name: /Підтвердіть email/ })).toBeVisible();
 

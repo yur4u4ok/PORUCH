@@ -10,6 +10,8 @@ export const registerSchema = z.object({
   display_name: z.string().trim().min(1, "validation.required").max(50, "validation.max|50"),
   email: z.string().trim().min(1, "validation.required").email("validation.email"),
   password: z.string().min(8, "validation.minPassword").max(128),
+  // Terms of Service: at least 16 years old.
+  age_confirmed: z.boolean().refine((v) => v, "auth.ageRequired"),
 });
 
 export const emailSchema = z.object({

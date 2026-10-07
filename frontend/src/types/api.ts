@@ -127,10 +127,27 @@ export interface PublicConfig {
   capabilities: Capability[];
 }
 
-export interface ResponseBrief {
+/** Terms agreed with one helper (a request may have several helpers). */
+export interface AgreedTerms {
+  agreed_offer_type: OfferType | null;
+  agreed_amount: string | null;
+}
+
+export interface ResponseBrief extends AgreedTerms {
   id: UUID;
   status: ResponseStatus;
   created_at: ISODateTime;
+  offer_type: OfferType;
+  offered_amount: string | null;
+  /** The author's one counter to a helper's different amount. */
+  author_counter_amount: string | null;
+}
+
+/** A helper the author chose (visible to the author only). */
+export interface ChosenHelper extends AgreedTerms {
+  user: PublicUser;
+  response_id: UUID;
+  conversation_id: UUID | null;
 }
 
 export interface HelpRequest {
@@ -162,6 +179,10 @@ export interface HelpRequest {
   my_response: ResponseBrief | null;
   responses_count: number;
   selected_helper: PublicUser | null;
+  /** How many people the author needs, how many are chosen, and who (author only). */
+  helpers_needed: number;
+  helpers_count: number;
+  helpers: ChosenHelper[];
   conversation_id: UUID | null;
   can_respond: boolean;
   thanked: boolean | null;
@@ -175,6 +196,9 @@ export interface HelpResponse {
   message: string;
   offer_type: OfferType;
   offered_amount: string | null;
+  author_counter_amount: string | null;
+  agreed_offer_type: OfferType | null;
+  agreed_amount: string | null;
   status: ResponseStatus;
   created_at: ISODateTime;
 }

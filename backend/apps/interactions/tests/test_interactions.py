@@ -308,3 +308,83 @@ def test_respond_runs_in_its_own_transaction():
     hr = HelpRequestFactory(reward_type="WILLING", reward_amount=500)
     response, created = respond(UserFactory(), hr.id, "", "COUNTER", 400)
     assert created and response.offered_amount == 400
+
+
+class TestSeveralHelpers:
+    """helpers_needed > 1: the request stays open until that many people are chosen."""
+
+    def test_request_closes_when_enough_helpers_are_chosen(self, make_client, no_push):
+        hr = HelpRequestFactory(helpers_needed=2)
+        author = make_client(hr.author)
+        offers = [respond(make_client(), hr).data["id"] for _ in range(3)]
+
+        author.post(f"{URL}{hr.id}/select-helper/", {"response_id": offers[0]}, format="json")
+        hr.refresh_from_db()
+        assert hr.status == "ACTIVE"  # one more person needed: still visible nearby
+        assert HelpResponse.objects.get(id=offers[2]).status == "PENDING"
+
+        author.post(f"{URL}{hr.id}/select-helper/", {"response_id": offers[1]}, format="json")
+        hr.refresh_from_db()
+        assert hr.status == "IN_PROGRESS"
+        assert HelpResponse.objects.get(id=offers[2]).status == "REJECTED"  # closed to others
+        assert Conversation.objects.filter(help_request=hr).count() == 2  # a chat with each helper
+
+        detail = author.get(f"{URL}{hr.id}/").data
+        assert detail["helpers_count"] == 2 and len(detail["helpers"]) == 2
+
+    def test_withdrawn_helper_reopens_and_completion_credits_everyone(self, make_client, no_push):
+        hr = HelpRequestFactory(helpers_needed=2)
+        author = make_client(hr.author)
+        helpers = [make_client() for _ in range(2)]
+        offers = [respond(h, hr).data["id"] for h in helpers]
+        for offer in offers:
+            author.post(f"{URL}{hr.id}/select-helper/", {"response_id": offer}, format="json")
+
+        helpers[0].post(f"/api/v1/help-responses/{offers[0]}/cancel/")
+        hr.refresh_from_db()
+        assert hr.status == "ACTIVE" and hr.selected_helper_id == helpers[1].user.pk
+
+        third = make_client()
+        offer = respond(third, hr).data["id"]
+        author.post(f"{URL}{hr.id}/select-helper/", {"response_id": offer}, format="json")
+        assert author.post(f"{URL}{hr.id}/complete/").status_code == 200
+        assert author.post(f"{URL}{hr.id}/thank-you/", {"message": "Дякую!"}, format="json").status_code in (200, 201)
+        for user in (helpers[1].user, third.user):
+            profile = Profile.objects.get(user=user)
+            assert profile.helped_count == 1 and profile.thanks_received_count == 1
+        assert Profile.objects.get(user=helpers[0].user).helped_count == 0
+
+
+class TestCounterOffer:
+    """Helper proposes another amount → author may counter once → helper accepts or declines."""
+
+    def _offer(self, make_client):
+        hr = HelpRequestFactory(reward_type="WILLING", reward_amount=500)
+        helper = make_client()
+        offer = helper.post(
+            f"{URL}{hr.id}/respond/", {"offer_type": "COUNTER", "offered_amount": "800"}, format="json"
+        ).data["id"]
+        return hr, helper, make_client(hr.author), offer
+
+    def test_helper_accepts_author_amount_and_is_chosen(self, make_client, no_push):
+        hr, helper, author, offer = self._offer(make_client)
+        assert author.post(f"/api/v1/help-responses/{offer}/counter/", {"amount": "650"}).status_code == 200
+        assert Notification.objects.filter(user=helper.user, title__contains="іншу суму").exists()
+        # Only one counter from the author.
+        assert author.post(f"/api/v1/help-responses/{offer}/counter/", {"amount": "700"}).status_code == 409
+
+        data = helper.post(f"/api/v1/help-responses/{offer}/counter-answer/", {"accept": True}).data
+        assert data["status"] == "ACCEPTED" and data["agreed_amount"] == "650.00"
+        hr.refresh_from_db()
+        assert hr.status == "IN_PROGRESS" and hr.agreed_amount == 650
+
+    def test_helper_declines_and_bargaining_ends(self, make_client, no_push):
+        hr, helper, author, offer = self._offer(make_client)
+        author.post(f"/api/v1/help-responses/{offer}/counter/", {"amount": "600"})
+        data = helper.post(f"/api/v1/help-responses/{offer}/counter-answer/", {"accept": False}).data
+        assert data["status"] == "CANCELLED"
+        assert helper.post(f"/api/v1/help-responses/{offer}/counter-answer/", {"accept": True}).status_code == 409
+
+    def test_only_the_author_can_counter(self, make_client):
+        hr, helper, author, offer = self._offer(make_client)
+        assert helper.post(f"/api/v1/help-responses/{offer}/counter/", {"amount": "1"}).status_code == 403

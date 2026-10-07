@@ -84,6 +84,8 @@ def create_help_request(
     reward_options: list[str] | None = None,
     reward_currency: str = DEFAULT_CURRENCY,
     needed_at=None,
+    helpers_needed: int = 1,
+    active_hours: int | None = None,
     place_name: str = "",
     title: str | None = None,
     subcategory: str | None = None,
@@ -128,7 +130,13 @@ def create_help_request(
         reward_currency=reward_currency,
         place_name=place_name.strip()[:120],
         needed_at=needed_at,
-        expires_at=needed_at + SCHEDULE_GRACE if needed_at else expiration_for(urgency, now),
+        helpers_needed=helpers_needed,
+        # The author chooses how long the request stays open; a scheduled one lives until its time.
+        expires_at=(
+            needed_at + SCHEDULE_GRACE
+            if needed_at
+            else now + timedelta(hours=active_hours) if active_hours else expiration_for(urgency, now)
+        ),
     )
     if photos:
         help_request.photos.set(photos)

@@ -62,6 +62,16 @@ def update_help_request(author: User, help_request_id, data: dict) -> HelpReques
     return help_request
 
 
+def _chosen_helpers(help_request: HelpRequest) -> list[User]:
+    """Everyone the author chose (a request may need several people)."""
+    return [
+        r.helper
+        for r in HelpResponse.objects.filter(help_request=help_request, status=ResponseStatus.ACCEPTED).select_related(
+            "helper"
+        )
+    ]
+
+
 @transaction.atomic
 def cancel_help_request(author: User, help_request_id) -> HelpRequest:
     """ACTIVE → CANCELLED. IN_PROGRESS can also be cancelled (helper did not show up)."""
@@ -72,7 +82,7 @@ def cancel_help_request(author: User, help_request_id) -> HelpRequest:
         return help_request
     if help_request.status not in (HelpRequestStatus.ACTIVE, HelpRequestStatus.IN_PROGRESS):
         raise InvalidState(_("Цей запит вже закрито."), code="REQUEST_CLOSED")
-    helper = help_request.selected_helper
+    helpers = _chosen_helpers(help_request)
     help_request.status = HelpRequestStatus.CANCELLED
     help_request.cancelled_at = timezone.now()
     help_request.save(update_fields=["status", "cancelled_at", "updated_at"])
@@ -80,7 +90,7 @@ def cancel_help_request(author: User, help_request_id) -> HelpRequest:
         status=ResponseStatus.CANCELLED, updated_at=timezone.now()
     )
     close_conversations(help_request)
-    if helper is not None:
+    for helper in helpers:
         notify(
             helper,
             NotificationType.REQUEST_CANCELLED,
@@ -108,23 +118,19 @@ def complete_help_request(author: User, help_request_id) -> HelpRequest:
     help_request.status = HelpRequestStatus.COMPLETED
     help_request.completed_at = now
     help_request.save(update_fields=["status", "completed_at", "updated_at"])
-    helper = help_request.selected_helper
-    assert helper is not None  # guaranteed by IN_PROGRESS invariant (DB check constraint)
-    Profile.objects.filter(user_id=helper.pk).update(helped_count=F("helped_count") + 1)
-
-    conversation = Conversation.objects.filter(
-        help_request=help_request, helper_id=help_request.selected_helper_id
-    ).first()
-    if conversation:
-        post_system_message(conversation, _("Допомогу отримано ❤️ Запит завершено."))
-    notify(
-        helper,
-        NotificationType.REQUEST_COMPLETED,
-        title=_("🎉 Допомога завершена"),
-        body=_("Дякуємо, що допомогли людині поруч!"),
-        url=f"/help/{help_request.id}",
-        help_request=help_request,
-    )
+    for helper in _chosen_helpers(help_request):
+        Profile.objects.filter(user_id=helper.pk).update(helped_count=F("helped_count") + 1)
+        conversation = Conversation.objects.filter(help_request=help_request, helper_id=helper.pk).first()
+        if conversation:
+            post_system_message(conversation, _("Допомогу отримано ❤️ Запит завершено."))
+        notify(
+            helper,
+            NotificationType.REQUEST_COMPLETED,
+            title=_("🎉 Допомога завершена"),
+            body=_("Дякуємо, що допомогли людині поруч!"),
+            url=f"/help/{help_request.id}",
+            help_request=help_request,
+        )
     analytics.track(
         user_id=author.id,
         event="help_requests_completed",

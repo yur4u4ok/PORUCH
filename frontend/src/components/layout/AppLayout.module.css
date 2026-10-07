@@ -81,12 +81,18 @@
     flex-direction: column;
     gap: var(--space-1);
     position: sticky;
-    top: 0;
-    height: 100vh;
+    top: var(--space-3);
+    /* A floating, rounded panel in a muted, slightly translucent teal (the solid brand teal
+       was too loud next to the content). */
+    height: calc(100vh - 2 * var(--space-3));
+    margin: var(--space-3) 0 var(--space-3) var(--space-3);
     width: var(--sidebar-width);
     flex-shrink: 0;
     padding: var(--space-6) var(--space-4);
-    background: var(--color-primary);
+    border-radius: var(--radius-xl);
+    background: var(--color-sidebar);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-md);
     color: var(--color-on-primary);
   }
   .brand {

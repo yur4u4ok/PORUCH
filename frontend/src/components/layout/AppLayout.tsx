@@ -6,6 +6,7 @@ import { BRAND } from "@/app/brand";
 import { NavLink, Outlet, useNavigate, useSearchParams } from "react-router";
 
 import { IconButton } from "@/components/ui";
+import { AttentionSignals } from "@/features/attention/AttentionSignals";
 import { InstallPrompt } from "@/features/pwa/InstallPrompt";
 
 import { BrandMark } from "./BrandMark";
@@ -69,11 +70,13 @@ export function AppLayout() {
   const { t } = useTranslation();
   const entries = useNavEntries();
   const { data: unread = 0 } = useUnreadCount(true);
+  const chatBadge = entries.find((e) => e.to === "/chats")?.badge ?? 0;
 
   return (
     <div className={styles.shell}>
       <PushDeepLinkTracker />
       <PullToRefresh />
+      <AttentionSignals unread={unread + chatBadge} />
       <InstallPrompt />
       <nav className={styles.sidebar} aria-label={BRAND}>
         <NavLink to="/" className={styles.brand}>

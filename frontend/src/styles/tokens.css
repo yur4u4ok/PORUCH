@@ -25,6 +25,7 @@
   --color-urgent-whenever: #1f7a4d;
   --color-urgent-scheduled: #2f5f9e;
   --color-overlay: rgb(10 30 28 / 0.5);
+  --color-sidebar: color-mix(in srgb, color-mix(in srgb, #0e5a54 68%, #66807c) 90%, transparent);
 
   --radius-sm: 8px;
   --radius-md: 14px;
@@ -65,6 +66,7 @@
   color-scheme: dark;
   --color-bg: #0f1a19;
   --color-overlay: rgb(0 0 0 / 0.72);
+  --color-sidebar: color-mix(in srgb, #1c3b37 88%, transparent);
   --color-surface: #162523;
   --color-surface-2: #1e302d;
   --color-border: #2c4440;
@@ -88,6 +90,7 @@
     color-scheme: dark;
     --color-bg: #0f1a19;
     --color-overlay: rgb(0 0 0 / 0.72);
+    --color-sidebar: color-mix(in srgb, #1c3b37 88%, transparent);
     --color-surface: #162523;
     --color-surface-2: #1e302d;
     --color-border: #2c4440;

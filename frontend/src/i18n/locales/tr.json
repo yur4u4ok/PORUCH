@@ -37,7 +37,11 @@
     "anonymous": "Komşu",
     "seeAll": "Tümü",
     "fromYou": "{{distance}} uzakta",
-    "since": "{{year}} yılından beri üye"
+    "since": "{{year}} yılından beri üye",
+    "selectAll": "Tümünü seç",
+    "selectNone": "Tümünü kaldır",
+    "less": "Azalt",
+    "more": "Artır"
   },
   "time": {
     "justNow": "az önce",
@@ -51,7 +55,9 @@
     "hours_one": "{{count}} saat",
     "hours_other": "{{count}} saat",
     "minutes_one": "{{count}} dakika",
-    "minutes_other": "{{count}} dakika"
+    "minutes_other": "{{count}} dakika",
+    "days_one": "{{count}} gün",
+    "days_other": "{{count}} gün"
   },
   "landing": {
     "needHelpTitle": "Yardıma mı ihtiyacın var?",
@@ -110,7 +116,10 @@
     "terms": "Kayıt olarak güvenli ve saygılı bir şekilde yardım etmeyi kabul edersin.",
     "googleFailed": "Google ile giriş yapılamadı. Tekrar dene.",
     "googleInactive": "Bu hesap devre dışı bırakıldı.",
-    "checkSpam": "E-postayı göremiyor musun? Bir dakika bekle ve Spam ile Promosyonlar klasörlerine bak. Oradaysa “Spam değil” olarak işaretle, sonrakiler gelen kutuna düşsün."
+    "checkSpam": "E-postayı göremiyor musun? Bir dakika bekle ve Spam ile Promosyonlar klasörlerine bak. Oradaysa “Spam değil” olarak işaretle, sonrakiler gelen kutuna düşsün.",
+    "ageConfirm": "En az 16 yaşındayım",
+    "ageRequired": "En az 16 yaşında olduğunu onayla",
+    "ageForGoogle": "Google ile devam etmek için önce yukarıda yaşını onayla."
   },
   "validation": {
     "required": "Zorunlu alan",
@@ -130,7 +139,8 @@
     "notificationsAllow": "Bildirimleri aç",
     "notificationsGranted": "Bildirimler açık ✓",
     "categoriesTitle": "Neye yardım edebilirsin?",
-    "categoriesText": "Sana yalnızca uygun istekleri göndeririz. Bunu ayarlardan değiştirebilirsin."
+    "categoriesText": "Sana yalnızca uygun istekleri göndeririz. Bunu ayarlardan değiştirebilirsin.",
+    "changeLater": "Bunu daha sonra ayarlardan değiştirebilirsin."
   },
   "home": {
     "needHelp": "Yardıma ihtiyacım var",
@@ -158,7 +168,7 @@
     "disable": "Kapat",
     "needLocation": "Konum gerekli",
     "explainTitle": "Bu mod ne yapar",
-    "explain": "Açık olduğu sürece (en fazla 2 saat), genelde başka bir yerde olsan bile, şu anki konumunun yakınındaki insanlardan gelen istekleri seçtiğin yarıçap ve kategorilerde sana göndeririz. Kapattığında ya da süre dolduğunda olağan ayarlarına dönersin."
+    "explain": "Açık olduğu sürece (seçtiğin süre boyunca), genelde başka bir yerde olsan bile, şu anki konumunun yakınındaki insanlardan gelen istekleri seçtiğin yarıçap ve kategorilerde sana göndeririz. Kapattığında ya da süre dolduğunda olağan ayarlarına dönersin."
   },
   "categories": {
     "AUTO": "Araba",
@@ -294,7 +304,11 @@
     "neededAtHint": "15 dakika ile 30 gün arası önceden",
     "neededAtRequired": "Tarih ve saati seç",
     "neededAtTooSoon": "Şu andan en az 15 dakika sonrasını seç",
-    "neededAtTime": "Saat"
+    "neededAtTime": "Saat",
+    "helpersNeeded": "Kaç kişi gerekiyor",
+    "helpersNeededHint": "Bu kadar kişi yardım etmeyi kabul edince istek diğerlerine kapanır.",
+    "activeHours": "İstek ne kadar süre aktif kalsın",
+    "activeHoursHint": "Sonra otomatik olarak kapanır."
   },
   "nearby": {
     "title": "Yakında yardım",
@@ -348,7 +362,11 @@
     "blocked": "Kullanıcı engellendi",
     "helpers_one": "{{count}} yanıt",
     "helpers_other": "{{count}} yanıt",
-    "rewardInfo": "Teşekkür"
+    "rewardInfo": "Teşekkür",
+    "helpersProgress": "{{needed}} kişiden {{count}} seçildi",
+    "selectedHelpers": "Yardım edenler",
+    "peopleStillNeeded_one": "{{count}} kişi daha gerekiyor",
+    "peopleStillNeeded_other": "{{count}} kişi daha gerekiyor"
   },
   "thanks": {
     "received": "Yardım alındı ❤️",
@@ -376,7 +394,8 @@
     "closed": "Sohbet kapandı",
     "image": "📷 Fotoğraf",
     "aboutRequest": "İstek: {{title}}",
-    "loadOlder": "Önceki mesajlar"
+    "loadOlder": "Önceki mesajlar",
+    "request": "İstek"
   },
   "notifications": {
     "title": "Bildirimler",
@@ -414,7 +433,8 @@
     "customItemsLabel": "Başka neyin var?",
     "customItemsPlaceholder": "Örneğin: bisiklet, çadır",
     "customItemsAdd": "Ekle",
-    "customItemsHint": "En fazla 10 eşya, her biri 40 karakter"
+    "customItemsHint": "En fazla 10 eşya, her biri 40 karakter",
+    "renameHint": "Adını değiştirmek için dokun"
   },
   "settings": {
     "title": "Ayarlar",
@@ -453,7 +473,9 @@
     "theme": "Tema",
     "themeLight": "Açık",
     "themeDark": "Koyu",
-    "themeSystem": "Sistem"
+    "themeSystem": "Sistem",
+    "sound": "Yeni bildirim sesi",
+    "soundHint": "Uygulama açıkken yeni bir şey gelince kısa bir ses."
   },
   "report": {
     "title": "Şikâyet et",
@@ -524,7 +546,17 @@
       "FREE": "Ücretsiz"
     },
     "agreed": "Anlaşıldı: {{terms}}",
-    "note": "Platform ödemelerle ilgilenmez: anlaşma sizin aranızdadır."
+    "note": "Platform ödemelerle ilgilenmez: anlaşma sizin aranızdadır.",
+    "counterButton": "Kendi tutarını öner",
+    "counterLabel": "Senin tutarın, {{currency}}",
+    "counterHint": "Bunu yalnızca bir kez yapabilirsin — sonra yardım eden kabul eder ya da reddeder.",
+    "counterSend": "Teklifi gönder",
+    "counterSent": "{{amount}} önerdin — yanıt bekleniyor",
+    "authorCounter": "İstek sahibi {{amount}} öneriyor",
+    "lastStep": "Bu son teklif: kabul et ya da reddet.",
+    "acceptCounter": "Kabul et",
+    "declineCounter": "Reddet",
+    "agreedToast": "Anlaştınız! Yardım için seçildin."
   },
   "share": {
     "button": "Paylaş",

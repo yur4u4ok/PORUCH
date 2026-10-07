@@ -145,3 +145,24 @@
   color: var(--color-text-muted);
   border-top: 1px solid var(--color-border);
 }
+
+/* Link from the chat to its help request: the category icon + «Запит», big enough to notice. */
+.requestLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: var(--color-primary-soft);
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.requestLink span {
+  font-size: 22px;
+  line-height: 1;
+}

@@ -19,8 +19,20 @@ PASSWORD = "Very-strong-Pa55"
 
 def register(client, email="new@example.com", password=PASSWORD):
     return client.post(
-        reverse("auth-register"), {"email": email, "password": password, "display_name": "Остап"}, format="json"
+        reverse("auth-register"),
+        {"email": email, "password": password, "display_name": "Остап", "age_confirmed": True},
+        format="json",
     )
+
+
+def test_register_requires_age_confirmation(api_client):
+    response = api_client.post(
+        reverse("auth-register"),
+        {"email": "young@example.com", "password": PASSWORD, "display_name": "Юний", "age_confirmed": False},
+        format="json",
+    )
+    assert response.status_code == 400 and "age_confirmed" in response.data["details"]
+    assert not User.objects.filter(email="young@example.com").exists()
 
 
 def test_register_creates_user_profile_preferences_and_sends_email(api_client):

@@ -29,6 +29,8 @@ import {
   useRespondToHelp,
   useSelectHelper,
   useThankHelper,
+  useAnswerCounter,
+  useCounterOffer,
   useWithdrawResponse,
 } from "@/features/help/hooks";
 import { ShareButton } from "@/features/help/ShareButton";
@@ -36,9 +38,16 @@ import { PersonRow } from "@/features/profile/PersonRow";
 import { useBlockUser } from "@/features/profile/hooks";
 import { useLocationStore } from "@/stores/locationStore";
 import { toast } from "@/stores/toastStore";
-import type { HelpRequest, OfferType } from "@/types/api";
+import type { HelpRequest, HelpResponse, OfferType } from "@/types/api";
 import { URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
-import { currencySymbol, formatDateTime, formatDistance, timeAgo, timeLeft } from "@/utils/format";
+import {
+  currencySymbol,
+  formatDateTime,
+  formatDistance,
+  formatMoney,
+  timeAgo,
+  timeLeft,
+} from "@/utils/format";
 import { agreedSummary, offerSummary, rewardSummary } from "@/utils/reward";
 import { emergencyVars } from "@/utils/emergency";
 
@@ -55,6 +64,11 @@ function ResponsesSection({ request }: { request: HelpRequest }) {
   return (
     <section className="stack-sm">
       <h3>{t("request.responses")}</h3>
+      {request.helpers_needed > 1 && (
+        <p className="muted">
+          👥 {t("request.helpersProgress", { count: request.helpers_count, needed: request.helpers_needed })}
+        </p>
+      )}
       {responses.isPending ? (
         <SkeletonList count={2} height={72} />
       ) : responses.isError ? (
@@ -71,6 +85,7 @@ function ResponsesSection({ request }: { request: HelpRequest }) {
               </Badge>
             )}
             {response.message && <p>«{response.message}»</p>}
+            {response.offer_type === "COUNTER" && <CounterOffer request={request} response={response} />}
             <div className="row">
               <Button
                 variant="help"
@@ -97,13 +112,108 @@ function ResponsesSection({ request }: { request: HelpRequest }) {
   );
 }
 
+/** Author: answer a helper's different amount with one amount of their own (only once). */
+function CounterOffer({ request, response }: { request: HelpRequest; response: HelpResponse }) {
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [amount, setAmount] = useState("");
+  const counter = useCounterOffer(request.id);
+  if (response.author_counter_amount) {
+    return (
+      <span className="muted">
+        ⏳{" "}
+        {t("offer.counterSent", {
+          amount: formatMoney(response.author_counter_amount, request.reward_currency),
+        })}
+      </span>
+    );
+  }
+  if (!open) {
+    return (
+      <Button variant="secondary" size="sm" onClick={() => setOpen(true)}>
+        💬 {t("offer.counterButton")}
+      </Button>
+    );
+  }
+  const value = amount.trim().replace(",", ".");
+  return (
+    <div className="stack-sm">
+      <Input
+        label={t("offer.counterLabel", { currency: currencySymbol(request.reward_currency) })}
+        hint={t("offer.counterHint")}
+        inputMode="decimal"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        autoFocus
+      />
+      <Button
+        size="sm"
+        disabled={!(Number(value) > 0)}
+        loading={counter.isPending}
+        onClick={() => counter.mutate({ responseId: response.id, amount: value })}
+      >
+        {t("offer.counterSend")}
+      </Button>
+    </div>
+  );
+}
+
+/** Helper: the author proposed their amount — accept (and be chosen) or decline. No more bargaining. */
+function CounterAnswer({
+  request,
+  responseId,
+  amount,
+}: {
+  request: HelpRequest;
+  responseId: string;
+  amount: string;
+}) {
+  const { t } = useTranslation();
+  const answer = useAnswerCounter(request.id);
+  const navigate = useNavigate();
+  return (
+    <Card className="stack-sm">
+      <strong>💬 {t("offer.authorCounter", { amount: formatMoney(amount, request.reward_currency) })}</strong>
+      <p className="muted" style={{ fontSize: 14 }}>
+        {t("offer.lastStep")}
+      </p>
+      <div className="row">
+        <Button
+          variant="help"
+          loading={answer.isPending && answer.variables?.accept === true}
+          onClick={() =>
+            answer.mutate(
+              { responseId, accept: true },
+              { onSuccess: () => toast.success(t("offer.agreedToast")) },
+            )
+          }
+        >
+          {t("offer.acceptCounter")}
+        </Button>
+        <Button
+          variant="ghost"
+          loading={answer.isPending && answer.variables?.accept === false}
+          onClick={() =>
+            answer.mutate({ responseId, accept: false }, { onSuccess: () => navigate("/nearby") })
+          }
+        >
+          {t("offer.declineCounter")}
+        </Button>
+      </div>
+    </Card>
+  );
+}
+
 function ThankYouCard({ request }: { request: HelpRequest }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState(t("thanks.placeholder"));
   const thank = useThankHelper(request.id);
   if (!request.selected_helper) return null;
-  const name = request.selected_helper.display_name ?? t("common.anonymous");
+  const names = request.helpers.map((h) => h.user.display_name ?? t("common.anonymous"));
+  const name = names.length
+    ? names.join(", ")
+    : (request.selected_helper.display_name ?? t("common.anonymous"));
   if (request.thanked) return <div className={styles.notice}>❤️ {t("thanks.already")}</div>;
   return (
     <Card className="stack-sm">
@@ -144,17 +254,28 @@ function AuthorActions({ request }: { request: HelpRequest }) {
   const open = request.status === "ACTIVE" || request.status === "IN_PROGRESS";
   return (
     <>
-      {request.status === "IN_PROGRESS" && request.selected_helper && (
+      {request.helpers.length > 0 && (
         <Card className="stack-sm">
-          <strong>{t("request.selectedHelper")}</strong>
-          <PersonRow user={request.selected_helper} />
-          {request.conversation_id && (
-            <Link to={`/chats/${request.conversation_id}`}>
-              <Button variant="help" block>
-                💬 {t("request.openChat")}
-              </Button>
-            </Link>
-          )}
+          <strong>
+            {request.helpers.length > 1 ? t("request.selectedHelpers") : t("request.selectedHelper")}
+          </strong>
+          {request.helpers.map((helper) => (
+            <div key={helper.response_id} className="stack-sm">
+              <PersonRow user={helper.user} />
+              {agreedSummary(request, t, helper) && (
+                <span className="muted">
+                  🤝 {t("offer.agreed", { terms: agreedSummary(request, t, helper) })}
+                </span>
+              )}
+              {helper.conversation_id && (
+                <Link to={`/chats/${helper.conversation_id}`}>
+                  <Button variant="help" block>
+                    💬 {t("request.openChat")}
+                  </Button>
+                </Link>
+              )}
+            </div>
+          ))}
         </Card>
       )}
       <ResponsesSection request={request} />
@@ -231,7 +352,7 @@ function HelperActions({ request }: { request: HelpRequest }) {
     return <div className={styles.notice}>🎉 {t("thanks.helperCompleted")}</div>;
   }
   if (mine?.status === "REJECTED") return <div className={styles.notice}>{t("request.rejectedNotice")}</div>;
-  if (mine?.status === "ACCEPTED" && request.status === "IN_PROGRESS") {
+  if (mine?.status === "ACCEPTED" && (request.status === "IN_PROGRESS" || request.status === "ACTIVE")) {
     return (
       <div className={styles.actions}>
         {request.conversation_id && (
@@ -246,6 +367,9 @@ function HelperActions({ request }: { request: HelpRequest }) {
         </Button>
       </div>
     );
+  }
+  if (mine?.status === "PENDING" && mine.author_counter_amount) {
+    return <CounterAnswer request={request} responseId={mine.id} amount={mine.author_counter_amount} />;
   }
   if (mine?.status === "PENDING") {
     return (
@@ -407,9 +531,13 @@ export default function HelpRequestPage() {
           {request.reward_type === "WILLING" ? rewardSummary(request, t) : t(`reward.${request.reward_type}`)}
         </p>
       )}
-      {agreedSummary(request, t) && (
-        <div className={styles.notice}>🤝 {t("offer.agreed", { terms: agreedSummary(request, t) })}</div>
-      )}
+      {!request.is_author &&
+        request.my_response?.status === "ACCEPTED" &&
+        agreedSummary(request, t, request.my_response) && (
+          <div className={styles.notice}>
+            🤝 {t("offer.agreed", { terms: agreedSummary(request, t, request.my_response) })}
+          </div>
+        )}
 
       {request.photos.length > 0 && (
         <div className={styles.photos}>

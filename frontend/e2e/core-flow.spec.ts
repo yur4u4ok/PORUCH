@@ -73,7 +73,7 @@ test("help request end-to-end flow", async ({ browser }) => {
   await expect(author.getByText("Бачу вас, підходжу")).toBeVisible();
 
   // 7. Author completes the request
-  await author.getByRole("link").filter({ hasText: "📄" }).click();
+  await author.getByRole("link", { name: /Запит/ }).click();
   await author.getByRole("button", { name: /Завершити/ }).click();
   await author.getByRole("dialog").getByRole("button", { name: "Завершити" }).click();
   await expect(author.getByText("Допомогу отримано ❤️")).toBeVisible();

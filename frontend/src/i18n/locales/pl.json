@@ -37,7 +37,11 @@
     "anonymous": "Sąsiad",
     "seeAll": "Wszystkie",
     "fromYou": "{{distance}} od ciebie",
-    "since": "Z nami od {{year}}"
+    "since": "Z nami od {{year}}",
+    "selectAll": "Zaznacz wszystko",
+    "selectNone": "Odznacz wszystko",
+    "less": "Mniej",
+    "more": "Więcej"
   },
   "time": {
     "justNow": "przed chwilą",
@@ -61,7 +65,11 @@
     "minutes_one": "{{count}} minuta",
     "minutes_few": "{{count}} minuty",
     "minutes_many": "{{count}} minut",
-    "minutes_other": "{{count}} minuty"
+    "minutes_other": "{{count}} minuty",
+    "days_one": "{{count}} dzień",
+    "days_few": "{{count}} dni",
+    "days_many": "{{count}} dni",
+    "days_other": "{{count}} dnia"
   },
   "landing": {
     "needHelpTitle": "Potrzebujesz pomocy?",
@@ -120,7 +128,10 @@
     "terms": "Rejestrując się, zobowiązujesz się pomagać bezpiecznie i z szacunkiem.",
     "googleFailed": "Nie udało się zalogować przez Google. Spróbuj ponownie.",
     "googleInactive": "To konto zostało dezaktywowane.",
-    "checkSpam": "Nie widzisz wiadomości? Poczekaj minutę i sprawdź foldery Spam i Oferty. Jeśli tam jest, oznacz ją jako „To nie spam”, żeby kolejne trafiały do skrzynki odbiorczej."
+    "checkSpam": "Nie widzisz wiadomości? Poczekaj minutę i sprawdź foldery Spam i Oferty. Jeśli tam jest, oznacz ją jako „To nie spam”, żeby kolejne trafiały do skrzynki odbiorczej.",
+    "ageConfirm": "Mam co najmniej 16 lat",
+    "ageRequired": "Potwierdź, że masz co najmniej 16 lat",
+    "ageForGoogle": "Aby kontynuować przez Google, najpierw potwierdź wiek powyżej."
   },
   "validation": {
     "required": "Pole wymagane",
@@ -140,7 +151,8 @@
     "notificationsAllow": "Włącz powiadomienia",
     "notificationsGranted": "Powiadomienia włączone ✓",
     "categoriesTitle": "W czym możesz pomóc?",
-    "categoriesText": "Wyślemy ci tylko pasujące prośby. Możesz to zmienić w ustawieniach."
+    "categoriesText": "Wyślemy ci tylko pasujące prośby. Możesz to zmienić w ustawieniach.",
+    "changeLater": "Możesz to później zmienić w ustawieniach."
   },
   "home": {
     "needHelp": "Potrzebuję pomocy",
@@ -168,7 +180,7 @@
     "disable": "Wyłącz",
     "needLocation": "Potrzebna jest lokalizacja",
     "explainTitle": "Co robi ten tryb",
-    "explain": "Gdy jest włączony (do 2 godzin), wysyłamy ci prośby od ludzi w pobliżu twojej obecnej lokalizacji, w wybranym promieniu i kategoriach – nawet jeśli zwykle przebywasz gdzie indziej. Po wyłączeniu lub upływie czasu wracają powiadomienia według zwykłych ustawień."
+    "explain": "Gdy jest włączony (przez wybrany przez ciebie czas), wysyłamy ci prośby od ludzi w pobliżu twojej obecnej lokalizacji, w wybranym promieniu i kategoriach — nawet jeśli zwykle przebywasz gdzie indziej. Po wyłączeniu lub upływie czasu wracają powiadomienia według zwykłych ustawień."
   },
   "categories": {
     "AUTO": "Samochód",
@@ -304,7 +316,11 @@
     "neededAtHint": "Od 15 minut do 30 dni naprzód",
     "neededAtRequired": "Wybierz datę i godzinę",
     "neededAtTooSoon": "Wybierz godzinę co najmniej 15 minut od teraz",
-    "neededAtTime": "Godzina"
+    "neededAtTime": "Godzina",
+    "helpersNeeded": "Ile osób potrzeba",
+    "helpersNeededHint": "Gdy tyle osób zgodzi się pomóc, prośba zamknie się dla innych.",
+    "activeHours": "Jak długo prośba będzie aktywna",
+    "activeHoursHint": "Potem zamknie się automatycznie."
   },
   "nearby": {
     "title": "Pomoc w pobliżu",
@@ -360,7 +376,13 @@
     "helpers_few": "{{count}} odpowiedzi",
     "helpers_many": "{{count}} odpowiedzi",
     "helpers_other": "{{count}} odpowiedzi",
-    "rewardInfo": "Podziękowanie"
+    "rewardInfo": "Podziękowanie",
+    "helpersProgress": "Wybrano {{count}} z {{needed}}",
+    "selectedHelpers": "Pomocnicy",
+    "peopleStillNeeded_one": "potrzeba jeszcze {{count}} osoby",
+    "peopleStillNeeded_few": "potrzeba jeszcze {{count}} osób",
+    "peopleStillNeeded_many": "potrzeba jeszcze {{count}} osób",
+    "peopleStillNeeded_other": "potrzeba jeszcze {{count}} osoby"
   },
   "thanks": {
     "received": "Pomoc otrzymana ❤️",
@@ -388,7 +410,8 @@
     "closed": "Rozmowa zamknięta",
     "image": "📷 Zdjęcie",
     "aboutRequest": "Prośba: {{title}}",
-    "loadOlder": "Wcześniejsze wiadomości"
+    "loadOlder": "Wcześniejsze wiadomości",
+    "request": "Prośba"
   },
   "notifications": {
     "title": "Powiadomienia",
@@ -426,7 +449,8 @@
     "customItemsLabel": "Co jeszcze masz?",
     "customItemsPlaceholder": "Na przykład: rower, namiot",
     "customItemsAdd": "Dodaj",
-    "customItemsHint": "Do 10 rzeczy, po 40 znaków"
+    "customItemsHint": "Do 10 rzeczy, po 40 znaków",
+    "renameHint": "Stuknij, aby zmienić imię"
   },
   "settings": {
     "title": "Ustawienia",
@@ -465,7 +489,9 @@
     "theme": "Motyw",
     "themeLight": "Jasny",
     "themeDark": "Ciemny",
-    "themeSystem": "Systemowy"
+    "themeSystem": "Systemowy",
+    "sound": "Dźwięk nowych powiadomień",
+    "soundHint": "Krótki sygnał, gdy aplikacja jest otwarta i przychodzi coś nowego."
   },
   "report": {
     "title": "Zgłoś",
@@ -536,7 +562,17 @@
       "FREE": "Za darmo"
     },
     "agreed": "Uzgodniono: {{terms}}",
-    "note": "Platforma nie obsługuje płatności: umawiacie się między sobą."
+    "note": "Platforma nie obsługuje płatności: umawiacie się między sobą.",
+    "counterButton": "Zaproponuj swoją kwotę",
+    "counterLabel": "Twoja kwota, {{currency}}",
+    "counterHint": "Można to zrobić tylko raz — potem pomocnik przyjmie lub odrzuci.",
+    "counterSend": "Wyślij propozycję",
+    "counterSent": "Zaproponowałeś(-aś) {{amount}} — czekamy na odpowiedź",
+    "authorCounter": "Autor proponuje {{amount}}",
+    "lastStep": "To ostatnia propozycja: przyjmij lub odrzuć.",
+    "acceptCounter": "Przyjmij",
+    "declineCounter": "Odrzuć",
+    "agreedToast": "Umowa! Wybrano cię do pomocy."
   },
   "share": {
     "button": "Udostępnij",

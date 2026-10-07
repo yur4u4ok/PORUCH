@@ -17,7 +17,8 @@ export function useConversations() {
   return useQuery({
     queryKey: queryKeys.conversations,
     queryFn: conversationsApi.list,
-    refetchInterval: 60_000,
+    refetchInterval: 15_000,
+    refetchOnWindowFocus: true,
   });
 }
 

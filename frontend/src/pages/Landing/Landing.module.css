@@ -126,3 +126,24 @@
   background: var(--color-primary-soft);
   border-color: transparent;
 }
+
+/* Sign-up: «I am at least 16» checkbox. */
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+.check input {
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  accent-color: var(--color-primary);
+  flex: none;
+}
+.checkError {
+  font-size: var(--text-sm);
+  color: var(--color-danger);
+  margin-top: calc(-1 * var(--space-2));
+}

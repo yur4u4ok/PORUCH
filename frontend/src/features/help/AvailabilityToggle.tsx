@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { BottomSheet, Button, Card, Switch } from "@/components/ui";
+import { BottomSheet, Button, Card, Chip, Switch } from "@/components/ui";
 import { useGeolocation } from "@/features/location/useGeolocation";
 import {
   useAvailability,
@@ -16,7 +16,11 @@ import { formatTime } from "@/utils/format";
 import { DEFAULT_RADII } from "@/utils/radius";
 
 import { CategoryChips, RadiusChips } from "./components";
+import { SelectAll } from "./SelectAll";
 import styles from "./components.module.css";
+
+/** How long to receive nearby requests (the backend allows up to 12 hours). */
+const DURATIONS = [30, 60, 120, 240, 480, 720];
 
 export function AvailabilityToggle() {
   const { t } = useTranslation();
@@ -28,6 +32,7 @@ export function AvailabilityToggle() {
   const { locate } = useGeolocation();
   const [open, setOpen] = useState(false);
   const [radius, setRadius] = useState(3000);
+  const [minutes, setMinutes] = useState(120);
   const [categories, setCategories] = useState<NotificationCategory[]>([]);
 
   const active = !!availability?.active;
@@ -45,7 +50,7 @@ export function AvailabilityToggle() {
       return;
     }
     setAvailability.mutate(
-      { ...position, radius, categories, duration_minutes: config?.availability_default_minutes },
+      { ...position, radius, categories, duration_minutes: minutes },
       { onSuccess: () => setOpen(false) },
     );
   };
@@ -86,7 +91,22 @@ export function AvailabilityToggle() {
           <RadiusChips radii={config?.radii ?? DEFAULT_RADII} value={radius} onChange={setRadius} />
         </div>
         <div className="stack-sm">
+          <strong>{t("availability.duration")}</strong>
+          <div className={styles.chips} role="radiogroup" aria-label={t("availability.duration")}>
+            {DURATIONS.map((m) => (
+              <Chip key={m} active={minutes === m} onClick={() => setMinutes(m)}>
+                {m < 60 ? t("time.minutes", { count: m }) : t("time.hours", { count: m / 60 })}
+              </Chip>
+            ))}
+          </div>
+        </div>
+        <div className="stack-sm">
           <strong>{t("availability.categories")}</strong>
+          <SelectAll
+            all={config?.notification_categories ?? []}
+            selected={categories}
+            onChange={setCategories}
+          />
           <CategoryChips
             options={config?.notification_categories ?? []}
             selected={categories}

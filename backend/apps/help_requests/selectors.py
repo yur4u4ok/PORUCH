@@ -98,9 +98,10 @@ def requests_by_role(viewer: User, role: str, statuses: list[str] | None = None)
     if role == "author":
         qs = qs.filter(author=viewer)
     elif role == "helper":
-        qs = qs.filter(selected_helper=viewer)
+        qs = qs.filter(responses__helper=viewer, responses__status="ACCEPTED").distinct()
     elif role == "responded":
-        qs = qs.filter(responses__helper=viewer, responses__status__in=ACTIVE_RESPONSE_STATUSES).distinct()
+        # Offers still waiting for the author's decision (chosen ones are under role=helper).
+        qs = qs.filter(responses__helper=viewer, responses__status="PENDING").distinct()
     else:
         return qs.none()
     if statuses:

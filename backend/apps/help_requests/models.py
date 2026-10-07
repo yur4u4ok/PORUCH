@@ -3,7 +3,7 @@ import secrets
 from django.conf import settings
 from django.contrib.gis.db import models as gis_models
 from django.contrib.postgres.fields import ArrayField
-from django.core.validators import MaxLengthValidator, MinValueValidator
+from django.core.validators import MaxLengthValidator, MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Q
 
@@ -38,6 +38,10 @@ class HelpRequest(TimeStampedModel):
     place_name = models.CharField(max_length=120, blank=True, default="")
 
     urgency = models.CharField(max_length=10, choices=Urgency.choices, db_index=True)
+    # How many people the author needs; the request closes to others when that many are chosen.
+    helpers_needed = models.PositiveSmallIntegerField(
+        default=1, validators=[MinValueValidator(1), MaxValueValidator(10)]
+    )
     # When help is needed, for urgency SCHEDULED ("у визначений час"); null otherwise.
     needed_at = models.DateTimeField(null=True, blank=True)
 

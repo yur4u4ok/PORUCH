@@ -218,6 +218,13 @@ export default function ProfilePage() {
 
   if (isPending || !me) return <Loader />;
 
+  /** Inline rename: Enter or leaving the field saves, Esc cancels; empty or unchanged does nothing. */
+  const saveName = () => {
+    const next = name.trim();
+    setEditName(false);
+    if (next && next !== me.display_name) updateMe.mutate({ display_name: next });
+  };
+
   const onAvatar = async (file?: File) => {
     if (!file) return;
     setUploading(true);
@@ -235,30 +242,59 @@ export default function ProfilePage() {
     <main className="page stack">
       <PageHeader
         title={t("profile.title")}
-        back={false}
         actions={
-          <Link to="/settings">
-            <Button variant="ghost" size="sm" aria-label={t("settings.title")}>
-              ⚙️
-            </Button>
+          <Link to="/settings" className={styles.settingsLink} aria-label={t("settings.title")}>
+            ⚙️
           </Link>
         }
       />
       <div className={styles.head}>
         <Avatar name={me.display_name} media={me.avatar} size={96} />
-        <label className={styles.avatarEdit}>
-          {uploading ? t("create.uploading") : t("profile.changeAvatar")}
+        <div className="row">
+          <label className={styles.avatarEdit}>
+            {uploading ? t("create.uploading") : t("profile.changeAvatar")}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              className="visually-hidden"
+              onChange={(e) => void onAvatar(e.target.files?.[0])}
+            />
+          </label>
+          {me.avatar && (
+            <button
+              type="button"
+              className={styles.avatarEdit}
+              onClick={() => updateMe.mutate({ avatar_id: null })}
+            >
+              {t("profile.removeAvatar")}
+            </button>
+          )}
+        </div>
+        {editName ? (
           <input
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            className="visually-hidden"
-            onChange={(e) => void onAvatar(e.target.files?.[0])}
+            className={styles.nameInput}
+            aria-label={t("auth.displayName")}
+            value={name}
+            maxLength={50}
+            autoFocus
+            onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") saveName();
+              if (e.key === "Escape") setEditName(false);
+            }}
+            onBlur={saveName}
           />
-        </label>
-        <h1>{me.display_name}</h1>
-        <Button variant="ghost" size="sm" onClick={() => (setName(me.display_name), setEditName(true))}>
-          ✏️ {t("profile.edit")}
-        </Button>
+        ) : (
+          <button
+            type="button"
+            className={styles.name}
+            title={t("profile.renameHint")}
+            onClick={() => (setName(me.display_name), setEditName(true))}
+          >
+            <h1>{me.display_name}</h1>
+            <span aria-hidden>✏️</span>
+          </button>
+        )}
         <div className={styles.stats}>
           <span>{t("profile.helped", { count: me.helped_count })}</span>
           <span>{t("profile.thanks", { count: me.thanks_received_count })}</span>
@@ -306,32 +342,6 @@ export default function ProfilePage() {
           initialCustom={me.custom_items}
         />
       )}
-      <BottomSheet
-        open={editName}
-        onClose={() => setEditName(false)}
-        title={t("profile.edit")}
-        actions={
-          <Button
-            block
-            loading={updateMe.isPending}
-            onClick={() => updateMe.mutate({ display_name: name }, { onSuccess: () => setEditName(false) })}
-          >
-            {t("common.save")}
-          </Button>
-        }
-      >
-        <Input
-          label={t("auth.displayName")}
-          value={name}
-          maxLength={50}
-          onChange={(e) => setName(e.target.value)}
-        />
-        {me.avatar && (
-          <Button variant="ghost" onClick={() => updateMe.mutate({ avatar_id: null })}>
-            {t("profile.removeAvatar")}
-          </Button>
-        )}
-      </BottomSheet>
     </main>
   );
 }

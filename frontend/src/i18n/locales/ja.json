@@ -37,7 +37,11 @@
     "anonymous": "ご近所さん",
     "seeAll": "すべて",
     "fromYou": "{{distance}}先",
-    "since": "{{year}}年から参加"
+    "since": "{{year}}年から参加",
+    "selectAll": "すべて選択",
+    "selectNone": "すべて解除",
+    "less": "減らす",
+    "more": "増やす"
   },
   "time": {
     "justNow": "たった今",
@@ -46,7 +50,8 @@
     "daysAgo_other": "{{count}}日前",
     "expiresIn": "あと{{value}}有効",
     "hours_other": "{{count}}時間",
-    "minutes_other": "{{count}}分"
+    "minutes_other": "{{count}}分",
+    "days_other": "{{count}}日"
   },
   "landing": {
     "needHelpTitle": "助けが必要ですか？",
@@ -105,7 +110,10 @@
     "terms": "登録することで、安全かつ思いやりをもって助け合うことに同意したものとみなされます。",
     "googleFailed": "Googleでログインできませんでした。もう一度お試しください。",
     "googleInactive": "このアカウントは無効になっています。",
-    "checkSpam": "メールが見当たらない場合は、1分ほど待ってから迷惑メールフォルダやプロモーションタブを確認してください。そこにあれば「迷惑メールではない」に設定すると、次から受信トレイに届きます。"
+    "checkSpam": "メールが見当たらない場合は、1分ほど待ってから迷惑メールフォルダやプロモーションタブを確認してください。そこにあれば「迷惑メールではない」に設定すると、次から受信トレイに届きます。",
+    "ageConfirm": "16歳以上です",
+    "ageRequired": "16歳以上であることを確認してください",
+    "ageForGoogle": "Googleで続けるには、先に上で年齢を確認してください。"
   },
   "validation": {
     "required": "必須項目です",
@@ -125,7 +133,8 @@
     "notificationsAllow": "通知をオンにする",
     "notificationsGranted": "通知はオンです ✓",
     "categoriesTitle": "何を手伝えますか？",
-    "categoriesText": "関係のある依頼だけをお送りします。設定でいつでも変更できます。"
+    "categoriesText": "関係のある依頼だけをお送りします。設定でいつでも変更できます。",
+    "changeLater": "あとで設定から変更できます。"
   },
   "home": {
     "needHelp": "助けが必要",
@@ -153,7 +162,7 @@
     "disable": "オフにする",
     "needLocation": "位置情報が必要です",
     "explainTitle": "このモードについて",
-    "explain": "オンの間（最長2時間）、普段は別の場所にいても、現在地の近くにいる人からの依頼を、選んだ範囲とカテゴリでお送りします。オフにするか時間が過ぎると、通常の設定に戻ります。"
+    "explain": "オンの間（選んだ時間だけ）、普段は別の場所にいても、現在地の近くにいる人からの依頼を、選んだ範囲とカテゴリでお送りします。オフにするか時間が過ぎると、通常の設定に戻ります。"
   },
   "categories": {
     "AUTO": "車",
@@ -289,7 +298,11 @@
     "neededAtHint": "15分後から30日後まで",
     "neededAtRequired": "日付と時刻を選んでください",
     "neededAtTooSoon": "今から15分以上先の時刻を選んでください",
-    "neededAtTime": "時刻"
+    "neededAtTime": "時刻",
+    "helpersNeeded": "必要な人数",
+    "helpersNeededHint": "この人数が手伝うことに同意すると、依頼はほかの人には閉じられます。",
+    "activeHours": "依頼を公開しておく時間",
+    "activeHoursHint": "時間が過ぎると自動で締め切られます。"
   },
   "nearby": {
     "title": "近くの助け合い",
@@ -342,7 +355,10 @@
     "blockConfirm": "このユーザーをブロックしますか？お互いの依頼が見えなくなり、メッセージも送れなくなります。",
     "blocked": "ブロックしました",
     "helpers_other": "応答 {{count}}件",
-    "rewardInfo": "お礼"
+    "rewardInfo": "お礼",
+    "helpersProgress": "{{needed}}人中{{count}}人を選択",
+    "selectedHelpers": "手伝う人",
+    "peopleStillNeeded_other": "あと{{count}}人必要"
   },
   "thanks": {
     "received": "助けてもらいました ❤️",
@@ -370,7 +386,8 @@
     "closed": "会話は終了しました",
     "image": "📷 写真",
     "aboutRequest": "依頼：{{title}}",
-    "loadOlder": "以前のメッセージ"
+    "loadOlder": "以前のメッセージ",
+    "request": "依頼"
   },
   "notifications": {
     "title": "通知",
@@ -408,7 +425,8 @@
     "customItemsLabel": "ほかに持っているものは？",
     "customItemsPlaceholder": "例：自転車、テント",
     "customItemsAdd": "追加",
-    "customItemsHint": "最大10個、各40文字まで"
+    "customItemsHint": "最大10個、各40文字まで",
+    "renameHint": "タップして名前を変更"
   },
   "settings": {
     "title": "設定",
@@ -447,7 +465,9 @@
     "theme": "テーマ",
     "themeLight": "ライト",
     "themeDark": "ダーク",
-    "themeSystem": "システム"
+    "themeSystem": "システム",
+    "sound": "新着通知の音",
+    "soundHint": "アプリを開いているときに新着があると短い音が鳴ります。"
   },
   "report": {
     "title": "通報",
@@ -518,7 +538,17 @@
       "FREE": "無償"
     },
     "agreed": "合意内容：{{terms}}",
-    "note": "このサービスは支払いを扱いません。取り決めは当事者同士で行ってください。"
+    "note": "このサービスは支払いを扱いません。取り決めは当事者同士で行ってください。",
+    "counterButton": "自分の金額を提案",
+    "counterLabel": "提案する金額（{{currency}}）",
+    "counterHint": "提案は一度だけです。その後、相手が承諾か辞退を選びます。",
+    "counterSend": "提案を送る",
+    "counterSent": "{{amount}}を提案しました — 返事待ち",
+    "authorCounter": "依頼者が{{amount}}を提案しています",
+    "lastStep": "これが最後の提案です。承諾か辞退を選んでください。",
+    "acceptCounter": "承諾する",
+    "declineCounter": "辞退する",
+    "agreedToast": "合意しました！手伝う人に選ばれました。"
   },
   "share": {
     "button": "共有",

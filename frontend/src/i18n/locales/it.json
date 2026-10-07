@@ -37,7 +37,11 @@
     "anonymous": "Vicino di casa",
     "seeAll": "Tutto",
     "fromYou": "a {{distance}}",
-    "since": "Iscritto dal {{year}}"
+    "since": "Iscritto dal {{year}}",
+    "selectAll": "Seleziona tutto",
+    "selectNone": "Deseleziona tutto",
+    "less": "Meno",
+    "more": "Più"
   },
   "time": {
     "justNow": "proprio ora",
@@ -51,7 +55,9 @@
     "hours_one": "{{count}} ora",
     "hours_other": "{{count}} ore",
     "minutes_one": "{{count}} minuto",
-    "minutes_other": "{{count}} minuti"
+    "minutes_other": "{{count}} minuti",
+    "days_one": "{{count}} giorno",
+    "days_other": "{{count}} giorni"
   },
   "landing": {
     "needHelpTitle": "Ti serve aiuto?",
@@ -110,7 +116,10 @@
     "terms": "Registrandoti, ti impegni ad aiutare in modo sicuro e rispettoso.",
     "googleFailed": "Accesso con Google non riuscito. Riprova.",
     "googleInactive": "Questo account è stato disattivato.",
-    "checkSpam": "Non vedi l'email? Aspetta un minuto e controlla le cartelle Spam e Promozioni. Se è lì, segnala che «Non è spam», così le prossime arriveranno nella posta in arrivo."
+    "checkSpam": "Non vedi l'email? Aspetta un minuto e controlla le cartelle Spam e Promozioni. Se è lì, segnala che «Non è spam», così le prossime arriveranno nella posta in arrivo.",
+    "ageConfirm": "Ho almeno 16 anni",
+    "ageRequired": "Conferma di avere almeno 16 anni",
+    "ageForGoogle": "Per continuare con Google, conferma prima la tua età qui sopra."
   },
   "validation": {
     "required": "Campo obbligatorio",
@@ -130,7 +139,8 @@
     "notificationsAllow": "Attiva notifiche",
     "notificationsGranted": "Notifiche attive ✓",
     "categoriesTitle": "In cosa puoi aiutare?",
-    "categoriesText": "Ti invieremo solo richieste pertinenti. Puoi cambiarlo nelle impostazioni."
+    "categoriesText": "Ti invieremo solo richieste pertinenti. Puoi cambiarlo nelle impostazioni.",
+    "changeLater": "Puoi cambiarlo più tardi nelle impostazioni."
   },
   "home": {
     "needHelp": "Ho bisogno di aiuto",
@@ -158,7 +168,7 @@
     "disable": "Disattiva",
     "needLocation": "Serve la posizione",
     "explainTitle": "Cosa fa questa modalità",
-    "explain": "Finché è attiva (fino a 2 ore), ti inviamo le richieste delle persone vicine alla tua posizione attuale, nel raggio e nelle categorie scelte, anche se di solito sei altrove. Quando la disattivi o il tempo scade, tornano le notifiche secondo le impostazioni abituali."
+    "explain": "Finché è attiva (per il tempo che scegli), ti inviamo le richieste delle persone vicine alla tua posizione attuale, nel raggio e nelle categorie scelte, anche se di solito sei altrove. Quando la disattivi o il tempo scade, tornano le notifiche secondo le impostazioni abituali."
   },
   "categories": {
     "AUTO": "Auto",
@@ -294,7 +304,11 @@
     "neededAtHint": "Da 15 minuti a 30 giorni prima",
     "neededAtRequired": "Scegli data e ora",
     "neededAtTooSoon": "Scegli un orario almeno 15 minuti da adesso",
-    "neededAtTime": "Ora"
+    "neededAtTime": "Ora",
+    "helpersNeeded": "Quante persone servono",
+    "helpersNeededHint": "Quando altrettante persone accettano di aiutare, la richiesta si chiude per gli altri.",
+    "activeHours": "Per quanto tempo la richiesta resta attiva",
+    "activeHoursHint": "Dopo si chiude automaticamente."
   },
   "nearby": {
     "title": "Aiuto vicino",
@@ -348,7 +362,11 @@
     "blocked": "Utente bloccato",
     "helpers_one": "{{count}} risposta",
     "helpers_other": "{{count}} risposte",
-    "rewardInfo": "Ringraziamento"
+    "rewardInfo": "Ringraziamento",
+    "helpersProgress": "Scelte {{count}} su {{needed}}",
+    "selectedHelpers": "Chi aiuta",
+    "peopleStillNeeded_one": "serve ancora {{count}} persona",
+    "peopleStillNeeded_other": "servono ancora {{count}} persone"
   },
   "thanks": {
     "received": "Aiuto ricevuto ❤️",
@@ -376,7 +394,8 @@
     "closed": "Conversazione chiusa",
     "image": "📷 Foto",
     "aboutRequest": "Richiesta: {{title}}",
-    "loadOlder": "Messaggi precedenti"
+    "loadOlder": "Messaggi precedenti",
+    "request": "Richiesta"
   },
   "notifications": {
     "title": "Notifiche",
@@ -414,7 +433,8 @@
     "customItemsLabel": "Cos'altro hai?",
     "customItemsPlaceholder": "Per esempio: bicicletta, tenda",
     "customItemsAdd": "Aggiungi",
-    "customItemsHint": "Fino a 10 oggetti, 40 caratteri ciascuno"
+    "customItemsHint": "Fino a 10 oggetti, 40 caratteri ciascuno",
+    "renameHint": "Tocca per cambiare nome"
   },
   "settings": {
     "title": "Impostazioni",
@@ -453,7 +473,9 @@
     "theme": "Tema",
     "themeLight": "Chiaro",
     "themeDark": "Scuro",
-    "themeSystem": "Sistema"
+    "themeSystem": "Sistema",
+    "sound": "Suono delle nuove notifiche",
+    "soundHint": "Un breve suono quando l'app è aperta e arriva qualcosa di nuovo."
   },
   "report": {
     "title": "Segnala",
@@ -524,7 +546,17 @@
       "FREE": "Gratis"
     },
     "agreed": "Concordato: {{terms}}",
-    "note": "La piattaforma non gestisce pagamenti: l'accordo è tra voi."
+    "note": "La piattaforma non gestisce pagamenti: l'accordo è tra voi.",
+    "counterButton": "Proponi il tuo importo",
+    "counterLabel": "Il tuo importo, {{currency}}",
+    "counterHint": "Puoi farlo una sola volta: poi chi aiuta accetta o rifiuta.",
+    "counterSend": "Invia proposta",
+    "counterSent": "Hai proposto {{amount}}: in attesa di risposta",
+    "authorCounter": "L'autore propone {{amount}}",
+    "lastStep": "È l'ultima proposta: accetta o rifiuta.",
+    "acceptCounter": "Accetta",
+    "declineCounter": "Rifiuta",
+    "agreedToast": "Fatto! Sei stato scelto per aiutare."
   },
   "share": {
     "button": "Condividi",

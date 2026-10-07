@@ -37,7 +37,11 @@
     "anonymous": "이웃",
     "seeAll": "전체",
     "fromYou": "{{distance}} 거리",
-    "since": "{{year}}년부터 회원"
+    "since": "{{year}}년부터 회원",
+    "selectAll": "모두 선택",
+    "selectNone": "모두 해제",
+    "less": "줄이기",
+    "more": "늘리기"
   },
   "time": {
     "justNow": "방금",
@@ -46,7 +50,8 @@
     "daysAgo_other": "{{count}}일 전",
     "expiresIn": "{{value}} 더 유효",
     "hours_other": "{{count}}시간",
-    "minutes_other": "{{count}}분"
+    "minutes_other": "{{count}}분",
+    "days_other": "{{count}}일"
   },
   "landing": {
     "needHelpTitle": "도움이 필요하세요?",
@@ -105,7 +110,10 @@
     "terms": "가입하면 안전하고 정중하게 서로 돕는 데 동의하는 것입니다.",
     "googleFailed": "Google로 로그인하지 못했어요. 다시 시도해 주세요.",
     "googleInactive": "이 계정은 비활성화되었습니다.",
-    "checkSpam": "메일이 보이지 않나요? 1분 정도 기다린 뒤 스팸함과 프로모션함을 확인해 주세요. 거기 있다면 ‘스팸 아님’으로 표시하면 다음부터 받은편지함으로 와요."
+    "checkSpam": "메일이 보이지 않나요? 1분 정도 기다린 뒤 스팸함과 프로모션함을 확인해 주세요. 거기 있다면 ‘스팸 아님’으로 표시하면 다음부터 받은편지함으로 와요.",
+    "ageConfirm": "만 16세 이상입니다",
+    "ageRequired": "만 16세 이상임을 확인해 주세요",
+    "ageForGoogle": "Google로 계속하려면 먼저 위에서 나이를 확인하세요."
   },
   "validation": {
     "required": "필수 항목입니다",
@@ -125,7 +133,8 @@
     "notificationsAllow": "알림 켜기",
     "notificationsGranted": "알림이 켜졌습니다 ✓",
     "categoriesTitle": "어떤 도움을 줄 수 있나요?",
-    "categoriesText": "관련 있는 요청만 보내 드려요. 설정에서 언제든 바꿀 수 있습니다."
+    "categoriesText": "관련 있는 요청만 보내 드려요. 설정에서 언제든 바꿀 수 있습니다.",
+    "changeLater": "나중에 설정에서 바꿀 수 있어요."
   },
   "home": {
     "needHelp": "도움이 필요해요",
@@ -153,7 +162,7 @@
     "disable": "끄기",
     "needLocation": "위치가 필요합니다",
     "explainTitle": "이 모드는 무엇인가요",
-    "explain": "켜져 있는 동안(최대 2시간), 평소에는 다른 곳에 있더라도 현재 위치 근처 사람들의 요청을 선택한 반경과 카테고리에 맞춰 보내 드립니다. 끄거나 시간이 지나면 평소 설정으로 돌아갑니다."
+    "explain": "켜져 있는 동안(선택한 시간 동안), 평소에는 다른 곳에 있더라도 현재 위치 근처 사람들의 요청을 선택한 반경과 카테고리에 맞춰 보내 드립니다. 끄거나 시간이 지나면 평소 설정으로 돌아갑니다."
   },
   "categories": {
     "AUTO": "자동차",
@@ -289,7 +298,11 @@
     "neededAtHint": "15분 후부터 30일 이내",
     "neededAtRequired": "날짜와 시간을 선택하세요",
     "neededAtTooSoon": "지금부터 최소 15분 이후로 선택하세요",
-    "neededAtTime": "시간"
+    "neededAtTime": "시간",
+    "helpersNeeded": "필요한 인원",
+    "helpersNeededHint": "이만큼의 사람이 돕기로 하면 요청이 다른 사람에게 닫혀요.",
+    "activeHours": "요청 유지 시간",
+    "activeHoursHint": "시간이 지나면 자동으로 닫혀요."
   },
   "nearby": {
     "title": "내 주변 도움",
@@ -342,7 +355,10 @@
     "blockConfirm": "이 사용자를 차단할까요? 서로의 요청이 보이지 않고 메시지도 주고받을 수 없습니다.",
     "blocked": "사용자를 차단했어요",
     "helpers_other": "응답 {{count}}개",
-    "rewardInfo": "감사 표시"
+    "rewardInfo": "감사 표시",
+    "helpersProgress": "{{needed}}명 중 {{count}}명 선택",
+    "selectedHelpers": "도우미",
+    "peopleStillNeeded_other": "{{count}}명 더 필요"
   },
   "thanks": {
     "received": "도움을 받았어요 ❤️",
@@ -370,7 +386,8 @@
     "closed": "대화가 종료되었어요",
     "image": "📷 사진",
     "aboutRequest": "요청: {{title}}",
-    "loadOlder": "이전 메시지"
+    "loadOlder": "이전 메시지",
+    "request": "요청"
   },
   "notifications": {
     "title": "알림",
@@ -408,7 +425,8 @@
     "customItemsLabel": "또 무엇을 가지고 있나요?",
     "customItemsPlaceholder": "예: 자전거, 텐트",
     "customItemsAdd": "추가",
-    "customItemsHint": "최대 10개, 각 40자까지"
+    "customItemsHint": "최대 10개, 각 40자까지",
+    "renameHint": "탭해서 이름 바꾸기"
   },
   "settings": {
     "title": "설정",
@@ -447,7 +465,9 @@
     "theme": "테마",
     "themeLight": "라이트",
     "themeDark": "다크",
-    "themeSystem": "시스템"
+    "themeSystem": "시스템",
+    "sound": "새 알림 소리",
+    "soundHint": "앱이 열려 있을 때 새 소식이 오면 짧은 소리가 나요."
   },
   "report": {
     "title": "신고",
@@ -518,7 +538,17 @@
       "FREE": "무료"
     },
     "agreed": "합의: {{terms}}",
-    "note": "플랫폼은 결제를 처리하지 않습니다. 합의는 두 분 사이의 일입니다."
+    "note": "플랫폼은 결제를 처리하지 않습니다. 합의는 두 분 사이의 일입니다.",
+    "counterButton": "내 금액 제안하기",
+    "counterLabel": "제안 금액({{currency}})",
+    "counterHint": "한 번만 제안할 수 있어요. 이후 도우미가 수락하거나 거절해요.",
+    "counterSend": "제안 보내기",
+    "counterSent": "{{amount}}을(를) 제안했어요 — 답변 대기 중",
+    "authorCounter": "요청자가 {{amount}}을(를) 제안해요",
+    "lastStep": "마지막 제안이에요: 수락하거나 거절하세요.",
+    "acceptCounter": "수락",
+    "declineCounter": "거절",
+    "agreedToast": "합의했어요! 도우미로 선택되었어요."
   },
   "share": {
     "button": "공유",

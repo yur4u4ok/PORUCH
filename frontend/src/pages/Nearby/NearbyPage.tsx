@@ -27,6 +27,7 @@ const ZOOM_BY_RADIUS: Record<number, number> = {
   5000: 12,
   10000: 11,
   20000: 10,
+  30000: 9,
 };
 
 export default function NearbyPage() {
@@ -95,7 +96,6 @@ export default function NearbyPage() {
     <main className="page stack">
       <PageHeader
         title={`🔍 ${t("nearby.title")}`}
-        back={false}
         actions={
           <Button variant="secondary" size="sm" onClick={() => setFiltersOpen(true)}>
             ⚙️ {t("nearby.filters")}

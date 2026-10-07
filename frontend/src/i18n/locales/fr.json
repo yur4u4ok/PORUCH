@@ -37,7 +37,11 @@
     "anonymous": "Voisin",
     "seeAll": "Tout",
     "fromYou": "à {{distance}}",
-    "since": "Membre depuis {{year}}"
+    "since": "Membre depuis {{year}}",
+    "selectAll": "Tout sélectionner",
+    "selectNone": "Tout désélectionner",
+    "less": "Moins",
+    "more": "Plus"
   },
   "time": {
     "justNow": "à l'instant",
@@ -51,7 +55,9 @@
     "hours_one": "{{count}} heure",
     "hours_other": "{{count}} heures",
     "minutes_one": "{{count}} minute",
-    "minutes_other": "{{count}} minutes"
+    "minutes_other": "{{count}} minutes",
+    "days_one": "{{count}} jour",
+    "days_other": "{{count}} jours"
   },
   "landing": {
     "needHelpTitle": "Besoin d'aide ?",
@@ -110,7 +116,10 @@
     "terms": "En vous inscrivant, vous vous engagez à aider en toute sécurité et avec respect.",
     "googleFailed": "Connexion avec Google impossible. Réessayez.",
     "googleInactive": "Ce compte a été désactivé.",
-    "checkSpam": "Vous ne voyez pas l'email ? Attendez une minute et vérifiez les dossiers Spam et Promotions. S'il y est, marquez-le « Non spam » pour que les suivants arrivent dans votre boîte de réception."
+    "checkSpam": "Vous ne voyez pas l'email ? Attendez une minute et vérifiez les dossiers Spam et Promotions. S'il y est, marquez-le « Non spam » pour que les suivants arrivent dans votre boîte de réception.",
+    "ageConfirm": "J'ai au moins 16 ans",
+    "ageRequired": "Confirmez que vous avez au moins 16 ans",
+    "ageForGoogle": "Pour continuer avec Google, confirmez d'abord votre âge ci-dessus."
   },
   "validation": {
     "required": "Champ obligatoire",
@@ -130,7 +139,8 @@
     "notificationsAllow": "Activer les notifications",
     "notificationsGranted": "Notifications activées ✓",
     "categoriesTitle": "Pour quoi pouvez-vous aider ?",
-    "categoriesText": "Nous ne vous enverrons que les demandes pertinentes. Modifiable dans les réglages."
+    "categoriesText": "Nous ne vous enverrons que les demandes pertinentes. Modifiable dans les réglages.",
+    "changeLater": "Vous pourrez le modifier plus tard dans les réglages."
   },
   "home": {
     "needHelp": "J'ai besoin d'aide",
@@ -158,7 +168,7 @@
     "disable": "Désactiver",
     "needLocation": "La localisation est nécessaire",
     "explainTitle": "Ce que fait ce mode",
-    "explain": "Tant qu'il est activé (jusqu'à 2 heures), nous vous envoyons les demandes des personnes proches de votre position actuelle, dans le rayon et les catégories choisis, même si vous êtes d'habitude ailleurs. Quand vous le désactivez ou que le temps est écoulé, vos réglages habituels reprennent."
+    "explain": "Tant qu'il est activé (pendant la durée que vous choisissez), nous vous envoyons les demandes des personnes proches de votre position actuelle, dans le rayon et les catégories choisis, même si vous êtes d'habitude ailleurs. Quand vous le désactivez ou que le temps est écoulé, vos réglages habituels reprennent."
   },
   "categories": {
     "AUTO": "Voiture",
@@ -294,7 +304,11 @@
     "neededAtHint": "De 15 minutes à 30 jours à l'avance",
     "neededAtRequired": "Choisissez la date et l'heure",
     "neededAtTooSoon": "Choisissez une heure au moins 15 minutes plus tard",
-    "neededAtTime": "Heure"
+    "neededAtTime": "Heure",
+    "helpersNeeded": "Combien de personnes sont nécessaires",
+    "helpersNeededHint": "Quand ce nombre de personnes a accepté d'aider, la demande se ferme aux autres.",
+    "activeHours": "Combien de temps la demande reste active",
+    "activeHoursHint": "Ensuite, elle se ferme automatiquement."
   },
   "nearby": {
     "title": "Aide à proximité",
@@ -348,7 +362,11 @@
     "blocked": "Utilisateur bloqué",
     "helpers_one": "{{count}} réponse",
     "helpers_other": "{{count}} réponses",
-    "rewardInfo": "Remerciement"
+    "rewardInfo": "Remerciement",
+    "helpersProgress": "{{count}} sur {{needed}} choisis",
+    "selectedHelpers": "Personnes qui aident",
+    "peopleStillNeeded_one": "encore {{count}} personne",
+    "peopleStillNeeded_other": "encore {{count}} personnes"
   },
   "thanks": {
     "received": "Aide reçue ❤️",
@@ -376,7 +394,8 @@
     "closed": "Conversation fermée",
     "image": "📷 Photo",
     "aboutRequest": "Demande : {{title}}",
-    "loadOlder": "Messages précédents"
+    "loadOlder": "Messages précédents",
+    "request": "Demande"
   },
   "notifications": {
     "title": "Notifications",
@@ -414,7 +433,8 @@
     "customItemsLabel": "Qu'avez-vous d'autre ?",
     "customItemsPlaceholder": "Par exemple : vélo, tente",
     "customItemsAdd": "Ajouter",
-    "customItemsHint": "Jusqu'à 10 objets, 40 caractères chacun"
+    "customItemsHint": "Jusqu'à 10 objets, 40 caractères chacun",
+    "renameHint": "Touchez pour changer votre nom"
   },
   "settings": {
     "title": "Réglages",
@@ -453,7 +473,9 @@
     "theme": "Thème",
     "themeLight": "Clair",
     "themeDark": "Sombre",
-    "themeSystem": "Système"
+    "themeSystem": "Système",
+    "sound": "Son des nouvelles notifications",
+    "soundHint": "Un court signal quand l'app est ouverte et que quelque chose de nouveau arrive."
   },
   "report": {
     "title": "Signaler",
@@ -524,7 +546,17 @@
       "FREE": "Gratuitement"
     },
     "agreed": "Convenu : {{terms}}",
-    "note": "La plateforme ne gère pas les paiements : l'arrangement se fait entre vous."
+    "note": "La plateforme ne gère pas les paiements : l'arrangement se fait entre vous.",
+    "counterButton": "Proposer votre montant",
+    "counterLabel": "Votre montant, {{currency}}",
+    "counterHint": "Possible une seule fois : ensuite la personne accepte ou refuse.",
+    "counterSend": "Envoyer la proposition",
+    "counterSent": "Vous avez proposé {{amount}} — en attente de réponse",
+    "authorCounter": "L'auteur propose {{amount}}",
+    "lastStep": "C'est la dernière proposition : acceptez ou refusez.",
+    "acceptCounter": "Accepter",
+    "declineCounter": "Refuser",
+    "agreedToast": "C'est convenu ! Vous avez été choisi pour aider."
   },
   "share": {
     "button": "Partager",

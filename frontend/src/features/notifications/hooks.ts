@@ -13,7 +13,9 @@ export function useUnreadCount(enabled: boolean) {
     queryFn: () => notificationsApi.unreadCount(),
     select: (data) => data.unread_count,
     enabled,
-    refetchInterval: 60_000,
+    // Kept fresh without a reload; push messages from the service worker refresh it instantly.
+    refetchInterval: 15_000,
+    refetchOnWindowFocus: true,
     meta: { silent: true },
   });
 }

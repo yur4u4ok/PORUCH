@@ -10,6 +10,8 @@ const valid = {
   location: { latitude: 49.84, longitude: 24.03, accuracy: 10 },
   urgency: "NOW",
   needed_at: "",
+  helpers_needed: 1,
+  active_hours: 6,
   reward_type: "NONE",
   reward_amount: "",
   reward_options: [],

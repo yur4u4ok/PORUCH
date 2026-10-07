@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { Trans, useTranslation } from "react-i18next";
 
 import { BRAND } from "@/app/brand";
@@ -128,9 +128,11 @@ export function RegisterPage() {
   const fe = useFieldError();
   const navigate = useNavigate();
   const registerMutation = useRegister();
-  const { register, handleSubmit, setError, formState } = useForm<RegisterForm>({
+  const { register, handleSubmit, setError, formState, control } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
+    defaultValues: { age_confirmed: false },
   });
+  const ageConfirmed = useWatch({ control, name: "age_confirmed" });
 
   const onSubmit = handleSubmit((values) =>
     registerMutation.mutate(values, {
@@ -171,6 +173,15 @@ export function RegisterPage() {
           {...register("password")}
           error={fe(formState.errors.password?.message)}
         />
+        <label className={styles.check}>
+          <input type="checkbox" {...register("age_confirmed")} />
+          <span>{t("auth.ageConfirm")}</span>
+        </label>
+        {formState.errors.age_confirmed && (
+          <p role="alert" className={styles.checkError}>
+            {fe(formState.errors.age_confirmed.message)}
+          </p>
+        )}
         <Button type="submit" size="lg" block loading={registerMutation.isPending}>
           {t("auth.register")}
         </Button>
@@ -183,7 +194,12 @@ export function RegisterPage() {
         </p>
       </form>
       <div className={styles.divider}>{t("auth.or")}</div>
-      <GoogleButton />
+      <GoogleButton disabled={!ageConfirmed} />
+      {!ageConfirmed && (
+        <p className="muted" style={{ fontSize: 13, marginTop: -8 }}>
+          {t("auth.ageForGoogle")}
+        </p>
+      )}
       <p>
         {t("auth.hasAccount")} <Link to="/auth/login">{t("auth.login")}</Link>
       </p>

@@ -19,6 +19,11 @@ class HelpResponse(UUIDModel):
     message = models.TextField(max_length=500, blank=True, validators=[MaxLengthValidator(500)])
     offer_type = models.CharField(max_length=10, choices=OfferType.choices, default=OfferType.ACCEPT)
     offered_amount = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    # The author's single counter to a helper's different amount; the helper then accepts or declines.
+    author_counter_amount = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    # Terms locked in for this helper when chosen (a request may have several helpers).
+    agreed_offer_type = models.CharField(max_length=10, null=True, blank=True)
+    agreed_amount = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     status = models.CharField(max_length=10, choices=ResponseStatus.choices, default=ResponseStatus.PENDING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -32,11 +37,6 @@ class HelpResponse(UUIDModel):
                 fields=["help_request", "helper"],
                 condition=Q(status__in=["PENDING", "ACCEPTED"]),
                 name="unique_active_response_per_user_request",
-            ),
-            models.UniqueConstraint(
-                fields=["help_request"],
-                condition=Q(status="ACCEPTED"),
-                name="single_accepted_response_per_request",
             ),
         ]
 

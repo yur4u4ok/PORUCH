@@ -37,7 +37,11 @@
     "anonymous": "邻居",
     "seeAll": "全部",
     "fromYou": "距你 {{distance}}",
-    "since": "{{year}} 年加入"
+    "since": "{{year}} 年加入",
+    "selectAll": "全选",
+    "selectNone": "全部取消",
+    "less": "减少",
+    "more": "增加"
   },
   "time": {
     "justNow": "刚刚",
@@ -46,7 +50,8 @@
     "daysAgo_other": "{{count}} 天前",
     "expiresIn": "还剩 {{value}} 有效",
     "hours_other": "{{count}} 小时",
-    "minutes_other": "{{count}} 分钟"
+    "minutes_other": "{{count}} 分钟",
+    "days_other": "{{count}} 天"
   },
   "landing": {
     "needHelpTitle": "需要帮助？",
@@ -105,7 +110,10 @@
     "terms": "注册即表示你同意以安全、尊重的方式互相帮助。",
     "googleFailed": "无法使用 Google 登录，请重试。",
     "googleInactive": "该账号已被停用。",
-    "checkSpam": "没看到邮件？请等一分钟，再查看垃圾邮件和推广邮件文件夹。如果在那里，请标记为“非垃圾邮件”，以后的邮件就会进入收件箱。"
+    "checkSpam": "没看到邮件？请等一分钟，再查看垃圾邮件和推广邮件文件夹。如果在那里，请标记为“非垃圾邮件”，以后的邮件就会进入收件箱。",
+    "ageConfirm": "我已年满 16 岁",
+    "ageRequired": "请确认你已年满 16 岁",
+    "ageForGoogle": "要使用 Google 继续，请先在上方确认年龄。"
   },
   "validation": {
     "required": "必填项",
@@ -125,7 +133,8 @@
     "notificationsAllow": "开启通知",
     "notificationsGranted": "通知已开启 ✓",
     "categoriesTitle": "你能帮什么忙？",
-    "categoriesText": "我们只会发送相关的求助，可以随时在设置中修改。"
+    "categoriesText": "我们只会发送相关的求助，可以随时在设置中修改。",
+    "changeLater": "之后可以在设置中更改。"
   },
   "home": {
     "needHelp": "我需要帮助",
@@ -153,7 +162,7 @@
     "disable": "关闭",
     "needLocation": "需要位置信息",
     "explainTitle": "这个模式有什么用",
-    "explain": "开启期间（最长 2 小时），即使你平时在别处，我们也会按你选择的范围和类别，把当前位置附近的人的求助发给你。关闭或时间到期后，恢复为常规设置的通知。"
+    "explain": "开启期间（在你选择的时长内），即使你平时在别处，我们也会按你选择的范围和类别，把当前位置附近的人的求助发给你。关闭或时间到期后，恢复为常规设置的通知。"
   },
   "categories": {
     "AUTO": "汽车",
@@ -289,7 +298,11 @@
     "neededAtHint": "15 分钟后至 30 天内",
     "neededAtRequired": "请选择日期和时间",
     "neededAtTooSoon": "请选择至少 15 分钟之后的时间",
-    "neededAtTime": "时间"
+    "neededAtTime": "时间",
+    "helpersNeeded": "需要多少人",
+    "helpersNeededHint": "当这么多人同意帮忙后，求助将不再对其他人开放。",
+    "activeHours": "求助保持有效的时长",
+    "activeHoursHint": "到期后会自动关闭。"
   },
   "nearby": {
     "title": "附近互助",
@@ -342,7 +355,10 @@
     "blockConfirm": "确定屏蔽该用户？你们将看不到彼此的求助，也无法互发消息。",
     "blocked": "已屏蔽该用户",
     "helpers_other": "{{count}} 个回应",
-    "rewardInfo": "答谢"
+    "rewardInfo": "答谢",
+    "helpersProgress": "已选择 {{count}} / {{needed}}",
+    "selectedHelpers": "帮手",
+    "peopleStillNeeded_other": "还需要 {{count}} 人"
   },
   "thanks": {
     "received": "已获得帮助 ❤️",
@@ -370,7 +386,8 @@
     "closed": "对话已结束",
     "image": "📷 照片",
     "aboutRequest": "求助：{{title}}",
-    "loadOlder": "更早的消息"
+    "loadOlder": "更早的消息",
+    "request": "求助"
   },
   "notifications": {
     "title": "通知",
@@ -408,7 +425,8 @@
     "customItemsLabel": "你还有什么？",
     "customItemsPlaceholder": "例如：自行车、帐篷",
     "customItemsAdd": "添加",
-    "customItemsHint": "最多 10 项，每项 40 个字符"
+    "customItemsHint": "最多 10 项，每项 40 个字符",
+    "renameHint": "点按以修改名字"
   },
   "settings": {
     "title": "设置",
@@ -447,7 +465,9 @@
     "theme": "主题",
     "themeLight": "浅色",
     "themeDark": "深色",
-    "themeSystem": "跟随系统"
+    "themeSystem": "跟随系统",
+    "sound": "新通知提示音",
+    "soundHint": "应用打开时有新消息会发出简短提示音。"
   },
   "report": {
     "title": "举报",
@@ -518,7 +538,17 @@
       "FREE": "免费"
     },
     "agreed": "已商定：{{terms}}",
-    "note": "平台不处理付款，具体约定由你们双方决定。"
+    "note": "平台不处理付款，具体约定由你们双方决定。",
+    "counterButton": "提出你的金额",
+    "counterLabel": "你的金额（{{currency}}）",
+    "counterHint": "只能提出一次，之后由帮手接受或拒绝。",
+    "counterSend": "发送提议",
+    "counterSent": "你提出了 {{amount}}，等待回复",
+    "authorCounter": "发布者提出 {{amount}}",
+    "lastStep": "这是最后的提议：接受或拒绝。",
+    "acceptCounter": "接受",
+    "declineCounter": "拒绝",
+    "agreedToast": "谈妥了！你已被选为帮手。"
   },
   "share": {
     "button": "分享",

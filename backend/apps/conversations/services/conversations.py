@@ -159,7 +159,7 @@ def send_message(
             other,
             NotificationType.NEW_MESSAGE,
             title=_("💬 Нове повідомлення"),
-            body=_("{name} надіслав(ла) вам повідомлення").format(name=name),
+            body=_("{name} надіслав(-ла) вам повідомлення").format(name=name),
             url=f"/chats/{conversation.id}",
             data={"conversation_id": str(conversation.id)},
         )

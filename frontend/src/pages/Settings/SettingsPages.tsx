@@ -6,6 +6,8 @@ import { PageHeader } from "@/components/layout/AppLayout";
 import { Avatar, Button, Card, EmptyState, Loader, Switch } from "@/components/ui";
 import { useMe } from "@/features/auth/hooks";
 import { CategoryChips, ConfirmDialog, RadiusChips } from "@/features/help/components";
+import { SelectAll } from "@/features/help/SelectAll";
+import { playChime, setSoundEnabled, soundEnabled } from "@/features/attention/sound";
 import { geolocationPermission, useGeolocation } from "@/features/location/useGeolocation";
 import { PushToggle } from "@/features/notifications/PushToggle";
 import {
@@ -57,6 +59,7 @@ export function SettingsPage() {
 }
 
 export function NotificationSettingsPage() {
+  const [sound, setSound] = useState(soundEnabled);
   const { t } = useTranslation();
   const { data: prefs, isPending } = usePreferences();
   const { data: config } = usePublicConfig();
@@ -97,6 +100,16 @@ export function NotificationSettingsPage() {
           checked={prefs.email_enabled}
           onChange={(v) => update.mutate({ email_enabled: v })}
         />
+        <Switch
+          label={t("settings.sound")}
+          description={t("settings.soundHint")}
+          checked={sound}
+          onChange={(v) => {
+            setSoundEnabled(v);
+            setSound(v);
+            if (v) playChime();
+          }}
+        />
       </Card>
       <Card className="stack-sm">
         <strong>{t("settings.radius")}</strong>
@@ -108,6 +121,11 @@ export function NotificationSettingsPage() {
       </Card>
       <Card className="stack-sm">
         <strong>{t("settings.categories")}</strong>
+        <SelectAll
+          all={config?.notification_categories ?? []}
+          selected={prefs.enabled_categories}
+          onChange={(next) => update.mutate({ enabled_categories: next })}
+        />
         <CategoryChips
           options={config?.notification_categories ?? []}
           selected={prefs.enabled_categories}
