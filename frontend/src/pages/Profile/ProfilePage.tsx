@@ -4,141 +4,15 @@ import { Link, useNavigate } from "react-router";
 
 import { mediaApi } from "@/api/media";
 import { PageHeader } from "@/components/layout/AppLayout";
-import {
-  Avatar,
-  BottomSheet,
-  Button,
-  Card,
-  Chip,
-  EmptyState,
-  ErrorState,
-  Input,
-  Loader,
-  SkeletonList,
-  Tabs,
-} from "@/components/ui";
+import { Avatar, Button, Card, EmptyState, ErrorState, Loader, SkeletonList, Tabs } from "@/components/ui";
 import { useLogout, useMe } from "@/features/auth/hooks";
 import { HelpRequestCard } from "@/features/help/components";
 import { useHelpHistory } from "@/features/help/hooks";
-import { CapabilityList } from "@/features/profile/CapabilityList";
-import {
-  useCapabilities,
-  useMyCapabilities,
-  useSetMyCapabilities,
-  useThanks,
-  useUpdateMe,
-} from "@/features/profile/hooks";
+import { useThanks, useUpdateMe } from "@/features/profile/hooks";
 import { toast } from "@/stores/toastStore";
 import { timeAgo } from "@/utils/format";
 
 import styles from "./Profile.module.css";
-
-function CapabilitiesEditor({
-  open,
-  onClose,
-  initial,
-  initialCustom,
-}: {
-  open: boolean;
-  onClose: () => void;
-  initial: string[];
-  initialCustom: string[];
-}) {
-  const { t } = useTranslation();
-  const { data: all } = useCapabilities();
-  const save = useSetMyCapabilities();
-  const updateMe = useUpdateMe();
-  const [selected, setSelected] = useState<string[]>(
-    initialCustom.length && !initial.includes("HAS_OTHER") ? [...initial, "HAS_OTHER"] : initial,
-  );
-  const [custom, setCustom] = useState<string[]>(initialCustom);
-  const [draft, setDraft] = useState("");
-  const otherSelected = selected.includes("HAS_OTHER");
-  const toggle = (code: string) =>
-    setSelected((s) => (s.includes(code) ? s.filter((c) => c !== code) : [...s, code]));
-
-  const addDraft = () => {
-    const value = draft.trim().slice(0, 40);
-    if (value && !custom.includes(value) && custom.length < 10) setCustom([...custom, value]);
-    setDraft("");
-  };
-
-  const onSave = async () => {
-    const pending = draft.trim() ? [...custom, draft.trim().slice(0, 40)] : custom;
-    await save.mutateAsync(selected);
-    await updateMe.mutateAsync({ custom_items: otherSelected ? pending.slice(0, 10) : [] });
-    onClose();
-  };
-
-  return (
-    <BottomSheet
-      open={open}
-      onClose={onClose}
-      title={t("profile.editCapabilities")}
-      actions={
-        <Button block loading={save.isPending || updateMe.isPending} onClick={() => void onSave()}>
-          {t("common.save")}
-        </Button>
-      }
-    >
-      {(["HELP", "ITEM"] as const).map((kind) => (
-        <div key={kind} className="stack-sm">
-          <strong>{kind === "HELP" ? t("profile.canHelp") : t("profile.has")}</strong>
-          <div className="row wrap">
-            {all
-              ?.filter((c) => c.kind === kind)
-              .map((c) => (
-                <Chip key={c.code} active={selected.includes(c.code)} onClick={() => toggle(c.code)}>
-                  {c.emoji} {t(`capabilities.${c.code}`)}
-                </Chip>
-              ))}
-          </div>
-          {kind === "ITEM" && otherSelected && (
-            <div className="stack-sm">
-              <div className="row" style={{ alignItems: "flex-end" }}>
-                <div style={{ flex: 1 }}>
-                  <Input
-                    label={t("profile.customItemsLabel")}
-                    placeholder={t("profile.customItemsPlaceholder")}
-                    hint={t("profile.customItemsHint")}
-                    value={draft}
-                    maxLength={40}
-                    onChange={(e) => setDraft(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        addDraft();
-                      }
-                    }}
-                  />
-                </div>
-                <Button
-                  variant="secondary"
-                  onClick={addDraft}
-                  disabled={!draft.trim() || custom.length >= 10}
-                >
-                  {t("profile.customItemsAdd")}
-                </Button>
-              </div>
-              <div className="row wrap">
-                {custom.map((item) => (
-                  <Chip
-                    key={item}
-                    active
-                    onClick={() => setCustom(custom.filter((c) => c !== item))}
-                    ariaLabel={`${t("common.delete")}: ${item}`}
-                  >
-                    ✨ {item} ✕
-                  </Chip>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      ))}
-    </BottomSheet>
-  );
-}
 
 function History() {
   const { t } = useTranslation();
@@ -208,10 +82,8 @@ export default function ProfilePage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: me, isPending } = useMe();
-  const caps = useMyCapabilities();
   const updateMe = useUpdateMe();
   const logout = useLogout();
-  const [editCaps, setEditCaps] = useState(false);
   const [editName, setEditName] = useState(false);
   const [name, setName] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -306,26 +178,10 @@ export default function ProfilePage() {
         </span>
       </div>
 
-      <Card className="stack-sm">
-        {(caps.data && caps.data.length > 0) || me.custom_items.length > 0 ? (
-          <CapabilityList capabilities={caps.data ?? []} customItems={me.custom_items} />
-        ) : (
-          <p className="muted">{t("onboarding.categoriesTitle")}</p>
-        )}
-        <Button variant="secondary" size="sm" onClick={() => setEditCaps(true)}>
-          {t("profile.editCapabilities")}
-        </Button>
-      </Card>
-
       <History />
       <ThanksList userId={me.id} />
 
       <div className="stack-sm">
-        <Link to="/notifications">
-          <Button variant="secondary" block>
-            🔔 {t("nav.notifications")}
-          </Button>
-        </Link>
         <Button
           variant="danger"
           block
@@ -334,15 +190,6 @@ export default function ProfilePage() {
           {t("auth.logout")}
         </Button>
       </div>
-
-      {editCaps && (
-        <CapabilitiesEditor
-          open={editCaps}
-          onClose={() => setEditCaps(false)}
-          initial={caps.data?.map((c) => c.code) ?? []}
-          initialCustom={me.custom_items}
-        />
-      )}
     </main>
   );
 }

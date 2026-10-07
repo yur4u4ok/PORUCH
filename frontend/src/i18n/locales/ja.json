@@ -149,7 +149,11 @@
     "myRequestsHint": "あなたが投稿したもの",
     "imHelping": "手伝っている依頼",
     "imHelpingHint": "あなたが手伝う人に選ばれた、ほかの人の依頼",
-    "nearbyPreviewHint": "近くで誰かが助けを求めています。あなたの力が必要かもしれません"
+    "nearbyPreviewHint": "近くで誰かが助けを求めています。あなたの力が必要かもしれません",
+    "noRequests": "進行中の依頼はまだありません。",
+    "createOne": "依頼を作成 →",
+    "noHelping": "まだ誰も手伝っていません。",
+    "findSomeone": "助けが必要な人を見る →"
   },
   "availability": {
     "title": "今すぐ手伝えます",

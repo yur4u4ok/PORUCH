@@ -149,7 +149,11 @@
     "myRequestsHint": "내가 올린 요청",
     "imHelping": "내가 돕는 요청",
     "imHelpingHint": "내가 도우미로 선택된 다른 사람의 요청",
-    "nearbyPreviewHint": "근처에 도움이 필요한 사람이 있어요. 어쩌면 당신의 도움이요"
+    "nearbyPreviewHint": "근처에 도움이 필요한 사람이 있어요. 어쩌면 당신의 도움이요",
+    "noRequests": "아직 진행 중인 요청이 없어요.",
+    "createOne": "요청 만들기 →",
+    "noHelping": "아직 돕고 있는 사람이 없어요.",
+    "findSomeone": "도움이 필요한 사람 보기 →"
   },
   "availability": {
     "title": "지금 도울 수 있어요",

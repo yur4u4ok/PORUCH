@@ -149,7 +149,11 @@
     "myRequestsHint": "你发布的内容",
     "imHelping": "我在帮忙",
     "imHelpingHint": "你被选为帮手的他人求助",
-    "nearbyPreviewHint": "附近有人需要帮助，也许正需要你"
+    "nearbyPreviewHint": "附近有人需要帮助，也许正需要你",
+    "noRequests": "暂时没有进行中的求助。",
+    "createOne": "发布求助 →",
+    "noHelping": "你还没有在帮助任何人。",
+    "findSomeone": "看看谁需要帮助 →"
   },
   "availability": {
     "title": "我现在可以帮忙",

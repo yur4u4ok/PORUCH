@@ -573,16 +573,16 @@ export default function HelpRequestPage() {
           ariaLabel={request.location.approximate ? t("request.approxLocation") : t("request.exactLocation")}
         />
         <div className={styles.mapFooter}>
-          <span className={styles.mapFooterLeft}>
-            <span className="muted" style={{ fontSize: 13 }}>
-              {request.location.approximate
-                ? `◌ ${t("request.approxLocation")}`
-                : `📍 ${t("request.exactLocation")}`}
-            </span>
-            <Button variant="soft" size="sm" onClick={() => setMapKey((k) => k + 1)}>
-              🎯 {t("request.showOnMap")}
-            </Button>
-          </span>
+          <button
+            type="button"
+            className={styles.recenter}
+            title={t("request.showOnMap")}
+            onClick={() => setMapKey((k) => k + 1)}
+          >
+            {request.location.approximate
+              ? `◌ ${t("request.approxLocation")}`
+              : `📍 ${t("request.exactLocation")}`}
+          </button>
           {!request.location.approximate && (
             // Universal Maps URL: opens the Maps app on Android/iPhone, the website elsewhere
             // (geo: links only worked on some Android phones).

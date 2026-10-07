@@ -155,7 +155,11 @@
     "myRequestsHint": "Yayınladıkların",
     "imHelping": "Yardım ediyorum",
     "imHelpingHint": "Yardım için seçildiğin, başkalarına ait istekler",
-    "nearbyPreviewHint": "Yakında birinin yardıma ihtiyacı var — belki seninkine"
+    "nearbyPreviewHint": "Yakında birinin yardıma ihtiyacı var — belki seninkine",
+    "noRequests": "Henüz aktif talep yok.",
+    "createOne": "Bir talep oluştur →",
+    "noHelping": "Henüz kimseye yardım etmiyorsun.",
+    "findSomeone": "Kimin yardıma ihtiyacı var, gör →"
   },
   "availability": {
     "title": "Şu an yardım edebilirim",

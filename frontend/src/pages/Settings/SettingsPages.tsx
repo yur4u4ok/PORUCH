@@ -88,7 +88,6 @@ export function NotificationSettingsPage() {
     <main className="page stack">
       <PageHeader title={t("settings.notifications")} />
       <Card className="stack-sm">
-        <strong>{t("settings.push")}</strong>
         <PushToggle hideWhenActive />
         <Switch
           label={t("settings.push")}

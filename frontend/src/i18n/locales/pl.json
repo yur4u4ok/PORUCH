@@ -167,7 +167,11 @@
     "myRequestsHint": "To, co opublikowałeś(-aś)",
     "imHelping": "Pomagam",
     "imHelpingHint": "Prośby innych osób, w których wybrano cię do pomocy",
-    "nearbyPreviewHint": "Ktoś w pobliżu potrzebuje pomocy – może twojej"
+    "nearbyPreviewHint": "Ktoś w pobliżu potrzebuje pomocy – może twojej",
+    "noRequests": "Na razie brak aktywnych próśb.",
+    "createOne": "Utwórz prośbę →",
+    "noHelping": "Na razie nikomu nie pomagasz.",
+    "findSomeone": "Zobacz, kto potrzebuje pomocy →"
   },
   "availability": {
     "title": "Mogę teraz pomóc",

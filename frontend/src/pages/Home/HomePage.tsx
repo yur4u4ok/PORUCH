@@ -11,7 +11,6 @@ import { useSyncNotificationLocation } from "@/features/location/useSyncNotifica
 import { cityName } from "@/utils/city";
 import { usePlace } from "@/features/location/place";
 import { InstallCard } from "@/features/pwa/InstallPrompt";
-import { emergencyVars } from "@/utils/emergency";
 
 import styles from "./Home.module.css";
 
@@ -81,7 +80,7 @@ function HomeSection({
   );
 }
 
-/** Two separate lists so "what I posted" never mixes with "where I help". */
+/** Two separate lists so "what I posted" never mixes with "where I help"; always shown, with a hint when empty. */
 function MyActiveHelp() {
   const { t } = useTranslation();
   const asAuthor = useHelpHistory({ role: "author", status: ["ACTIVE", "IN_PROGRESS"] });
@@ -90,20 +89,24 @@ function MyActiveHelp() {
   const helping = asHelper.data?.pages[0]?.results ?? [];
   return (
     <>
-      {mine.length > 0 && (
-        <HomeSection title={t("home.myRequests")} hint={t("home.myRequestsHint")}>
-          {mine.map((request) => (
-            <HelpRequestCard key={request.id} request={request} showStatus />
-          ))}
-        </HomeSection>
-      )}
-      {helping.length > 0 && (
-        <HomeSection title={t("home.imHelping")} hint={t("home.imHelpingHint")}>
-          {helping.map((request) => (
-            <HelpRequestCard key={request.id} request={request} showStatus />
-          ))}
-        </HomeSection>
-      )}
+      <HomeSection title={t("home.myRequests")} hint={t("home.myRequestsHint")}>
+        {mine.length > 0
+          ? mine.map((request) => <HelpRequestCard key={request.id} request={request} showStatus />)
+          : !asAuthor.isPending && (
+              <Link to="/help/create" className={styles.empty}>
+                {t("home.noRequests")} <strong>{t("home.createOne")}</strong>
+              </Link>
+            )}
+      </HomeSection>
+      <HomeSection title={t("home.imHelping")} hint={t("home.imHelpingHint")}>
+        {helping.length > 0
+          ? helping.map((request) => <HelpRequestCard key={request.id} request={request} showStatus />)
+          : !asHelper.isPending && (
+              <Link to="/nearby" className={styles.empty}>
+                {t("home.noHelping")} <strong>{t("home.findSomeone")}</strong>
+              </Link>
+            )}
+      </HomeSection>
     </>
   );
 }
@@ -119,7 +122,6 @@ function NotificationLocationSync() {
 }
 
 export default function HomePage() {
-  const { t } = useTranslation();
   return (
     <main className="page stack">
       <LocationHeader />
@@ -128,9 +130,6 @@ export default function HomePage() {
       <NearbyHelpButton />
       <MyActiveHelp />
       <NotificationLocationSync />
-      <p className="muted" style={{ fontSize: 13 }}>
-        ⚠️ {t("emergency.short", emergencyVars())}
-      </p>
     </main>
   );
 }

@@ -155,7 +155,11 @@
     "myRequestsHint": "Quello che hai pubblicato",
     "imHelping": "Sto aiutando",
     "imHelpingHint": "Richieste di altri in cui sei stato scelto per aiutare",
-    "nearbyPreviewHint": "Qualcuno vicino ha bisogno di aiuto: magari del tuo"
+    "nearbyPreviewHint": "Qualcuno vicino ha bisogno di aiuto: magari del tuo",
+    "noRequests": "Nessuna richiesta attiva per ora.",
+    "createOne": "Creane una →",
+    "noHelping": "Per ora non stai aiutando nessuno.",
+    "findSomeone": "Guarda chi ha bisogno di aiuto →"
   },
   "availability": {
     "title": "Posso aiutare ora",

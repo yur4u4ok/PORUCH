@@ -155,7 +155,11 @@
     "myRequestsHint": "What you've posted",
     "imHelping": "I'm helping",
     "imHelpingHint": "Other people's requests where you were chosen to help",
-    "nearbyPreviewHint": "Someone nearby needs help — maybe yours"
+    "nearbyPreviewHint": "Someone nearby needs help — maybe yours",
+    "noRequests": "No active requests yet.",
+    "createOne": "Create one →",
+    "noHelping": "You're not helping anyone yet.",
+    "findSomeone": "See who needs help →"
   },
   "availability": {
     "title": "I can help right now",
