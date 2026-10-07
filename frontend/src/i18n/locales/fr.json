@@ -575,14 +575,19 @@
     "howTo": "Comment l'installer :",
     "steps": {
       "ios": [
-        "Touchez Partager ⬆️ en bas de Safari",
-        "Choisissez « Sur l'écran d'accueil » (faites défiler si besoin)",
+        "Ouvrez Poruch dans Safari (si le site s'est ouvert dans Telegram ou une autre app, touchez d'abord « Ouvrir dans Safari »)",
+        "Touchez Partager ⬆️, en bas de l'écran ou dans le menu « ⋯ »",
+        "Choisissez « Sur l'écran d'accueil ». Absent ? Touchez « Plus » ou faites défiler jusqu'à « Modifier les actions… » et activez « Sur l'écran d'accueil ». Désactivez aussi la navigation privée",
         "Touchez « Ajouter » : Poruch apparaît avec vos apps"
       ],
       "ios-other-browser": [
         "Touchez Partager ⬆️ dans la barre d'adresse",
         "Choisissez « Sur l'écran d'accueil » ; s'il manque, ouvrez le site dans Safari",
         "Touchez « Ajouter »"
+      ],
+      "in-app": [
+        "Cette app a ouvert le site dans son navigateur intégré, qui ne permet pas d'installer",
+        "Touchez « ⋯ » ou « ⋮ » en haut, choisissez « Ouvrir dans le navigateur » (Safari ou Chrome) et installez Poruch là-bas"
       ],
       "android": [
         "Ouvrez le menu du navigateur ⋮ en haut à droite",

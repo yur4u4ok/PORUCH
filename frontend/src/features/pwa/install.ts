@@ -11,7 +11,7 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
-export type Platform = "ios" | "ios-other-browser" | "android" | "desktop";
+export type Platform = "ios" | "ios-other-browser" | "in-app" | "android" | "desktop";
 
 let deferred: BeforeInstallPromptEvent | null = null;
 let installed = false;
@@ -41,6 +41,8 @@ export function isStandalone(): boolean {
 }
 
 export function detectPlatform(ua = navigator.userAgent): Platform {
+  // Instagram/Facebook/TikTok open links in their own browser, which cannot install apps.
+  if (/Instagram|FBAN|FBAV|FB_IAB|BytedanceWebview|musical_ly|Line\//.test(ua)) return "in-app";
   // iPadOS reports itself as a Mac; touch points tell them apart.
   const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
   if (ios) return /CriOS|FxiOS|EdgiOS|OPiOS/.test(ua) ? "ios-other-browser" : "ios";

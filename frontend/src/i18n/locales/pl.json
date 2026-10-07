@@ -587,14 +587,19 @@
     "howTo": "Jak zainstalować:",
     "steps": {
       "ios": [
-        "Stuknij „Udostępnij” ⬆️ na dole Safari",
-        "Wybierz „Do ekranu początkowego” (przewiń listę, jeśli nie widać)",
+        "Otwórz Poruch w samym Safari (jeśli strona otworzyła się w Telegramie lub innej aplikacji, najpierw stuknij „Otwórz w Safari”)",
+        "Stuknij „Udostępnij” ⬆️ — na dole ekranu lub w menu „⋯”",
+        "Wybierz „Do ekranu początkowego”. Nie ma na liście? Stuknij „Więcej” lub przewiń do „Edytuj czynności…” i włącz „Do ekranu początkowego”. Wyłącz też tryb prywatny Safari",
         "Stuknij „Dodaj” — Poruch pojawi się wśród aplikacji"
       ],
       "ios-other-browser": [
         "Stuknij „Udostępnij” ⬆️ na pasku adresu",
         "Wybierz „Do ekranu początkowego”; jeśli go nie ma, otwórz stronę w Safari",
         "Stuknij „Dodaj”"
+      ],
+      "in-app": [
+        "Ta aplikacja otworzyła stronę we wbudowanej przeglądarce, z której nie da się instalować",
+        "Stuknij „⋯” lub „⋮” u góry, wybierz „Otwórz w przeglądarce” (Safari lub Chrome) i tam zainstaluj Poruch"
       ],
       "android": [
         "Otwórz menu przeglądarki ⋮ w prawym górnym rogu",

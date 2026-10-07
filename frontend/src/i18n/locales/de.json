@@ -575,14 +575,19 @@
     "howTo": "So installierst du sie:",
     "steps": {
       "ios": [
-        "Tippe in Safari unten auf Teilen ⬆️",
-        "Wähle „Zum Home-Bildschirm“ (scrolle, falls nicht sichtbar)",
+        "Öffne Poruch direkt in Safari (wurde die Seite in Telegram oder einer anderen App geöffnet, tippe zuerst auf „In Safari öffnen“)",
+        "Tippe auf Teilen ⬆️ – unten auf dem Bildschirm oder im Menü „⋯“",
+        "Wähle „Zum Home-Bildschirm“. Nicht in der Liste? Tippe auf „Mehr“ oder scrolle zu „Aktionen bearbeiten …“ und aktiviere „Zum Home-Bildschirm“. Schalte auch das private Surfen aus",
         "Tippe auf „Hinzufügen“ – Poruch erscheint bei deinen Apps"
       ],
       "ios-other-browser": [
         "Tippe in der Adressleiste auf Teilen ⬆️",
         "Wähle „Zum Home-Bildschirm“; fehlt der Punkt, öffne die Seite in Safari",
         "Tippe auf „Hinzufügen“"
+      ],
+      "in-app": [
+        "Diese App hat die Seite in ihrem eingebauten Browser geöffnet, dort lässt sich nichts installieren",
+        "Tippe oben auf „⋯“ oder „⋮“, wähle „Im Browser öffnen“ (Safari oder Chrome) und installiere Poruch dort"
       ],
       "android": [
         "Öffne das Browsermenü ⋮ oben rechts",

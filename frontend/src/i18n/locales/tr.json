@@ -575,14 +575,19 @@
     "howTo": "Nasıl yüklenir:",
     "steps": {
       "ios": [
-        "Safari'nin altındaki Paylaş ⬆️ simgesine dokun",
-        "“Ana Ekrana Ekle”yi seç (görmüyorsan listeyi kaydır)",
+        "Poruch'u doğrudan Safari'de aç (site Telegram ya da başka bir uygulamada açıldıysa önce “Safari'de Aç”a dokun)",
+        "Paylaş ⬆️ simgesine dokun — ekranın altında ya da “⋯” menüsünde",
+        "“Ana Ekrana Ekle”yi seç. Listede yok mu? “Diğer”e dokun ya da “Eylemleri Düzenle…”ye kadar kaydırıp “Ana Ekrana Ekle”yi aç. Safari'nin gizli modunu da kapat",
         "“Ekle”ye dokun — Poruch uygulamalarının arasında görünür"
       ],
       "ios-other-browser": [
         "Adres çubuğundaki Paylaş ⬆️ simgesine dokun",
         "“Ana Ekrana Ekle”yi seç; yoksa siteyi Safari'de aç",
         "“Ekle”ye dokun"
+      ],
+      "in-app": [
+        "Bu uygulama siteyi kendi yerleşik tarayıcısında açtı, buradan yükleme yapılamaz",
+        "Üstteki “⋯” ya da “⋮” simgesine dokun, “Tarayıcıda aç”ı (Safari veya Chrome) seç ve Poruch'u orada yükle"
       ],
       "android": [
         "Sağ üstteki tarayıcı menüsünü ⋮ aç",

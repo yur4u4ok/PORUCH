@@ -3,6 +3,7 @@ import { Link } from "react-router";
 
 import { BrandMark } from "@/components/layout/BrandMark";
 import { Button } from "@/components/ui";
+import { InstallCard } from "@/features/pwa/InstallPrompt";
 import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
 import { emergencyVars } from "@/utils/emergency";
 
@@ -27,6 +28,7 @@ export default function LandingPage() {
           <p>{t("landing.canHelpText")}</p>
         </section>
       </div>
+      <InstallCard />
       <div className="stack-sm">
         <Link to="/auth/register">
           <Button size="lg" block>
