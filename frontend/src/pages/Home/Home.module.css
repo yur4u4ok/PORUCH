@@ -62,32 +62,6 @@
   font-size: var(--text-md);
   opacity: 0.85;
 }
-.helpButton {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-4) var(--space-5);
-  border-radius: var(--radius-lg);
-  border: 2px solid var(--color-primary);
-  background: var(--color-surface);
-  color: var(--color-text);
-  text-decoration: none;
-}
-.helpButton:hover {
-  background: var(--color-primary-soft);
-}
-.helpButton strong {
-  font-family: var(--font-display);
-  font-weight: 600;
-}
-.helpButton small {
-  display: block;
-  font-weight: 500;
-  color: var(--color-text-muted);
-}
-.helpIcon {
-  font-size: 32px;
-}
 .mapLink {
   display: flex;
   align-items: center;

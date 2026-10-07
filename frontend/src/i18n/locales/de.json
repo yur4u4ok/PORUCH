@@ -475,7 +475,17 @@
     "themeDark": "Dunkel",
     "themeSystem": "System",
     "sound": "Ton für neue Mitteilungen",
-    "soundHint": "Ein kurzer Ton, wenn die App offen ist und etwas Neues kommt."
+    "soundHint": "Ein kurzer Ton, wenn die App offen ist und etwas Neues kommt.",
+    "mute": "Nicht stören",
+    "muteHint": "Benachrichtigungen über neue Anfragen in der Nähe kurz pausieren.",
+    "mutedUntil": "Pausiert bis {{time}}",
+    "muteOff": "Aus",
+    "muteFor": {
+      "1h": "1 Std.",
+      "3h": "3 Std.",
+      "morning": "Bis morgen früh",
+      "24h": "24 Std."
+    }
   },
   "report": {
     "title": "Melden",

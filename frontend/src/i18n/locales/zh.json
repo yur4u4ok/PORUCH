@@ -467,7 +467,17 @@
     "themeDark": "深色",
     "themeSystem": "跟随系统",
     "sound": "新通知提示音",
-    "soundHint": "应用打开时有新消息会发出简短提示音。"
+    "soundHint": "应用打开时有新消息会发出简短提示音。",
+    "mute": "勿扰",
+    "muteHint": "暂时停止附近新求助的通知。",
+    "mutedUntil": "通知已暂停至 {{time}}",
+    "muteOff": "关闭",
+    "muteFor": {
+      "1h": "1 小时",
+      "3h": "3 小时",
+      "morning": "直到早上",
+      "24h": "24 小时"
+    }
   },
   "report": {
     "title": "举报",

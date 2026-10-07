@@ -491,7 +491,17 @@
     "themeDark": "Ciemny",
     "themeSystem": "Systemowy",
     "sound": "Dźwięk nowych powiadomień",
-    "soundHint": "Krótki sygnał, gdy aplikacja jest otwarta i przychodzi coś nowego."
+    "soundHint": "Krótki sygnał, gdy aplikacja jest otwarta i przychodzi coś nowego.",
+    "mute": "Nie przeszkadzać",
+    "muteHint": "Wstrzymaj na chwilę powiadomienia o nowych prośbach w pobliżu.",
+    "mutedUntil": "Powiadomienia wstrzymane do {{time}}",
+    "muteOff": "Wyłączone",
+    "muteFor": {
+      "1h": "1 godz.",
+      "3h": "3 godz.",
+      "morning": "Do rana",
+      "24h": "24 godz."
+    }
   },
   "report": {
     "title": "Zgłoś",

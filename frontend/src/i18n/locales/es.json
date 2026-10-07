@@ -475,7 +475,17 @@
     "themeDark": "Oscuro",
     "themeSystem": "Sistema",
     "sound": "Sonido de avisos nuevos",
-    "soundHint": "Un sonido breve cuando la app está abierta y llega algo nuevo."
+    "soundHint": "Un sonido breve cuando la app está abierta y llega algo nuevo.",
+    "mute": "No molestar",
+    "muteHint": "Pausar un tiempo los avisos de nuevas solicitudes cercanas.",
+    "mutedUntil": "Avisos en pausa hasta {{time}}",
+    "muteOff": "Desactivado",
+    "muteFor": {
+      "1h": "1 h",
+      "3h": "3 h",
+      "morning": "Hasta la mañana",
+      "24h": "24 h"
+    }
   },
   "report": {
     "title": "Denunciar",

@@ -475,7 +475,17 @@
     "themeDark": "Dark",
     "themeSystem": "System",
     "sound": "Sound for new notifications",
-    "soundHint": "A short chime when the app is open and something new arrives."
+    "soundHint": "A short chime when the app is open and something new arrives.",
+    "mute": "Do not disturb",
+    "muteHint": "Pause notifications about new requests nearby for a while.",
+    "mutedUntil": "Notifications paused until {{time}}",
+    "muteOff": "Off",
+    "muteFor": {
+      "1h": "1 h",
+      "3h": "3 h",
+      "morning": "Until morning",
+      "24h": "24 h"
+    }
   },
   "report": {
     "title": "Report",

@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
 import { useMe } from "@/features/auth/hooks";
-import { AvailabilityToggle } from "@/features/help/AvailabilityToggle";
 import { HelpRequestCard } from "@/features/help/components";
 import { useHelpHistory } from "@/features/help/hooks";
 import { useGeolocation } from "@/features/location/useGeolocation";
@@ -35,21 +34,6 @@ function EmergencyHelpButton() {
       <span>
         <span className={styles.sosTitle}>{t("home.needHelp")}</span>
         <span className={styles.sosSub}>{t("home.needHelpSub")}</span>
-      </span>
-    </Link>
-  );
-}
-
-function NearbyHelpButton() {
-  const { t } = useTranslation();
-  return (
-    <Link to="/nearby" className={styles.helpButton}>
-      <span className={styles.helpIcon} aria-hidden>
-        🤝
-      </span>
-      <span>
-        <strong>{t("home.someoneNeeds")}</strong>
-        <small>{t("home.someoneNeedsSub")}</small>
       </span>
     </Link>
   );
@@ -126,11 +110,9 @@ export default function HomePage() {
       <LocationHeader />
       <InstallCard />
       <EmergencyHelpButton />
-      <NearbyHelpButton />
       <Link to="/nearby?view=map" className={styles.mapLink}>
         🗺 {t("home.nearbyMap")}
       </Link>
-      <AvailabilityToggle />
       <MyActiveHelp />
       <NotificationLocationSync />
       <p className="muted" style={{ fontSize: 13 }}>

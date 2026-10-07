@@ -102,6 +102,7 @@ export interface Preferences {
   email_enabled: boolean;
   has_location: boolean;
   location_updated_at: ISODateTime | null;
+  muted_until: ISODateTime | null;
 }
 
 export interface Availability {

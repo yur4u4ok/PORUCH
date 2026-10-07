@@ -467,7 +467,17 @@
     "themeDark": "다크",
     "themeSystem": "시스템",
     "sound": "새 알림 소리",
-    "soundHint": "앱이 열려 있을 때 새 소식이 오면 짧은 소리가 나요."
+    "soundHint": "앱이 열려 있을 때 새 소식이 오면 짧은 소리가 나요.",
+    "mute": "방해 금지",
+    "muteHint": "근처 새 요청 알림을 잠시 멈춥니다.",
+    "mutedUntil": "{{time}}까지 알림 일시 중지",
+    "muteOff": "끄기",
+    "muteFor": {
+      "1h": "1시간",
+      "3h": "3시간",
+      "morning": "아침까지",
+      "24h": "24시간"
+    }
   },
   "report": {
     "title": "신고",

@@ -9,6 +9,7 @@ import { CategoryChips, ConfirmDialog, RadiusChips } from "@/features/help/compo
 import { SelectAll } from "@/features/help/SelectAll";
 import { playChime, setSoundEnabled, soundEnabled } from "@/features/attention/sound";
 import { geolocationPermission, useGeolocation } from "@/features/location/useGeolocation";
+import { MuteNotifications } from "@/features/notifications/MuteNotifications";
 import { PushToggle } from "@/features/notifications/PushToggle";
 import {
   useBlocks,
@@ -110,6 +111,9 @@ export function NotificationSettingsPage() {
             if (v) playChime();
           }}
         />
+      </Card>
+      <Card>
+        <MuteNotifications mutedUntil={prefs.muted_until} />
       </Card>
       <Card className="stack-sm">
         <strong>{t("settings.radius")}</strong>

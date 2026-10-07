@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type { TFunction } from "i18next";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -80,9 +81,11 @@ function ResponsesSection({ request }: { request: HelpRequest }) {
           <Card key={response.id} className="stack-sm">
             <PersonRow user={response.helper} />
             {request.reward_type === "WILLING" && (
-              <Badge tone={response.offer_type === "COUNTER" ? "warning" : "success"}>
-                {offerSummary(response, request.reward_currency, t)}
-              </Badge>
+              <div
+                className={clsx(styles.offerTag, response.offer_type === "COUNTER" && styles.offerCounter)}
+              >
+                💰 {offerSummary(response, request.reward_currency, t)}
+              </div>
             )}
             {response.message && <p>«{response.message}»</p>}
             {response.offer_type === "COUNTER" && <CounterOffer request={request} response={response} />}
@@ -496,58 +499,58 @@ export default function HelpRequestPage() {
   return (
     <main className="page stack">
       <PageHeader title={t(`categories.${request.category}`)} />
-      <div className={styles.hero}>
-        <span className={styles.emoji} aria-hidden>
-          {requestEmoji(request.category, request.subcategory)}
-        </span>
-        <div className="stack-sm">
-          <h1 style={{ fontSize: "var(--text-xl)" }}>{request.title}</h1>
-          <div className={styles.meta}>
-            <StatusBadge status={request.status} />
-            <UrgencyBadge urgency={request.urgency} neededAt={request.needed_at} />
-            {request.distance_m != null && (
-              <span>📍 {t("common.fromYou", { distance: formatDistance(request.distance_m) })}</span>
-            )}
-            <span>{t("request.createdAt", { time: timeAgo(request.created_at) })}</span>
-            {request.status === "ACTIVE" && (
-              <span>⏳ {t("time.expiresIn", { value: timeLeft(request.expires_at) })}</span>
-            )}
-            {request.is_author && request.responses_count > 0 && (
-              <Badge tone="count">{t("request.helpers", { count: request.responses_count })}</Badge>
-            )}
+      <section className={styles.details}>
+        <div className={styles.hero}>
+          <span className={styles.emoji} aria-hidden>
+            {requestEmoji(request.category, request.subcategory)}
+          </span>
+          <div className="stack-sm">
+            <h1 style={{ fontSize: "var(--text-xl)" }}>{request.title}</h1>
+            <div className={styles.meta}>
+              <StatusBadge status={request.status} />
+              <UrgencyBadge urgency={request.urgency} neededAt={request.needed_at} />
+              {request.distance_m != null && (
+                <span>📍 {t("common.fromYou", { distance: formatDistance(request.distance_m) })}</span>
+              )}
+              <span>{t("request.createdAt", { time: timeAgo(request.created_at) })}</span>
+              {request.status === "ACTIVE" && (
+                <span>⏳ {t("time.expiresIn", { value: timeLeft(request.expires_at) })}</span>
+              )}
+              {request.is_author && request.responses_count > 0 && (
+                <Badge tone="count">{t("request.helpers", { count: request.responses_count })}</Badge>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {(request.category === "URGENT" || request.urgency === "NOW") && (
-        <div className={styles.warning}>⚠️ {t("emergency.short", emergencyVars())}</div>
-      )}
+        <p className={styles.description}>{request.description}</p>
 
-      <p className={styles.description}>{request.description}</p>
+        {request.reward_type !== "NONE" && (
+          <p>
+            <strong>{t("request.rewardInfo")}:</strong>{" "}
+            {request.reward_type === "WILLING"
+              ? rewardSummary(request, t)
+              : t(`reward.${request.reward_type}`)}
+          </p>
+        )}
+        {!request.is_author &&
+          request.my_response?.status === "ACCEPTED" &&
+          agreedSummary(request, t, request.my_response) && (
+            <div className={styles.notice}>
+              🤝 {t("offer.agreed", { terms: agreedSummary(request, t, request.my_response) })}
+            </div>
+          )}
 
-      {request.reward_type !== "NONE" && (
-        <p>
-          <strong>{t("request.rewardInfo")}:</strong>{" "}
-          {request.reward_type === "WILLING" ? rewardSummary(request, t) : t(`reward.${request.reward_type}`)}
-        </p>
-      )}
-      {!request.is_author &&
-        request.my_response?.status === "ACCEPTED" &&
-        agreedSummary(request, t, request.my_response) && (
-          <div className={styles.notice}>
-            🤝 {t("offer.agreed", { terms: agreedSummary(request, t, request.my_response) })}
+        {request.photos.length > 0 && (
+          <div className={styles.photos}>
+            {request.photos.map((photo) => (
+              <a key={photo.id} href={photo.url ?? "#"} target="_blank" rel="noreferrer">
+                <img src={photo.thumbnail_url ?? ""} alt={t("request.photos")} loading="lazy" />
+              </a>
+            ))}
           </div>
         )}
-
-      {request.photos.length > 0 && (
-        <div className={styles.photos}>
-          {request.photos.map((photo) => (
-            <a key={photo.id} href={photo.url ?? "#"} target="_blank" rel="noreferrer">
-              <img src={photo.thumbnail_url ?? ""} alt={t("request.photos")} loading="lazy" />
-            </a>
-          ))}
-        </div>
-      )}
+      </section>
 
       <section className="stack-sm">
         <LazyMap
@@ -607,6 +610,10 @@ export default function HelpRequestPage() {
             ⛔ {t("request.block")}
           </Button>
         </div>
+      )}
+
+      {(request.category === "URGENT" || request.urgency === "NOW") && (
+        <div className={styles.warning}>⚠️ {t("emergency.short", emergencyVars())}</div>
       )}
 
       <ReportDialog

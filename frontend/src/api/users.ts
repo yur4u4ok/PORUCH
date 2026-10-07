@@ -1,4 +1,5 @@
 import type {
+  ISODateTime,
   Availability,
   Block,
   Capability,
@@ -32,6 +33,7 @@ export interface PreferencesUpdate {
   enabled_categories?: NotificationCategory[];
   push_enabled?: boolean;
   email_enabled?: boolean;
+  muted_until?: ISODateTime | null;
   location?: GeoPosition;
 }
 

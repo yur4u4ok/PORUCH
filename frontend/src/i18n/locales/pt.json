@@ -475,7 +475,17 @@
     "themeDark": "Escuro",
     "themeSystem": "Sistema",
     "sound": "Som de novas notificações",
-    "soundHint": "Um som curto quando a app está aberta e chega algo novo."
+    "soundHint": "Um som curto quando a app está aberta e chega algo novo.",
+    "mute": "Não incomodar",
+    "muteHint": "Pausar por um tempo os avisos de novos pedidos por perto.",
+    "mutedUntil": "Avisos pausados até {{time}}",
+    "muteOff": "Desligado",
+    "muteFor": {
+      "1h": "1 h",
+      "3h": "3 h",
+      "morning": "Até de manhã",
+      "24h": "24 h"
+    }
   },
   "report": {
     "title": "Denunciar",

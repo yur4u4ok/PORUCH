@@ -56,6 +56,7 @@ def find_recipients(help_request: HelpRequest):
     return (
         User.objects.filter(is_active=True, email_verified=True, notification_preference__push_enabled=True)
         .exclude(pk=help_request.author_id)
+        .exclude(notification_preference__muted_until__gt=now)
         .exclude(pk__in=blocked_user_ids(help_request.author))
         .annotate(
             pref_distance=Distance("notification_preference__location", point),

@@ -6,6 +6,7 @@ import { BRAND } from "@/app/brand";
 import { NavLink, Outlet, useNavigate, useSearchParams } from "react-router";
 
 import { IconButton } from "@/components/ui";
+import { useLogout } from "@/features/auth/hooks";
 import { AttentionSignals } from "@/features/attention/AttentionSignals";
 import { InstallPrompt } from "@/features/pwa/InstallPrompt";
 
@@ -70,6 +71,8 @@ export function AppLayout() {
   const { t } = useTranslation();
   const entries = useNavEntries();
   const { data: unread = 0 } = useUnreadCount(true);
+  const logout = useLogout();
+  const navigate = useNavigate();
   const chatBadge = entries.find((e) => e.to === "/chats")?.badge ?? 0;
 
   return (
@@ -83,7 +86,7 @@ export function AppLayout() {
           <BrandMark inverse />
         </NavLink>
         {[
-          ...entries,
+          ...entries.map((e) => (e.create ? { ...e, icon: "❤️" } : e)),
           { to: "/notifications", icon: "🔔", label: t("nav.notifications"), badge: unread },
           { to: "/settings", icon: "⚙️", label: t("nav.settings") },
         ].map((entry) => (
@@ -107,6 +110,14 @@ export function AppLayout() {
           <span aria-hidden>💬</span>
           {t("support.title")}
         </NavLink>
+        <button
+          type="button"
+          className={styles.sideItem}
+          onClick={() => logout.mutate(undefined, { onSettled: () => navigate("/", { replace: true }) })}
+        >
+          <span aria-hidden>🚪</span>
+          {t("auth.logout")}
+        </button>
       </nav>
       <div className={styles.main}>
         <OfflineBanner />

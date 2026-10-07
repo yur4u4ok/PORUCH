@@ -80,6 +80,8 @@ class NotificationPreference(models.Model):
     # Last location explicitly shared by the user in the foreground (no background tracking).
     location = gis_models.PointField(geography=True, srid=4326, null=True, blank=True)
     location_updated_at = models.DateTimeField(null=True, blank=True)
+    # «Не турбувати»: no nearby-request notifications until this moment.
+    muted_until = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name = "налаштування сповіщень"

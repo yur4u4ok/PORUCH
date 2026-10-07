@@ -243,8 +243,9 @@ export default function ProfilePage() {
       <PageHeader
         title={t("profile.title")}
         actions={
-          <Link to="/settings" className={styles.settingsLink} aria-label={t("settings.title")}>
-            ⚙️
+          <Link to="/settings" className={styles.settingsLink}>
+            <span aria-hidden>⚙️</span>
+            {t("settings.title")}
           </Link>
         }
       />

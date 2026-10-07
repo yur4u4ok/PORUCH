@@ -475,7 +475,17 @@
     "themeDark": "Sombre",
     "themeSystem": "Système",
     "sound": "Son des nouvelles notifications",
-    "soundHint": "Un court signal quand l'app est ouverte et que quelque chose de nouveau arrive."
+    "soundHint": "Un court signal quand l'app est ouverte et que quelque chose de nouveau arrive.",
+    "mute": "Ne pas déranger",
+    "muteHint": "Suspendre un moment les alertes sur les nouvelles demandes à proximité.",
+    "mutedUntil": "Alertes en pause jusqu’à {{time}}",
+    "muteOff": "Désactivé",
+    "muteFor": {
+      "1h": "1 h",
+      "3h": "3 h",
+      "morning": "Jusqu’au matin",
+      "24h": "24 h"
+    }
   },
   "report": {
     "title": "Signaler",

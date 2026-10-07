@@ -48,6 +48,7 @@ class PreferencesSerializer(serializers.ModelSerializer):
             "email_enabled",
             "has_location",
             "location_updated_at",
+            "muted_until",
         ]
 
     def get_has_location(self, obj) -> bool:
@@ -61,4 +62,5 @@ class PreferencesUpdateSerializer(serializers.Serializer):
     )
     push_enabled = serializers.BooleanField(required=False)
     email_enabled = serializers.BooleanField(required=False)
+    muted_until = serializers.DateTimeField(required=False, allow_null=True)
     location = LocationInputSerializer(required=False)

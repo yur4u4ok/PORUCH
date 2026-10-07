@@ -13,7 +13,7 @@ import { useGeolocation } from "@/features/location/useGeolocation";
 import { useSyncNotificationLocation } from "@/features/location/useSyncNotificationLocation";
 import { PushToggle } from "@/features/notifications/PushToggle";
 import { usePublicConfig } from "@/features/profile/hooks";
-import { useNearbyFilters } from "@/stores/nearbyFiltersStore";
+import { shownAsSelected, useNearbyFilters } from "@/stores/nearbyFiltersStore";
 import type { LatLng } from "@/types/api";
 import { cityName } from "@/utils/city";
 import { fallbackCenter, usePlace } from "@/features/location/place";
@@ -185,7 +185,7 @@ export default function NearbyPage() {
         title={t("nearby.filters")}
         actions={
           <>
-            <Button variant="ghost" onClick={filters.reset}>
+            <Button variant="soft" onClick={filters.reset}>
               {t("nearby.all")}
             </Button>
             <Button onClick={() => setFiltersOpen(false)}>{t("common.done")}</Button>
@@ -196,7 +196,7 @@ export default function NearbyPage() {
           <strong>{t("nearby.category")}</strong>
           <CategoryChips
             options={CATEGORY_ORDER}
-            selected={filters.categories}
+            selected={shownAsSelected(filters.categories, CATEGORY_ORDER)}
             onToggle={filters.toggleCategory}
           />
         </div>
@@ -207,9 +207,9 @@ export default function NearbyPage() {
               <Button
                 key={u}
                 size="sm"
-                variant={filters.urgencies.includes(u) ? "primary" : "secondary"}
+                variant={shownAsSelected(filters.urgencies, URGENCIES).includes(u) ? "primary" : "secondary"}
                 onClick={() => filters.toggleUrgency(u)}
-                aria-pressed={filters.urgencies.includes(u)}
+                aria-pressed={shownAsSelected(filters.urgencies, URGENCIES).includes(u)}
               >
                 {URGENCY_EMOJI[u]} {t(`urgency.${u}`)}
               </Button>
