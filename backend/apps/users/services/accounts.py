@@ -126,6 +126,22 @@ def verify_email(token: str) -> User:
     return user
 
 
+def change_password(user: User, current: str | None, new: str) -> None:
+    """Accounts created with Google have no password yet: they set one without the current."""
+    if user.has_usable_password() and not user.check_password(current or ""):
+        raise ValidationFailed(details={"current_password": [_("Неправильний пароль.")]})
+    try:
+        validate_password(new, user=user)
+    except DjangoValidationError as exc:
+        raise ValidationFailed(details={"new_password": list(exc.messages)}) from exc
+    user.set_password(new)
+    user.save(update_fields=["password"])
+    # Sign out every other device; this one gets fresh cookies from the view.
+    from apps.users.services.tokens import revoke_all_tokens
+
+    revoke_all_tokens(user)
+
+
 def request_email_change(user: User, new_email: str, password: str | None) -> None:
     """Send a confirmation link to the new address; the login email changes only after it is opened."""
     new_email = User.objects.normalize_email(new_email).strip().lower()

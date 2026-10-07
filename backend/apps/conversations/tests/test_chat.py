@@ -160,3 +160,45 @@ async def receive_event(ws, name, attempts=10):
         if event["event"] == name:
             return event
     raise AssertionError(f"event {name} not received")
+
+
+@pytest.mark.django_db
+class TestRepliesReactionsPresence:
+    def test_reply_quotes_a_message_from_the_same_chat(self, make_client, no_push):
+        conversation, author, helper = setup_conversation()
+        first = make_client(helper).post(url(conversation, "messages/"), {"text": "Буду о 18:00"}, format="json").data
+        reply = (
+            make_client(author)
+            .post(url(conversation, "messages/"), {"text": "Добре", "reply_to_id": first["id"]}, format="json")
+            .data
+        )
+        assert reply["reply_to"]["id"] == first["id"] and reply["reply_to"]["text"] == "Буду о 18:00"
+        other, _, _ = setup_conversation()
+        foreign = Message.objects.filter(conversation=other).first()
+        stray = (
+            make_client(author)
+            .post(url(conversation, "messages/"), {"text": "x", "reply_to_id": str(foreign.id)}, format="json")
+            .data
+        )
+        assert stray["reply_to"] is None  # another chat's message is never quoted
+
+    def test_reaction_toggles_and_replaces(self, make_client, no_push):
+        conversation, author, helper = setup_conversation()
+        message = make_client(helper).post(url(conversation, "messages/"), {"text": "Привіт"}, format="json").data
+        client = make_client(author)
+        react_url = url(conversation, f"messages/{message['id']}/reactions/")
+        data = client.post(react_url, {"emoji": "👍"}, format="json").data
+        assert data["reactions"] == [{"emoji": "👍", "user_ids": [str(author.id)]}]
+        data = client.post(react_url, {"emoji": "❤️"}, format="json").data
+        assert data["reactions"] == [{"emoji": "❤️", "user_ids": [str(author.id)]}]  # replaced
+        data = client.post(react_url, {"emoji": "❤️"}, format="json").data
+        assert data["reactions"] == []  # same again removes it
+        assert client.post(react_url, {"emoji": "💩"}, format="json").status_code == 400
+        assert make_client().post(react_url, {"emoji": "👍"}, format="json").status_code == 404
+
+    def test_other_online_in_chat_list(self, make_client):
+        conversation, author, helper = setup_conversation()
+        client = make_client(author)
+        assert client.get("/api/v1/conversations/").data["results"][0]["other_online"] is False
+        make_client(helper).get("/api/v1/me/")  # any request marks the helper as online
+        assert client.get("/api/v1/conversations/").data["results"][0]["other_online"] is True

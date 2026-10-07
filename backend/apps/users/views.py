@@ -189,6 +189,20 @@ class MeView(APIView):
         return Response(_me(request.user))
 
 
+class PasswordChangeView(APIView):
+    permission_classes = [IsAuthenticatedUser]
+    throttle_classes = [LoginThrottle]
+
+    @extend_schema(request=s.PasswordChangeSerializer, responses=s.MeSerializer)
+    def post(self, request):
+        ser = s.PasswordChangeSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        accounts.change_password(
+            request.user, ser.validated_data.get("current_password"), ser.validated_data["new_password"]
+        )
+        return set_auth_cookies(Response(_me(request.user)), issue_tokens(request.user))
+
+
 class EmailChangeView(APIView):
     permission_classes = [IsAuthenticatedUser]
     throttle_classes = [RegisterThrottle]

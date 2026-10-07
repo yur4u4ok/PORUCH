@@ -61,6 +61,8 @@ class Message(UUIDModel):
     text = models.TextField(max_length=3000, blank=True, validators=[MaxLengthValidator(3000)])
     message_type = models.CharField(max_length=10, choices=Type.choices, default=Type.TEXT)
     attachment = models.ForeignKey("media.Media", null=True, blank=True, on_delete=models.SET_NULL, related_name="+")
+    # The message this one answers (shown as a quote above it).
+    reply_to = models.ForeignKey("self", null=True, blank=True, on_delete=models.SET_NULL, related_name="+")
     # Client generated id for optimistic UI + idempotent retries.
     client_id = models.UUIDField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
@@ -79,3 +81,18 @@ class Message(UUIDModel):
 
     def __str__(self) -> str:
         return f"{self.message_type} {self.id}"
+
+
+class MessageReaction(models.Model):
+    """One emoji per person per message; picking another replaces it, picking the same removes it."""
+
+    message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="reactions")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="+")
+    emoji = models.CharField(max_length=16)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["message", "user"], name="one_reaction_per_user")]
+
+    def __str__(self) -> str:
+        return f"{self.emoji} on {self.message_id}"

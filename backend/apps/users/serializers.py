@@ -90,6 +90,11 @@ class MeUpdateSerializer(serializers.Serializer):
     phone_region = serializers.CharField(max_length=2, required=False)
 
 
+class PasswordChangeSerializer(serializers.Serializer):
+    current_password = serializers.CharField(max_length=128, required=False, allow_blank=True)
+    new_password = serializers.CharField(min_length=8, max_length=128)
+
+
 class EmailChangeSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=254)
     password = serializers.CharField(max_length=128, required=False, allow_blank=True)

@@ -9,6 +9,7 @@ from apps.conversations.serializers import (
     ConversationSerializer,
     MessageCreateSerializer,
     MessageSerializer,
+    ReactionSerializer,
     ReadSerializer,
 )
 from apps.conversations.services import conversations as svc
@@ -49,7 +50,11 @@ class MessageListCreateView(ListAPIView):
 
     def get_queryset(self):
         conversation = svc.get_conversation_for(self.request.user, self.kwargs["conversation_id"])
-        return Message.objects.filter(conversation=conversation).select_related("attachment")
+        return (
+            Message.objects.filter(conversation=conversation)
+            .select_related("attachment", "reply_to")
+            .prefetch_related("reactions")
+        )
 
     @extend_schema(request=MessageCreateSerializer, responses={201: MessageSerializer})
     def post(self, request, conversation_id):
@@ -59,6 +64,15 @@ class MessageListCreateView(ListAPIView):
         return Response(
             MessageSerializer(message).data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK
         )
+
+
+class MessageReactionView(APIView):
+    @extend_schema(request=ReactionSerializer, responses=MessageSerializer)
+    def post(self, request, conversation_id, message_id):
+        ser = ReactionSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        message = svc.react(request.user, conversation_id, message_id, ser.validated_data["emoji"])
+        return Response(MessageSerializer(message).data)
 
 
 class ConversationReadView(APIView):

@@ -3,6 +3,7 @@ from unittest import mock
 from urllib.parse import unquote
 
 import pytest
+from django.conf import settings
 from django.core import mail
 from django.urls import reverse
 from rest_framework.test import APIClient
@@ -295,3 +296,22 @@ class TestContacts:
         assert api_client.post(reverse("auth-verify-email"), {"token": token}, format="json").status_code == 200
         user.refresh_from_db()
         assert user.email == "new@example.com" and user.pending_email == ""
+
+
+class TestPasswordChange:
+    def test_requires_current_password_and_keeps_this_session(self, auth_client, user):
+        user.set_password(PASSWORD)
+        user.save()
+        url = reverse("me-password")
+        bad = auth_client.post(url, {"current_password": "nope", "new_password": "Another-strong-Pa55"}, format="json")
+        assert bad.status_code == 400 and "current_password" in bad.data["details"]
+        ok = auth_client.post(url, {"current_password": PASSWORD, "new_password": "Another-strong-Pa55"}, format="json")
+        assert ok.status_code == 200 and settings.AUTH_COOKIE_ACCESS in ok.cookies
+        user.refresh_from_db()
+        assert user.check_password("Another-strong-Pa55")
+
+    def test_google_account_sets_first_password(self, auth_client, user):
+        user.set_unusable_password()
+        user.save()
+        ok = auth_client.post(reverse("me-password"), {"new_password": "Another-strong-Pa55"}, format="json")
+        assert ok.status_code == 200 and ok.data["has_password"] is True
