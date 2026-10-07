@@ -52,6 +52,21 @@ def post_system_message(conversation: Conversation, text: str) -> Message:
     return message
 
 
+def post_offer_message(conversation: Conversation, helper: User, text: str, sent_at) -> Message | None:
+    """The note a helper wrote when offering help opens the chat, dated when it was written.
+
+    The author has already read it on the request page, so it does not count as unread.
+    Added once per chat (not again if the helper is chosen a second time).
+    """
+    text = (text or "").strip()
+    if not text or conversation.messages.filter(sender=helper).exists():
+        return None
+    message = Message.objects.create(conversation=conversation, sender=helper, text=text, read_at=timezone.now())
+    Message.objects.filter(pk=message.pk).update(created_at=sent_at)
+    message.created_at = sent_at
+    return message
+
+
 def conversations_for(user: User) -> QuerySet[Conversation]:
     return (
         Conversation.objects.filter(participants__user=user)

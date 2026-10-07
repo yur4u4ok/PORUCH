@@ -135,7 +135,11 @@ def _accept_response(help_request: HelpRequest, response: HelpResponse, *, agree
 
     Caller holds row locks on the request and the response.
     """
-    from apps.conversations.services.conversations import get_or_create_for_help_request, post_system_message
+    from apps.conversations.services.conversations import (
+        get_or_create_for_help_request,
+        post_offer_message,
+        post_system_message,
+    )
 
     now = timezone.now()
     response.status = ResponseStatus.ACCEPTED
@@ -165,6 +169,7 @@ def _accept_response(help_request: HelpRequest, response: HelpResponse, *, agree
     help_request.save(update_fields=fields)
 
     conversation = get_or_create_for_help_request(help_request, response.helper)
+    post_offer_message(conversation, response.helper, response.message, response.created_at)
     post_system_message(conversation, _("Помічника обрано. Домовтеся про деталі в цьому чаті."))
     if help_request.reward_type == RewardType.WILLING:
         post_system_message(

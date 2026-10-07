@@ -202,3 +202,14 @@ class TestRepliesReactionsPresence:
         assert client.get("/api/v1/conversations/").data["results"][0]["other_online"] is False
         make_client(helper).get("/api/v1/me/")  # any request marks the helper as online
         assert client.get("/api/v1/conversations/").data["results"][0]["other_online"] is True
+
+
+@pytest.mark.django_db
+def test_helpers_offer_note_opens_the_chat(make_client, no_push):
+    hr = HelpRequestFactory()
+    resp = HelpResponseFactory(help_request=hr, message="Можу підвезти домкрат")
+    _, _, conversation = select_helper(hr.author, hr.id, resp.id)
+    ordered = list(Message.objects.filter(conversation=conversation).order_by("created_at"))
+    assert ordered[0].sender_id == resp.helper_id and ordered[0].text == "Можу підвезти домкрат"
+    assert ordered[0].read_at is not None  # the author already saw it on the request page
+    assert ordered[1].message_type == "SYSTEM"
