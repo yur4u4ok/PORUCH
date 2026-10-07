@@ -23,7 +23,6 @@ interface NavEntry {
   icon: string;
   label: string;
   badge?: number;
-  create?: boolean;
   end?: boolean;
 }
 
@@ -35,7 +34,7 @@ function useNavEntries(): NavEntry[] {
   return [
     { to: "/", icon: "🏠", label: t("nav.home"), end: true },
     { to: "/nearby", icon: "🗺", label: t("nav.nearby") },
-    { to: "/help/create", icon: "+", label: t("nav.help"), create: true },
+    { to: "/help/create", icon: "❤️", label: t("nav.help") },
     { to: "/chats", icon: "💬", label: t("nav.chats"), badge: unreadChats },
     { to: "/notifications", icon: "🔔", label: t("nav.notifications"), badge: unread },
     { to: "/profile", icon: "👤", label: t("nav.profile"), end: true },
@@ -87,10 +86,7 @@ export function AppLayout() {
         <NavLink to="/" className={styles.brand}>
           <BrandMark inverse />
         </NavLink>
-        {[
-          ...entries.map((e) => (e.create ? { ...e, icon: "❤️" } : e)),
-          { to: "/settings", icon: "⚙️", label: t("nav.settings") },
-        ].map((entry) => (
+        {[...entries, { to: "/settings", icon: "⚙️", label: t("nav.settings") }].map((entry) => (
           <NavLink
             key={entry.to}
             to={entry.to}
@@ -130,13 +126,7 @@ export function AppLayout() {
             key={entry.to}
             to={entry.to}
             end={entry.end}
-            className={({ isActive }) =>
-              clsx(
-                styles.navItem,
-                entry.create && styles.navCreate,
-                isActive && !entry.create && styles.navActive,
-              )
-            }
+            className={({ isActive }) => clsx(styles.navItem, isActive && styles.navActive)}
           >
             <span className={styles.navIcon} aria-hidden>
               {entry.icon}
