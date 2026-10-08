@@ -265,13 +265,10 @@ def authenticate_google(credential: str) -> tuple[User, bool]:
 
     social = SocialAccount.objects.select_related("user").filter(provider="google", uid=uid).first()
     if social and social.user.email.lower() != email:
-        # The account moved to another email: the old Google identity no longer opens it.
-        raise DomainError(
-            _(
-                "Цей Google-акаунт більше не прив'язаний до профілю — email у профілі змінено. Увійдіть через Google з новою адресою."
-            ),
-            code="GOOGLE_EMAIL_CHANGED",
-        )
+        # The profile moved to another email: the old Google identity is released and can
+        # sign up (or join an account with its own address) like any new one.
+        social.delete()
+        social = None
     if social:
         user = social.user
         created = False

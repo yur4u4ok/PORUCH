@@ -133,9 +133,15 @@
   /* Pinned to the bottom of the sidebar, apart from the main sections. */
   .sideBottom {
     margin-top: auto;
+  }
+  /* the divider sits above the item, so its icon and label stay centred in the block */
+  .sideBottom::before {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--space-1));
+    left: 0;
+    right: 0;
     border-top: 1px solid rgb(255 255 255 / 0.14);
-    border-radius: 0 0 var(--radius-md) var(--radius-md);
-    padding-top: var(--space-2);
   }
   .sideItem:hover {
     background: rgb(255 255 255 / 0.1);

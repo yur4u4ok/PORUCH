@@ -168,16 +168,17 @@ def test_google_auth_creates_verified_user(api_client, settings):
     assert SocialAccount.objects.filter(user=user, provider="google", uid="g-123").count() == 1
 
 
-def test_old_google_account_stops_working_after_email_change(api_client, settings):
+def test_old_google_account_is_released_after_email_change(api_client, settings):
     settings.GOOGLE_CLIENT_ID = "client-id"
     claims = {"sub": "g-old", "email": "old@example.com", "email_verified": True, "given_name": "Галя"}
     with mock.patch("apps.users.services.accounts._verify_google_credential", return_value=claims):
         assert api_client.post(reverse("auth-google"), {"credential": "x"}, format="json").status_code == 201
-        User.objects.filter(email="old@example.com").update(email="new@example.com")
+        first = User.objects.get(email="old@example.com")
+        User.objects.filter(pk=first.pk).update(email="new@example.com")
         response = api_client.post(reverse("auth-google"), {"credential": "x"}, format="json")
-    assert response.status_code == 400
-    assert response.data["code"] == "GOOGLE_EMAIL_CHANGED"
-    assert User.objects.count() == 1
+    assert response.status_code == 201  # a new account for the old address, not the moved profile
+    assert User.objects.get(email="old@example.com").pk != first.pk
+    assert not SocialAccount.objects.filter(user=first).exists()
 
 
 def test_email_verification_token_for_other_email_is_invalid(user, api_client):
