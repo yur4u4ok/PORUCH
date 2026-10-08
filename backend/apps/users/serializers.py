@@ -11,6 +11,12 @@ class CapabilitySerializer(serializers.ModelSerializer):
         fields = ["code", "kind", "category", "emoji"]
 
 
+def rating_of(user: User) -> float | None:
+    """Average stars, one decimal; None until the first review."""
+    profile = user.profile
+    return round(profile.rating_sum / profile.reviews_count, 1) if profile.reviews_count else None
+
+
 class PublicUserSerializer(serializers.Serializer):
     """Public information only. Respects the user's privacy settings."""
 
@@ -19,9 +25,14 @@ class PublicUserSerializer(serializers.Serializer):
     avatar = serializers.SerializerMethodField()
     helped_count = serializers.IntegerField(source="profile.helped_count", read_only=True)
     thanks_received_count = serializers.IntegerField(source="profile.thanks_received_count", read_only=True)
+    reviews_count = serializers.IntegerField(source="profile.reviews_count", read_only=True)
+    rating = serializers.SerializerMethodField()
     member_since = serializers.DateTimeField(source="date_joined", read_only=True)
     is_verified = serializers.BooleanField(source="email_verified", read_only=True)
     is_active = serializers.BooleanField(read_only=True)
+
+    def get_rating(self, user: User) -> float | None:
+        return rating_of(user)
 
     def get_display_name(self, user: User) -> str | None:
         profile = user.profile
@@ -57,10 +68,15 @@ class MeSerializer(serializers.Serializer):
     custom_items = serializers.ListField(source="profile.custom_items", child=serializers.CharField(), read_only=True)
     helped_count = serializers.IntegerField(source="profile.helped_count", read_only=True)
     thanks_received_count = serializers.IntegerField(source="profile.thanks_received_count", read_only=True)
+    reviews_count = serializers.IntegerField(source="profile.reviews_count", read_only=True)
+    rating = serializers.SerializerMethodField()
     has_password = serializers.SerializerMethodField()
     phone = serializers.SerializerMethodField()
     phone_verified = serializers.BooleanField(read_only=True)
     pending_email = serializers.EmailField(read_only=True)
+
+    def get_rating(self, user: User) -> float | None:
+        return rating_of(user)
 
     def get_phone(self, user: User) -> str | None:
         from apps.users.phone import get_phone

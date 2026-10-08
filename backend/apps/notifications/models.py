@@ -19,6 +19,7 @@ class NotificationType(models.TextChoices):
     NEW_MESSAGE = "NEW_MESSAGE", "Нове повідомлення"
     REQUEST_COMPLETED = "REQUEST_COMPLETED", "Запит завершено"
     THANK_YOU_RECEIVED = "THANK_YOU_RECEIVED", "Отримано подяку"
+    REVIEW_RECEIVED = "REVIEW_RECEIVED", "Отримано відгук про співпрацю"
     REQUEST_EXPIRING = "REQUEST_EXPIRING", "Запит скоро завершиться"
     REQUEST_CANCELLED = "REQUEST_CANCELLED", "Запит скасовано"
 

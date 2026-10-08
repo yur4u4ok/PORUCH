@@ -80,6 +80,8 @@ class Profile(models.Model):
     # Reputation counters (denormalised, updated by services with F() expressions)
     helped_count = models.PositiveIntegerField(default=0)
     thanks_received_count = models.PositiveIntegerField(default=0)
+    reviews_count = models.PositiveIntegerField(default=0)
+    rating_sum = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = "профіль"

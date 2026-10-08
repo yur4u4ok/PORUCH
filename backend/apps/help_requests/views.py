@@ -15,7 +15,13 @@ from apps.help_requests.services.create_request import create_help_request
 from apps.interactions.models import HelpResponse
 from apps.interactions.serializers import HelpResponseSerializer, RespondSerializer, SelectHelperSerializer
 from apps.interactions.services import responses as response_svc
-from apps.reputation.serializers import ThankYouCreateSerializer, ThankYouSerializer
+from apps.reputation.serializers import (
+    ReviewCreateSerializer,
+    ReviewSerializer,
+    ThankYouCreateSerializer,
+    ThankYouSerializer,
+)
+from apps.reputation.services.reviews import create_review
 from apps.reputation.services.thanks import create_thank_you
 from common.exceptions import Forbidden, NotFound
 from common.throttling import CreateHelpRequestThrottle, RespondThrottle
@@ -160,6 +166,15 @@ class HelpRequestViewSet(viewsets.ViewSet):
             .order_by("created_at")
         )
         return Response(HelpResponseSerializer(qs, many=True).data)
+
+    @extend_schema(request=ReviewCreateSerializer, responses={201: ReviewSerializer})
+    @action(detail=True, methods=["post"], url_path="reviews")
+    def review(self, request, pk=None):
+        ser = ReviewCreateSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        data = ser.validated_data
+        review = create_review(request.user, pk, data["to_user"], data["rating"], data["text"])
+        return Response(ReviewSerializer(review).data, status=status.HTTP_201_CREATED)
 
     @extend_schema(request=ThankYouCreateSerializer, responses={201: ThankYouSerializer})
     @action(detail=True, methods=["post"], url_path="thank-you")
