@@ -244,6 +244,13 @@ EMAIL_CONFIG = env.email_url("EMAIL_URL", default="consolemail://")
 vars().update(EMAIL_CONFIG)
 # Where «Підтримка» messages go. Empty = support form disabled.
 SUPPORT_EMAIL = env("SUPPORT_EMAIL", default="")
+
+# Personal data at rest (phone numbers): a Fernet key (32 url-safe base64 bytes).
+# Generate: python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+# Without it a key is derived from DJANGO_SECRET_KEY — then rotating that secret makes stored phones unreadable.
+FIELD_ENCRYPTION_KEY = env("FIELD_ENCRYPTION_KEY", default="")
+# Region used to read numbers typed without «+country code».
+PHONE_DEFAULT_REGION = env("PHONE_DEFAULT_REGION", default="UA")
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="Poruch <no-reply@poruch.local>")
 
 # Days to keep database backups in object storage (manage.py backups).
@@ -280,9 +287,9 @@ HELP_REQUEST_EXPIRATION_HOURS = {
 HELP_REQUEST_DEFAULT_EXPIRATION_HOURS = 24
 HELP_REQUEST_EXPIRING_NOTICE_MINUTES = env.int("HELP_REQUEST_EXPIRING_NOTICE_MINUTES", default=60)
 HELP_REQUEST_MAX_PHOTOS = 5
-NEARBY_ALLOWED_RADII = [500, 1000, 3000, 5000, 10000, 20000]
+NEARBY_ALLOWED_RADII = [500, 1000, 3000, 5000, 10000, 20000, 30000]
 NEARBY_DEFAULT_RADIUS = 3000
-NEARBY_MAX_RADIUS = 20000
+NEARBY_MAX_RADIUS = 30000
 # Grid used to blur locations for non-participants (degrees).
 APPROXIMATE_LOCATION_GRID_DEG = env.float("APPROXIMATE_LOCATION_GRID_DEG", default=0.005)
 APPROXIMATE_DISTANCE_STEP_M = 100

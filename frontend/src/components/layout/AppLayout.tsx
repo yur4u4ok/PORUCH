@@ -6,6 +6,8 @@ import { BRAND } from "@/app/brand";
 import { NavLink, Outlet, useNavigate, useSearchParams } from "react-router";
 
 import { IconButton } from "@/components/ui";
+import { useLogoutConfirm } from "@/features/auth/LogoutConfirm";
+import { AttentionSignals } from "@/features/attention/AttentionSignals";
 import { InstallPrompt } from "@/features/pwa/InstallPrompt";
 
 import { BrandMark } from "./BrandMark";
@@ -21,7 +23,6 @@ interface NavEntry {
   icon: string;
   label: string;
   badge?: number;
-  create?: boolean;
   end?: boolean;
 }
 
@@ -29,11 +30,13 @@ function useNavEntries(): NavEntry[] {
   const { t } = useTranslation();
   const { data: conversations } = useConversations();
   const unreadChats = conversations?.results.reduce((sum, c) => sum + c.unread_count, 0) ?? 0;
+  const { data: unread = 0 } = useUnreadCount(true);
   return [
     { to: "/", icon: "🏠", label: t("nav.home"), end: true },
     { to: "/nearby", icon: "🗺", label: t("nav.nearby") },
-    { to: "/help/create", icon: "+", label: t("nav.help"), create: true },
+    { to: "/help/create", icon: "❤️", label: t("nav.help") },
     { to: "/chats", icon: "💬", label: t("nav.chats"), badge: unreadChats },
+    { to: "/notifications", icon: "🔔", label: t("nav.notifications"), badge: unread },
     { to: "/profile", icon: "👤", label: t("nav.profile"), end: true },
   ];
 }
@@ -69,21 +72,20 @@ export function AppLayout() {
   const { t } = useTranslation();
   const entries = useNavEntries();
   const { data: unread = 0 } = useUnreadCount(true);
+  const logout = useLogoutConfirm();
+  const chatBadge = entries.find((e) => e.to === "/chats")?.badge ?? 0;
 
   return (
     <div className={styles.shell}>
       <PushDeepLinkTracker />
       <PullToRefresh />
+      <AttentionSignals unread={unread + chatBadge} />
       <InstallPrompt />
       <nav className={styles.sidebar} aria-label={BRAND}>
         <NavLink to="/" className={styles.brand}>
           <BrandMark inverse />
         </NavLink>
-        {[
-          ...entries,
-          { to: "/notifications", icon: "🔔", label: t("nav.notifications"), badge: unread },
-          { to: "/settings", icon: "⚙️", label: t("nav.settings") },
-        ].map((entry) => (
+        {entries.map((entry) => (
           <NavLink
             key={entry.to}
             to={entry.to}
@@ -104,6 +106,11 @@ export function AppLayout() {
           <span aria-hidden>💬</span>
           {t("support.title")}
         </NavLink>
+        <button type="button" className={styles.sideItem} onClick={logout.ask}>
+          <span aria-hidden>🚪</span>
+          {t("auth.logout")}
+        </button>
+        {logout.dialog}
       </nav>
       <div className={styles.main}>
         <OfflineBanner />
@@ -115,13 +122,7 @@ export function AppLayout() {
             key={entry.to}
             to={entry.to}
             end={entry.end}
-            className={({ isActive }) =>
-              clsx(
-                styles.navItem,
-                entry.create && styles.navCreate,
-                isActive && !entry.create && styles.navActive,
-              )
-            }
+            className={({ isActive }) => clsx(styles.navItem, isActive && styles.navActive)}
           >
             <span className={styles.navIcon} aria-hidden>
               {entry.icon}

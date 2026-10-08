@@ -51,7 +51,9 @@ class RegisterView(APIView):
     def post(self, request):
         ser = s.RegisterSerializer(data=request.data)
         ser.is_valid(raise_exception=True)
-        user = accounts.register_user(**ser.validated_data)
+        data = dict(ser.validated_data)
+        data.pop("age_confirmed")
+        user = accounts.register_user(**data)
         response = Response(_me(user), status=status.HTTP_201_CREATED)
         return set_auth_cookies(response, issue_tokens(user))
 
@@ -184,6 +186,32 @@ class MeView(APIView):
         ser = s.MeUpdateSerializer(data=request.data, partial=True)
         ser.is_valid(raise_exception=True)
         profile.update_profile(request.user, ser.validated_data)
+        return Response(_me(request.user))
+
+
+class PasswordChangeView(APIView):
+    permission_classes = [IsAuthenticatedUser]
+    throttle_classes = [LoginThrottle]
+
+    @extend_schema(request=s.PasswordChangeSerializer, responses=s.MeSerializer)
+    def post(self, request):
+        ser = s.PasswordChangeSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        accounts.change_password(
+            request.user, ser.validated_data.get("current_password"), ser.validated_data["new_password"]
+        )
+        return set_auth_cookies(Response(_me(request.user)), issue_tokens(request.user))
+
+
+class EmailChangeView(APIView):
+    permission_classes = [IsAuthenticatedUser]
+    throttle_classes = [RegisterThrottle]
+
+    @extend_schema(request=s.EmailChangeSerializer, responses=s.MeSerializer)
+    def post(self, request):
+        ser = s.EmailChangeSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        accounts.request_email_change(request.user, ser.validated_data["email"], ser.validated_data.get("password"))
         return Response(_me(request.user))
 
 

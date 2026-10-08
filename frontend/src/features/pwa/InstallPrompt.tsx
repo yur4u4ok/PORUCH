@@ -13,7 +13,7 @@ import {
   type Platform,
 } from "./install";
 
-/** Step-by-step instructions where the browser cannot install on a button press. */
+/** Short steps where the browser cannot install on a button press. */
 function Steps({ platform }: { platform: Platform }) {
   const { t } = useTranslation();
   const steps = t(`install.steps.${platform}`, { returnObjects: true }) as string[];
@@ -23,6 +23,34 @@ function Steps({ platform }: { platform: Platform }) {
         <li key={step}>{step}</li>
       ))}
     </ol>
+  );
+}
+
+/** Collapsed help for the cases that go wrong: in-app browsers, hidden menu items, private mode… */
+function Troubleshooting({ platform }: { platform: Platform }) {
+  const { t } = useTranslation();
+  const tips = t(`install.trouble.${platform}`, { returnObjects: true }) as string[];
+  const copy = async () => {
+    const url = window.location.origin;
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success(t("install.copied"));
+    } catch {
+      window.prompt(t("install.copyLink"), url);
+    }
+  };
+  return (
+    <details className={styles.trouble}>
+      <summary>{t("install.troubleTitle")}</summary>
+      <ul>
+        {tips.map((tip) => (
+          <li key={tip}>{tip}</li>
+        ))}
+      </ul>
+      <Button variant="secondary" size="sm" onClick={() => void copy()}>
+        🔗 {t("install.copyLink")}
+      </Button>
+    </details>
   );
 }
 
@@ -52,6 +80,7 @@ function InstallBody({ onDone }: { onDone: () => void }) {
         <>
           <strong>{t("install.howTo")}</strong>
           <Steps platform={platform} />
+          <Troubleshooting platform={platform} />
         </>
       )}
     </div>

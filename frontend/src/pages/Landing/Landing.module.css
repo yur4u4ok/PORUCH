@@ -7,14 +7,6 @@
   margin: 0 auto;
   padding: var(--space-8) var(--space-5) var(--space-8);
 }
-.title {
-  font-family: var(--font-display);
-  font-size: 40px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--color-primary);
-  letter-spacing: -0.02em;
-}
 .duo {
   display: grid;
   gap: var(--space-3);
@@ -94,4 +86,64 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* «Як це працює» / «Чому тут безпечно»: folded by default so the page stays short. */
+.fold {
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+.fold summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+.fold summary::-webkit-details-marker {
+  display: none;
+}
+.fold summary::after {
+  content: "▾";
+  color: var(--color-primary);
+  transition: transform 0.15s;
+}
+.fold[open] summary::after {
+  transform: rotate(180deg);
+}
+.fold[open] summary {
+  margin-bottom: var(--space-3);
+}
+.fold.trust {
+  /* .trust is a grid with its own padding; as a fold it must match «Як це працює» exactly. */
+  display: block;
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-primary-soft);
+  border-color: transparent;
+}
+
+/* Sign-up: «I am at least 16» checkbox. */
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+.check input {
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  accent-color: var(--color-primary);
+  flex: none;
+}
+.checkError {
+  font-size: var(--text-sm);
+  color: var(--color-danger);
+  margin-top: calc(-1 * var(--space-2));
 }

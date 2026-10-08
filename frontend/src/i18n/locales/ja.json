@@ -3,7 +3,8 @@
     "slogan": "近くの人から、助けを",
     "offline": "インターネットに接続されていません。一部の機能は一時的に使えません。",
     "updateReady": "アプリの新しいバージョンがあります",
-    "reload": "更新"
+    "reload": "更新",
+    "updateHint": "アプリの新しいバージョンがあるかもしれません。ページを再読み込みしてください。"
   },
   "nav": {
     "home": "ホーム",
@@ -36,7 +37,12 @@
     "anonymous": "ご近所さん",
     "seeAll": "すべて",
     "fromYou": "{{distance}}先",
-    "since": "{{year}}年から参加"
+    "since": "{{year}}年から参加",
+    "selectAll": "すべて選択",
+    "selectNone": "すべて解除",
+    "less": "減らす",
+    "more": "増やす",
+    "previous": "前へ"
   },
   "time": {
     "justNow": "たった今",
@@ -45,10 +51,10 @@
     "daysAgo_other": "{{count}}日前",
     "expiresIn": "あと{{value}}有効",
     "hours_other": "{{count}}時間",
-    "minutes_other": "{{count}}分"
+    "minutes_other": "{{count}}分",
+    "days_other": "{{count}}日"
   },
   "landing": {
-    "title": "助けは、すぐそばに。",
     "needHelpTitle": "助けが必要ですか？",
     "needHelpText": "近くの人に知らせましょう。",
     "canHelpTitle": "手を貸せますか？",
@@ -61,7 +67,7 @@
     "step2": "近くの人に通知が届く",
     "step3": "誰かが応答したら、チャットで詳細を決める",
     "step4": "助けてもらったらお礼を伝える ❤️",
-    "notMarketplace": "これはサービスの売買の場ではありません。ご近所同士で助け合う場所です。支払いや手数料の義務はありません。",
+    "notMarketplace": "サービスではなく、助け合いのコミュニティです。必須の支払いや手数料なしで、近くの人を助けましょう。",
     "trustTitle": "安心して使える理由",
     "trust": [
       "正確な住所は表示されません。見られるのは、手伝うと決めた人だけです。",
@@ -105,14 +111,24 @@
     "terms": "登録することで、安全かつ思いやりをもって助け合うことに同意したものとみなされます。",
     "googleFailed": "Googleでログインできませんでした。もう一度お試しください。",
     "googleInactive": "このアカウントは無効になっています。",
-    "checkSpam": "メールが見当たらない場合は、1分ほど待ってから迷惑メールフォルダやプロモーションタブを確認してください。そこにあれば「迷惑メールではない」に設定すると、次から受信トレイに届きます。"
+    "checkSpam": "メールが見当たらない場合は、1分ほど待ってから迷惑メールフォルダやプロモーションタブを確認してください。そこにあれば「迷惑メールではない」に設定すると、次から受信トレイに届きます。",
+    "ageConfirm": "16歳以上です",
+    "ageRequired": "16歳以上であることを確認してください",
+    "ageForGoogle": "Googleで続けるには、先に上で年齢を確認してください。",
+    "logoutTitle": "ログアウトしますか？",
+    "logoutText": "Poruchを使うには再度ログインが必要です。",
+    "showPassword": "パスワードを表示",
+    "hidePassword": "パスワードを隠す",
+    "phone": "電話番号",
+    "phoneHint": "助け合いが決まった相手にだけ表示されます。"
   },
   "validation": {
     "required": "必須項目です",
     "email": "メールアドレスが正しくありません",
     "minPassword": "8文字以上",
     "max": "{{max}}文字以内",
-    "amount": "金額が正しくありません"
+    "amount": "金額が正しくありません",
+    "phone": "電話番号が正しくありません"
   },
   "onboarding": {
     "step": "ステップ {{current}} / {{total}}",
@@ -125,7 +141,8 @@
     "notificationsAllow": "通知をオンにする",
     "notificationsGranted": "通知はオンです ✓",
     "categoriesTitle": "何を手伝えますか？",
-    "categoriesText": "関係のある依頼だけをお送りします。設定でいつでも変更できます。"
+    "categoriesText": "関係のある依頼だけをお送りします。設定でいつでも変更できます。",
+    "changeLater": "あとで設定から変更できます。"
   },
   "home": {
     "needHelp": "助けが必要",
@@ -140,7 +157,14 @@
     "myRequestsHint": "あなたが投稿したもの",
     "imHelping": "手伝っている依頼",
     "imHelpingHint": "あなたが手伝う人に選ばれた、ほかの人の依頼",
-    "nearbyPreviewHint": "近くで誰かが助けを求めています。あなたの力が必要かもしれません"
+    "nearbyPreviewHint": "近くで誰かが助けを求めています。あなたの力が必要かもしれません",
+    "noRequests": "進行中の依頼はまだありません。",
+    "createOne": "依頼を作成 →",
+    "noHelping": "まだ誰も手伝っていません。",
+    "findSomeone": "助けが必要な人を見る →",
+    "hello": "こんにちは、{{name}}さん",
+    "ask": "助けを求める",
+    "orPick": "または内容を選ぶ:"
   },
   "availability": {
     "title": "今すぐ手伝えます",
@@ -153,7 +177,7 @@
     "disable": "オフにする",
     "needLocation": "位置情報が必要です",
     "explainTitle": "このモードについて",
-    "explain": "オンの間（最長2時間）、普段は別の場所にいても、現在地の近くにいる人からの依頼を、選んだ範囲とカテゴリでお送りします。オフにするか時間が過ぎると、通常の設定に戻ります。"
+    "explain": "オンの間（選んだ時間だけ）、普段は別の場所にいても、現在地の近くにいる人からの依頼を、選んだ範囲とカテゴリでお送りします。オフにするか時間が過ぎると、通常の設定に戻ります。"
   },
   "categories": {
     "AUTO": "車",
@@ -289,7 +313,11 @@
     "neededAtHint": "15分後から30日後まで",
     "neededAtRequired": "日付と時刻を選んでください",
     "neededAtTooSoon": "今から15分以上先の時刻を選んでください",
-    "neededAtTime": "時刻"
+    "neededAtTime": "時刻",
+    "helpersNeeded": "必要な人数",
+    "helpersNeededHint": "この人数が手伝うことに同意すると、依頼はほかの人には閉じられます。",
+    "activeHours": "依頼を公開しておく時間",
+    "activeHoursHint": "時間が過ぎると自動で締め切られます。"
   },
   "nearby": {
     "title": "近くの助け合い",
@@ -342,7 +370,11 @@
     "blockConfirm": "このユーザーをブロックしますか？お互いの依頼が見えなくなり、メッセージも送れなくなります。",
     "blocked": "ブロックしました",
     "helpers_other": "応答 {{count}}件",
-    "rewardInfo": "お礼"
+    "rewardInfo": "お礼",
+    "helpersProgress": "{{needed}}人中{{count}}人を選択",
+    "selectedHelpers": "手伝う人",
+    "peopleStillNeeded_other": "あと{{count}}人必要",
+    "showOnMap": "依頼の場所へ"
   },
   "thanks": {
     "received": "助けてもらいました ❤️",
@@ -370,7 +402,14 @@
     "closed": "会話は終了しました",
     "image": "📷 写真",
     "aboutRequest": "依頼：{{title}}",
-    "loadOlder": "以前のメッセージ"
+    "loadOlder": "以前のメッセージ",
+    "request": "依頼",
+    "you": "あなた",
+    "reply": "返信",
+    "replyingTo": "{{name}}さんへの返信",
+    "actions": "メッセージの操作",
+    "typingName": "{{name}}さんが入力中…",
+    "lastSeen": "最終オンライン {{when}}"
   },
   "notifications": {
     "title": "通知",
@@ -408,7 +447,21 @@
     "customItemsLabel": "ほかに持っているものは？",
     "customItemsPlaceholder": "例：自転車、テント",
     "customItemsAdd": "追加",
-    "customItemsHint": "最大10個、各40文字まで"
+    "customItemsHint": "最大10個、各40文字まで",
+    "renameHint": "タップして名前を変更",
+    "contacts": "連絡先",
+    "change": "変更",
+    "addPhone": "追加",
+    "noPhone": "未設定",
+    "changePhone": "電話番号",
+    "phoneSaved": "番号を保存しました",
+    "changeEmail": "メールを変更",
+    "changeEmailText": "新しいアドレスにリンクを送ります。開くとメールが変更されます。",
+    "newEmail": "新しいアドレス",
+    "sendConfirmation": "確認を送信",
+    "emailSent": "{{email}} に送信しました。リンクを開いてください。",
+    "emailPending": "確認待ち: {{email}}",
+    "contactsPrivacy": "電話とメールは、あなたが選んだ手伝う人と、あなたを選んだ依頼者にだけ表示されます。"
   },
   "settings": {
     "title": "設定",
@@ -447,7 +500,27 @@
     "theme": "テーマ",
     "themeLight": "ライト",
     "themeDark": "ダーク",
-    "themeSystem": "システム"
+    "themeSystem": "システム",
+    "sound": "新着通知の音",
+    "soundHint": "アプリを開いているときに新着があると短い音が鳴ります。",
+    "mute": "おやすみモード",
+    "muteHint": "近くの新しい依頼の通知をしばらく停止します。",
+    "mutedUntil": "{{time}}まで通知を停止中",
+    "muteOff": "オフ",
+    "muteFor": {
+      "1h": "1時間",
+      "3h": "3時間",
+      "morning": "朝まで",
+      "24h": "24時間"
+    },
+    "locationAuto": "通知用の位置情報はアプリを開くたびに自動で更新されます。",
+    "locationAutoDenied": "ブラウザで位置情報がブロックされています。近くの依頼を受け取るにはサイト設定で許可してください。",
+    "changePassword": "パスワードを変更",
+    "setPassword": "パスワードを設定",
+    "currentPassword": "現在のパスワード",
+    "newPassword": "新しいパスワード",
+    "passwordChanged": "パスワードを変更しました",
+    "passwordOtherDevices": "他の端末では再ログインが必要です。"
   },
   "report": {
     "title": "通報",
@@ -518,7 +591,17 @@
       "FREE": "無償"
     },
     "agreed": "合意内容：{{terms}}",
-    "note": "このサービスは支払いを扱いません。取り決めは当事者同士で行ってください。"
+    "note": "このサービスは支払いを扱いません。取り決めは当事者同士で行ってください。",
+    "counterButton": "自分の金額を提案",
+    "counterLabel": "提案する金額（{{currency}}）",
+    "counterHint": "提案は一度だけです。その後、相手が承諾か辞退を選びます。",
+    "counterSend": "提案を送る",
+    "counterSent": "{{amount}}を提案しました — 返事待ち",
+    "authorCounter": "依頼者が{{amount}}を提案しています",
+    "lastStep": "これが最後の提案です。承諾か辞退を選んでください。",
+    "acceptCounter": "承諾する",
+    "declineCounter": "辞退する",
+    "agreedToast": "合意しました！手伝う人に選ばれました。"
   },
   "share": {
     "button": "共有",
@@ -569,14 +652,18 @@
     "howTo": "インストール方法：",
     "steps": {
       "ios": [
-        "Safari下部の共有ボタン ⬆️ をタップ",
-        "「ホーム画面に追加」を選択（見えない場合はリストをスクロール）",
+        "画面下部または「⋯」メニューの共有ボタン ⬆️ をタップ",
+        "「ホーム画面に追加」を選択",
         "「追加」をタップ — Poruchがアプリに並びます"
       ],
       "ios-other-browser": [
         "アドレスバーの共有ボタン ⬆️ をタップ",
         "「ホーム画面に追加」を選択。項目がない場合はSafariで開いてください",
         "「追加」をタップ"
+      ],
+      "in-app": [
+        "このアプリは内蔵ブラウザでサイトを開いているため、ここからはインストールできません",
+        "上部の「⋯」または「⋮」から「ブラウザで開く」（SafariまたはChrome）を選び、そこでPoruchをインストールしてください"
       ],
       "android": [
         "右上のブラウザメニュー ⋮ を開く",
@@ -588,6 +675,33 @@
         "インストールを確認"
       ]
     },
+    "troubleTitle": "インストールできない場合",
+    "trouble": {
+      "ios": [
+        "サイトはSafariアプリで開く必要があります。TelegramやInstagramなどはアプリ内ビューアでページを開くため、インストールできません。下のボタンでアドレスをコピーし、Safariに貼り付けてください。",
+        "Safariかどうかの確認方法：共有メニューに「ブックマークを追加」と「ページを検索」があります。",
+        "「ホーム画面に追加」がない場合は、共有メニューを「アクションを編集…」までスクロールしてオンにしてください。",
+        "Safariのプライベートブラウズをオフにしてください（アドレスバーが暗い色の場合）。"
+      ],
+      "ios-other-browser": [
+        "共有メニューに「ホーム画面に追加」がない場合は、下のアドレスをコピーしてSafariで開いてください。",
+        "TelegramやInstagramから開いたページはアプリ内ビューアのため、インストールできません。",
+        "iOS 16.4以降が必要です：設定 → 一般 → 情報。"
+      ],
+      "in-app": [
+        "下のボタンでアドレスをコピーし、Safari（iPhone）またはChrome（Android）に貼り付けてください。"
+      ],
+      "android": [
+        "サイトはChromeで開く必要があります。TelegramやInstagramなどでは ⋮ →「Chromeで開く」をタップしてください。",
+        "「アプリをインストール」がない場合は、Google PlayでChromeを更新するか、下のアドレスをコピーしてChromeで開いてください。"
+      ],
+      "desktop": [
+        "ChromeとEdgeでインストールできます。MacのSafariでは：ファイル → Dockに追加。",
+        "Firefoxではインストールできません。ChromeまたはEdgeで開いてください。"
+      ]
+    },
+    "copyLink": "アドレスをコピー",
+    "copied": "アドレスをコピーしました",
     "later": "あとで",
     "thanks": "Poruchをインストールしました ❤️",
     "cardTitle": "アプリをインストール",

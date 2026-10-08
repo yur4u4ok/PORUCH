@@ -28,6 +28,8 @@ class HelpRequestCreateSerializer(serializers.Serializer):
     reward_options = serializers.ListField(
         child=serializers.ChoiceField(choices=RewardOption.choices), required=False, max_length=4
     )
+    helpers_needed = serializers.IntegerField(required=False, min_value=1, max_value=10, default=1)
+    active_hours = serializers.IntegerField(required=False, allow_null=True, min_value=1, max_value=168)
     place_name = serializers.CharField(max_length=120, required=False, allow_blank=True)
     photo_ids = serializers.ListField(
         child=serializers.UUIDField(), required=False, max_length=settings.HELP_REQUEST_MAX_PHOTOS
@@ -77,10 +79,22 @@ class HelpRequestListQuerySerializer(serializers.Serializer):
         return attrs
 
 
+def contact_of(user) -> dict:
+    """Phone and email, shared only between an author and the helpers they accepted."""
+    from apps.users.phone import get_phone
+
+    return {"email": user.email, "phone": get_phone(user)}
+
+
 class ResponseBriefSerializer(serializers.Serializer):
     id = serializers.UUIDField()
     status = serializers.CharField()
     created_at = serializers.DateTimeField()
+    offer_type = serializers.CharField()
+    offered_amount = serializers.DecimalField(max_digits=10, decimal_places=2, allow_null=True)
+    author_counter_amount = serializers.DecimalField(max_digits=10, decimal_places=2, allow_null=True)
+    agreed_offer_type = serializers.CharField(allow_null=True)
+    agreed_amount = serializers.DecimalField(max_digits=10, decimal_places=2, allow_null=True)
 
 
 class HelpRequestSerializer(serializers.ModelSerializer):
@@ -96,6 +110,9 @@ class HelpRequestSerializer(serializers.ModelSerializer):
     can_respond = serializers.SerializerMethodField()
     thanked = serializers.SerializerMethodField()
     share_url = serializers.SerializerMethodField()
+    helpers = serializers.SerializerMethodField()
+    helpers_count = serializers.SerializerMethodField()
+    author_contact = serializers.SerializerMethodField()
 
     class Meta:
         model = HelpRequest
@@ -128,6 +145,10 @@ class HelpRequestSerializer(serializers.ModelSerializer):
             "my_response",
             "responses_count",
             "selected_helper",
+            "helpers_needed",
+            "helpers_count",
+            "helpers",
+            "author_contact",
             "conversation_id",
             "can_respond",
             "thanked",
@@ -161,16 +182,59 @@ class HelpRequestSerializer(serializers.ModelSerializer):
         chosen = active[0] if active else (responses[0] if responses else None)
         return ResponseBriefSerializer(chosen).data if chosen else None
 
+    def _accepted(self, obj) -> list:
+        cache = getattr(obj, "_accepted_cache", None)
+        if cache is None:
+            cache = list(
+                obj.responses.filter(status="ACCEPTED").select_related("helper__profile__avatar").order_by("updated_at")
+            )
+            obj._accepted_cache = cache
+        return cache
+
+    def _viewer_is_helper(self, obj) -> bool:
+        return any(r.helper_id == self._viewer.pk for r in self._accepted(obj))
+
+    def get_helpers_count(self, obj) -> int:
+        return len(self._accepted(obj))
+
+    def get_helpers(self, obj) -> list[dict]:
+        """For the author: every chosen helper with their chat and agreed terms."""
+        if obj.author_id != self._viewer.pk:
+            return []
+        conversations = {c.helper_id: str(c.id) for c in obj.conversations.all()}
+        return [
+            {
+                "user": PublicUserSerializer(r.helper).data,
+                "response_id": str(r.id),
+                "conversation_id": conversations.get(r.helper_id),
+                "agreed_offer_type": r.agreed_offer_type,
+                "agreed_amount": str(r.agreed_amount) if r.agreed_amount is not None else None,
+                "contact": contact_of(r.helper),
+            }
+            for r in self._accepted(obj)
+        ]
+
+    def get_author_contact(self, obj) -> dict | None:
+        """The author's phone and email — only for helpers the author has accepted."""
+        return contact_of(obj.author) if self._viewer_is_helper(obj) else None
+
     def get_selected_helper(self, obj) -> dict | None:
-        if obj.selected_helper_id and self._viewer.pk in (obj.author_id, obj.selected_helper_id):
+        if obj.author_id == self._viewer.pk and obj.selected_helper_id:
             return PublicUserSerializer(obj.selected_helper).data
+        if self._viewer_is_helper(obj):
+            return PublicUserSerializer(self._viewer).data
         return None
 
     def get_conversation_id(self, obj) -> str | None:
-        if self._viewer.pk not in (obj.author_id, obj.selected_helper_id) or not obj.selected_helper_id:
+        """The viewer's chat for this request: the helper's own, or the author's first one."""
+        if obj.author_id == self._viewer.pk:
+            helper_id = obj.selected_helper_id
+        elif self._viewer_is_helper(obj):
+            helper_id = self._viewer.pk
+        else:
             return None
         for conversation in obj.conversations.all():
-            if conversation.helper_id == obj.selected_helper_id:
+            if conversation.helper_id == helper_id:
                 return str(conversation.id)
         return None
 

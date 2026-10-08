@@ -76,6 +76,13 @@ class TestNearbyMatching:
         HelpResponseFactory(help_request=hr, helper=user, status="CANCELLED")
         assert recipients(hr) == set()
 
+    def test_muted_user_skipped_until_mute_ends(self, no_push):
+        muted = subscriber(north_m=100)
+        expired = subscriber(north_m=100)
+        NotificationPreference.objects.filter(user=muted).update(muted_until=timezone.now() + timedelta(hours=1))
+        NotificationPreference.objects.filter(user=expired).update(muted_until=timezone.now() - timedelta(minutes=1))
+        assert recipients(HelpRequestFactory()) == {expired.id}
+
     def test_availability_location_used(self, no_push):
         user = UserFactory()
         PushSubscriptionFactory(user=user)

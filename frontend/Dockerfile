@@ -20,6 +20,7 @@ RUN npm run build
 
 FROM nginx:1.27-alpine AS production
 COPY nginx.conf /etc/nginx/templates/default.conf.template
+COPY nginx-security-headers.conf /etc/nginx/snippets/security-headers.conf
 COPY --from=build /app/dist /usr/share/nginx/html
 ENV BACKEND_UPSTREAM=http://backend:8000
 EXPOSE 80

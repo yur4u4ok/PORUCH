@@ -1,9 +1,12 @@
 import type { TFunction } from "i18next";
 
 import { formatMoney } from "@/utils/format";
-import type { HelpRequest, HelpResponse, OfferType, RewardOption } from "@/types/api";
+import type { AgreedTerms, HelpRequest, HelpResponse, OfferType, RewardOption } from "@/types/api";
 
 export const REWARD_OPTIONS: RewardOption[] = ["PIZZA", "COFFEE", "RETURN_HELP", "GIVE_ITEM"];
+
+/** Same icons as on the create form: ❤️ no payment, 💰 ready to thank, 🍫 a small thank-you. */
+export const REWARD_TYPE_EMOJI = { NONE: "❤️", WILLING: "💰", UNSURE: "🍫" } as const;
 
 export const REWARD_OPTION_EMOJI: Record<RewardOption, string> = {
   PIZZA: "🍕",
@@ -36,12 +39,16 @@ export function offerSummary(
   return t(`offer.short.${response.offer_type}`);
 }
 
-/** Agreed terms after the author chose a helper. */
-export function agreedSummary(request: HelpRequest, t: TFunction): string | null {
-  const type: OfferType | null = request.agreed_offer_type;
+/** Terms agreed with a helper (defaults to the request's own, i.e. the first helper). */
+export function agreedSummary(
+  request: HelpRequest,
+  t: TFunction,
+  terms: AgreedTerms = request,
+): string | null {
+  const type: OfferType | null = terms.agreed_offer_type;
   if (!type || request.reward_type !== "WILLING") return null;
   if (type === "FREE") return t("offer.short.FREE");
-  if (type === "COUNTER" && request.agreed_amount)
-    return formatMoney(request.agreed_amount, request.reward_currency);
+  if (type === "COUNTER" && terms.agreed_amount)
+    return formatMoney(terms.agreed_amount, request.reward_currency);
   return rewardSummary(request, t);
 }

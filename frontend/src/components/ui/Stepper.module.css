@@ -1,0 +1,35 @@
+.field {
+  composes: field from "./Field.module.css";
+}
+.label {
+  composes: label from "./Field.module.css";
+}
+.hint {
+  composes: hint from "./Field.module.css";
+}
+.row {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-primary);
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.value {
+  min-width: 2ch;
+  text-align: center;
+  font-size: var(--text-xl);
+  font-weight: 800;
+}

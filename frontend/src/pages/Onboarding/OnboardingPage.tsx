@@ -3,8 +3,10 @@ import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router";
 
 import { Button, Card } from "@/components/ui";
+import { SelectAll } from "@/features/help/SelectAll";
 import { CategoryChips } from "@/features/help/components";
 import { useGeolocation } from "@/features/location/useGeolocation";
+import { enablePush } from "@/features/notifications/push";
 import { PushToggle } from "@/features/notifications/PushToggle";
 import { usePublicConfig, useUpdateMe, useUpdatePreferences } from "@/features/profile/hooks";
 import type { NotificationCategory } from "@/types/api";
@@ -38,6 +40,9 @@ export default function OnboardingPage() {
     navigate(consumeAfterAuth(from), { replace: true });
   };
 
+  const offered = (config?.notification_categories ?? DEFAULT).filter(
+    (c) => c !== "URGENT" && c !== "DISTRICT",
+  );
   const toggle = (c: NotificationCategory) =>
     setCategories((list) => (list.includes(c) ? list.filter((x) => x !== c) : [...list, c]));
 
@@ -56,6 +61,9 @@ export default function OnboardingPage() {
             </Button>
           )}
           {status === "denied" && <p className="muted">{t("settings.locationDenied")}</p>}
+          <p className="muted" style={{ fontSize: 13 }}>
+            ℹ️ {t("onboarding.changeLater")}
+          </p>
         </Card>
       )}
       {step === 2 && (
@@ -63,16 +71,18 @@ export default function OnboardingPage() {
           <h2>🔔 {t("onboarding.notificationsTitle")}</h2>
           <p className="muted">{t("onboarding.notificationsText")}</p>
           <PushToggle />
+          <p className="muted" style={{ fontSize: 13 }}>
+            ℹ️ {t("onboarding.changeLater")}
+          </p>
         </Card>
       )}
       {step === 3 && (
         <Card className="stack">
           <h2>🤝 {t("onboarding.categoriesTitle")}</h2>
           <p className="muted">{t("onboarding.categoriesText")}</p>
+          <SelectAll all={offered} selected={categories} onChange={setCategories} />
           <CategoryChips
-            options={(config?.notification_categories ?? DEFAULT).filter(
-              (c) => c !== "URGENT" && c !== "DISTRICT",
-            )}
+            options={offered}
             selected={categories}
             onToggle={toggle}
             labelKey="notificationCategories"
@@ -80,23 +90,35 @@ export default function OnboardingPage() {
         </Card>
       )}
       <div className="row-between">
-        {step < TOTAL ? (
-          <>
-            <Button variant="ghost" onClick={() => setStep(step + 1)}>
-              {t("common.skip")}
-            </Button>
-            <Button onClick={() => setStep(step + 1)}>{t("common.next")}</Button>
-          </>
+        {step > 1 ? (
+          <Button variant="ghost" onClick={() => setStep(step - 1)}>
+            ← {t("common.back")}
+          </Button>
         ) : (
-          <>
-            <Button variant="ghost" onClick={() => setStep(step - 1)}>
-              {t("common.back")}
-            </Button>
+          <span />
+        )}
+        <div className="row">
+          {step < TOTAL ? (
+            <>
+              <Button variant="ghost" onClick={() => setStep(step + 1)}>
+                {t("common.skip")}
+              </Button>
+              <Button
+                onClick={() => {
+                  // On the notifications step «Далі» turns push on (the tap lets the browser ask).
+                  if (step === 2) void enablePush().catch(() => undefined);
+                  setStep(step + 1);
+                }}
+              >
+                {t("common.next")}
+              </Button>
+            </>
+          ) : (
             <Button onClick={finish} loading={updateMe.isPending}>
               {t("common.done")}
             </Button>
-          </>
-        )}
+          )}
+        </div>
       </div>
     </main>
   );

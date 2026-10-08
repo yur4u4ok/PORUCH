@@ -99,3 +99,78 @@ export function BottomSheet({ open, onClose, title, children, actions }: Overlay
     document.body,
   );
 }
+
+/** Full-screen photo viewer inside the app: ✕, Esc or a tap outside closes; arrows/keys move between photos. */
+export function Lightbox({
+  images,
+  index,
+  onClose,
+  onIndex,
+}: {
+  images: { src: string; alt?: string }[];
+  index: number | null;
+  onClose: () => void;
+  onIndex?: (index: number) => void;
+}) {
+  const { t } = useTranslation();
+  const open = index !== null && !!images[index];
+  const panelRef = useOverlayBehaviour(open, onClose);
+  const many = images.length > 1;
+  const go = (step: number) => index !== null && onIndex?.((index + step + images.length) % images.length);
+  useEffect(() => {
+    if (!open || !many) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") go(1);
+      if (e.key === "ArrowLeft") go(-1);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  });
+  if (!open) return null;
+  const image = images[index]!;
+  return createPortal(
+    <div
+      ref={panelRef}
+      className={styles.lightbox}
+      role="dialog"
+      aria-modal="true"
+      aria-label={image.alt}
+      tabIndex={-1}
+      onClick={onClose}
+    >
+      <button type="button" className={styles.lightboxClose} aria-label={t("common.close")} onClick={onClose}>
+        ✕
+      </button>
+      <img
+        src={image.src}
+        alt={image.alt ?? ""}
+        className={styles.lightboxImage}
+        onClick={(e) => e.stopPropagation()}
+      />
+      {many && (
+        <>
+          <button
+            type="button"
+            className={clsx(styles.lightboxNav, styles.lightboxPrev)}
+            aria-label={t("common.previous")}
+            onClick={(e) => (e.stopPropagation(), go(-1))}
+          >
+            ‹
+          </button>
+          <button
+            type="button"
+            className={clsx(styles.lightboxNav, styles.lightboxNext)}
+            aria-label={t("common.next")}
+            onClick={(e) => (e.stopPropagation(), go(1))}
+          >
+            ›
+          </button>
+          <span className={styles.lightboxCount}>
+            {index + 1} / {images.length}
+          </span>
+        </>
+      )}
+    </div>,
+    document.body,
+  );
+}

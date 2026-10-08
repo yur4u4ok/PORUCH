@@ -1,8 +1,9 @@
 import { useTranslation } from "react-i18next";
 
 import { PageHeader } from "@/components/layout/AppLayout";
-import { Avatar, Badge, Card, EmptyState, ErrorState, SkeletonList } from "@/components/ui";
-import { useConversations } from "@/features/chat/hooks";
+import { Avatar, Badge, Card, EmptyState, ErrorState, LoadMore, SkeletonList } from "@/components/ui";
+import { allResults } from "@/api/paging";
+import { useAllConversations } from "@/features/chat/hooks";
 import { CATEGORY_EMOJI } from "@/utils/categories";
 import { timeAgo } from "@/utils/format";
 
@@ -10,18 +11,19 @@ import styles from "../HelpRequest/HelpRequest.module.css";
 
 export default function ConversationsPage() {
   const { t } = useTranslation();
-  const query = useConversations();
+  const query = useAllConversations();
+  const conversations = allResults(query.data);
   return (
     <main className="page stack">
-      <PageHeader title={t("chat.title")} back={false} />
+      <PageHeader title={t("chat.title")} />
       {query.isPending ? (
         <SkeletonList count={4} height={76} />
       ) : query.isError ? (
         <ErrorState onRetry={() => void query.refetch()} />
-      ) : query.data.results.length === 0 ? (
+      ) : conversations.length === 0 ? (
         <EmptyState icon="💬" title={t("chat.empty")} text={t("chat.emptyText")} />
       ) : (
-        query.data.results.map((conversation) => {
+        conversations.map((conversation) => {
           const other = conversation.other_participant;
           const name = other?.display_name ?? t("common.anonymous");
           const last = conversation.last_message;
@@ -29,7 +31,7 @@ export default function ConversationsPage() {
           return (
             <Card key={conversation.id} to={`/chats/${conversation.id}`}>
               <div className={styles.person}>
-                <Avatar name={name} media={other?.avatar} size={48} />
+                <Avatar name={name} media={other?.avatar} size={48} online={conversation.other_online} />
                 <div className={styles.personInfo}>
                   <div className="row-between">
                     <span className={styles.personName}>{name}</span>
@@ -62,6 +64,11 @@ export default function ConversationsPage() {
           );
         })
       )}
+      <LoadMore
+        hasNextPage={query.hasNextPage}
+        isFetching={query.isFetchingNextPage}
+        onLoad={() => void query.fetchNextPage()}
+      />
     </main>
   );
 }

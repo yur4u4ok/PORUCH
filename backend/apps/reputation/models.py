@@ -17,7 +17,8 @@ class ThankYou(UUIDModel):
         verbose_name = "подяка"
         verbose_name_plural = "подяки"
         constraints = [
-            models.UniqueConstraint(fields=["help_request"], name="unique_thank_you_per_request"),
+            # One thank-you per helper of a request (a request may have several helpers).
+            models.UniqueConstraint(fields=["help_request", "to_user"], name="unique_thank_you_per_helper"),
         ]
 
     def __str__(self) -> str:

@@ -3,9 +3,12 @@ import type { Me } from "@/types/api";
 import { http, request } from "./client";
 
 export interface RegisterInput {
+  age_confirmed: boolean;
   email: string;
   password: string;
   display_name: string;
+  phone: string;
+  phone_region?: string;
   city_id?: string | null;
 }
 

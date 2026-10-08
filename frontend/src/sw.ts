@@ -1,11 +1,12 @@
 /// <reference lib="webworker" />
 /**
- * Service worker: cached app shell (offline), Web Push display and notification click handling.
+ * Service worker: app shell for offline use, Web Push display and notification click handling.
  * API calls are never cached (always network).
  */
 import { clientsClaim } from "workbox-core";
-import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from "workbox-precaching";
+import { cleanupOutdatedCaches, matchPrecache, precacheAndRoute } from "workbox-precaching";
 import { NavigationRoute, registerRoute } from "workbox-routing";
+import { NetworkFirst } from "workbox-strategies";
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -14,11 +15,23 @@ clientsClaim();
 cleanupOutdatedCaches();
 precacheAndRoute(self.__WB_MANIFEST);
 
-// SPA navigation fallback → cached index.html (offline shell). Backend paths are excluded.
+// Pages: network first, so an open link always gets the current version. Serving the precached
+// index.html first meant: old page → new worker deletes old chunks → «Importing a module script
+// failed» on the next click. The cached shell is used only offline (or if the network is too slow).
+const pages = new NetworkFirst({ cacheName: "pages", networkTimeoutSeconds: 4 });
 registerRoute(
-  new NavigationRoute(createHandlerBoundToURL("index.html"), {
-    denylist: [/^\/api\//, /^\/admin/, /^\/ws\//, /^\/static\//, /^\/health\//, /^\/r\//],
-  }),
+  new NavigationRoute(
+    async (options) => {
+      try {
+        const response = await pages.handle(options);
+        if (response?.ok) return response;
+      } catch {
+        /* offline */
+      }
+      return (await matchPrecache("index.html")) ?? Response.error();
+    },
+    { denylist: [/^\/api\//, /^\/admin/, /^\/ws\//, /^\/static\//, /^\/health\//, /^\/r\//] },
+  ),
 );
 
 interface PushPayload {
@@ -49,7 +62,17 @@ self.addEventListener("push", (event) => {
     vibrate: [120, 60, 120],
     data: { url: data.url || "/" },
   };
-  event.waitUntil(self.registration.showNotification(title, options));
+  event.waitUntil(
+    Promise.all([
+      self.registration.showNotification(title, options),
+      // Tell open pages: they refresh counters and lists right away (no reload needed).
+      self.clients
+        .matchAll({ type: "window", includeUncontrolled: true })
+        .then((windows) =>
+          windows.forEach((w) => w.postMessage({ type: "poruch:push", kind: data.type ?? null })),
+        ),
+    ]),
+  );
 });
 
 self.addEventListener("notificationclick", (event) => {

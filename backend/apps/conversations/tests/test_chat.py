@@ -91,6 +91,18 @@ class TestChatApi:
         assert message.read_at is not None
         assert helper_client.get("/api/v1/conversations/").data["results"][0]["unread_count"] == 0
 
+    def test_opening_chat_clears_its_notifications(self, make_client, no_push):
+        conversation, author, helper = setup_conversation()
+        make_client(author).post(url(conversation, "messages/"), {"text": "hi"}, format="json")
+        other = Notification.objects.create(user=helper, type="NEW_MESSAGE", title="x", url="/chats/elsewhere")
+        assert Notification.objects.filter(user=helper, url=f"/chats/{conversation.id}", read_at__isnull=True).exists()
+        make_client(helper).post(url(conversation, "read/"), {}, format="json")
+        assert not Notification.objects.filter(
+            user=helper, url=f"/chats/{conversation.id}", read_at__isnull=True
+        ).exists()
+        other.refresh_from_db()
+        assert other.read_at is None
+
     def test_messages_paginated_newest_first(self, make_client):
         conversation, author, _ = setup_conversation()
         client = make_client(author)
@@ -160,3 +172,74 @@ async def receive_event(ws, name, attempts=10):
         if event["event"] == name:
             return event
     raise AssertionError(f"event {name} not received")
+
+
+@pytest.mark.django_db
+class TestRepliesReactionsPresence:
+    def test_reply_quotes_a_message_from_the_same_chat(self, make_client, no_push):
+        conversation, author, helper = setup_conversation()
+        first = make_client(helper).post(url(conversation, "messages/"), {"text": "Буду о 18:00"}, format="json").data
+        reply = (
+            make_client(author)
+            .post(url(conversation, "messages/"), {"text": "Добре", "reply_to_id": first["id"]}, format="json")
+            .data
+        )
+        assert reply["reply_to"]["id"] == first["id"] and reply["reply_to"]["text"] == "Буду о 18:00"
+        other, _, _ = setup_conversation()
+        foreign = Message.objects.filter(conversation=other).first()
+        stray = (
+            make_client(author)
+            .post(url(conversation, "messages/"), {"text": "x", "reply_to_id": str(foreign.id)}, format="json")
+            .data
+        )
+        assert stray["reply_to"] is None  # another chat's message is never quoted
+
+    def test_reaction_toggles_and_replaces(self, make_client, no_push):
+        conversation, author, helper = setup_conversation()
+        message = make_client(helper).post(url(conversation, "messages/"), {"text": "Привіт"}, format="json").data
+        client = make_client(author)
+        react_url = url(conversation, f"messages/{message['id']}/reactions/")
+        data = client.post(react_url, {"emoji": "👍"}, format="json").data
+        assert data["reactions"] == [{"emoji": "👍", "user_ids": [str(author.id)]}]
+        data = client.post(react_url, {"emoji": "❤️"}, format="json").data
+        assert data["reactions"] == [{"emoji": "❤️", "user_ids": [str(author.id)]}]  # replaced
+        data = client.post(react_url, {"emoji": "❤️"}, format="json").data
+        assert data["reactions"] == []  # same again removes it
+        assert client.post(react_url, {"emoji": "💩"}, format="json").status_code == 400
+        assert make_client().post(react_url, {"emoji": "👍"}, format="json").status_code == 404
+
+    def test_other_online_in_chat_list(self, make_client):
+        conversation, author, helper = setup_conversation()
+        client = make_client(author)
+        assert client.get("/api/v1/conversations/").data["results"][0]["other_online"] is False
+        make_client(helper).get("/api/v1/me/")  # any request marks the helper as online
+        assert client.get("/api/v1/conversations/").data["results"][0]["other_online"] is True
+
+
+@pytest.mark.django_db
+def test_helpers_offer_note_opens_the_chat(make_client, no_push):
+    hr = HelpRequestFactory()
+    resp = HelpResponseFactory(help_request=hr, message="Можу підвезти домкрат")
+    _, _, conversation = select_helper(hr.author, hr.id, resp.id)
+    ordered = list(Message.objects.filter(conversation=conversation).order_by("created_at"))
+    assert ordered[0].sender_id == resp.helper_id and ordered[0].text == "Можу підвезти домкрат"
+    assert ordered[0].read_at is not None  # the author already saw it on the request page
+    assert ordered[1].message_type == "SYSTEM"
+
+
+@pytest.mark.django_db
+def test_completing_request_closes_its_chat(make_client, no_push):
+    from apps.help_requests.services.lifecycle import complete_help_request
+
+    conversation, author, helper = setup_conversation()
+    complete_help_request(author, conversation.help_request_id)
+    response = make_client(helper).post(url(conversation, "messages/"), {"text": "ще тут"}, format="json")
+    assert response.status_code >= 400
+    assert make_client(author).get(url(conversation)).data["is_open"] is False
+
+
+@pytest.mark.django_db
+def test_chat_shows_partner_last_seen(make_client):
+    conversation, author, helper = setup_conversation()
+    make_client(helper).get("/api/v1/conversations/")
+    assert make_client(author).get(url(conversation)).data["other_last_seen"]

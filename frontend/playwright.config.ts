@@ -14,6 +14,7 @@ export default defineConfig({
   use: {
     baseURL: process.env.E2E_BASE_URL || "http://localhost:5173",
     locale: "uk-UA",
+    timezoneId: "Europe/Kyiv",
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },

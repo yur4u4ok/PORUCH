@@ -15,6 +15,10 @@ export const createHelpSchema = z
     urgency: z.enum(["NOW", "TODAY", "WHENEVER", "SCHEDULED"]),
     /** "YYYY-MM-DDTHH:mm" in the user's local time (datetime-local input); for SCHEDULED only. */
     needed_at: z.string(),
+    /** How many people the author needs (1–10). */
+    helpers_needed: z.number().int().min(1).max(10),
+    /** How long the request stays open, in hours (not used for SCHEDULED). */
+    active_hours: z.number().int().min(1).max(168),
     reward_type: z.enum(["NONE", "WILLING", "UNSURE"]),
     reward_amount: z
       .string()
@@ -50,9 +54,9 @@ export type CreateHelpForm = z.infer<typeof createHelpSchema>;
 
 export const STEP_FIELDS: (keyof CreateHelpForm)[][] = [
   ["category"],
-  ["title", "description"],
+  ["title", "description", "helpers_needed"],
   ["location"],
-  ["urgency", "needed_at"],
+  ["urgency", "needed_at", "active_hours"],
   ["reward_type", "reward_amount", "reward_options"],
   [],
   [],

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type { TFunction } from "i18next";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -11,6 +12,7 @@ import {
   Button,
   Card,
   EmptyState,
+  Lightbox,
   ErrorState,
   Loader,
   Modal,
@@ -29,6 +31,8 @@ import {
   useRespondToHelp,
   useSelectHelper,
   useThankHelper,
+  useAnswerCounter,
+  useCounterOffer,
   useWithdrawResponse,
 } from "@/features/help/hooks";
 import { ShareButton } from "@/features/help/ShareButton";
@@ -36,11 +40,17 @@ import { PersonRow } from "@/features/profile/PersonRow";
 import { useBlockUser } from "@/features/profile/hooks";
 import { useLocationStore } from "@/stores/locationStore";
 import { toast } from "@/stores/toastStore";
-import type { HelpRequest, OfferType } from "@/types/api";
+import type { Contact, HelpRequest, HelpResponse, OfferType } from "@/types/api";
 import { URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
-import { currencySymbol, formatDateTime, formatDistance, timeAgo, timeLeft } from "@/utils/format";
+import {
+  currencySymbol,
+  formatDateTime,
+  formatDistance,
+  formatMoney,
+  timeAgo,
+  timeLeft,
+} from "@/utils/format";
 import { agreedSummary, offerSummary, rewardSummary } from "@/utils/reward";
-import { emergencyVars } from "@/utils/emergency";
 
 import styles from "./HelpRequest.module.css";
 
@@ -55,6 +65,11 @@ function ResponsesSection({ request }: { request: HelpRequest }) {
   return (
     <section className="stack-sm">
       <h3>{t("request.responses")}</h3>
+      {request.helpers_needed > 1 && (
+        <p className="muted">
+          👥 {t("request.helpersProgress", { count: request.helpers_count, needed: request.helpers_needed })}
+        </p>
+      )}
       {responses.isPending ? (
         <SkeletonList count={2} height={72} />
       ) : responses.isError ? (
@@ -63,14 +78,17 @@ function ResponsesSection({ request }: { request: HelpRequest }) {
         <Card className="muted">{t("request.noResponses")}</Card>
       ) : (
         pending.map((response) => (
-          <Card key={response.id} className="stack-sm">
+          <Card key={response.id} className={clsx("stack-sm", styles.reply)}>
             <PersonRow user={response.helper} />
             {request.reward_type === "WILLING" && (
-              <Badge tone={response.offer_type === "COUNTER" ? "warning" : "success"}>
-                {offerSummary(response, request.reward_currency, t)}
-              </Badge>
+              <div
+                className={clsx(styles.offerTag, response.offer_type === "COUNTER" && styles.offerCounter)}
+              >
+                💰 {offerSummary(response, request.reward_currency, t)}
+              </div>
             )}
             {response.message && <p>«{response.message}»</p>}
+            {response.offer_type === "COUNTER" && <CounterOffer request={request} response={response} />}
             <div className="row">
               <Button
                 variant="help"
@@ -97,13 +115,108 @@ function ResponsesSection({ request }: { request: HelpRequest }) {
   );
 }
 
+/** Author: answer a helper's different amount with one amount of their own (only once). */
+function CounterOffer({ request, response }: { request: HelpRequest; response: HelpResponse }) {
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [amount, setAmount] = useState("");
+  const counter = useCounterOffer(request.id);
+  if (response.author_counter_amount) {
+    return (
+      <span className="muted">
+        ⏳{" "}
+        {t("offer.counterSent", {
+          amount: formatMoney(response.author_counter_amount, request.reward_currency),
+        })}
+      </span>
+    );
+  }
+  if (!open) {
+    return (
+      <Button variant="secondary" size="sm" onClick={() => setOpen(true)}>
+        💬 {t("offer.counterButton")}
+      </Button>
+    );
+  }
+  const value = amount.trim().replace(",", ".");
+  return (
+    <div className="stack-sm">
+      <Input
+        label={t("offer.counterLabel", { currency: currencySymbol(request.reward_currency) })}
+        hint={t("offer.counterHint")}
+        inputMode="decimal"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        autoFocus
+      />
+      <Button
+        size="sm"
+        disabled={!(Number(value) > 0)}
+        loading={counter.isPending}
+        onClick={() => counter.mutate({ responseId: response.id, amount: value })}
+      >
+        {t("offer.counterSend")}
+      </Button>
+    </div>
+  );
+}
+
+/** Helper: the author proposed their amount — accept (and be chosen) or decline. No more bargaining. */
+function CounterAnswer({
+  request,
+  responseId,
+  amount,
+}: {
+  request: HelpRequest;
+  responseId: string;
+  amount: string;
+}) {
+  const { t } = useTranslation();
+  const answer = useAnswerCounter(request.id);
+  const navigate = useNavigate();
+  return (
+    <Card className="stack-sm">
+      <strong>💬 {t("offer.authorCounter", { amount: formatMoney(amount, request.reward_currency) })}</strong>
+      <p className="muted" style={{ fontSize: 14 }}>
+        {t("offer.lastStep")}
+      </p>
+      <div className="row">
+        <Button
+          variant="help"
+          loading={answer.isPending && answer.variables?.accept === true}
+          onClick={() =>
+            answer.mutate(
+              { responseId, accept: true },
+              { onSuccess: () => toast.success(t("offer.agreedToast")) },
+            )
+          }
+        >
+          {t("offer.acceptCounter")}
+        </Button>
+        <Button
+          variant="ghost"
+          loading={answer.isPending && answer.variables?.accept === false}
+          onClick={() =>
+            answer.mutate({ responseId, accept: false }, { onSuccess: () => navigate("/nearby") })
+          }
+        >
+          {t("offer.declineCounter")}
+        </Button>
+      </div>
+    </Card>
+  );
+}
+
 function ThankYouCard({ request }: { request: HelpRequest }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState(t("thanks.placeholder"));
   const thank = useThankHelper(request.id);
   if (!request.selected_helper) return null;
-  const name = request.selected_helper.display_name ?? t("common.anonymous");
+  const names = request.helpers.map((h) => h.user.display_name ?? t("common.anonymous"));
+  const name = names.length
+    ? names.join(", ")
+    : (request.selected_helper.display_name ?? t("common.anonymous"));
   if (request.thanked) return <div className={styles.notice}>❤️ {t("thanks.already")}</div>;
   return (
     <Card className="stack-sm">
@@ -144,17 +257,29 @@ function AuthorActions({ request }: { request: HelpRequest }) {
   const open = request.status === "ACTIVE" || request.status === "IN_PROGRESS";
   return (
     <>
-      {request.status === "IN_PROGRESS" && request.selected_helper && (
+      {request.helpers.length > 0 && (
         <Card className="stack-sm">
-          <strong>{t("request.selectedHelper")}</strong>
-          <PersonRow user={request.selected_helper} />
-          {request.conversation_id && (
-            <Link to={`/chats/${request.conversation_id}`}>
-              <Button variant="help" block>
-                💬 {t("request.openChat")}
-              </Button>
-            </Link>
-          )}
+          <strong>
+            {request.helpers.length > 1 ? t("request.selectedHelpers") : t("request.selectedHelper")}
+          </strong>
+          {request.helpers.map((helper) => (
+            <div key={helper.response_id} className="stack-sm">
+              <PersonRow user={helper.user} />
+              <ContactLinks contact={helper.contact} />
+              {agreedSummary(request, t, helper) && (
+                <span className="muted">
+                  🤝 {t("offer.agreed", { terms: agreedSummary(request, t, helper) })}
+                </span>
+              )}
+              {helper.conversation_id && (
+                <Link to={`/chats/${helper.conversation_id}`}>
+                  <Button variant="help" block>
+                    💬 {t("request.openChat")}
+                  </Button>
+                </Link>
+              )}
+            </div>
+          ))}
         </Card>
       )}
       <ResponsesSection request={request} />
@@ -231,7 +356,7 @@ function HelperActions({ request }: { request: HelpRequest }) {
     return <div className={styles.notice}>🎉 {t("thanks.helperCompleted")}</div>;
   }
   if (mine?.status === "REJECTED") return <div className={styles.notice}>{t("request.rejectedNotice")}</div>;
-  if (mine?.status === "ACCEPTED" && request.status === "IN_PROGRESS") {
+  if (mine?.status === "ACCEPTED" && (request.status === "IN_PROGRESS" || request.status === "ACTIVE")) {
     return (
       <div className={styles.actions}>
         {request.conversation_id && (
@@ -246,6 +371,9 @@ function HelperActions({ request }: { request: HelpRequest }) {
         </Button>
       </div>
     );
+  }
+  if (mine?.status === "PENDING" && mine.author_counter_amount) {
+    return <CounterAnswer request={request} responseId={mine.id} amount={mine.author_counter_amount} />;
   }
   if (mine?.status === "PENDING") {
     return (
@@ -339,6 +467,22 @@ function shareMessage(request: HelpRequest, t: TFunction): string {
   ].join("\n");
 }
 
+/** Phone and email of the other side — shown only once the author has accepted the helper. */
+function ContactLinks({ contact }: { contact: Contact }) {
+  return (
+    <div className={styles.contacts}>
+      {contact.phone && (
+        <a href={`tel:${contact.phone}`} className={styles.contact}>
+          📞 {contact.phone}
+        </a>
+      )}
+      <a href={`mailto:${contact.email}`} className={styles.contact}>
+        📧 {contact.email}
+      </a>
+    </div>
+  );
+}
+
 export default function HelpRequestPage() {
   const { id = "" } = useParams();
   const { t } = useTranslation();
@@ -346,6 +490,9 @@ export default function HelpRequestPage() {
   const query = useHelpRequest(id, position);
   const [reportOpen, setReportOpen] = useState(false);
   const [blockOpen, setBlockOpen] = useState(false);
+  // Bumped to rebuild the map on the request's spot after the user has panned away.
+  const [mapKey, setMapKey] = useState(0);
+  const [photoIndex, setPhotoIndex] = useState<number | null>(null);
   const block = useBlockUser();
   const navigate = useNavigate();
 
@@ -372,57 +519,78 @@ export default function HelpRequestPage() {
   return (
     <main className="page stack">
       <PageHeader title={t(`categories.${request.category}`)} />
-      <div className={styles.hero}>
-        <span className={styles.emoji} aria-hidden>
-          {requestEmoji(request.category, request.subcategory)}
-        </span>
-        <div className="stack-sm">
-          <h1 style={{ fontSize: "var(--text-xl)" }}>{request.title}</h1>
-          <div className={styles.meta}>
-            <StatusBadge status={request.status} />
-            <UrgencyBadge urgency={request.urgency} neededAt={request.needed_at} />
-            {request.distance_m != null && (
-              <span>📍 {t("common.fromYou", { distance: formatDistance(request.distance_m) })}</span>
-            )}
-            <span>{t("request.createdAt", { time: timeAgo(request.created_at) })}</span>
-            {request.status === "ACTIVE" && (
-              <span>⏳ {t("time.expiresIn", { value: timeLeft(request.expires_at) })}</span>
-            )}
-            {request.is_author && request.responses_count > 0 && (
-              <Badge tone="count">{t("request.helpers", { count: request.responses_count })}</Badge>
-            )}
+      <section className={clsx(styles.details, request.is_author && styles.detailsMine)}>
+        <span className={styles.tape} aria-hidden />
+        <div className={styles.hero}>
+          <span className={styles.emoji} aria-hidden>
+            {requestEmoji(request.category, request.subcategory)}
+          </span>
+          <div className="stack-sm">
+            <h1 style={{ fontSize: "var(--text-xl)" }}>{request.title}</h1>
+            <div className={styles.meta}>
+              <StatusBadge status={request.status} />
+              <UrgencyBadge urgency={request.urgency} neededAt={request.needed_at} />
+              {request.distance_m != null && (
+                <span>📍 {t("common.fromYou", { distance: formatDistance(request.distance_m) })}</span>
+              )}
+              <span>{t("request.createdAt", { time: timeAgo(request.created_at) })}</span>
+              {request.status === "ACTIVE" && (
+                <span>⏳ {t("time.expiresIn", { value: timeLeft(request.expires_at) })}</span>
+              )}
+              {request.is_author && request.responses_count > 0 && (
+                <Badge tone="count">{t("request.helpers", { count: request.responses_count })}</Badge>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {(request.category === "URGENT" || request.urgency === "NOW") && (
-        <div className={styles.warning}>⚠️ {t("emergency.short", emergencyVars())}</div>
-      )}
+        <p className={styles.description}>{request.description}</p>
 
-      <p className={styles.description}>{request.description}</p>
+        {request.reward_type !== "NONE" && (
+          <p>
+            <strong>{t("request.rewardInfo")}:</strong>{" "}
+            {request.reward_type === "WILLING"
+              ? rewardSummary(request, t)
+              : t(`reward.${request.reward_type}`)}
+          </p>
+        )}
+        {!request.is_author &&
+          request.my_response?.status === "ACCEPTED" &&
+          agreedSummary(request, t, request.my_response) && (
+            <div className={styles.notice}>
+              🤝 {t("offer.agreed", { terms: agreedSummary(request, t, request.my_response) })}
+            </div>
+          )}
 
-      {request.reward_type !== "NONE" && (
-        <p>
-          <strong>{t("request.rewardInfo")}:</strong>{" "}
-          {request.reward_type === "WILLING" ? rewardSummary(request, t) : t(`reward.${request.reward_type}`)}
-        </p>
-      )}
-      {agreedSummary(request, t) && (
-        <div className={styles.notice}>🤝 {t("offer.agreed", { terms: agreedSummary(request, t) })}</div>
-      )}
-
-      {request.photos.length > 0 && (
-        <div className={styles.photos}>
-          {request.photos.map((photo) => (
-            <a key={photo.id} href={photo.url ?? "#"} target="_blank" rel="noreferrer">
-              <img src={photo.thumbnail_url ?? ""} alt={t("request.photos")} loading="lazy" />
-            </a>
-          ))}
-        </div>
-      )}
+        {request.photos.length > 0 && (
+          <div className={styles.photos}>
+            {request.photos.map((photo, i) => (
+              <button
+                key={photo.id}
+                type="button"
+                className={styles.photoButton}
+                onClick={() => setPhotoIndex(i)}
+                aria-label={t("request.photos")}
+              >
+                <img src={photo.thumbnail_url ?? ""} alt="" loading="lazy" />
+              </button>
+            ))}
+          </div>
+        )}
+        <Lightbox
+          images={request.photos.map((p) => ({
+            src: p.url ?? p.thumbnail_url ?? "",
+            alt: t("request.photos"),
+          }))}
+          index={photoIndex}
+          onIndex={setPhotoIndex}
+          onClose={() => setPhotoIndex(null)}
+        />
+      </section>
 
       <section className="stack-sm">
         <LazyMap
+          key={mapKey}
           center={request.location}
           zoom={request.location.approximate ? 14 : 16}
           height={200}
@@ -439,12 +607,17 @@ export default function HelpRequestPage() {
           me={position}
           ariaLabel={request.location.approximate ? t("request.approxLocation") : t("request.exactLocation")}
         />
-        <div className="row-between">
-          <span className="muted" style={{ fontSize: 13 }}>
+        <div className={styles.mapFooter}>
+          <button
+            type="button"
+            className={styles.recenter}
+            title={t("request.showOnMap")}
+            onClick={() => setMapKey((k) => k + 1)}
+          >
             {request.location.approximate
               ? `◌ ${t("request.approxLocation")}`
               : `📍 ${t("request.exactLocation")}`}
-          </span>
+          </button>
           {!request.location.approximate && (
             // Universal Maps URL: opens the Maps app on Android/iPhone, the website elsewhere
             // (geo: links only worked on some Android phones).
@@ -463,6 +636,7 @@ export default function HelpRequestPage() {
         <Card className="stack-sm">
           <strong>{t("request.author")}</strong>
           <PersonRow user={request.author} />
+          {request.author_contact && <ContactLinks contact={request.author_contact} />}
         </Card>
       )}
 

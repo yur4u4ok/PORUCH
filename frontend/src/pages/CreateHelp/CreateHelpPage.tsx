@@ -1,13 +1,15 @@
+import clsx from "clsx";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 
 import { ApiError } from "@/api/client";
 import { errorMessage } from "@/app/queryClient";
 import { PageHeader } from "@/components/layout/AppLayout";
-import { Button, Card, Chip, Input, Textarea } from "@/components/ui";
+import { Button, Card, Chip, Input, Select, Textarea } from "@/components/ui";
+import { Stepper } from "@/components/ui/Stepper";
 import { LazyMap } from "@/components/ui/LazyMap";
 import { useMe } from "@/features/auth/hooks";
 import { CategoryGrid, EmergencyDisclaimer, OptionTiles, UrgencyBadge } from "@/features/help/components";
@@ -21,11 +23,10 @@ import { usePublicConfig } from "@/features/profile/hooks";
 import { useOnline } from "@/hooks/useOnline";
 import { useFieldError } from "@/hooks/useFieldError";
 import { toast } from "@/stores/toastStore";
-import type { Category, Media } from "@/types/api";
-import { CATEGORY_EMOJI, URGENCIES, URGENCY_EMOJI } from "@/utils/categories";
+import type { Category, Media, Urgency } from "@/types/api";
+import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCIES, URGENCY_EMOJI } from "@/utils/categories";
 import { currencySymbol, region } from "@/utils/format";
-import { REWARD_OPTION_EMOJI, REWARD_OPTIONS, rewardSummary } from "@/utils/reward";
-import { emergencyVars } from "@/utils/emergency";
+import { REWARD_OPTION_EMOJI, REWARD_OPTIONS, REWARD_TYPE_EMOJI, rewardSummary } from "@/utils/reward";
 
 import styles from "./CreateHelp.module.css";
 
@@ -34,6 +35,14 @@ function toLocalInput(date: Date): string {
   const pad = (n: number) => String(n).padStart(2, "0");
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
+
+/** Choices for how long a request stays open, and the default per urgency. */
+const ACTIVE_HOURS = [1, 2, 3, 6, 12, 24, 48, 72, 168];
+const DEFAULT_ACTIVE_HOURS: Record<Exclude<Urgency, "SCHEDULED">, number> = {
+  NOW: 6,
+  TODAY: 24,
+  WHENEVER: 72,
+};
 
 const STEP_TITLES = [
   "create.stepCategory",
@@ -55,6 +64,9 @@ export default function CreateHelpPage() {
     max: toLocalInput(new Date(Date.now() + 30 * 24 * 3600_000)),
   }));
   const navigate = useNavigate();
+  // ?category=AUTO from the home screen's tear-off tabs preselects the category.
+  const [searchParams] = useSearchParams();
+  const presetCategory = CATEGORY_ORDER.find((c) => c === searchParams.get("category") && c !== "URGENT");
   const online = useOnline();
   const { data: me } = useMe();
   const { data: config } = usePublicConfig();
@@ -68,13 +80,15 @@ export default function CreateHelpPage() {
     {
       resolver: zodResolver(createHelpSchema),
       defaultValues: {
-        category: undefined,
+        category: presetCategory,
         subcategory: null,
         title: "",
         description: "",
         location: null,
         urgency: "NOW",
         needed_at: "",
+        helpers_needed: 1,
+        active_hours: DEFAULT_ACTIVE_HOURS.NOW,
         reward_type: "NONE",
         reward_amount: "",
         reward_options: [],
@@ -152,6 +166,8 @@ export default function CreateHelpPage() {
         // datetime-local is the user's local time; send an absolute instant.
         needed_at:
           form.urgency === "SCHEDULED" && form.needed_at ? new Date(form.needed_at).toISOString() : null,
+        helpers_needed: form.helpers_needed,
+        active_hours: form.urgency === "SCHEDULED" ? null : form.active_hours,
         reward_type: form.reward_type,
         reward_amount:
           form.reward_type === "WILLING" && form.reward_amount ? form.reward_amount.replace(",", ".") : null,
@@ -195,13 +211,20 @@ export default function CreateHelpPage() {
   return (
     <main className="page stack">
       <PageHeader title={t("create.title")} />
-      <div className={styles.progress} aria-hidden>
-        <div
-          className={styles.progressBar}
-          style={{ width: `${((step + 1) / STEP_TITLES.length) * 100}%` }}
-        />
-      </div>
-      <h2>{t(STEP_TITLES[step]!)}</h2>
+      {/* One segment per step: done ones filled, the current one highlighted. */}
+      <ol
+        className={styles.progress}
+        aria-label={t("onboarding.step", { current: step + 1, total: STEP_TITLES.length })}
+      >
+        {STEP_TITLES.map((key, i) => (
+          <li
+            key={key}
+            className={clsx(styles.segment, i < step && styles.segmentDone, i === step && styles.segmentNow)}
+            aria-current={i === step ? "step" : undefined}
+          />
+        ))}
+      </ol>
+      <h2 className={styles.stepTitle}>{t(STEP_TITLES[step]!)}</h2>
 
       {!online && <div className={styles.warning}>📡 {t("create.offline")}</div>}
 
@@ -229,9 +252,6 @@ export default function CreateHelpPage() {
               </div>
             </div>
           )}
-          {values.category === "URGENT" && (
-            <div className={styles.warning}>🚨 {t("emergency.short", emergencyVars())}</div>
-          )}
         </div>
       )}
 
@@ -254,6 +274,20 @@ export default function CreateHelpPage() {
             {...register("description")}
             error={fe(formState.errors.description?.message)}
             autoFocus
+          />
+          <Controller
+            control={control}
+            name="helpers_needed"
+            render={({ field }) => (
+              <Stepper
+                label={t("create.helpersNeeded")}
+                hint={t("create.helpersNeededHint")}
+                value={field.value}
+                min={1}
+                max={10}
+                onChange={field.onChange}
+              />
+            )}
           />
         </div>
       )}
@@ -314,7 +348,10 @@ export default function CreateHelpPage() {
             render={({ field }) => (
               <OptionTiles
                 value={field.value}
-                onChange={field.onChange}
+                onChange={(u) => {
+                  field.onChange(u);
+                  if (u !== "SCHEDULED") setValue("active_hours", DEFAULT_ACTIVE_HOURS[u]);
+                }}
                 options={URGENCIES.filter((u) => values.category !== "URGENT" || u === "NOW").map((u) => ({
                   value: u,
                   icon: URGENCY_EMOJI[u],
@@ -323,6 +360,26 @@ export default function CreateHelpPage() {
               />
             )}
           />
+          {values.urgency !== "SCHEDULED" && (
+            <Controller
+              control={control}
+              name="active_hours"
+              render={({ field }) => (
+                <Select
+                  label={t("create.activeHours")}
+                  hint={t("create.activeHoursHint")}
+                  value={field.value}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                >
+                  {ACTIVE_HOURS.map((h) => (
+                    <option key={h} value={h}>
+                      {h < 24 || h % 24 ? t("time.hours", { count: h }) : t("time.days", { count: h / 24 })}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            />
+          )}
           {values.urgency === "SCHEDULED" && (
             <Controller
               control={control}
@@ -353,9 +410,9 @@ export default function CreateHelpPage() {
                 value={field.value}
                 onChange={field.onChange}
                 options={[
-                  { value: "NONE", icon: "❤️", label: t("reward.NONE") },
-                  { value: "WILLING", icon: "💰", label: t("reward.WILLING") },
-                  { value: "UNSURE", icon: "🍫", label: t("reward.UNSURE") },
+                  { value: "NONE", icon: REWARD_TYPE_EMOJI.NONE, label: t("reward.NONE") },
+                  { value: "WILLING", icon: REWARD_TYPE_EMOJI.WILLING, label: t("reward.WILLING") },
+                  { value: "UNSURE", icon: REWARD_TYPE_EMOJI.UNSURE, label: t("reward.UNSURE") },
                 ]}
               />
             )}

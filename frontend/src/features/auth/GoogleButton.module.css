@@ -27,6 +27,6 @@
 }
 
 .button:disabled {
-  opacity: 0.6;
-  cursor: progress;
+  opacity: 0.5;
+  cursor: not-allowed;
 }

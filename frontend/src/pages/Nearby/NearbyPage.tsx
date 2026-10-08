@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router";
 
 import { PageHeader } from "@/components/layout/AppLayout";
-import { BottomSheet, Button, EmptyState, ErrorState, SkeletonList, Tabs } from "@/components/ui";
+import { BottomSheet, Button, EmptyState, ErrorState, LoadMore, SkeletonList, Tabs } from "@/components/ui";
 import { LazyMap } from "@/components/ui/LazyMap";
 import type { MapMarker } from "@/components/ui/Map";
 import { useMe } from "@/features/auth/hooks";
@@ -13,12 +13,21 @@ import { useGeolocation } from "@/features/location/useGeolocation";
 import { useSyncNotificationLocation } from "@/features/location/useSyncNotificationLocation";
 import { PushToggle } from "@/features/notifications/PushToggle";
 import { usePublicConfig } from "@/features/profile/hooks";
-import { useNearbyFilters } from "@/stores/nearbyFiltersStore";
+import { shownAsSelected, useNearbyFilters } from "@/stores/nearbyFiltersStore";
 import type { LatLng } from "@/types/api";
 import { cityName } from "@/utils/city";
 import { fallbackCenter, usePlace } from "@/features/location/place";
-import { CATEGORY_ORDER, URGENCIES, URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
+import {
+  CATEGORY_EMOJI,
+  CATEGORY_ORDER,
+  URGENCIES,
+  URGENCY_EMOJI,
+  URGENCY_HEX,
+  requestEmoji,
+} from "@/utils/categories";
 import { DEFAULT_RADII } from "@/utils/radius";
+
+import styles from "./Nearby.module.css";
 
 const ZOOM_BY_RADIUS: Record<number, number> = {
   500: 15,
@@ -27,7 +36,11 @@ const ZOOM_BY_RADIUS: Record<number, number> = {
   5000: 12,
   10000: 11,
   20000: 10,
+  30000: 9,
 };
+
+/** Enough for a dense city radius without loading an unbounded number of pins. */
+const MAP_LIMIT = 200;
 
 export default function NearbyPage() {
   const { t, i18n } = useTranslation();
@@ -66,6 +79,12 @@ export default function NearbyPage() {
     [position, filters.radius, filters.categories, filters.urgencies],
   );
   const nearby = useHelpRequests(query);
+  // The map shows everything within the radius at once (up to MAP_LIMIT), not just the first page.
+  const loaded = nearby.data?.pages.reduce((n, p) => n + p.results.length, 0) ?? 0;
+  const { hasNextPage, isFetchingNextPage, fetchNextPage } = nearby;
+  useEffect(() => {
+    if (view === "map" && hasNextPage && !isFetchingNextPage && loaded < MAP_LIMIT) void fetchNextPage();
+  }, [view, hasNextPage, isFetchingNextPage, loaded, fetchNextPage]);
   const requests = useMemo(() => nearby.data?.pages.flatMap((p) => p.results) ?? [], [nearby.data]);
 
   const markers: MapMarker[] = useMemo(
@@ -94,8 +113,7 @@ export default function NearbyPage() {
   return (
     <main className="page stack">
       <PageHeader
-        title={`🔍 ${t("nearby.title")}`}
-        back={false}
+        title={t("nearby.title")}
         actions={
           <Button variant="secondary" size="sm" onClick={() => setFiltersOpen(true)}>
             ⚙️ {t("nearby.filters")}
@@ -112,6 +130,32 @@ export default function NearbyPage() {
           { value: "map", label: `🗺 ${t("nearby.map")}` },
         ]}
       />
+      {/* Quick category filter, like the tear-off tabs on the home screen: one tap shows only that kind. */}
+      <nav className={styles.strip} aria-label={t("nearby.category")}>
+        <button
+          type="button"
+          className={styles.stripTab}
+          aria-pressed={filters.categories.length === 0}
+          onClick={() => filters.setCategories([])}
+        >
+          <span aria-hidden>✳️</span>
+          {t("nearby.all")}
+        </button>
+        {CATEGORY_ORDER.map((c) => (
+          <button
+            key={c}
+            type="button"
+            className={styles.stripTab}
+            aria-pressed={filters.categories.includes(c)}
+            onClick={() =>
+              filters.setCategories(filters.categories.length === 1 && filters.categories[0] === c ? [] : [c])
+            }
+          >
+            <span aria-hidden>{CATEGORY_EMOJI[c]}</span>
+            {t(`categories.${c}`)}
+          </button>
+        ))}
+      </nav>
       <RadiusChips
         radii={config?.radii ?? DEFAULT_RADII}
         value={filters.radius}
@@ -167,15 +211,11 @@ export default function NearbyPage() {
           {requests.map((request) => (
             <HelpRequestCard key={request.id} request={request} />
           ))}
-          {nearby.hasNextPage && (
-            <Button
-              variant="secondary"
-              onClick={() => void nearby.fetchNextPage()}
-              loading={nearby.isFetchingNextPage}
-            >
-              {t("nearby.loadMore")}
-            </Button>
-          )}
+          <LoadMore
+            hasNextPage={nearby.hasNextPage}
+            isFetching={nearby.isFetchingNextPage}
+            onLoad={() => void nearby.fetchNextPage()}
+          />
         </div>
       )}
 
@@ -185,7 +225,7 @@ export default function NearbyPage() {
         title={t("nearby.filters")}
         actions={
           <>
-            <Button variant="ghost" onClick={filters.reset}>
+            <Button variant="soft" onClick={filters.reset}>
               {t("nearby.all")}
             </Button>
             <Button onClick={() => setFiltersOpen(false)}>{t("common.done")}</Button>
@@ -196,7 +236,7 @@ export default function NearbyPage() {
           <strong>{t("nearby.category")}</strong>
           <CategoryChips
             options={CATEGORY_ORDER}
-            selected={filters.categories}
+            selected={shownAsSelected(filters.categories, CATEGORY_ORDER)}
             onToggle={filters.toggleCategory}
           />
         </div>
@@ -207,9 +247,9 @@ export default function NearbyPage() {
               <Button
                 key={u}
                 size="sm"
-                variant={filters.urgencies.includes(u) ? "primary" : "secondary"}
+                variant={shownAsSelected(filters.urgencies, URGENCIES).includes(u) ? "primary" : "secondary"}
                 onClick={() => filters.toggleUrgency(u)}
-                aria-pressed={filters.urgencies.includes(u)}
+                aria-pressed={shownAsSelected(filters.urgencies, URGENCIES).includes(u)}
               >
                 {URGENCY_EMOJI[u]} {t(`urgency.${u}`)}
               </Button>

@@ -42,7 +42,9 @@ export async function registerAndOnboard(page: Page, name: string, email: string
   await page.goto("/auth/register");
   await page.getByLabel("Як до вас звертатися").fill(name);
   await page.getByLabel("Email").fill(email);
-  await page.getByLabel("Пароль").fill(PASSWORD);
+  await page.getByLabel("Номер телефону").fill("+380 67 123 45 67");
+  await page.getByLabel("Пароль", { exact: true }).fill(PASSWORD);
+  await page.getByRole("checkbox").check(); // «Мені виповнилося 16 років»
   await page.getByRole("button", { name: "Зареєструватися" }).click();
   await expect(page.getByRole("heading", { name: /Підтвердіть email/ })).toBeVisible();
 
@@ -59,5 +61,5 @@ export async function registerAndOnboard(page: Page, name: string, email: string
   await page.getByRole("button", { name: "Далі" }).click();
   await page.getByRole("button", { name: "Далі" }).click();
   await page.getByRole("button", { name: "Готово" }).click();
-  await expect(page.getByRole("link", { name: /^Потрібна допомога/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Попросити допомогу" })).toBeVisible();
 }

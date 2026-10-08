@@ -93,6 +93,11 @@ export interface Me {
   helped_count: number;
   thanks_received_count: number;
   has_password: boolean;
+  /** E.164, e.g. +380671234567; null if not given (e.g. signed up with Google). */
+  phone: string | null;
+  phone_verified: boolean;
+  /** A new email waiting for confirmation from that inbox ("" if none). */
+  pending_email: string;
 }
 
 export interface Preferences {
@@ -102,6 +107,7 @@ export interface Preferences {
   email_enabled: boolean;
   has_location: boolean;
   location_updated_at: ISODateTime | null;
+  muted_until: ISODateTime | null;
 }
 
 export interface Availability {
@@ -127,10 +133,34 @@ export interface PublicConfig {
   capabilities: Capability[];
 }
 
-export interface ResponseBrief {
+/** Terms agreed with one helper (a request may have several helpers). */
+export interface AgreedTerms {
+  agreed_offer_type: OfferType | null;
+  agreed_amount: string | null;
+}
+
+export interface ResponseBrief extends AgreedTerms {
   id: UUID;
   status: ResponseStatus;
   created_at: ISODateTime;
+  offer_type: OfferType;
+  offered_amount: string | null;
+  /** The author's one counter to a helper's different amount. */
+  author_counter_amount: string | null;
+}
+
+/** A helper the author chose (visible to the author only). */
+/** Shared only between an author and the helpers they accepted. */
+export interface Contact {
+  email: string;
+  phone: string | null;
+}
+
+export interface ChosenHelper extends AgreedTerms {
+  user: PublicUser;
+  response_id: UUID;
+  conversation_id: UUID | null;
+  contact: Contact;
 }
 
 export interface HelpRequest {
@@ -162,6 +192,12 @@ export interface HelpRequest {
   my_response: ResponseBrief | null;
   responses_count: number;
   selected_helper: PublicUser | null;
+  /** How many people the author needs, how many are chosen, and who (author only). */
+  helpers_needed: number;
+  helpers_count: number;
+  helpers: ChosenHelper[];
+  /** The author's contacts — only for a helper the author accepted. */
+  author_contact: Contact | null;
   conversation_id: UUID | null;
   can_respond: boolean;
   thanked: boolean | null;
@@ -175,6 +211,9 @@ export interface HelpResponse {
   message: string;
   offer_type: OfferType;
   offered_amount: string | null;
+  author_counter_amount: string | null;
+  agreed_offer_type: OfferType | null;
+  agreed_amount: string | null;
   status: ResponseStatus;
   created_at: ISODateTime;
 }
@@ -192,6 +231,12 @@ export interface Message {
   /** client-only optimistic state */
   pending?: boolean;
   failed?: boolean;
+  /** The message this one answers (a short preview). */
+  reply_to?: { id: UUID; sender_id: UUID | null; text: string; message_type: MessageType } | null;
+  /** Who reacted with what; the client marks its own from user_ids. */
+  reactions?: { emoji: string; user_ids: UUID[] }[];
+  /** client-only: the photo is still being uploaded (shown from a local preview) */
+  uploading?: boolean;
 }
 
 export interface Conversation {
@@ -203,6 +248,9 @@ export interface Conversation {
   is_open: boolean;
   created_at: ISODateTime;
   last_message_at: ISODateTime | null;
+  /** In the app right now (any screen). */
+  other_online: boolean;
+  other_last_seen: string | null;
 }
 
 export type NotificationType =

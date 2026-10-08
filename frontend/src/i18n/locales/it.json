@@ -3,7 +3,8 @@
     "slogan": "Aiuto da chi ti sta vicino",
     "offline": "Nessuna connessione a internet. Alcune funzioni sono momentaneamente non disponibili.",
     "updateReady": "È disponibile una nuova versione dell'app",
-    "reload": "Aggiorna"
+    "reload": "Aggiorna",
+    "updateHint": "Potrebbe esserci una nuova versione dell'app. Ricarica la pagina."
   },
   "nav": {
     "home": "Home",
@@ -36,7 +37,12 @@
     "anonymous": "Vicino di casa",
     "seeAll": "Tutto",
     "fromYou": "a {{distance}}",
-    "since": "Iscritto dal {{year}}"
+    "since": "Iscritto dal {{year}}",
+    "selectAll": "Seleziona tutto",
+    "selectNone": "Deseleziona tutto",
+    "less": "Meno",
+    "more": "Più",
+    "previous": "Precedente"
   },
   "time": {
     "justNow": "proprio ora",
@@ -50,10 +56,11 @@
     "hours_one": "{{count}} ora",
     "hours_other": "{{count}} ore",
     "minutes_one": "{{count}} minuto",
-    "minutes_other": "{{count}} minuti"
+    "minutes_other": "{{count}} minuti",
+    "days_one": "{{count}} giorno",
+    "days_other": "{{count}} giorni"
   },
   "landing": {
-    "title": "Aiuto qui vicino.",
     "needHelpTitle": "Ti serve aiuto?",
     "needHelpText": "Fallo sapere a chi ti sta vicino.",
     "canHelpTitle": "Puoi aiutare?",
@@ -66,7 +73,7 @@
     "step2": "Le persone vicine ricevono un avviso",
     "step3": "Qualcuno risponde e vi accordate in chat",
     "step4": "Ringrazia quando ti hanno aiutato ❤️",
-    "notMarketplace": "Non è un mercato di servizi. Vicini che aiutano vicini, senza pagamenti obbligatori né commissioni.",
+    "notMarketplace": "Non un servizio, ma una comunità di aiuto reciproco. Aiuta chi ti sta vicino, senza pagamenti né commissioni obbligatorie.",
     "trustTitle": "Perché è sicuro",
     "trust": [
       "Il tuo indirizzo esatto resta nascosto. Lo vede solo chi ha accettato di aiutarti.",
@@ -110,14 +117,24 @@
     "terms": "Registrandoti, ti impegni ad aiutare in modo sicuro e rispettoso.",
     "googleFailed": "Accesso con Google non riuscito. Riprova.",
     "googleInactive": "Questo account è stato disattivato.",
-    "checkSpam": "Non vedi l'email? Aspetta un minuto e controlla le cartelle Spam e Promozioni. Se è lì, segnala che «Non è spam», così le prossime arriveranno nella posta in arrivo."
+    "checkSpam": "Non vedi l'email? Aspetta un minuto e controlla le cartelle Spam e Promozioni. Se è lì, segnala che «Non è spam», così le prossime arriveranno nella posta in arrivo.",
+    "ageConfirm": "Ho almeno 16 anni",
+    "ageRequired": "Conferma di avere almeno 16 anni",
+    "ageForGoogle": "Per continuare con Google, conferma prima la tua età qui sopra.",
+    "logoutTitle": "Uscire dall’account?",
+    "logoutText": "Per usare Poruch dovrai accedere di nuovo.",
+    "showPassword": "Mostra password",
+    "hidePassword": "Nascondi password",
+    "phone": "Numero di telefono",
+    "phoneHint": "Lo vedranno solo le persone con cui concordi l’aiuto."
   },
   "validation": {
     "required": "Campo obbligatorio",
     "email": "Email non valida",
     "minPassword": "Almeno 8 caratteri",
     "max": "Massimo {{max}} caratteri",
-    "amount": "Importo non valido"
+    "amount": "Importo non valido",
+    "phone": "Numero di telefono non valido"
   },
   "onboarding": {
     "step": "Passo {{current}} di {{total}}",
@@ -130,7 +147,8 @@
     "notificationsAllow": "Attiva notifiche",
     "notificationsGranted": "Notifiche attive ✓",
     "categoriesTitle": "In cosa puoi aiutare?",
-    "categoriesText": "Ti invieremo solo richieste pertinenti. Puoi cambiarlo nelle impostazioni."
+    "categoriesText": "Ti invieremo solo richieste pertinenti. Puoi cambiarlo nelle impostazioni.",
+    "changeLater": "Puoi cambiarlo più tardi nelle impostazioni."
   },
   "home": {
     "needHelp": "Ho bisogno di aiuto",
@@ -145,7 +163,14 @@
     "myRequestsHint": "Quello che hai pubblicato",
     "imHelping": "Sto aiutando",
     "imHelpingHint": "Richieste di altri in cui sei stato scelto per aiutare",
-    "nearbyPreviewHint": "Qualcuno vicino ha bisogno di aiuto: magari del tuo"
+    "nearbyPreviewHint": "Qualcuno vicino ha bisogno di aiuto: magari del tuo",
+    "noRequests": "Nessuna richiesta attiva per ora.",
+    "createOne": "Creane una →",
+    "noHelping": "Per ora non stai aiutando nessuno.",
+    "findSomeone": "Guarda chi ha bisogno di aiuto →",
+    "hello": "Ciao, {{name}}!",
+    "ask": "Chiedi aiuto",
+    "orPick": "Oppure scegli subito di cosa si tratta:"
   },
   "availability": {
     "title": "Posso aiutare ora",
@@ -158,7 +183,7 @@
     "disable": "Disattiva",
     "needLocation": "Serve la posizione",
     "explainTitle": "Cosa fa questa modalità",
-    "explain": "Finché è attiva (fino a 2 ore), ti inviamo le richieste delle persone vicine alla tua posizione attuale, nel raggio e nelle categorie scelte, anche se di solito sei altrove. Quando la disattivi o il tempo scade, tornano le notifiche secondo le impostazioni abituali."
+    "explain": "Finché è attiva (per il tempo che scegli), ti inviamo le richieste delle persone vicine alla tua posizione attuale, nel raggio e nelle categorie scelte, anche se di solito sei altrove. Quando la disattivi o il tempo scade, tornano le notifiche secondo le impostazioni abituali."
   },
   "categories": {
     "AUTO": "Auto",
@@ -294,7 +319,11 @@
     "neededAtHint": "Da 15 minuti a 30 giorni prima",
     "neededAtRequired": "Scegli data e ora",
     "neededAtTooSoon": "Scegli un orario almeno 15 minuti da adesso",
-    "neededAtTime": "Ora"
+    "neededAtTime": "Ora",
+    "helpersNeeded": "Quante persone servono",
+    "helpersNeededHint": "Quando altrettante persone accettano di aiutare, la richiesta si chiude per gli altri.",
+    "activeHours": "Per quanto tempo la richiesta resta attiva",
+    "activeHoursHint": "Dopo si chiude automaticamente."
   },
   "nearby": {
     "title": "Aiuto vicino",
@@ -348,7 +377,12 @@
     "blocked": "Utente bloccato",
     "helpers_one": "{{count}} risposta",
     "helpers_other": "{{count}} risposte",
-    "rewardInfo": "Ringraziamento"
+    "rewardInfo": "Ringraziamento",
+    "helpersProgress": "Scelte {{count}} su {{needed}}",
+    "selectedHelpers": "Chi aiuta",
+    "peopleStillNeeded_one": "serve ancora {{count}} persona",
+    "peopleStillNeeded_other": "servono ancora {{count}} persone",
+    "showOnMap": "Torna alla richiesta"
   },
   "thanks": {
     "received": "Aiuto ricevuto ❤️",
@@ -376,7 +410,14 @@
     "closed": "Conversazione chiusa",
     "image": "📷 Foto",
     "aboutRequest": "Richiesta: {{title}}",
-    "loadOlder": "Messaggi precedenti"
+    "loadOlder": "Messaggi precedenti",
+    "request": "Richiesta",
+    "you": "Tu",
+    "reply": "Rispondi",
+    "replyingTo": "Risposta a {{name}}",
+    "actions": "Azioni sul messaggio",
+    "typingName": "{{name}} sta scrivendo…",
+    "lastSeen": "Ultimo accesso {{when}}"
   },
   "notifications": {
     "title": "Notifiche",
@@ -414,7 +455,21 @@
     "customItemsLabel": "Cos'altro hai?",
     "customItemsPlaceholder": "Per esempio: bicicletta, tenda",
     "customItemsAdd": "Aggiungi",
-    "customItemsHint": "Fino a 10 oggetti, 40 caratteri ciascuno"
+    "customItemsHint": "Fino a 10 oggetti, 40 caratteri ciascuno",
+    "renameHint": "Tocca per cambiare nome",
+    "contacts": "Contatti",
+    "change": "Modifica",
+    "addPhone": "Aggiungi",
+    "noPhone": "Non indicato",
+    "changePhone": "Numero di telefono",
+    "phoneSaved": "Numero salvato",
+    "changeEmail": "Cambia email",
+    "changeEmailText": "Invieremo un link al nuovo indirizzo. L’email cambierà quando lo apri.",
+    "newEmail": "Nuovo indirizzo",
+    "sendConfirmation": "Invia conferma",
+    "emailSent": "Email inviata a {{email}}. Apri il link.",
+    "emailPending": "In attesa di conferma: {{email}}",
+    "contactsPrivacy": "Telefono ed email li vedono solo gli aiutanti che scegli e gli autori che scelgono te."
   },
   "settings": {
     "title": "Impostazioni",
@@ -453,7 +508,27 @@
     "theme": "Tema",
     "themeLight": "Chiaro",
     "themeDark": "Scuro",
-    "themeSystem": "Sistema"
+    "themeSystem": "Sistema",
+    "sound": "Suono delle nuove notifiche",
+    "soundHint": "Un breve suono quando l'app è aperta e arriva qualcosa di nuovo.",
+    "mute": "Non disturbare",
+    "muteHint": "Sospendi per un po’ gli avvisi sulle nuove richieste vicine.",
+    "mutedUntil": "Avvisi in pausa fino a {{time}}",
+    "muteOff": "Disattivato",
+    "muteFor": {
+      "1h": "1 h",
+      "3h": "3 h",
+      "morning": "Fino al mattino",
+      "24h": "24 h"
+    },
+    "locationAuto": "La posizione per gli avvisi si aggiorna da sola ogni volta che apri l’app.",
+    "locationAutoDenied": "La posizione è bloccata nel browser: consentila nelle impostazioni del sito per ricevere richieste vicine.",
+    "changePassword": "Cambia password",
+    "setPassword": "Imposta password",
+    "currentPassword": "Password attuale",
+    "newPassword": "Nuova password",
+    "passwordChanged": "Password cambiata",
+    "passwordOtherDevices": "Sugli altri dispositivi dovrai accedere di nuovo."
   },
   "report": {
     "title": "Segnala",
@@ -524,7 +599,17 @@
       "FREE": "Gratis"
     },
     "agreed": "Concordato: {{terms}}",
-    "note": "La piattaforma non gestisce pagamenti: l'accordo è tra voi."
+    "note": "La piattaforma non gestisce pagamenti: l'accordo è tra voi.",
+    "counterButton": "Proponi il tuo importo",
+    "counterLabel": "Il tuo importo, {{currency}}",
+    "counterHint": "Puoi farlo una sola volta: poi chi aiuta accetta o rifiuta.",
+    "counterSend": "Invia proposta",
+    "counterSent": "Hai proposto {{amount}}: in attesa di risposta",
+    "authorCounter": "L'autore propone {{amount}}",
+    "lastStep": "È l'ultima proposta: accetta o rifiuta.",
+    "acceptCounter": "Accetta",
+    "declineCounter": "Rifiuta",
+    "agreedToast": "Fatto! Sei stato scelto per aiutare."
   },
   "share": {
     "button": "Condividi",
@@ -575,14 +660,18 @@
     "howTo": "Come installarla:",
     "steps": {
       "ios": [
-        "Tocca Condividi ⬆️ in basso in Safari",
-        "Scegli «Aggiungi alla schermata Home» (scorri se non lo vedi)",
+        "Tocca Condividi ⬆️, in basso o nel menu «⋯»",
+        "Scegli «Aggiungi alla schermata Home»",
         "Tocca «Aggiungi»: Poruch compare tra le app"
       ],
       "ios-other-browser": [
         "Tocca Condividi ⬆️ nella barra degli indirizzi",
         "Scegli «Aggiungi alla schermata Home»; se manca, apri il sito in Safari",
         "Tocca «Aggiungi»"
+      ],
+      "in-app": [
+        "Questa app ha aperto il sito nel suo browser integrato, da cui non si può installare",
+        "Tocca «⋯» o «⋮» in alto, scegli «Apri nel browser» (Safari o Chrome) e installa Poruch da lì"
       ],
       "android": [
         "Apri il menu del browser ⋮ in alto a destra",
@@ -594,6 +683,33 @@
         "Conferma l'installazione"
       ]
     },
+    "troubleTitle": "Non riesci a installare?",
+    "trouble": {
+      "ios": [
+        "Il sito deve essere aperto nell'app Safari. Telegram, Instagram e altre aprono le pagine in un visualizzatore integrato da cui non si può installare. Copia l'indirizzo (pulsante qui sotto) e incollalo in Safari.",
+        "Come capire se sei in Safari: il menu Condividi ha «Aggiungi segnalibro» e «Trova nella pagina».",
+        "Manca «Aggiungi alla schermata Home»? Scorri il menu Condividi fino a «Modifica azioni…» e attivalo.",
+        "Disattiva la navigazione privata di Safari (barra degli indirizzi scura)."
+      ],
+      "ios-other-browser": [
+        "Se nel menu Condividi manca «Aggiungi alla schermata Home», apri il sito in Safari: copia l'indirizzo qui sotto e incollalo lì.",
+        "Una pagina aperta da Telegram o Instagram è un visualizzatore integrato e non permette di installare.",
+        "Serve iOS 16.4 o successivo: Impostazioni → Generali → Info."
+      ],
+      "in-app": [
+        "Copia l'indirizzo con il pulsante qui sotto e incollalo in Safari (iPhone) o Chrome (Android)."
+      ],
+      "android": [
+        "Il sito deve essere aperto in Chrome. In Telegram, Instagram e altre app tocca ⋮ → «Apri in Chrome».",
+        "Manca «Installa app»? Aggiorna Chrome da Google Play oppure copia l'indirizzo qui sotto e aprilo in Chrome."
+      ],
+      "desktop": [
+        "Chrome ed Edge permettono l'installazione. In Safari su Mac: File → Aggiungi al Dock.",
+        "Firefox non permette di installare: apri il sito in Chrome o Edge."
+      ]
+    },
+    "copyLink": "Copia indirizzo",
+    "copied": "Indirizzo copiato",
     "later": "Più tardi",
     "thanks": "Poruch installata ❤️",
     "cardTitle": "Installa l'app",

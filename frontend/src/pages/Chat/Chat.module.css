@@ -48,18 +48,33 @@
   flex-direction: column;
   gap: var(--space-2);
 }
+/* One message: the bubble, its reactions and (when tapped) the action bar, aligned to its side. */
+.row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  border-radius: 20px;
+  transition: background 300ms ease;
+}
+.rowMine {
+  align-items: flex-end;
+}
+.flash {
+  background: color-mix(in srgb, var(--color-primary) 14%, transparent);
+}
 .bubble {
   max-width: 78%;
+  cursor: pointer;
   padding: var(--space-2) var(--space-3);
   border-radius: 18px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  align-self: flex-start;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 .mine {
-  align-self: flex-end;
   background: var(--color-primary);
   border-color: var(--color-primary);
   color: #fff;
@@ -88,6 +103,14 @@
   font-size: 11px;
   opacity: 0.75;
   text-align: right;
+}
+.imageButton {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
 }
 .image {
   border-radius: 12px;
@@ -144,4 +167,249 @@
   text-align: center;
   color: var(--color-text-muted);
   border-top: 1px solid var(--color-border);
+}
+
+/* Link from the chat to its help request: the category icon + «Запит», big enough to notice. */
+.requestLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: var(--color-primary-soft);
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.requestLink span {
+  font-size: 22px;
+  line-height: 1;
+}
+/* A photo still uploading: dimmed, with a spinner and a label over it. */
+.uploading {
+  position: absolute;
+  inset: 0 0 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border-radius: 12px;
+  background: rgb(0 0 0 / 0.45);
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+.uploadingSpin {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgb(255 255 255 / 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: chatSpin 0.8s linear infinite;
+}
+@keyframes chatSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.selected {
+  box-shadow:
+    0 0 0 2px var(--color-primary-soft),
+    0 0 0 4px var(--color-primary);
+}
+/* the quoted message inside a reply */
+.quote {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  width: 100%;
+  margin-bottom: 4px;
+  padding: 4px 8px;
+  border: 0;
+  border-left: 3px solid currentColor;
+  border-radius: 6px;
+  background: rgb(127 127 127 / 0.14);
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+.quote span {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  opacity: 0.85;
+}
+.reactions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: -2px;
+}
+.reaction {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  min-height: 28px;
+  padding: 0 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.reactionMine {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+/* Shown on hover with a mouse (and for keyboard focus); on touch screens a tap on the message opens it. */
+.actions {
+  position: absolute;
+  top: calc(100% - 6px);
+  z-index: 5;
+  display: none;
+  flex-wrap: nowrap;
+  max-width: calc(100vw - 2 * var(--space-3));
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+.actionEmoji,
+.actionText {
+  flex-shrink: 0;
+  min-width: 32px;
+  min-height: 36px;
+  white-space: nowrap;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: none;
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+.actionEmoji {
+  font-size: 20px;
+}
+.actionText {
+  padding: 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.actionEmoji:hover,
+.actionText:hover {
+  background: var(--color-surface-2);
+}
+/* «Replying to …» above the input */
+.replyBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-top: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
+  background: var(--color-surface);
+}
+.replyBarText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+}
+.replyBarText span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--color-text-muted);
+}
+.actionsOpen {
+  display: flex;
+}
+.rowMine .actions {
+  right: 0;
+}
+.row:not(.rowMine) .actions {
+  left: 0;
+}
+.row:hover,
+.row:focus-within {
+  z-index: 6;
+}
+@media (hover: hover) {
+  .row:hover .actions,
+  .row:focus-within .actions {
+    display: flex;
+  }
+}
+.actionsAbove {
+  top: auto;
+  bottom: calc(100% - 6px);
+}
+/* «Олена друкує…» on the partner's side, right above the input */
+.typing {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+.typingDots {
+  display: inline-flex;
+  gap: 3px;
+}
+.typingDots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: typingDot 1.2s infinite ease-in-out;
+}
+.typingDots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.typingDots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes typingDot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .typingDots span {
+    animation: none;
+  }
+}
+/* On narrow phones the reply button is just «↩» so the bar fits in one row. */
+@media (max-width: 479px) {
+  .actionLabel {
+    display: none;
+  }
 }

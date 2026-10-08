@@ -47,7 +47,9 @@ def _resolve_city(city_id) -> City | None:
 
 
 @transaction.atomic
-def register_user(*, email: str, password: str, display_name: str, city_id=None) -> User:
+def register_user(
+    *, email: str, password: str, display_name: str, city_id=None, phone: str = "", phone_region: str | None = None
+) -> User:
     email = User.objects.normalize_email(email).strip().lower()
     if User.objects.filter(email__iexact=email).exists():
         raise Conflict(_("Користувач з таким email вже існує."), code="EMAIL_TAKEN")
@@ -57,11 +59,19 @@ def register_user(*, email: str, password: str, display_name: str, city_id=None)
     except DjangoValidationError as exc:
         raise ValidationFailed(details={"password": list(exc.messages)}) from exc
     city = _resolve_city(city_id)
+    from apps.users.phone import normalize_phone
+
+    if phone:
+        normalize_phone(phone, phone_region)  # validate before creating anything
     try:
         user = User.objects.create_user(email=email, password=password)
     except IntegrityError as exc:
         raise Conflict(_("Користувач з таким email вже існує."), code="EMAIL_TAKEN") from exc
     _create_profile(user, display_name, city)
+    if phone:
+        from apps.users.phone import set_phone
+
+        user.save(update_fields=set_phone(user, phone, phone_region))
     send_verification_email(user)
     analytics.track(user_id=user.id, event="user_registered", properties={"method": "email"})
     return user
@@ -99,11 +109,64 @@ def verify_email(token: str) -> User:
     user = User.objects.filter(id=data.get("uid"), email=data.get("email"), is_active=True).first()
     if user is None:
         raise DomainError(_("Недійсне посилання."), code="TOKEN_INVALID")
+    new_email = data.get("new_email")
+    if new_email:
+        # Email change: the link was sent to the new inbox, so opening it proves ownership.
+        if user.pending_email != new_email:
+            raise DomainError(_("Недійсне посилання."), code="TOKEN_INVALID")
+        if User.objects.filter(email__iexact=new_email).exclude(pk=user.pk).exists():
+            raise Conflict(_("Користувач з таким email вже існує."), code="EMAIL_TAKEN")
+        user.email, user.pending_email, user.email_verified = new_email, "", True
+        user.save(update_fields=["email", "pending_email", "email_verified"])
+        # The Google account of the old address no longer signs in here; the Google account of the new
+        # one links itself on the next «Continue with Google». Kept only if it is the sole way in.
+        if user.has_usable_password():
+            SocialAccount.objects.filter(user=user, provider="google").delete()
+        return user
     if not user.email_verified:
         user.email_verified = True
         user.save(update_fields=["email_verified"])
         analytics.track(user_id=user.id, event="email_verified")
     return user
+
+
+def change_password(user: User, current: str | None, new: str) -> None:
+    """Accounts created with Google have no password yet: they set one without the current."""
+    if user.has_usable_password() and not user.check_password(current or ""):
+        raise ValidationFailed(details={"current_password": [_("Неправильний пароль.")]})
+    try:
+        validate_password(new, user=user)
+    except DjangoValidationError as exc:
+        raise ValidationFailed(details={"new_password": list(exc.messages)}) from exc
+    user.set_password(new)
+    user.save(update_fields=["password"])
+    # Sign out every other device; this one gets fresh cookies from the view.
+    from apps.users.services.tokens import revoke_all_tokens
+
+    revoke_all_tokens(user)
+
+
+def request_email_change(user: User, new_email: str, password: str | None) -> None:
+    """Send a confirmation link to the new address; the login email changes only after it is opened."""
+    new_email = User.objects.normalize_email(new_email).strip().lower()
+    if user.has_usable_password() and not user.check_password(password or ""):
+        raise ValidationFailed(details={"password": [_("Неправильний пароль.")]})
+    if new_email == user.email:
+        raise ValidationFailed(details={"email": [_("Це ваша поточна адреса.")]})
+    if User.objects.filter(email__iexact=new_email).exists():
+        raise Conflict(_("Користувач з таким email вже існує."), code="EMAIL_TAKEN")
+    user.pending_email = new_email
+    user.save(update_fields=["pending_email"])
+    token = signing.dumps({"uid": str(user.id), "email": user.email, "new_email": new_email}, salt=EMAIL_VERIFY_SALT)
+    send_service_email(
+        new_email,
+        _("Підтвердіть нову адресу в Poruch"),
+        heading=_("Нова електронна адреса"),
+        paragraphs=[_("Ви змінюєте email свого акаунта Poruch. Підтвердіть, що ця адреса ваша.")],
+        button_text=_("Підтвердити email"),
+        button_url=_frontend_url("/auth/verify-email", token=token),
+        note=_("Якщо це були не ви — просто проігноруйте цей лист, нічого не зміниться."),
+    )
 
 
 def request_password_reset(email: str) -> None:
@@ -201,6 +264,14 @@ def authenticate_google(credential: str) -> tuple[User, bool]:
     email = claims["email"].lower()
 
     social = SocialAccount.objects.select_related("user").filter(provider="google", uid=uid).first()
+    if social and social.user.email.lower() != email:
+        # The account moved to another email: the old Google identity no longer opens it.
+        raise DomainError(
+            _(
+                "Цей Google-акаунт більше не прив'язаний до профілю — email у профілі змінено. Увійдіть через Google з новою адресою."
+            ),
+            code="GOOGLE_EMAIL_CHANGED",
+        )
     if social:
         user = social.user
         created = False

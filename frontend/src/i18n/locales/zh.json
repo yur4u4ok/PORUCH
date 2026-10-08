@@ -3,7 +3,8 @@
     "slogan": "来自身边人的帮助",
     "offline": "没有网络连接。部分功能暂时无法使用。",
     "updateReady": "应用有新版本可用",
-    "reload": "更新"
+    "reload": "更新",
+    "updateHint": "可能有新版本，请刷新页面。"
   },
   "nav": {
     "home": "首页",
@@ -36,7 +37,12 @@
     "anonymous": "邻居",
     "seeAll": "全部",
     "fromYou": "距你 {{distance}}",
-    "since": "{{year}} 年加入"
+    "since": "{{year}} 年加入",
+    "selectAll": "全选",
+    "selectNone": "全部取消",
+    "less": "减少",
+    "more": "增加",
+    "previous": "上一张"
   },
   "time": {
     "justNow": "刚刚",
@@ -45,10 +51,10 @@
     "daysAgo_other": "{{count}} 天前",
     "expiresIn": "还剩 {{value}} 有效",
     "hours_other": "{{count}} 小时",
-    "minutes_other": "{{count}} 分钟"
+    "minutes_other": "{{count}} 分钟",
+    "days_other": "{{count}} 天"
   },
   "landing": {
-    "title": "帮助就在身边。",
     "needHelpTitle": "需要帮助？",
     "needHelpText": "告诉附近的人。",
     "canHelpTitle": "能帮忙吗？",
@@ -61,7 +67,7 @@
     "step2": "附近的人会收到通知",
     "step3": "有人回应后，在聊天中商量细节",
     "step4": "得到帮助后说声谢谢 ❤️",
-    "notMarketplace": "这不是服务交易平台。邻里互助，没有强制付费，也没有佣金。",
+    "notMarketplace": "这不是服务平台，而是互助社区。帮助身边的人，无需强制付费或佣金。",
     "trustTitle": "为什么这里安全",
     "trust": [
       "你的确切地址会被隐藏，只有答应帮忙的人才能看到。",
@@ -105,14 +111,24 @@
     "terms": "注册即表示你同意以安全、尊重的方式互相帮助。",
     "googleFailed": "无法使用 Google 登录，请重试。",
     "googleInactive": "该账号已被停用。",
-    "checkSpam": "没看到邮件？请等一分钟，再查看垃圾邮件和推广邮件文件夹。如果在那里，请标记为“非垃圾邮件”，以后的邮件就会进入收件箱。"
+    "checkSpam": "没看到邮件？请等一分钟，再查看垃圾邮件和推广邮件文件夹。如果在那里，请标记为“非垃圾邮件”，以后的邮件就会进入收件箱。",
+    "ageConfirm": "我已年满 16 岁",
+    "ageRequired": "请确认你已年满 16 岁",
+    "ageForGoogle": "要使用 Google 继续，请先在上方确认年龄。",
+    "logoutTitle": "要退出登录吗？",
+    "logoutText": "之后需要重新登录才能使用 Poruch。",
+    "showPassword": "显示密码",
+    "hidePassword": "隐藏密码",
+    "phone": "手机号码",
+    "phoneHint": "只有与你约定帮助的人才能看到。"
   },
   "validation": {
     "required": "必填项",
     "email": "邮箱格式不正确",
     "minPassword": "至少 8 个字符",
     "max": "最多 {{max}} 个字符",
-    "amount": "金额无效"
+    "amount": "金额无效",
+    "phone": "手机号码无效"
   },
   "onboarding": {
     "step": "第 {{current}} 步，共 {{total}} 步",
@@ -125,7 +141,8 @@
     "notificationsAllow": "开启通知",
     "notificationsGranted": "通知已开启 ✓",
     "categoriesTitle": "你能帮什么忙？",
-    "categoriesText": "我们只会发送相关的求助，可以随时在设置中修改。"
+    "categoriesText": "我们只会发送相关的求助，可以随时在设置中修改。",
+    "changeLater": "之后可以在设置中更改。"
   },
   "home": {
     "needHelp": "我需要帮助",
@@ -140,7 +157,14 @@
     "myRequestsHint": "你发布的内容",
     "imHelping": "我在帮忙",
     "imHelpingHint": "你被选为帮手的他人求助",
-    "nearbyPreviewHint": "附近有人需要帮助，也许正需要你"
+    "nearbyPreviewHint": "附近有人需要帮助，也许正需要你",
+    "noRequests": "暂时没有进行中的求助。",
+    "createOne": "发布求助 →",
+    "noHelping": "你还没有在帮助任何人。",
+    "findSomeone": "看看谁需要帮助 →",
+    "hello": "你好，{{name}}！",
+    "ask": "请求帮助",
+    "orPick": "或直接选择类别："
   },
   "availability": {
     "title": "我现在可以帮忙",
@@ -153,7 +177,7 @@
     "disable": "关闭",
     "needLocation": "需要位置信息",
     "explainTitle": "这个模式有什么用",
-    "explain": "开启期间（最长 2 小时），即使你平时在别处，我们也会按你选择的范围和类别，把当前位置附近的人的求助发给你。关闭或时间到期后，恢复为常规设置的通知。"
+    "explain": "开启期间（在你选择的时长内），即使你平时在别处，我们也会按你选择的范围和类别，把当前位置附近的人的求助发给你。关闭或时间到期后，恢复为常规设置的通知。"
   },
   "categories": {
     "AUTO": "汽车",
@@ -289,7 +313,11 @@
     "neededAtHint": "15 分钟后至 30 天内",
     "neededAtRequired": "请选择日期和时间",
     "neededAtTooSoon": "请选择至少 15 分钟之后的时间",
-    "neededAtTime": "时间"
+    "neededAtTime": "时间",
+    "helpersNeeded": "需要多少人",
+    "helpersNeededHint": "当这么多人同意帮忙后，求助将不再对其他人开放。",
+    "activeHours": "求助保持有效的时长",
+    "activeHoursHint": "到期后会自动关闭。"
   },
   "nearby": {
     "title": "附近互助",
@@ -342,7 +370,11 @@
     "blockConfirm": "确定屏蔽该用户？你们将看不到彼此的求助，也无法互发消息。",
     "blocked": "已屏蔽该用户",
     "helpers_other": "{{count}} 个回应",
-    "rewardInfo": "答谢"
+    "rewardInfo": "答谢",
+    "helpersProgress": "已选择 {{count}} / {{needed}}",
+    "selectedHelpers": "帮手",
+    "peopleStillNeeded_other": "还需要 {{count}} 人",
+    "showOnMap": "回到求助位置"
   },
   "thanks": {
     "received": "已获得帮助 ❤️",
@@ -370,7 +402,14 @@
     "closed": "对话已结束",
     "image": "📷 照片",
     "aboutRequest": "求助：{{title}}",
-    "loadOlder": "更早的消息"
+    "loadOlder": "更早的消息",
+    "request": "求助",
+    "you": "你",
+    "reply": "回复",
+    "replyingTo": "回复 {{name}}",
+    "actions": "消息操作",
+    "typingName": "{{name}} 正在输入…",
+    "lastSeen": "最后在线 {{when}}"
   },
   "notifications": {
     "title": "通知",
@@ -408,7 +447,21 @@
     "customItemsLabel": "你还有什么？",
     "customItemsPlaceholder": "例如：自行车、帐篷",
     "customItemsAdd": "添加",
-    "customItemsHint": "最多 10 项，每项 40 个字符"
+    "customItemsHint": "最多 10 项，每项 40 个字符",
+    "renameHint": "点按以修改名字",
+    "contacts": "联系方式",
+    "change": "修改",
+    "addPhone": "添加",
+    "noPhone": "未填写",
+    "changePhone": "手机号码",
+    "phoneSaved": "号码已保存",
+    "changeEmail": "修改邮箱",
+    "changeEmailText": "我们会向新地址发送链接，打开后邮箱即更改。",
+    "newEmail": "新地址",
+    "sendConfirmation": "发送确认",
+    "emailSent": "已发送至 {{email}}，请打开其中的链接。",
+    "emailPending": "等待确认：{{email}}",
+    "contactsPrivacy": "你的电话和邮箱仅对你选中的帮助者和选中你的发布者可见。"
   },
   "settings": {
     "title": "设置",
@@ -447,7 +500,27 @@
     "theme": "主题",
     "themeLight": "浅色",
     "themeDark": "深色",
-    "themeSystem": "跟随系统"
+    "themeSystem": "跟随系统",
+    "sound": "新通知提示音",
+    "soundHint": "应用打开时有新消息会发出简短提示音。",
+    "mute": "勿扰",
+    "muteHint": "暂时停止附近新求助的通知。",
+    "mutedUntil": "通知已暂停至 {{time}}",
+    "muteOff": "关闭",
+    "muteFor": {
+      "1h": "1 小时",
+      "3h": "3 小时",
+      "morning": "直到早上",
+      "24h": "24 小时"
+    },
+    "locationAuto": "每次打开应用时，用于通知的位置会自动更新。",
+    "locationAutoDenied": "浏览器已阻止定位——请在网站设置中允许，以接收附近的求助。",
+    "changePassword": "修改密码",
+    "setPassword": "设置密码",
+    "currentPassword": "当前密码",
+    "newPassword": "新密码",
+    "passwordChanged": "密码已修改",
+    "passwordOtherDevices": "其他设备需要重新登录。"
   },
   "report": {
     "title": "举报",
@@ -518,7 +591,17 @@
       "FREE": "免费"
     },
     "agreed": "已商定：{{terms}}",
-    "note": "平台不处理付款，具体约定由你们双方决定。"
+    "note": "平台不处理付款，具体约定由你们双方决定。",
+    "counterButton": "提出你的金额",
+    "counterLabel": "你的金额（{{currency}}）",
+    "counterHint": "只能提出一次，之后由帮手接受或拒绝。",
+    "counterSend": "发送提议",
+    "counterSent": "你提出了 {{amount}}，等待回复",
+    "authorCounter": "发布者提出 {{amount}}",
+    "lastStep": "这是最后的提议：接受或拒绝。",
+    "acceptCounter": "接受",
+    "declineCounter": "拒绝",
+    "agreedToast": "谈妥了！你已被选为帮手。"
   },
   "share": {
     "button": "分享",
@@ -565,14 +648,18 @@
     "howTo": "安装方法：",
     "steps": {
       "ios": [
-        "点按 Safari 底部的“分享” ⬆️",
-        "选择“添加到主屏幕”（看不到就往下滑）",
+        "点按屏幕底部或“⋯”菜单中的“分享” ⬆️",
+        "选择“添加到主屏幕”",
         "点按“添加”，Poruch 就会出现在应用中"
       ],
       "ios-other-browser": [
         "点按地址栏中的“分享” ⬆️",
         "选择“添加到主屏幕”；如果没有，请用 Safari 打开网站",
         "点按“添加”"
+      ],
+      "in-app": [
+        "这个应用用内置浏览器打开了网站，无法在这里安装",
+        "点按顶部的“⋯”或“⋮”，选择“在浏览器中打开”（Safari 或 Chrome），然后在那里安装 Poruch"
       ],
       "android": [
         "打开右上角的浏览器菜单 ⋮",
@@ -581,6 +668,31 @@
       ],
       "desktop": ["点击地址栏中的安装图标 ⊕（或菜单 ⋮ →“安装 Poruch”）", "确认安装"]
     },
+    "troubleTitle": "无法安装？",
+    "trouble": {
+      "ios": [
+        "网站必须在 Safari 应用中打开。Telegram、Instagram 等会用内置浏览器打开页面，无法安装。请用下方按钮复制网址，粘贴到 Safari 中打开。",
+        "如何确认在 Safari 中：分享菜单里有“添加书签”和“在页面上查找”。",
+        "Safari 里没有“添加到主屏幕”？把分享菜单滑到“编辑操作…”，打开该项。",
+        "请关闭 Safari 无痕浏览（地址栏为深色时）。"
+      ],
+      "ios-other-browser": [
+        "如果分享菜单里没有“添加到主屏幕”，请复制下方网址，在 Safari 中打开。",
+        "从 Telegram 或 Instagram 打开的页面是内置浏览器，无法安装。",
+        "需要 iOS 16.4 或更高版本：设置 → 通用 → 关于本机。"
+      ],
+      "in-app": ["用下方按钮复制网址，粘贴到 Safari（iPhone）或 Chrome（Android）中打开。"],
+      "android": [
+        "网站必须在 Chrome 中打开。在 Telegram、Instagram 等应用中点按 ⋮ →“在 Chrome 中打开”。",
+        "没有“安装应用”？请在 Google Play 更新 Chrome，或复制下方网址在 Chrome 中打开。"
+      ],
+      "desktop": [
+        "Chrome 和 Edge 支持安装。Mac 上的 Safari：文件 → 添加到程序坞。",
+        "Firefox 不支持安装，请用 Chrome 或 Edge 打开。"
+      ]
+    },
+    "copyLink": "复制网址",
+    "copied": "网址已复制",
     "later": "以后再说",
     "thanks": "Poruch 已安装 ❤️",
     "cardTitle": "安装应用",

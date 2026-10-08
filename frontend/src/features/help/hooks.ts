@@ -101,5 +101,13 @@ export const useRejectResponse = (id: string) =>
   useRequestMutation(id, (responseId: string) => responsesApi.reject(responseId));
 export const useWithdrawResponse = (id: string) =>
   useRequestMutation(id, (responseId: string) => responsesApi.cancel(responseId));
+export const useCounterOffer = (id: string) =>
+  useRequestMutation(id, ({ responseId, amount }: { responseId: string; amount: string }) =>
+    responsesApi.counter(responseId, amount),
+  );
+export const useAnswerCounter = (id: string) =>
+  useRequestMutation(id, ({ responseId, accept }: { responseId: string; accept: boolean }) =>
+    responsesApi.answerCounter(responseId, accept),
+  );
 export const useThankHelper = (id: string) =>
   useRequestMutation(id, (message: string) => helpRequestsApi.thankYou(id, message));

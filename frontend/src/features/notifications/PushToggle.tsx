@@ -12,7 +12,14 @@ import {
   pushSupport,
 } from "./push";
 
-export function PushToggle({ compact = false }: { compact?: boolean }) {
+/** hideWhenActive: where a separate on/off switch already exists (settings), show only the «enable» step. */
+export function PushToggle({
+  compact = false,
+  hideWhenActive = false,
+}: {
+  compact?: boolean;
+  hideWhenActive?: boolean;
+}) {
   const { t } = useTranslation();
   const support = pushSupport();
   const [active, setActive] = useState(false);
@@ -54,6 +61,7 @@ export function PushToggle({ compact = false }: { compact?: boolean }) {
   };
 
   if (active) {
+    if (hideWhenActive) return null;
     return compact ? (
       <span className="muted">✓ {t("notifications.enabled")}</span>
     ) : (

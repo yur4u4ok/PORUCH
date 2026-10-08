@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 import { PageHeader } from "@/components/layout/AppLayout";
-import { Avatar, Button, Card, EmptyState, Loader, Switch } from "@/components/ui";
+import { ApiError } from "@/api/client";
+import { Avatar, Button, Card, EmptyState, Input, Loader, Modal, Switch } from "@/components/ui";
 import { useMe } from "@/features/auth/hooks";
 import { CategoryChips, ConfirmDialog, RadiusChips } from "@/features/help/components";
+import { SelectAll } from "@/features/help/SelectAll";
+import { playChime, setSoundEnabled, soundEnabled } from "@/features/attention/sound";
 import { geolocationPermission, useGeolocation } from "@/features/location/useGeolocation";
+import { MuteNotifications } from "@/features/notifications/MuteNotifications";
 import { PushToggle } from "@/features/notifications/PushToggle";
 import {
   useBlocks,
+  useChangePassword,
   useDeactivate,
   usePreferences,
   usePublicConfig,
   useUnblockUser,
-  useUpdateMe,
   useUpdatePreferences,
 } from "@/features/profile/hooks";
 import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
@@ -24,7 +28,6 @@ import { ThemeSwitcher } from "@/features/profile/ThemeSwitcher";
 import { toast } from "@/stores/toastStore";
 import type { NotificationCategory } from "@/types/api";
 import { DEFAULT_RADII } from "@/utils/radius";
-import { emergencyVars } from "@/utils/emergency";
 
 export function SettingsPage() {
   const { t } = useTranslation();
@@ -49,19 +52,22 @@ export function SettingsPage() {
       <Card to="/support">💬 {t("support.title")}</Card>
       <Card to="/privacy">📄 {t("legal.privacy")}</Card>
       <Card to="/terms">📄 {t("legal.terms")}</Card>
-      <p className="muted" style={{ fontSize: 13 }}>
-        ⚠️ {t("settings.about", emergencyVars())}
-      </p>
     </main>
   );
 }
 
 export function NotificationSettingsPage() {
+  const [sound, setSound] = useState(soundEnabled);
   const { t } = useTranslation();
   const { data: prefs, isPending } = usePreferences();
   const { data: config } = usePublicConfig();
   const update = useUpdatePreferences();
   const { locate, status } = useGeolocation();
+  const [geoState, setGeoState] = useState<string>("granted");
+
+  useEffect(() => {
+    void geolocationPermission().then(setGeoState);
+  }, []);
 
   if (isPending || !prefs) return <Loader />;
 
@@ -72,21 +78,19 @@ export function NotificationSettingsPage() {
     update.mutate({ enabled_categories: next });
   };
 
-  const updateLocation = async () => {
+  const allowLocation = async () => {
     const position = await locate({ force: true });
-    if (position)
-      update.mutate(
-        { location: position },
-        { onSuccess: () => toast.success(t("settings.locationUpdated")) },
-      );
+    if (position) {
+      setGeoState("granted");
+      update.mutate({ location: position });
+    }
   };
 
   return (
     <main className="page stack">
       <PageHeader title={t("settings.notifications")} />
       <Card className="stack-sm">
-        <strong>{t("settings.push")}</strong>
-        <PushToggle />
+        <PushToggle hideWhenActive />
         <Switch
           label={t("settings.push")}
           checked={prefs.push_enabled}
@@ -97,6 +101,19 @@ export function NotificationSettingsPage() {
           checked={prefs.email_enabled}
           onChange={(v) => update.mutate({ email_enabled: v })}
         />
+        <Switch
+          label={t("settings.sound")}
+          description={t("settings.soundHint")}
+          checked={sound}
+          onChange={(v) => {
+            setSoundEnabled(v);
+            setSound(v);
+            if (v) playChime();
+          }}
+        />
+      </Card>
+      <Card>
+        <MuteNotifications mutedUntil={prefs.muted_until} />
       </Card>
       <Card className="stack-sm">
         <strong>{t("settings.radius")}</strong>
@@ -108,6 +125,11 @@ export function NotificationSettingsPage() {
       </Card>
       <Card className="stack-sm">
         <strong>{t("settings.categories")}</strong>
+        <SelectAll
+          all={config?.notification_categories ?? []}
+          selected={prefs.enabled_categories}
+          onChange={(next) => update.mutate({ enabled_categories: next })}
+        />
         <CategoryChips
           options={config?.notification_categories ?? []}
           selected={prefs.enabled_categories}
@@ -116,11 +138,92 @@ export function NotificationSettingsPage() {
         />
       </Card>
       <Card className="stack-sm">
-        <Button variant="secondary" onClick={updateLocation} loading={status === "locating"}>
-          📍 {t("settings.updateLocation")}
-        </Button>
+        <span className="muted" style={{ fontSize: 14 }}>
+          📍 {geoState === "denied" ? t("settings.locationAutoDenied") : t("settings.locationAuto")}
+        </span>
+        {geoState === "prompt" && (
+          <Button variant="secondary" onClick={allowLocation} loading={status === "locating"}>
+            {t("nearby.allowLocation")}
+          </Button>
+        )}
       </Card>
     </main>
+  );
+}
+
+/** Change the password (or set a first one for accounts made with Google). */
+function PasswordCard({ hasPassword }: { hasPassword: boolean }) {
+  const { t } = useTranslation();
+  const change = useChangePassword();
+  const [open, setOpen] = useState(false);
+  const [current, setCurrent] = useState("");
+  const [next, setNext] = useState("");
+  const errors = change.error instanceof ApiError ? change.error.fieldErrors() : {};
+  const close = () => {
+    setOpen(false);
+    setCurrent("");
+    setNext("");
+    change.reset();
+  };
+  const save = () =>
+    change.mutate(
+      { current_password: hasPassword ? current : undefined, new_password: next },
+      {
+        onSuccess: () => {
+          toast.success(t("settings.passwordChanged"));
+          close();
+        },
+      },
+    );
+  return (
+    <Card className="stack-sm">
+      <div className="row-between">
+        <span>🔑 {t("auth.password")}</span>
+        <Button variant="ghost" size="sm" onClick={() => setOpen(true)}>
+          {hasPassword ? t("settings.changePassword") : t("settings.setPassword")}
+        </Button>
+      </div>
+      <Modal
+        open={open}
+        onClose={close}
+        title={hasPassword ? t("settings.changePassword") : t("settings.setPassword")}
+        actions={
+          <>
+            <Button variant="ghost" onClick={close}>
+              {t("common.cancel")}
+            </Button>
+            <Button onClick={save} loading={change.isPending} disabled={next.length < 8}>
+              {t("common.save")}
+            </Button>
+          </>
+        }
+      >
+        <div className="stack">
+          {hasPassword && (
+            <Input
+              label={t("settings.currentPassword")}
+              type="password"
+              autoComplete="current-password"
+              value={current}
+              onChange={(e) => setCurrent(e.target.value)}
+              error={errors.current_password}
+            />
+          )}
+          <Input
+            label={t("settings.newPassword")}
+            type="password"
+            autoComplete="new-password"
+            hint={t("auth.passwordHint")}
+            value={next}
+            onChange={(e) => setNext(e.target.value)}
+            error={errors.new_password}
+          />
+          <p className="muted" style={{ fontSize: 13 }}>
+            {t("settings.passwordOtherDevices")}
+          </p>
+        </div>
+      </Modal>
+    </Card>
   );
 }
 
@@ -128,7 +231,6 @@ export function PrivacySettingsPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: me } = useMe();
-  const updateMe = useUpdateMe();
   const blocks = useBlocks();
   const unblock = useUnblockUser();
   const deactivate = useDeactivate();
@@ -151,24 +253,20 @@ export function PrivacySettingsPage() {
     <main className="page stack">
       <PageHeader title={t("settings.privacy")} />
       <Card className="stack-sm">
-        <Switch
-          label={t("settings.showName")}
-          checked={me.show_name}
-          onChange={(v) => updateMe.mutate({ show_name: v })}
-        />
-        <Switch
-          label={t("settings.showAvatar")}
-          checked={me.show_avatar}
-          onChange={(v) => updateMe.mutate({ show_avatar: v })}
-        />
         <div className="row-between">
-          <span>{t("settings.location")}</span>
+          <span>📍 {t("settings.location")}</span>
           <span className="muted">{geoLabel}</span>
         </div>
-        <Link to="/settings/notifications" className="muted">
-          🔔 {t("settings.notifications")} →
-        </Link>
       </Card>
+      <Card to="/settings/notifications">
+        <div className="row-between">
+          <span>🔔 {t("settings.notifications")}</span>
+          <span aria-hidden className="muted" style={{ fontSize: 22, lineHeight: 1 }}>
+            ›
+          </span>
+        </div>
+      </Card>
+      <PasswordCard hasPassword={me.has_password} />
       <Card className="stack-sm">
         <strong>{t("settings.blocked")}</strong>
         {blocks.isPending ? (

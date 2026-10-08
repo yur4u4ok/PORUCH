@@ -2,11 +2,13 @@ import clsx from "clsx";
 import {
   forwardRef,
   useId,
+  useState,
   type InputHTMLAttributes,
   type ReactNode,
   type SelectHTMLAttributes,
   type TextareaHTMLAttributes,
 } from "react";
+import { useTranslation } from "react-i18next";
 
 import styles from "./Field.module.css";
 
@@ -46,19 +48,43 @@ function FieldWrapper({ label, hint, error, id, children, counter }: FieldWrappe
 type BaseProps = { label?: ReactNode; hint?: ReactNode; error?: string };
 
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement> & BaseProps>(
-  function Input({ label, hint, error, id, className, ...rest }, ref) {
+  function Input({ label, hint, error, id, className, type, ...rest }, ref) {
+    const { t } = useTranslation();
     const autoId = useId();
     const inputId = id ?? autoId;
+    // Password fields get a show/hide toggle.
+    const [visible, setVisible] = useState(false);
+    const isPassword = type === "password";
+    const input = (
+      <input
+        ref={ref}
+        id={inputId}
+        type={isPassword && visible ? "text" : type}
+        className={clsx(styles.control, error && styles.invalid, isPassword && styles.withToggle, className)}
+        aria-invalid={!!error || undefined}
+        aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
+        {...rest}
+      />
+    );
     return (
       <FieldWrapper label={label} hint={hint} error={error} id={inputId}>
-        <input
-          ref={ref}
-          id={inputId}
-          className={clsx(styles.control, error && styles.invalid, className)}
-          aria-invalid={!!error || undefined}
-          aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
-          {...rest}
-        />
+        {isPassword ? (
+          <div className={styles.passwordWrap}>
+            {input}
+            <button
+              type="button"
+              className={styles.reveal}
+              aria-label={visible ? t("auth.hidePassword") : t("auth.showPassword")}
+              aria-pressed={visible}
+              aria-controls={inputId}
+              onClick={() => setVisible((v) => !v)}
+            >
+              {visible ? "🙈" : "👁"}
+            </button>
+          </div>
+        ) : (
+          input
+        )}
       </FieldWrapper>
     );
   },

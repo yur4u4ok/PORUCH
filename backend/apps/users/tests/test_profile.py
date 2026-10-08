@@ -12,7 +12,7 @@ def test_me_get_and_patch(auth_client):
     response = auth_client.patch(reverse("me"), {"display_name": "  Остап ", "show_name": False}, format="json")
     assert response.status_code == 200
     assert response.data["display_name"] == "Остап"
-    assert response.data["show_name"] is False
+    assert response.data["show_name"] is True  # names are always shown now
     assert "email" in response.data
 
 

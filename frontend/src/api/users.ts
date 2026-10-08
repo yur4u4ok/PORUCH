@@ -1,4 +1,5 @@
 import type {
+  ISODateTime,
   Availability,
   Block,
   Capability,
@@ -25,6 +26,8 @@ export interface MeUpdate {
   show_avatar?: boolean;
   onboarding_completed?: boolean;
   custom_items?: string[];
+  phone?: string;
+  phone_region?: string;
 }
 
 export interface PreferencesUpdate {
@@ -32,6 +35,7 @@ export interface PreferencesUpdate {
   enabled_categories?: NotificationCategory[];
   push_enabled?: boolean;
   email_enabled?: boolean;
+  muted_until?: ISODateTime | null;
   location?: GeoPosition;
 }
 
@@ -47,6 +51,9 @@ export const usersApi = {
   me: () => request<Me>("/me/"),
   updateMe: (input: MeUpdate) => http.patch<Me>("/me/", input),
   deactivate: () => http.post<void>("/me/deactivate/"),
+  changePassword: (input: { current_password?: string; new_password: string }) =>
+    http.post<Me>("/me/password/", input),
+  changeEmail: (input: { email: string; password?: string }) => http.post<Me>("/me/email/", input),
   capabilities: () => http.get<Capability[]>("/capabilities/"),
   myCapabilities: () => http.get<Capability[]>("/me/capabilities/"),
   setMyCapabilities: (codes: string[]) => http.put<Capability[]>("/me/capabilities/", { codes }),

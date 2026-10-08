@@ -105,7 +105,7 @@ def respond(
         help_request.author,
         NotificationType.HELP_RESPONSE_RECEIVED,
         title=_("🤝 Хтось може допомогти"),
-        body=_("{name} готовий(а) допомогти з вашим запитом").format(name=_display_name(helper))
+        body=_("{name} готовий(-а) допомогти з вашим запитом").format(name=_display_name(helper))
         + (f" · {offer_summary(help_request, offer_type, offered_amount)}" if offer_type != OfferType.ACCEPT else ""),
         url=f"/help/{help_request.id}",
         help_request=help_request,
@@ -115,80 +115,67 @@ def respond(
     return response, True
 
 
-@transaction.atomic
-def select_helper(author: User, help_request_id, response_id):
-    """Accept a response. Row locks guarantee only one helper is ever selected.
+def accepted_responses(help_request: HelpRequest):
+    return HelpResponse.objects.filter(help_request=help_request, status=ResponseStatus.ACCEPTED)
 
-    Idempotent: repeating the call for the already-selected response returns the same state.
+
+def _agreed_terms(help_request: HelpRequest, response: HelpResponse) -> tuple[str | None, object]:
+    """Terms locked in for this helper: author's terms, an agreed counter amount, or free help."""
+    if help_request.reward_type != RewardType.WILLING:
+        return None, None
+    if response.offer_type == OfferType.FREE:
+        return OfferType.FREE, None
+    if response.offer_type == OfferType.COUNTER:
+        return OfferType.COUNTER, response.offered_amount
+    return OfferType.ACCEPT, help_request.reward_amount
+
+
+def _accept_response(help_request: HelpRequest, response: HelpResponse, *, agreed_type, agreed_amount):
+    """Mark a helper as chosen; close the request to others once enough helpers are chosen.
+
+    Caller holds row locks on the request and the response.
     """
-    from apps.conversations.services.conversations import get_or_create_for_help_request, post_system_message
-
-    help_request = HelpRequest.objects.select_for_update().filter(id=help_request_id).first()
-    if help_request is None:
-        raise NotFound()
-    if help_request.author_id != author.pk:
-        raise Forbidden(_("Тільки автор може обрати помічника."), code="NOT_AUTHOR")
-    response = (
-        HelpResponse.objects.select_for_update()
-        .select_related("helper")
-        .filter(id=response_id, help_request=help_request)
-        .first()
+    from apps.conversations.services.conversations import (
+        get_or_create_for_help_request,
+        post_offer_message,
+        post_system_message,
     )
-    if response is None:
-        raise NotFound()
-
-    if help_request.status == HelpRequestStatus.IN_PROGRESS and help_request.selected_helper_id == response.helper_id:
-        conversation = get_or_create_for_help_request(help_request, response.helper)
-        return help_request, response, conversation
-    if help_request.status != HelpRequestStatus.ACTIVE:
-        raise InvalidState(_("Помічника вже обрано або запит закрито."), code="REQUEST_NOT_ACTIVE")
-    if response.status != ResponseStatus.PENDING:
-        raise InvalidState(_("Ця пропозиція вже неактивна."), code="RESPONSE_NOT_PENDING")
-    if not response.helper.is_active or is_blocked_between(author, response.helper):
-        raise InvalidState(_("Користувач недоступний."), code="USER_UNAVAILABLE")
 
     now = timezone.now()
-    help_request.status = HelpRequestStatus.IN_PROGRESS
-    help_request.selected_helper = response.helper
-    help_request.in_progress_at = now
-    # Lock in the agreed terms: author's terms, the helper's counter-offer, or free help.
-    help_request.agreed_offer_type = response.offer_type
-    help_request.agreed_amount = (
-        response.offered_amount
-        if response.offer_type == OfferType.COUNTER
-        else (help_request.reward_amount if response.offer_type == OfferType.ACCEPT else None)
-    )
-    help_request.save(
-        update_fields=[
-            "status",
-            "selected_helper",
-            "in_progress_at",
-            "agreed_offer_type",
-            "agreed_amount",
-            "updated_at",
-        ]
-    )
-
     response.status = ResponseStatus.ACCEPTED
-    response.save(update_fields=["status", "updated_at"])
+    response.agreed_offer_type = agreed_type
+    response.agreed_amount = agreed_amount
+    response.save(update_fields=["status", "agreed_offer_type", "agreed_amount", "updated_at"])
 
-    rejected = list(
-        HelpResponse.objects.filter(help_request=help_request, status=ResponseStatus.PENDING)
-        .exclude(pk=response.pk)
-        .select_related("helper")
-    )
-    HelpResponse.objects.filter(pk__in=[r.pk for r in rejected]).update(status=ResponseStatus.REJECTED, updated_at=now)
+    fields = ["updated_at"]
+    if help_request.selected_helper_id is None:  # the first chosen helper (also the request-level terms)
+        help_request.selected_helper = response.helper
+        help_request.agreed_offer_type = agreed_type
+        help_request.agreed_amount = agreed_amount
+        fields += ["selected_helper", "agreed_offer_type", "agreed_amount"]
+    rejected: list[HelpResponse] = []
+    if accepted_responses(help_request).count() >= help_request.helpers_needed:
+        help_request.status = HelpRequestStatus.IN_PROGRESS
+        help_request.in_progress_at = now
+        fields += ["status", "in_progress_at"]
+        rejected = list(
+            HelpResponse.objects.filter(help_request=help_request, status=ResponseStatus.PENDING).select_related(
+                "helper"
+            )
+        )
+        HelpResponse.objects.filter(pk__in=[r.pk for r in rejected]).update(
+            status=ResponseStatus.REJECTED, updated_at=now
+        )
+    help_request.save(update_fields=fields)
 
     conversation = get_or_create_for_help_request(help_request, response.helper)
+    post_offer_message(conversation, response.helper, response.message, response.created_at)
     post_system_message(conversation, _("Помічника обрано. Домовтеся про деталі в цьому чаті."))
     if help_request.reward_type == RewardType.WILLING:
         post_system_message(
             conversation,
-            _("Домовленість про подяку: {terms}").format(
-                terms=offer_summary(help_request, response.offer_type, response.offered_amount)
-            ),
+            _("Домовленість про подяку: {terms}").format(terms=offer_summary(help_request, agreed_type, agreed_amount)),
         )
-
     notify(
         response.helper,
         NotificationType.HELP_RESPONSE_ACCEPTED,
@@ -203,20 +190,122 @@ def select_helper(author: User, help_request_id, response_id):
             other.helper,
             NotificationType.HELP_RESPONSE_REJECTED,
             title=_("Дякуємо за готовність допомогти"),
-            body=_("Автор запиту вже знайшов помічника"),
+            body=_("Автор запиту вже знайшов помічників"),
             url=f"/help/{help_request.id}",
             help_request=help_request,
             push=False,
         )
     analytics.track(
-        user_id=author.id,
+        user_id=help_request.author_id,
         event="help_response_accepted",
         properties={
             "help_request_id": help_request.id,
             "seconds_to_help": int((now - help_request.created_at).total_seconds()),
         },
     )
+    return conversation
+
+
+def _lock_request_and_response(help_request_id, response_id) -> tuple[HelpRequest, HelpResponse]:
+    help_request = HelpRequest.objects.select_for_update().filter(id=help_request_id).first()
+    if help_request is None:
+        raise NotFound()
+    response = (
+        HelpResponse.objects.select_for_update()
+        .select_related("helper")
+        .filter(id=response_id, help_request=help_request)
+        .first()
+    )
+    if response is None:
+        raise NotFound()
+    return help_request, response
+
+
+@transaction.atomic
+def select_helper(author: User, help_request_id, response_id):
+    """Choose a helper. Row locks keep the number of chosen helpers within helpers_needed.
+
+    Idempotent: choosing an already chosen helper returns the same state.
+    """
+    from apps.conversations.services.conversations import get_or_create_for_help_request
+
+    help_request, response = _lock_request_and_response(help_request_id, response_id)
+    if help_request.author_id != author.pk:
+        raise Forbidden(_("Тільки автор може обрати помічника."), code="NOT_AUTHOR")
+    if response.status == ResponseStatus.ACCEPTED:
+        return help_request, response, get_or_create_for_help_request(help_request, response.helper)
+    if help_request.status != HelpRequestStatus.ACTIVE:
+        raise InvalidState(_("Помічників вже обрано або запит закрито."), code="REQUEST_NOT_ACTIVE")
+    if response.status != ResponseStatus.PENDING:
+        raise InvalidState(_("Ця пропозиція вже неактивна."), code="RESPONSE_NOT_PENDING")
+    if not response.helper.is_active or is_blocked_between(author, response.helper):
+        raise InvalidState(_("Користувач недоступний."), code="USER_UNAVAILABLE")
+    agreed_type, agreed_amount = _agreed_terms(help_request, response)
+    conversation = _accept_response(help_request, response, agreed_type=agreed_type, agreed_amount=agreed_amount)
     return help_request, response, conversation
+
+
+@transaction.atomic
+def counter_offer(author: User, response_id, amount) -> HelpResponse:
+    """The author answers a helper's different amount with one amount of their own (only once)."""
+    response = (
+        HelpResponse.objects.select_for_update().select_related("help_request", "helper").filter(id=response_id).first()
+    )
+    if response is None:
+        raise NotFound()
+    help_request = response.help_request
+    if help_request.author_id != author.pk:
+        raise Forbidden(_("Тільки автор може запропонувати суму."), code="NOT_AUTHOR")
+    if response.status != ResponseStatus.PENDING or help_request.status != HelpRequestStatus.ACTIVE:
+        raise InvalidState(_("Ця пропозиція вже неактивна."), code="RESPONSE_NOT_PENDING")
+    if response.offer_type != OfferType.COUNTER:
+        raise InvalidState(_("Помічник не пропонував іншу суму."), code="NO_COUNTER_OFFER")
+    if response.author_counter_amount is not None:
+        raise InvalidState(_("Ви вже запропонували свою суму."), code="COUNTER_ALREADY_SENT")
+    if amount is None or amount <= 0:
+        raise ValidationFailed(details={"amount": [_("Вкажіть суму, яку пропонуєте.")]})
+    response.author_counter_amount = amount
+    response.save(update_fields=["author_counter_amount", "updated_at"])
+    notify(
+        response.helper,
+        NotificationType.HELP_RESPONSE_RECEIVED,
+        title=_("💬 Автор пропонує іншу суму"),
+        body=_("Автор запиту пропонує {amount}. Погодитися чи відмовитися?").format(
+            amount=format_money(amount, help_request.reward_currency)
+        ),
+        url=f"/help/{help_request.id}",
+        help_request=help_request,
+    )
+    return response
+
+
+@transaction.atomic
+def answer_counter_offer(helper: User, response_id, accept: bool):
+    """The helper accepts (and is chosen at the author's amount) or declines. No further bargaining."""
+    response = HelpResponse.objects.filter(id=response_id).first()
+    if response is None or response.helper_id != helper.pk:
+        raise NotFound()
+    help_request, response = _lock_request_and_response(response.help_request_id, response.pk)
+    if response.author_counter_amount is None:
+        raise InvalidState(_("Автор не пропонував іншої суми."), code="NO_COUNTER_OFFER")
+    if response.status != ResponseStatus.PENDING or help_request.status != HelpRequestStatus.ACTIVE:
+        raise InvalidState(_("Ця пропозиція вже неактивна."), code="RESPONSE_NOT_PENDING")
+    if not accept:
+        response.status = ResponseStatus.CANCELLED
+        response.save(update_fields=["status", "updated_at"])
+        notify(
+            help_request.author,
+            NotificationType.HELP_RESPONSE_RECEIVED,
+            title=_("Помічник не погодився на суму"),
+            body=_("{name} відмовився(-лась) від вашої пропозиції").format(name=_display_name(helper)),
+            url=f"/help/{help_request.id}",
+            help_request=help_request,
+        )
+        return response, None
+    conversation = _accept_response(
+        help_request, response, agreed_type=OfferType.COUNTER, agreed_amount=response.author_counter_amount
+    )
+    return response, conversation
 
 
 @transaction.atomic
@@ -260,26 +349,24 @@ def cancel_response(helper: User, response_id) -> HelpResponse:
         raise InvalidState(_("Ця пропозиція вже неактивна."), code="RESPONSE_NOT_PENDING")
     help_request = HelpRequest.objects.select_for_update().get(pk=response.help_request_id)
     was_accepted = response.status == ResponseStatus.ACCEPTED
-    if was_accepted and help_request.status != HelpRequestStatus.IN_PROGRESS:
+    if was_accepted and help_request.status not in (HelpRequestStatus.ACTIVE, HelpRequestStatus.IN_PROGRESS):
         raise InvalidState(_("Запит вже завершено."), code="REQUEST_NOT_IN_PROGRESS")
     response.status = ResponseStatus.CANCELLED
     response.save(update_fields=["status", "updated_at"])
     if was_accepted:
-        help_request.status = HelpRequestStatus.ACTIVE
-        help_request.selected_helper = None
-        help_request.in_progress_at = None
-        help_request.agreed_offer_type = None
-        help_request.agreed_amount = None
-        help_request.save(
-            update_fields=[
-                "status",
-                "selected_helper",
-                "in_progress_at",
-                "agreed_offer_type",
-                "agreed_amount",
-                "updated_at",
-            ]
-        )
+        fields = ["updated_at"]
+        if help_request.status == HelpRequestStatus.IN_PROGRESS:
+            # A place is free again: the request is visible to people nearby.
+            help_request.status = HelpRequestStatus.ACTIVE
+            help_request.in_progress_at = None
+            fields += ["status", "in_progress_at"]
+        if help_request.selected_helper_id == helper.pk:
+            remaining = accepted_responses(help_request).order_by("updated_at").first()
+            help_request.selected_helper_id = remaining.helper_id if remaining else None
+            help_request.agreed_offer_type = remaining.agreed_offer_type if remaining else None
+            help_request.agreed_amount = remaining.agreed_amount if remaining else None
+            fields += ["selected_helper", "agreed_offer_type", "agreed_amount"]
+        help_request.save(update_fields=fields)
         close_conversations(help_request, helper)
         notify(
             help_request.author,

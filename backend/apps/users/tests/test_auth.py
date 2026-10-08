@@ -3,6 +3,7 @@ from unittest import mock
 from urllib.parse import unquote
 
 import pytest
+from django.conf import settings
 from django.core import mail
 from django.urls import reverse
 from rest_framework.test import APIClient
@@ -19,8 +20,26 @@ PASSWORD = "Very-strong-Pa55"
 
 def register(client, email="new@example.com", password=PASSWORD):
     return client.post(
-        reverse("auth-register"), {"email": email, "password": password, "display_name": "Остап"}, format="json"
+        reverse("auth-register"),
+        {
+            "email": email,
+            "password": password,
+            "display_name": "Остап",
+            "phone": "067 123 45 67",
+            "age_confirmed": True,
+        },
+        format="json",
     )
+
+
+def test_register_requires_age_confirmation(api_client):
+    response = api_client.post(
+        reverse("auth-register"),
+        {"email": "young@example.com", "password": PASSWORD, "display_name": "Юний", "age_confirmed": False},
+        format="json",
+    )
+    assert response.status_code == 400 and "age_confirmed" in response.data["details"]
+    assert not User.objects.filter(email="young@example.com").exists()
 
 
 def test_register_creates_user_profile_preferences_and_sends_email(api_client):
@@ -149,6 +168,18 @@ def test_google_auth_creates_verified_user(api_client, settings):
     assert SocialAccount.objects.filter(user=user, provider="google", uid="g-123").count() == 1
 
 
+def test_old_google_account_stops_working_after_email_change(api_client, settings):
+    settings.GOOGLE_CLIENT_ID = "client-id"
+    claims = {"sub": "g-old", "email": "old@example.com", "email_verified": True, "given_name": "Галя"}
+    with mock.patch("apps.users.services.accounts._verify_google_credential", return_value=claims):
+        assert api_client.post(reverse("auth-google"), {"credential": "x"}, format="json").status_code == 201
+        User.objects.filter(email="old@example.com").update(email="new@example.com")
+        response = api_client.post(reverse("auth-google"), {"credential": "x"}, format="json")
+    assert response.status_code == 400
+    assert response.data["code"] == "GOOGLE_EMAIL_CHANGED"
+    assert User.objects.count() == 1
+
+
 def test_email_verification_token_for_other_email_is_invalid(user, api_client):
     token = make_email_verification_token(user)
     user.email = "changed@example.com"
@@ -234,3 +265,74 @@ def settings_cookie_names(response):
     from django.conf import settings
 
     return {name for name in response.cookies if name in (settings.AUTH_COOKIE_ACCESS, settings.AUTH_COOKIE_REFRESH)}
+
+
+class TestContacts:
+    def test_phone_is_normalized_and_encrypted_at_rest(self, api_client):
+        response = register(api_client, email="phone@example.com")
+        assert response.data["phone"] == "+380671234567"
+        user = User.objects.get(email="phone@example.com")
+        assert "380671234567" not in user.phone_encrypted  # not stored in clear text
+        assert user.phone_hash
+
+    def test_invalid_phone_rejected(self, api_client):
+        response = api_client.post(
+            reverse("auth-register"),
+            {"email": "x@example.com", "password": PASSWORD, "display_name": "X", "phone": "12", "age_confirmed": True},
+            format="json",
+        )
+        assert response.status_code == 400 and "phone" in response.data["details"]
+
+    def test_change_phone_in_profile(self, auth_client):
+        response = auth_client.patch(reverse("me"), {"phone": "+48 512 345 678"}, format="json")
+        assert response.status_code == 200 and response.data["phone"] == "+48512345678"
+        response = auth_client.patch(reverse("me"), {"phone": ""}, format="json")
+        assert response.data["phone"] is None
+
+    def test_email_changes_only_after_confirming_new_inbox(self, auth_client, user):
+        user.set_password(PASSWORD)
+        user.save()
+        response = auth_client.post(
+            reverse("me-email"), {"email": "wrong@example.com", "password": "nope"}, format="json"
+        )
+        assert response.status_code == 400
+        response = auth_client.post(
+            reverse("me-email"), {"email": "New@Example.com", "password": PASSWORD}, format="json"
+        )
+        assert response.status_code == 200 and response.data["pending_email"] == "new@example.com"
+        user.refresh_from_db()
+        assert user.email != "new@example.com"  # not yet
+        assert mail.outbox[-1].to == ["new@example.com"]
+        token = unquote(re.search(r"token=([^\s\"&]+)", mail.outbox[-1].body).group(1))
+        api_client = APIClient()
+        assert api_client.post(reverse("auth-verify-email"), {"token": token}, format="json").status_code == 200
+        user.refresh_from_db()
+        assert user.email == "new@example.com" and user.pending_email == ""
+
+    def test_email_change_unlinks_old_google_account(self, auth_client, user):
+        user.set_password(PASSWORD)
+        user.save()
+        SocialAccount.objects.create(user=user, provider="google", uid="old-google")
+        auth_client.post(reverse("me-email"), {"email": "fresh@example.com", "password": PASSWORD}, format="json")
+        token = unquote(re.search(r"token=([^\s\"&]+)", mail.outbox[-1].body).group(1))
+        APIClient().post(reverse("auth-verify-email"), {"token": token}, format="json")
+        assert not SocialAccount.objects.filter(user=user).exists()
+
+
+class TestPasswordChange:
+    def test_requires_current_password_and_keeps_this_session(self, auth_client, user):
+        user.set_password(PASSWORD)
+        user.save()
+        url = reverse("me-password")
+        bad = auth_client.post(url, {"current_password": "nope", "new_password": "Another-strong-Pa55"}, format="json")
+        assert bad.status_code == 400 and "current_password" in bad.data["details"]
+        ok = auth_client.post(url, {"current_password": PASSWORD, "new_password": "Another-strong-Pa55"}, format="json")
+        assert ok.status_code == 200 and settings.AUTH_COOKIE_ACCESS in ok.cookies
+        user.refresh_from_db()
+        assert user.check_password("Another-strong-Pa55")
+
+    def test_google_account_sets_first_password(self, auth_client, user):
+        user.set_unusable_password()
+        user.save()
+        ok = auth_client.post(reverse("me-password"), {"new_password": "Another-strong-Pa55"}, format="json")
+        assert ok.status_code == 200 and ok.data["has_password"] is True

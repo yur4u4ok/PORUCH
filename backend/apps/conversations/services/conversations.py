@@ -10,7 +10,7 @@ from apps.conversations.models import Conversation, ConversationParticipant, Mes
 from apps.moderation.selectors import is_blocked_between
 from apps.users.models import User
 from common import analytics
-from common.exceptions import Forbidden, InvalidState, NotFound
+from common.exceptions import Forbidden, InvalidState, NotFound, ValidationFailed
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +52,21 @@ def post_system_message(conversation: Conversation, text: str) -> Message:
     return message
 
 
+def post_offer_message(conversation: Conversation, helper: User, text: str, sent_at) -> Message | None:
+    """The note a helper wrote when offering help opens the chat, dated when it was written.
+
+    The author has already read it on the request page, so it does not count as unread.
+    Added once per chat (not again if the helper is chosen a second time).
+    """
+    text = (text or "").strip()
+    if not text or conversation.messages.filter(sender=helper).exists():
+        return None
+    message = Message.objects.create(conversation=conversation, sender=helper, text=text, read_at=timezone.now())
+    Message.objects.filter(pk=message.pk).update(created_at=sent_at)
+    message.created_at = sent_at
+    return message
+
+
 def conversations_for(user: User) -> QuerySet[Conversation]:
     return (
         Conversation.objects.filter(participants__user=user)
@@ -80,7 +95,8 @@ def attach_last_messages(conversations: list[Conversation]) -> None:
     ids = [c.id for c in conversations]
     latest = (
         Message.objects.filter(conversation_id__in=ids)
-        .select_related("attachment")
+        .select_related("attachment", "reply_to")
+        .prefetch_related("reactions")
         .order_by("conversation_id", "-created_at")
         .distinct("conversation_id")
     )
@@ -113,7 +129,7 @@ def _other_participant_id(conversation: Conversation, user: User):
 
 @transaction.atomic
 def send_message(
-    user: User, conversation_id, *, text: str = "", attachment_id=None, client_id=None
+    user: User, conversation_id, *, text: str = "", attachment_id=None, client_id=None, reply_to_id=None
 ) -> tuple[Message, bool]:
     """Returns (message, created). Idempotent on (sender, client_id)."""
     conversation = get_conversation_for(user, conversation_id)
@@ -135,6 +151,8 @@ def send_message(
         from apps.media.services.media import get_ready_media_for_owner
 
         attachment = get_ready_media_for_owner(user, attachment_id, kind="CHAT")
+    # Only a message from this same chat can be answered.
+    reply_to = Message.objects.filter(pk=reply_to_id, conversation=conversation).first() if reply_to_id else None
     try:
         with transaction.atomic():
             message = Message.objects.create(
@@ -143,6 +161,7 @@ def send_message(
                 text=(text or "").strip(),
                 message_type=Message.Type.IMAGE if attachment else Message.Type.TEXT,
                 attachment=attachment,
+                reply_to=reply_to,
                 client_id=client_id,
             )
     except IntegrityError:
@@ -159,7 +178,7 @@ def send_message(
             other,
             NotificationType.NEW_MESSAGE,
             title=_("💬 Нове повідомлення"),
-            body=_("{name} надіслав(ла) вам повідомлення").format(name=name),
+            body=_("{name} надіслав(-ла) вам повідомлення").format(name=name),
             url=f"/chats/{conversation.id}",
             data={"conversation_id": str(conversation.id)},
         )
@@ -183,8 +202,44 @@ def mark_read(user: User, conversation_id, up_to=None) -> int:
             conversation.id, "message.read", {"reader_id": str(user.pk), "message_ids": ids, "read_at": now.isoformat()}
         )
     ConversationParticipant.objects.filter(conversation=conversation, user=user).update(last_read_at=now)
+    # Opening the chat also clears its unread «new message» notifications.
+    from apps.notifications.models import Notification
+
+    Notification.objects.filter(user=user, read_at__isnull=True).filter(
+        Q(data__conversation_id=str(conversation.id)) | Q(url=f"/chats/{conversation.id}")
+    ).update(read_at=now)
     return len(ids)
 
 
 def can_access(user: User, conversation_id) -> bool:
     return ConversationParticipant.objects.filter(conversation_id=conversation_id, user=user).exists()
+
+
+REACTIONS = {"👍", "❤️", "😂", "😮", "🙏", "👌"}
+
+
+def react(user: User, conversation_id, message_id, emoji: str) -> Message:
+    """Toggle the user's reaction: same emoji removes it, another replaces it. Everyone in the chat sees it live."""
+    from apps.conversations.models import MessageReaction
+
+    conversation = get_conversation_for(user, conversation_id)
+    message = Message.objects.filter(pk=message_id, conversation=conversation).first()
+    if message is None or message.message_type == Message.Type.SYSTEM:
+        raise NotFound(_("Повідомлення не знайдено."))
+    if emoji not in REACTIONS:
+        raise ValidationFailed(details={"emoji": [_("Невідома реакція.")]})
+    existing = MessageReaction.objects.filter(message=message, user=user).first()
+    if existing and existing.emoji == emoji:
+        existing.delete()
+    elif existing:
+        existing.emoji = emoji
+        existing.save(update_fields=["emoji"])
+    else:
+        MessageReaction.objects.create(message=message, user=user, emoji=emoji)
+    message = _with_relations().get(pk=message.pk)
+    realtime.broadcast(conversation.id, "message.updated", _serialize(message))
+    return message
+
+
+def _with_relations():
+    return Message.objects.select_related("attachment", "reply_to").prefetch_related("reactions")

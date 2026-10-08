@@ -3,7 +3,8 @@
     "slogan": "Yakınındaki insanlardan yardım",
     "offline": "İnternet bağlantısı yok. Bazı özellikler geçici olarak kullanılamıyor.",
     "updateReady": "Uygulamanın yeni bir sürümü var",
-    "reload": "Güncelle"
+    "reload": "Güncelle",
+    "updateHint": "Uygulamanın yeni bir sürümü olabilir. Sayfayı yenile."
   },
   "nav": {
     "home": "Ana sayfa",
@@ -36,7 +37,12 @@
     "anonymous": "Komşu",
     "seeAll": "Tümü",
     "fromYou": "{{distance}} uzakta",
-    "since": "{{year}} yılından beri üye"
+    "since": "{{year}} yılından beri üye",
+    "selectAll": "Tümünü seç",
+    "selectNone": "Tümünü kaldır",
+    "less": "Azalt",
+    "more": "Artır",
+    "previous": "Önceki"
   },
   "time": {
     "justNow": "az önce",
@@ -50,10 +56,11 @@
     "hours_one": "{{count}} saat",
     "hours_other": "{{count}} saat",
     "minutes_one": "{{count}} dakika",
-    "minutes_other": "{{count}} dakika"
+    "minutes_other": "{{count}} dakika",
+    "days_one": "{{count}} gün",
+    "days_other": "{{count}} gün"
   },
   "landing": {
-    "title": "Yardım hemen yanında.",
     "needHelpTitle": "Yardıma mı ihtiyacın var?",
     "needHelpText": "Yakınındaki insanlara haber ver.",
     "canHelpTitle": "Yardım edebilir misin?",
@@ -66,7 +73,7 @@
     "step2": "Yakındaki insanlara bildirim gider",
     "step3": "Biri yanıt verir, ayrıntıları sohbette konuşursunuz",
     "step4": "Yardım aldıktan sonra teşekkür et ❤️",
-    "notMarketplace": "Bu bir hizmet pazarı değil. Komşular komşulara yardım eder; zorunlu ödeme ya da komisyon yok.",
+    "notMarketplace": "Bir hizmet platformu değil, bir dayanışma topluluğu. Yakınındakilere zorunlu ödeme ve komisyon olmadan yardım et.",
     "trustTitle": "Neden güvenli",
     "trust": [
       "Tam adresin gizli kalır. Onu yalnızca yardım etmeyi kabul edenler görür.",
@@ -110,14 +117,24 @@
     "terms": "Kayıt olarak güvenli ve saygılı bir şekilde yardım etmeyi kabul edersin.",
     "googleFailed": "Google ile giriş yapılamadı. Tekrar dene.",
     "googleInactive": "Bu hesap devre dışı bırakıldı.",
-    "checkSpam": "E-postayı göremiyor musun? Bir dakika bekle ve Spam ile Promosyonlar klasörlerine bak. Oradaysa “Spam değil” olarak işaretle, sonrakiler gelen kutuna düşsün."
+    "checkSpam": "E-postayı göremiyor musun? Bir dakika bekle ve Spam ile Promosyonlar klasörlerine bak. Oradaysa “Spam değil” olarak işaretle, sonrakiler gelen kutuna düşsün.",
+    "ageConfirm": "En az 16 yaşındayım",
+    "ageRequired": "En az 16 yaşında olduğunu onayla",
+    "ageForGoogle": "Google ile devam etmek için önce yukarıda yaşını onayla.",
+    "logoutTitle": "Çıkış yapılsın mı?",
+    "logoutText": "Poruch'u kullanmak için yeniden giriş yapmanız gerekecek.",
+    "showPassword": "Şifreyi göster",
+    "hidePassword": "Şifreyi gizle",
+    "phone": "Telefon numarası",
+    "phoneHint": "Yalnızca yardım konusunda anlaştığınız kişiler görür."
   },
   "validation": {
     "required": "Zorunlu alan",
     "email": "Geçersiz e-posta",
     "minPassword": "En az 8 karakter",
     "max": "En fazla {{max}} karakter",
-    "amount": "Geçersiz tutar"
+    "amount": "Geçersiz tutar",
+    "phone": "Geçersiz telefon numarası"
   },
   "onboarding": {
     "step": "Adım {{current}} / {{total}}",
@@ -130,7 +147,8 @@
     "notificationsAllow": "Bildirimleri aç",
     "notificationsGranted": "Bildirimler açık ✓",
     "categoriesTitle": "Neye yardım edebilirsin?",
-    "categoriesText": "Sana yalnızca uygun istekleri göndeririz. Bunu ayarlardan değiştirebilirsin."
+    "categoriesText": "Sana yalnızca uygun istekleri göndeririz. Bunu ayarlardan değiştirebilirsin.",
+    "changeLater": "Bunu daha sonra ayarlardan değiştirebilirsin."
   },
   "home": {
     "needHelp": "Yardıma ihtiyacım var",
@@ -145,7 +163,14 @@
     "myRequestsHint": "Yayınladıkların",
     "imHelping": "Yardım ediyorum",
     "imHelpingHint": "Yardım için seçildiğin, başkalarına ait istekler",
-    "nearbyPreviewHint": "Yakında birinin yardıma ihtiyacı var — belki seninkine"
+    "nearbyPreviewHint": "Yakında birinin yardıma ihtiyacı var — belki seninkine",
+    "noRequests": "Henüz aktif talep yok.",
+    "createOne": "Bir talep oluştur →",
+    "noHelping": "Henüz kimseye yardım etmiyorsun.",
+    "findSomeone": "Kimin yardıma ihtiyacı var, gör →",
+    "hello": "Merhaba, {{name}}!",
+    "ask": "Yardım iste",
+    "orPick": "Ya da konuyu hemen seç:"
   },
   "availability": {
     "title": "Şu an yardım edebilirim",
@@ -158,7 +183,7 @@
     "disable": "Kapat",
     "needLocation": "Konum gerekli",
     "explainTitle": "Bu mod ne yapar",
-    "explain": "Açık olduğu sürece (en fazla 2 saat), genelde başka bir yerde olsan bile, şu anki konumunun yakınındaki insanlardan gelen istekleri seçtiğin yarıçap ve kategorilerde sana göndeririz. Kapattığında ya da süre dolduğunda olağan ayarlarına dönersin."
+    "explain": "Açık olduğu sürece (seçtiğin süre boyunca), genelde başka bir yerde olsan bile, şu anki konumunun yakınındaki insanlardan gelen istekleri seçtiğin yarıçap ve kategorilerde sana göndeririz. Kapattığında ya da süre dolduğunda olağan ayarlarına dönersin."
   },
   "categories": {
     "AUTO": "Araba",
@@ -294,7 +319,11 @@
     "neededAtHint": "15 dakika ile 30 gün arası önceden",
     "neededAtRequired": "Tarih ve saati seç",
     "neededAtTooSoon": "Şu andan en az 15 dakika sonrasını seç",
-    "neededAtTime": "Saat"
+    "neededAtTime": "Saat",
+    "helpersNeeded": "Kaç kişi gerekiyor",
+    "helpersNeededHint": "Bu kadar kişi yardım etmeyi kabul edince istek diğerlerine kapanır.",
+    "activeHours": "İstek ne kadar süre aktif kalsın",
+    "activeHoursHint": "Sonra otomatik olarak kapanır."
   },
   "nearby": {
     "title": "Yakında yardım",
@@ -348,7 +377,12 @@
     "blocked": "Kullanıcı engellendi",
     "helpers_one": "{{count}} yanıt",
     "helpers_other": "{{count}} yanıt",
-    "rewardInfo": "Teşekkür"
+    "rewardInfo": "Teşekkür",
+    "helpersProgress": "{{needed}} kişiden {{count}} seçildi",
+    "selectedHelpers": "Yardım edenler",
+    "peopleStillNeeded_one": "{{count}} kişi daha gerekiyor",
+    "peopleStillNeeded_other": "{{count}} kişi daha gerekiyor",
+    "showOnMap": "Talebe dön"
   },
   "thanks": {
     "received": "Yardım alındı ❤️",
@@ -376,7 +410,14 @@
     "closed": "Sohbet kapandı",
     "image": "📷 Fotoğraf",
     "aboutRequest": "İstek: {{title}}",
-    "loadOlder": "Önceki mesajlar"
+    "loadOlder": "Önceki mesajlar",
+    "request": "İstek",
+    "you": "Sen",
+    "reply": "Yanıtla",
+    "replyingTo": "{{name}} adlı kişiye yanıt",
+    "actions": "Mesaj işlemleri",
+    "typingName": "{{name}} yazıyor…",
+    "lastSeen": "Son görülme {{when}}"
   },
   "notifications": {
     "title": "Bildirimler",
@@ -414,7 +455,21 @@
     "customItemsLabel": "Başka neyin var?",
     "customItemsPlaceholder": "Örneğin: bisiklet, çadır",
     "customItemsAdd": "Ekle",
-    "customItemsHint": "En fazla 10 eşya, her biri 40 karakter"
+    "customItemsHint": "En fazla 10 eşya, her biri 40 karakter",
+    "renameHint": "Adını değiştirmek için dokun",
+    "contacts": "İletişim",
+    "change": "Değiştir",
+    "addPhone": "Ekle",
+    "noPhone": "Belirtilmemiş",
+    "changePhone": "Telefon numarası",
+    "phoneSaved": "Numara kaydedildi",
+    "changeEmail": "E-postayı değiştir",
+    "changeEmailText": "Yeni adrese bir bağlantı göndereceğiz. Açtığınızda e-posta değişir.",
+    "newEmail": "Yeni adres",
+    "sendConfirmation": "Onay gönder",
+    "emailSent": "{{email}} adresine e-posta gönderildi. Bağlantıyı açın.",
+    "emailPending": "Onay bekleniyor: {{email}}",
+    "contactsPrivacy": "Telefon ve e-postanızı yalnızca seçtiğiniz yardımcılar ve sizi seçen yazarlar görür."
   },
   "settings": {
     "title": "Ayarlar",
@@ -453,7 +508,27 @@
     "theme": "Tema",
     "themeLight": "Açık",
     "themeDark": "Koyu",
-    "themeSystem": "Sistem"
+    "themeSystem": "Sistem",
+    "sound": "Yeni bildirim sesi",
+    "soundHint": "Uygulama açıkken yeni bir şey gelince kısa bir ses.",
+    "mute": "Rahatsız etme",
+    "muteHint": "Yakındaki yeni talep bildirimlerini bir süre duraklat.",
+    "mutedUntil": "Bildirimler {{time}} saatine kadar duraklatıldı",
+    "muteOff": "Kapalı",
+    "muteFor": {
+      "1h": "1 sa",
+      "3h": "3 sa",
+      "morning": "Sabaha kadar",
+      "24h": "24 sa"
+    },
+    "locationAuto": "Bildirim konumunuz uygulamayı her açtığınızda otomatik güncellenir.",
+    "locationAutoDenied": "Konum tarayıcıda engellendi — yakındaki talepleri almak için site ayarlarından izin verin.",
+    "changePassword": "Şifreyi değiştir",
+    "setPassword": "Şifre belirle",
+    "currentPassword": "Mevcut şifre",
+    "newPassword": "Yeni şifre",
+    "passwordChanged": "Şifre değiştirildi",
+    "passwordOtherDevices": "Diğer cihazlarda yeniden giriş yapmanız gerekecek."
   },
   "report": {
     "title": "Şikâyet et",
@@ -524,7 +599,17 @@
       "FREE": "Ücretsiz"
     },
     "agreed": "Anlaşıldı: {{terms}}",
-    "note": "Platform ödemelerle ilgilenmez: anlaşma sizin aranızdadır."
+    "note": "Platform ödemelerle ilgilenmez: anlaşma sizin aranızdadır.",
+    "counterButton": "Kendi tutarını öner",
+    "counterLabel": "Senin tutarın, {{currency}}",
+    "counterHint": "Bunu yalnızca bir kez yapabilirsin — sonra yardım eden kabul eder ya da reddeder.",
+    "counterSend": "Teklifi gönder",
+    "counterSent": "{{amount}} önerdin — yanıt bekleniyor",
+    "authorCounter": "İstek sahibi {{amount}} öneriyor",
+    "lastStep": "Bu son teklif: kabul et ya da reddet.",
+    "acceptCounter": "Kabul et",
+    "declineCounter": "Reddet",
+    "agreedToast": "Anlaştınız! Yardım için seçildin."
   },
   "share": {
     "button": "Paylaş",
@@ -575,14 +660,18 @@
     "howTo": "Nasıl yüklenir:",
     "steps": {
       "ios": [
-        "Safari'nin altındaki Paylaş ⬆️ simgesine dokun",
-        "“Ana Ekrana Ekle”yi seç (görmüyorsan listeyi kaydır)",
+        "Paylaş ⬆️ simgesine dokun — altta ya da “⋯” menüsünde",
+        "“Ana Ekrana Ekle”yi seç",
         "“Ekle”ye dokun — Poruch uygulamalarının arasında görünür"
       ],
       "ios-other-browser": [
         "Adres çubuğundaki Paylaş ⬆️ simgesine dokun",
         "“Ana Ekrana Ekle”yi seç; yoksa siteyi Safari'de aç",
         "“Ekle”ye dokun"
+      ],
+      "in-app": [
+        "Bu uygulama siteyi kendi yerleşik tarayıcısında açtı, buradan yükleme yapılamaz",
+        "Üstteki “⋯” ya da “⋮” simgesine dokun, “Tarayıcıda aç”ı (Safari veya Chrome) seç ve Poruch'u orada yükle"
       ],
       "android": [
         "Sağ üstteki tarayıcı menüsünü ⋮ aç",
@@ -594,6 +683,33 @@
         "Yüklemeyi onayla"
       ]
     },
+    "troubleTitle": "Yüklenemiyor mu?",
+    "trouble": {
+      "ios": [
+        "Site Safari uygulamasında açık olmalı. Telegram, Instagram ve diğerleri sayfaları yükleme yapamayan yerleşik bir görüntüleyicide açar. Adresi kopyala (aşağıdaki düğme) ve Safari'ye yapıştır.",
+        "Safari'de olduğunu anlamak için: Paylaş menüsünde “Yer İmi Ekle” ve “Sayfada Bul” vardır.",
+        "Safari'de “Ana Ekrana Ekle” yok mu? Paylaş menüsünü “Eylemleri Düzenle…”ye kadar kaydır ve aç.",
+        "Safari'nin gizli modunu kapat (koyu adres çubuğu)."
+      ],
+      "ios-other-browser": [
+        "Paylaş menüsünde “Ana Ekrana Ekle” yoksa siteyi Safari'de aç: aşağıdaki adresi kopyalayıp oraya yapıştır.",
+        "Telegram ya da Instagram'dan açılan sayfa yerleşik bir görüntüleyicidir, yükleme yapamaz.",
+        "iOS 16.4 veya üstü gerekir: Ayarlar → Genel → Hakkında."
+      ],
+      "in-app": [
+        "Aşağıdaki düğmeyle adresi kopyala ve Safari'ye (iPhone) ya da Chrome'a (Android) yapıştır."
+      ],
+      "android": [
+        "Site Chrome'da açık olmalı. Telegram, Instagram ve diğer uygulamalarda ⋮ → “Chrome'da aç”a dokun.",
+        "“Uygulamayı yükle” yok mu? Chrome'u Google Play'den güncelle ya da aşağıdaki adresi kopyalayıp Chrome'da aç."
+      ],
+      "desktop": [
+        "Chrome ve Edge yüklemeyi destekler. Mac'te Safari: Dosya → Dock'a Ekle.",
+        "Firefox yükleme yapamaz — siteyi Chrome ya da Edge'de aç."
+      ]
+    },
+    "copyLink": "Adresi kopyala",
+    "copied": "Adres kopyalandı",
     "later": "Sonra",
     "thanks": "Poruch yüklendi ❤️",
     "cardTitle": "Uygulamayı yükle",

@@ -34,6 +34,10 @@ def update_preferences(user: User, data: dict) -> NotificationPreference:
         if name in data:
             setattr(prefs, name, bool(data[name]))
             fields.append(name)
+    if "muted_until" in data:
+        until = data["muted_until"]
+        prefs.muted_until = until if until and until > timezone.now() else None
+        fields.append("muted_until")
     if data.get("location"):
         loc = data["location"]
         coords = validate_coordinates(loc.get("latitude"), loc.get("longitude"), loc.get("accuracy"))

@@ -1,10 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { notificationsApi } from "@/api/notifications";
+import { notificationsApi, type NotificationsPage } from "@/api/notifications";
+import { infiniteList } from "@/api/paging";
 import { queryKeys } from "@/api/queryKeys";
 
 export function useNotifications(enabled = true) {
-  return useQuery({ queryKey: queryKeys.notifications, queryFn: () => notificationsApi.list(), enabled });
+  return useInfiniteQuery({
+    queryKey: queryKeys.notifications,
+    ...infiniteList<NotificationsPage["results"][number], NotificationsPage>("/notifications/"),
+    enabled,
+  });
 }
 
 export function useUnreadCount(enabled: boolean) {
@@ -13,7 +18,9 @@ export function useUnreadCount(enabled: boolean) {
     queryFn: () => notificationsApi.unreadCount(),
     select: (data) => data.unread_count,
     enabled,
-    refetchInterval: 60_000,
+    // Kept fresh without a reload; push messages from the service worker refresh it instantly.
+    refetchInterval: 15_000,
+    refetchOnWindowFocus: true,
     meta: { silent: true },
   });
 }

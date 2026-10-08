@@ -25,6 +25,7 @@ $SSH "$SERVER" "cd $DIR && C='docker compose -f docker-compose.prod.yml --env-fi
   && \$C run --rm migrate \
   && \$C up -d --remove-orphans \
   && docker image prune -f >/dev/null \
+  && docker builder prune -f --keep-storage 2GB >/dev/null \
   && \$C ps --format 'table {{.Service}}\t{{.Status}}'"
 
 echo -n "→ Waiting for the backend"

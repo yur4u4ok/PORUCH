@@ -23,4 +23,24 @@ class HelpResponseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HelpResponse
-        fields = ["id", "help_request_id", "helper", "message", "offer_type", "offered_amount", "status", "created_at"]
+        fields = [
+            "id",
+            "help_request_id",
+            "helper",
+            "message",
+            "offer_type",
+            "offered_amount",
+            "author_counter_amount",
+            "agreed_offer_type",
+            "agreed_amount",
+            "status",
+            "created_at",
+        ]
+
+
+class CounterOfferSerializer(serializers.Serializer):
+    amount = serializers.DecimalField(max_digits=10, decimal_places=2, min_value=0)
+
+
+class CounterAnswerSerializer(serializers.Serializer):
+    accept = serializers.BooleanField()

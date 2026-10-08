@@ -1,8 +1,9 @@
 import clsx from "clsx";
-import { useState, type ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
+import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 
-import { Badge, Button, Card, Chip, Modal, Select, Textarea } from "@/components/ui";
+import { Button, Chip, Modal, Select, Textarea } from "@/components/ui";
 import { useReport } from "@/features/profile/hooks";
 import { toast } from "@/stores/toastStore";
 import type {
@@ -13,45 +14,39 @@ import type {
   ReportReason,
   Urgency,
 } from "@/types/api";
-import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCY_EMOJI, requestEmoji } from "@/utils/categories";
+import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
 import { formatDateTime, formatDistance, formatRadius, timeAgo } from "@/utils/format";
 import { emergencyVars } from "@/utils/emergency";
+import { REWARD_TYPE_EMOJI, rewardSummary } from "@/utils/reward";
 
 import styles from "./components.module.css";
 
+/** Solid, high-contrast labels: they must read on white cards and on the yellow notice alike. */
 export function UrgencyBadge({ urgency, neededAt }: { urgency: Urgency; neededAt?: string | null }) {
   const { t } = useTranslation();
-  const tone =
-    urgency === "NOW"
-      ? "danger"
-      : urgency === "TODAY"
-        ? "warning"
-        : urgency === "SCHEDULED"
-          ? "info"
-          : "success";
   return (
-    <Badge tone={tone}>
+    <span className={styles.pill} style={{ background: URGENCY_HEX[urgency] }}>
       {URGENCY_EMOJI[urgency]}{" "}
       {urgency === "SCHEDULED" && neededAt ? formatDateTime(neededAt) : t(`urgency.${urgency}`)}
-    </Badge>
+    </span>
   );
 }
 
+const STATUS_COLOR: Record<HelpRequestStatus, string> = {
+  ACTIVE: "var(--color-primary)",
+  IN_PROGRESS: "#6a4c9c",
+  COMPLETED: "#1f7a4d",
+  CANCELLED: "#4b5856",
+  EXPIRED: "#4b5856",
+};
+
 export function StatusBadge({ status }: { status: HelpRequestStatus }) {
   const { t } = useTranslation();
-  const tone =
-    status === "ACTIVE"
-      ? "info"
-      : status === "IN_PROGRESS"
-        ? "warning"
-        : status === "COMPLETED"
-          ? "success"
-          : "neutral";
   return (
-    <Badge tone={tone}>
+    <span className={styles.pill} style={{ background: STATUS_COLOR[status] ?? "#4b5856" }}>
       {status === "COMPLETED" ? "✓ " : ""}
       {t(`status.${status}`)}
-    </Badge>
+    </span>
   );
 }
 
@@ -63,8 +58,13 @@ export function HelpRequestCard({
   showStatus?: boolean;
 }) {
   const { t } = useTranslation();
+  // A note pinned to the board: the coloured edge on top says how urgent it is.
   return (
-    <Card to={`/help/${request.id}`}>
+    <Link
+      to={`/help/${request.id}`}
+      className={styles.note}
+      style={{ "--urgency": URGENCY_HEX[request.urgency] } as CSSProperties}
+    >
       <div className={styles.card}>
         <div className={styles.emoji} aria-hidden>
           {requestEmoji(request.category, request.subcategory)}
@@ -82,11 +82,20 @@ export function HelpRequestCard({
               <span>📍 {t("common.fromYou", { distance: formatDistance(request.distance_m) })}</span>
             )}
             <span>{timeAgo(request.created_at)}</span>
-            {request.reward_type === "WILLING" && <span>💰</span>}
+            {request.helpers_needed > 1 && (
+              <span>
+                👥 {t("request.peopleStillNeeded", { count: request.helpers_needed - request.helpers_count })}
+              </span>
+            )}
+          </div>
+          <div className={styles.reward}>
+            {request.reward_type === "WILLING"
+              ? `${REWARD_TYPE_EMOJI.WILLING} ${[t("reward.WILLING"), rewardSummary(request, t)].filter(Boolean).join(": ")}`
+              : `${REWARD_TYPE_EMOJI[request.reward_type]} ${t(`reward.${request.reward_type}`)}`}
           </div>
         </div>
       </div>
-    </Card>
+    </Link>
   );
 }
 

@@ -39,10 +39,18 @@ class UserManager(BaseUserManager["User"]):
 class User(UUIDModel, AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     email_verified = models.BooleanField(default=False)
+    # A new address waiting for confirmation from that inbox; the login email changes only then.
+    pending_email = models.EmailField(blank=True, default="")
+    # Phone number, encrypted at rest (see common/crypto.py); phone_hash allows lookups.
+    phone_encrypted = models.TextField(blank=True, default="")
+    phone_hash = models.CharField(max_length=64, blank=True, default="", db_index=True)
+    phone_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
     deactivated_at = models.DateTimeField(null=True, blank=True)
+    # Last time the app was open (written at most once a minute, see common/presence.py).
+    last_seen_at = models.DateTimeField(null=True, blank=True)
 
     objects = UserManager()
 

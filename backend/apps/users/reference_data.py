@@ -14,7 +14,7 @@ HELP_CAPABILITIES = [
     ("ITEM_LENDING", "ITEMS", "🤲"),
     ("ANIMAL_HELP", "ANIMALS", "🐕"),
     ("PERSON_HELP", "PEOPLE", "🧑‍🤝‍🧑"),
-    ("OTHER", "OTHER", "✨"),
+    ("OTHER", "OTHER", "🧩"),
 ]
 ITEM_CAPABILITIES = [
     ("HAS_TOOLKIT", "HOME", "🧰"),
@@ -27,7 +27,7 @@ ITEM_CAPABILITIES = [
     ("HAS_PET_CARRIER", "ANIMALS", "🐾"),
     ("HAS_JUMPER_CABLES", "AUTO", "🔌"),
     ("HAS_COMPRESSOR", "AUTO", "🛞"),
-    ("HAS_OTHER", "OTHER", "✨"),
+    ("HAS_OTHER", "OTHER", "🧩"),
 ]
 # Retired codes are deactivated (kept for existing user data).
 RETIRED_CAPABILITIES = ["HAS_JACK", "HAS_TOW_ROPE"]

@@ -11,7 +11,8 @@ from common.exceptions import ValidationFailed
 def update_profile(user: User, data: dict) -> Profile:
     profile = user.profile
     fields: list[str] = []
-    for name in ("display_name", "show_name", "show_avatar", "onboarding_completed"):
+    # Name and photo are always shown (show_name / show_avatar are no longer user settings).
+    for name in ("display_name", "onboarding_completed"):
         if name in data:
             value = data[name]
             if name == "display_name":
@@ -43,6 +44,10 @@ def update_profile(user: User, data: dict) -> Profile:
         fields.append("avatar")
     if fields:
         profile.save(update_fields=fields)
+    if "phone" in data:
+        from apps.users.phone import set_phone
+
+        user.save(update_fields=set_phone(user, data["phone"], data.get("phone_region")))
     return profile
 
 

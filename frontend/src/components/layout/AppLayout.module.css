@@ -37,22 +37,23 @@
   font-size: 22px;
   line-height: 1;
 }
-.navActive {
-  color: var(--color-primary);
-}
-.navCreate .navIcon {
-  width: 44px;
-  height: 44px;
+.navIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  background: var(--color-primary);
-  color: #fff;
-  margin-top: -18px;
-  box-shadow: var(--shadow-md);
-  font-size: 28px;
-  font-weight: 700;
+  width: 52px;
+  height: 30px;
+  border-radius: var(--radius-full);
+  transition: background var(--transition);
+}
+/* The open tab: a tinted pill behind the icon, bold coloured label. */
+.navActive {
+  color: var(--color-primary);
+  font-weight: 800;
+}
+.navActive .navIcon {
+  background: var(--color-primary-soft);
+  box-shadow: inset 0 0 0 1.5px var(--color-primary);
 }
 .dot {
   position: absolute;
@@ -81,12 +82,18 @@
     flex-direction: column;
     gap: var(--space-1);
     position: sticky;
-    top: 0;
-    height: 100vh;
+    top: var(--space-3);
+    /* A floating, rounded panel in a muted, slightly translucent teal (the solid brand teal
+       was too loud next to the content). */
+    height: calc(100vh - 2 * var(--space-3));
+    margin: var(--space-3) 0 var(--space-3) var(--space-3);
     width: var(--sidebar-width);
     flex-shrink: 0;
     padding: var(--space-6) var(--space-4);
-    background: var(--color-primary);
+    border-radius: var(--radius-xl);
+    background: var(--color-sidebar);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-md);
     color: var(--color-on-primary);
   }
   .brand {
@@ -114,6 +121,14 @@
     text-decoration: none;
     font-weight: 600;
     color: rgb(255 255 255 / 0.78);
+  }
+  button.sideItem {
+    border: 0;
+    background: none;
+    font: inherit;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
   }
   /* Pinned to the bottom of the sidebar, apart from the main sections. */
   .sideBottom {
@@ -158,8 +173,9 @@
 }
 .headerTitle {
   flex: 1;
-  font-size: var(--text-lg);
-  font-weight: 700;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

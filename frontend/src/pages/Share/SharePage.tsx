@@ -14,7 +14,6 @@ import { rememberAfterAuth } from "@/utils/afterAuth";
 import { requestEmoji } from "@/utils/categories";
 import { timeAgo } from "@/utils/format";
 import { rewardSummary } from "@/utils/reward";
-import { emergencyVars } from "@/utils/emergency";
 
 import styles from "../Landing/Landing.module.css";
 
@@ -102,9 +101,6 @@ export default function SharePage() {
           >
             {t("share.login")}
           </Button>
-          <p className="muted" style={{ fontSize: 13 }}>
-            ⚠️ {t("emergency.short", emergencyVars())}
-          </p>
         </>
       )}
     </main>

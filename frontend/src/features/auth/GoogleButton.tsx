@@ -12,7 +12,7 @@ import styles from "./GoogleButton.module.css";
  * separate browser), which left users stuck on the sign-up page.
  * Rendered only when GOOGLE_CLIENT_ID is configured.
  */
-export function GoogleButton({ redirectTo }: { redirectTo?: string }) {
+export function GoogleButton({ redirectTo, disabled = false }: { redirectTo?: string; disabled?: boolean }) {
   const { data: config } = usePublicConfig();
   const { t } = useTranslation();
   if (!config?.google_client_id) return null;
@@ -23,7 +23,7 @@ export function GoogleButton({ redirectTo }: { redirectTo?: string }) {
   };
 
   return (
-    <button type="button" className={styles.button} onClick={start}>
+    <button type="button" className={styles.button} onClick={start} disabled={disabled}>
       <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden>
         <path
           fill="#EA4335"

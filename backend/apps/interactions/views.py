@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from apps.interactions.models import HelpResponse
-from apps.interactions.serializers import HelpResponseSerializer
+from apps.interactions.serializers import CounterAnswerSerializer, CounterOfferSerializer, HelpResponseSerializer
 from apps.interactions.services import responses as svc
 from common.exceptions import NotFound
 
@@ -39,4 +39,22 @@ class HelpResponseViewSet(viewsets.ViewSet):
     @action(detail=True, methods=["post"])
     def cancel(self, request, pk=None):
         svc.cancel_response(request.user, pk)
+        return Response(HelpResponseSerializer(self._get_visible(request, pk)).data)
+
+    @extend_schema(request=CounterOfferSerializer, responses=HelpResponseSerializer)
+    @action(detail=True, methods=["post"])
+    def counter(self, request, pk=None):
+        """Author: answer a helper's different amount with one amount of their own."""
+        ser = CounterOfferSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        svc.counter_offer(request.user, pk, ser.validated_data["amount"])
+        return Response(HelpResponseSerializer(self._get_visible(request, pk)).data)
+
+    @extend_schema(request=CounterAnswerSerializer, responses=HelpResponseSerializer)
+    @action(detail=True, methods=["post"], url_path="counter-answer")
+    def counter_answer(self, request, pk=None):
+        """Helper: accept the author's amount (and be chosen) or decline. No further bargaining."""
+        ser = CounterAnswerSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        svc.answer_counter_offer(request.user, pk, ser.validated_data["accept"])
         return Response(HelpResponseSerializer(self._get_visible(request, pk)).data)
