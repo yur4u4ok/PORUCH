@@ -722,5 +722,20 @@
     "updated": "Current version: {{date}}",
     "englishOnly": "This document is available in Ukrainian and English",
     "agree": "You also accept the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
+  },
+  "reviews": {
+    "rating": "Rating",
+    "sent": "Thanks for the review!",
+    "title": "Review {{name}}",
+    "submit": "Send review",
+    "placeholder": "How did it go? (optional)",
+    "permanent": "The review appears on their profile. It can't be changed or deleted later.",
+    "leaveTitle": "Rate your cooperation",
+    "done": "Reviewed",
+    "leave": "Leave a review",
+    "heading": "Reviews",
+    "none": "No reviews yet",
+    "count_one": "{{count}} review",
+    "count_other": "{{count}} reviews"
   }
 }

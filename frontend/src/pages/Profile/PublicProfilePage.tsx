@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+
+import { RatingSummary, ReviewsList } from "@/features/reviews/Reviews";
 import { Navigate, useNavigate, useParams } from "react-router";
 
 import { PageHeader } from "@/components/layout/AppLayout";
@@ -43,12 +45,14 @@ export default function PublicProfilePage() {
         <div className={styles.stats}>
           <span>{t("profile.helped", { count: user.helped_count })}</span>
           <span>{t("profile.thanks", { count: user.thanks_received_count })}</span>
+          <RatingSummary user={user} />
         </div>
         <span className="muted">
           {t("common.since", { year: new Date(user.member_since).getFullYear() })}
           {user.is_verified && ` · ✓ ${t("profile.verified")}`}
         </span>
       </div>
+      <ReviewsList userId={user.id} />
       <ThanksList userId={user.id} />
       <div className="row" style={{ justifyContent: "center" }}>
         <Button variant="ghost" size="sm" onClick={() => setReportOpen(true)}>

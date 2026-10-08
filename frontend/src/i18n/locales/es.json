@@ -720,5 +720,20 @@
     "updated": "Versión vigente: {{date}}",
     "englishOnly": "Este documento está disponible en ucraniano e inglés",
     "agree": "También aceptas las <terms>Condiciones de uso</terms> y la <privacy>Política de privacidad</privacy>."
+  },
+  "reviews": {
+    "rating": "Valoración",
+    "sent": "¡Gracias por tu reseña!",
+    "title": "Reseña de {{name}}",
+    "submit": "Enviar reseña",
+    "placeholder": "¿Cómo fue? (opcional)",
+    "permanent": "La reseña aparece en su perfil y no se puede cambiar ni borrar después.",
+    "leaveTitle": "Valora la colaboración",
+    "done": "Reseña enviada",
+    "leave": "Dejar reseña",
+    "heading": "Reseñas",
+    "none": "Aún no hay reseñas",
+    "count_one": "{{count}} reseña",
+    "count_other": "{{count}} reseñas"
   }
 }

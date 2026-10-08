@@ -709,5 +709,20 @@
     "updated": "현재 버전: {{date}}",
     "englishOnly": "이 문서는 우크라이나어와 영어로 제공됩니다",
     "agree": "또한 <terms>이용약관</terms> 및 <privacy>개인정보 처리방침</privacy>에 동의하게 됩니다."
+  },
+  "reviews": {
+    "rating": "평점",
+    "sent": "리뷰 감사합니다!",
+    "title": "{{name}}님 리뷰",
+    "submit": "리뷰 보내기",
+    "placeholder": "어떠셨나요? (선택)",
+    "permanent": "리뷰는 프로필에 표시되며 나중에 수정하거나 삭제할 수 없습니다.",
+    "leaveTitle": "협력 평가하기",
+    "done": "리뷰 완료",
+    "leave": "리뷰 남기기",
+    "heading": "리뷰",
+    "none": "아직 리뷰가 없습니다",
+    "count_one": "리뷰 {{count}}개",
+    "count_other": "리뷰 {{count}}개"
   }
 }

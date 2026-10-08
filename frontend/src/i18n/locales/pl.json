@@ -736,5 +736,20 @@
     "updated": "Obowiązująca wersja: {{date}}",
     "englishOnly": "Ten dokument jest dostępny po ukraińsku i angielsku",
     "agree": "Akceptujesz też <terms>Warunki korzystania</terms> i <privacy>Politykę prywatności</privacy>."
+  },
+  "reviews": {
+    "rating": "Ocena",
+    "sent": "Dziękujemy za opinię!",
+    "title": "Opinia o {{name}}",
+    "submit": "Wyślij opinię",
+    "placeholder": "Jak poszło? (opcjonalnie)",
+    "permanent": "Opinia pojawi się w profilu i nie można jej później zmienić ani usunąć.",
+    "leaveTitle": "Oceń współpracę",
+    "done": "Opinia wystawiona",
+    "leave": "Wystaw opinię",
+    "heading": "Opinie",
+    "none": "Brak opinii",
+    "count_one": "{{count}} opinia",
+    "count_other": "{{count}} opinii"
   }
 }

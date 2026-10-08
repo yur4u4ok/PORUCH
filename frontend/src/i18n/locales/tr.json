@@ -722,5 +722,20 @@
     "updated": "Geçerli sürüm: {{date}}",
     "englishOnly": "Bu belge Ukraynaca ve İngilizce olarak mevcuttur",
     "agree": "Ayrıca <terms>Kullanım Koşulları</terms> ile <privacy>Gizlilik Politikası</privacy>'nı kabul edersin."
+  },
+  "reviews": {
+    "rating": "Puan",
+    "sent": "Değerlendirmeniz için teşekkürler!",
+    "title": "{{name}} hakkında değerlendirme",
+    "submit": "Değerlendirmeyi gönder",
+    "placeholder": "Nasıl geçti? (isteğe bağlı)",
+    "permanent": "Değerlendirme profilinde görünür, sonradan değiştirilemez veya silinemez.",
+    "leaveTitle": "İş birliğini değerlendirin",
+    "done": "Değerlendirildi",
+    "leave": "Değerlendir",
+    "heading": "Değerlendirmeler",
+    "none": "Henüz değerlendirme yok",
+    "count_one": "{{count}} değerlendirme",
+    "count_other": "{{count}} değerlendirme"
   }
 }

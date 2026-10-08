@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+
+import { RatingSummary, ReviewsList } from "@/features/reviews/Reviews";
 import { Link } from "react-router";
 
 import { mediaApi } from "@/api/media";
@@ -188,6 +190,7 @@ export default function ProfilePage() {
         <div className={styles.stats}>
           <span>{t("profile.helped", { count: me.helped_count })}</span>
           <span>{t("profile.thanks", { count: me.thanks_received_count })}</span>
+          <RatingSummary user={me} />
         </div>
         <span className="muted">
           {t("common.since", { year: new Date(me.date_joined).getFullYear() })} ·{" "}
@@ -198,6 +201,7 @@ export default function ProfilePage() {
       <ContactsCard me={me} />
 
       <History />
+      <ReviewsList userId={me.id} />
       <ThanksList userId={me.id} />
 
       <div className="stack-sm">

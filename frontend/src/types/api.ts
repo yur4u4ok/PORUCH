@@ -68,6 +68,9 @@ export interface PublicUser {
   avatar: Media | null;
   helped_count: number;
   thanks_received_count: number;
+  reviews_count: number;
+  /** average stars (1 decimal), null until the first review */
+  rating: number | null;
   member_since: ISODateTime;
   is_verified: boolean;
   is_active: boolean;
@@ -92,6 +95,9 @@ export interface Me {
   custom_items: string[];
   helped_count: number;
   thanks_received_count: number;
+  reviews_count: number;
+  /** average stars (1 decimal), null until the first review */
+  rating: number | null;
   has_password: boolean;
   /** E.164, e.g. +380671234567; null if not given (e.g. signed up with Google). */
   phone: string | null;
@@ -201,6 +207,8 @@ export interface HelpRequest {
   conversation_id: UUID | null;
   can_respond: boolean;
   thanked: boolean | null;
+  /** after completion: people the viewer worked with, and whether they were reviewed */
+  reviews_to_leave: { user: PublicUser; reviewed: boolean }[];
   share_url: string | null;
 }
 
@@ -280,6 +288,15 @@ export interface ThankYou {
   id: UUID;
   from_user: PublicUser;
   message: string;
+  help_request: { id: UUID; title: string; category: Category };
+  created_at: ISODateTime;
+}
+
+export interface Review {
+  id: UUID;
+  from_user: PublicUser;
+  rating: number;
+  text: string;
   help_request: { id: UUID; title: string; category: Category };
   created_at: ISODateTime;
 }

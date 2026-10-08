@@ -39,6 +39,7 @@ import { ShareButton } from "@/features/help/ShareButton";
 import { PersonRow } from "@/features/profile/PersonRow";
 import { useBlockUser } from "@/features/profile/hooks";
 import { useLocationStore } from "@/stores/locationStore";
+import { LeaveReviews } from "@/features/reviews/Reviews";
 import { toast } from "@/stores/toastStore";
 import type { Contact, HelpRequest, HelpResponse, OfferType } from "@/types/api";
 import { URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
@@ -641,6 +642,7 @@ export default function HelpRequestPage() {
       )}
 
       {request.is_author ? <AuthorActions request={request} /> : <HelperActions request={request} />}
+      <LeaveReviews request={request} />
 
       {request.share_url && <ShareButton url={request.share_url} text={shareMessage(request, t)} />}
 

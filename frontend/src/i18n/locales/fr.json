@@ -722,5 +722,20 @@
     "updated": "Version en vigueur : {{date}}",
     "englishOnly": "Ce document est disponible en ukrainien et en anglais",
     "agree": "Vous acceptez aussi les <terms>Conditions d'utilisation</terms> et la <privacy>Politique de confidentialité</privacy>."
+  },
+  "reviews": {
+    "rating": "Note",
+    "sent": "Merci pour votre avis !",
+    "title": "Avis sur {{name}}",
+    "submit": "Envoyer l'avis",
+    "placeholder": "Comment ça s'est passé ? (facultatif)",
+    "permanent": "L'avis apparaît sur son profil et ne peut plus être modifié ni supprimé.",
+    "leaveTitle": "Évaluez la collaboration",
+    "done": "Avis laissé",
+    "leave": "Laisser un avis",
+    "heading": "Avis",
+    "none": "Pas encore d'avis",
+    "count_one": "{{count}} avis",
+    "count_other": "{{count}} avis"
   }
 }

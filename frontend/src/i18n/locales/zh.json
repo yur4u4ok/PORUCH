@@ -705,5 +705,20 @@
     "updated": "当前版本：{{date}}",
     "englishOnly": "本文件提供乌克兰语和英语版本",
     "agree": "同时，你也接受<terms>服务条款</terms>和<privacy>隐私政策</privacy>。"
+  },
+  "reviews": {
+    "rating": "评分",
+    "sent": "感谢你的评价！",
+    "title": "评价 {{name}}",
+    "submit": "提交评价",
+    "placeholder": "进展如何？（可选）",
+    "permanent": "评价会显示在对方的个人资料中，之后无法修改或删除。",
+    "leaveTitle": "评价这次合作",
+    "done": "已评价",
+    "leave": "写评价",
+    "heading": "评价",
+    "none": "暂无评价",
+    "count_one": "{{count}} 条评价",
+    "count_other": "{{count}} 条评价"
   }
 }

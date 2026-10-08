@@ -722,5 +722,20 @@
     "updated": "Aktuelle Fassung: {{date}}",
     "englishOnly": "Dieses Dokument gibt es auf Ukrainisch und Englisch",
     "agree": "Außerdem akzeptierst du die <terms>Nutzungsbedingungen</terms> und die <privacy>Datenschutzerklärung</privacy>."
+  },
+  "reviews": {
+    "rating": "Bewertung",
+    "sent": "Danke für die Bewertung!",
+    "title": "Bewertung für {{name}}",
+    "submit": "Bewertung senden",
+    "placeholder": "Wie lief es? (optional)",
+    "permanent": "Die Bewertung erscheint im Profil und kann später nicht geändert oder gelöscht werden.",
+    "leaveTitle": "Zusammenarbeit bewerten",
+    "done": "Bewertet",
+    "leave": "Bewerten",
+    "heading": "Bewertungen",
+    "none": "Noch keine Bewertungen",
+    "count_one": "{{count}} Bewertung",
+    "count_other": "{{count}} Bewertungen"
   }
 }

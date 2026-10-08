@@ -42,6 +42,7 @@ const request = {
   conversation_id: null,
   can_respond: true,
   thanked: null,
+  reviews_to_leave: [],
   share_url: null,
 } satisfies HelpRequest;
 

@@ -722,5 +722,20 @@
     "updated": "Versione in vigore: {{date}}",
     "englishOnly": "Questo documento è disponibile in ucraino e in inglese",
     "agree": "Accetti anche i <terms>Termini di servizio</terms> e l'<privacy>Informativa sulla privacy</privacy>."
+  },
+  "reviews": {
+    "rating": "Valutazione",
+    "sent": "Grazie per la recensione!",
+    "title": "Recensione per {{name}}",
+    "submit": "Invia recensione",
+    "placeholder": "Com'è andata? (facoltativo)",
+    "permanent": "La recensione appare nel suo profilo e non si può modificare né eliminare.",
+    "leaveTitle": "Valuta la collaborazione",
+    "done": "Recensito",
+    "leave": "Lascia una recensione",
+    "heading": "Recensioni",
+    "none": "Ancora nessuna recensione",
+    "count_one": "{{count}} recensione",
+    "count_other": "{{count}} recensioni"
   }
 }

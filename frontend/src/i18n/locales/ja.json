@@ -714,5 +714,20 @@
     "updated": "現行版：{{date}}",
     "englishOnly": "この文書はウクライナ語と英語で提供しています",
     "agree": "また、<terms>利用規約</terms>と<privacy>プライバシーポリシー</privacy>に同意したものとみなされます。"
+  },
+  "reviews": {
+    "rating": "評価",
+    "sent": "レビューありがとうございます！",
+    "title": "{{name}}さんへのレビュー",
+    "submit": "レビューを送信",
+    "placeholder": "いかがでしたか？（任意）",
+    "permanent": "レビューはプロフィールに表示され、後から変更・削除できません。",
+    "leaveTitle": "協力を評価する",
+    "done": "レビュー済み",
+    "leave": "レビューする",
+    "heading": "レビュー",
+    "none": "まだレビューはありません",
+    "count_one": "{{count}}件のレビュー",
+    "count_other": "{{count}}件のレビュー"
   }
 }

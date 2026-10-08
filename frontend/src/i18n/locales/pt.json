@@ -720,5 +720,20 @@
     "updated": "Versão em vigor: {{date}}",
     "englishOnly": "Este documento está disponível em ucraniano e inglês",
     "agree": "Também aceita os <terms>Termos de utilização</terms> e a <privacy>Política de privacidade</privacy>."
+  },
+  "reviews": {
+    "rating": "Avaliação",
+    "sent": "Obrigado pela avaliação!",
+    "title": "Avaliar {{name}}",
+    "submit": "Enviar avaliação",
+    "placeholder": "Como correu? (opcional)",
+    "permanent": "A avaliação aparece no perfil e não pode ser alterada nem apagada depois.",
+    "leaveTitle": "Avalie a colaboração",
+    "done": "Avaliado",
+    "leave": "Deixar avaliação",
+    "heading": "Avaliações",
+    "none": "Ainda sem avaliações",
+    "count_one": "{{count}} avaliação",
+    "count_other": "{{count}} avaliações"
   }
 }
