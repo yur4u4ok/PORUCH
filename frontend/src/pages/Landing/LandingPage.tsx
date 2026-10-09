@@ -27,10 +27,11 @@ export default function LandingPage() {
   // The landing is dark unless the person picked a theme; the app itself follows the system.
   const theme = useThemeStore((s) => s.theme);
   useEffect(() => {
-    if (theme !== "system") return;
-    applyTheme("dark");
-    return () => applyTheme("system");
+    if (theme === "system") applyTheme("dark");
   }, [theme]);
+  // Leaving the landing: back to whatever the person chose (or the system theme). Only on unmount —
+  // resetting on every theme change would undo a fresh choice and make the toggle need two taps.
+  useEffect(() => () => applyTheme(useThemeStore.getState().theme), []);
   const { t } = useTranslation();
   const navigate = useNavigate();
   useEffect(() => track("landing_view", "landing"), []);
