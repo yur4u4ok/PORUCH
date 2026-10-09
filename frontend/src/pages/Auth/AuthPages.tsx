@@ -159,6 +159,23 @@ export function RegisterPage() {
         <BrandMark />
       </Link>
       <h1>{t("auth.registerTitle")}</h1>
+      {/* The age check comes first: it's needed both for Google and for the form below. */}
+      <label className={styles.check}>
+        <input type="checkbox" {...register("age_confirmed")} />
+        <span>{t("auth.ageConfirm")}</span>
+      </label>
+      {formState.errors.age_confirmed && (
+        <p role="alert" className={styles.checkError}>
+          {fe(formState.errors.age_confirmed.message)}
+        </p>
+      )}
+      <GoogleButton disabled={!ageConfirmed} />
+      {!ageConfirmed && (
+        <p className="muted" style={{ fontSize: 13, marginTop: -8 }}>
+          {t("auth.ageForGoogle")}
+        </p>
+      )}
+      <div className={styles.divider}>{t("auth.or")}</div>
       <form className="stack" onSubmit={onSubmit} noValidate>
         <Input
           label={t("auth.displayName")}
@@ -191,15 +208,6 @@ export function RegisterPage() {
           {...register("password")}
           error={fe(formState.errors.password?.message)}
         />
-        <label className={styles.check}>
-          <input type="checkbox" {...register("age_confirmed")} />
-          <span>{t("auth.ageConfirm")}</span>
-        </label>
-        {formState.errors.age_confirmed && (
-          <p role="alert" className={styles.checkError}>
-            {fe(formState.errors.age_confirmed.message)}
-          </p>
-        )}
         <Button type="submit" size="lg" block loading={registerMutation.isPending}>
           {t("auth.register")}
         </Button>
@@ -211,13 +219,6 @@ export function RegisterPage() {
           />
         </p>
       </form>
-      <div className={styles.divider}>{t("auth.or")}</div>
-      <GoogleButton disabled={!ageConfirmed} />
-      {!ageConfirmed && (
-        <p className="muted" style={{ fontSize: 13, marginTop: -8 }}>
-          {t("auth.ageForGoogle")}
-        </p>
-      )}
       <p>
         {t("auth.hasAccount")} <Link to="/auth/login">{t("auth.login")}</Link>
       </p>
