@@ -42,7 +42,8 @@
     "selectNone": "Clear all",
     "less": "Less",
     "more": "More",
-    "previous": "Previous"
+    "previous": "Previous",
+    "selectedOf": "{{count}} of {{total}} selected"
   },
   "time": {
     "justNow": "just now",
@@ -151,8 +152,8 @@
     "changeLater": "You can change this later in settings."
   },
   "home": {
-    "needHelp": "I need help",
-    "needHelpSub": "Let people nearby know",
+    "needHelp": "Need help",
+    "needHelpSub": "Someone nearby can help.",
     "someoneNeeds": "Someone needs help",
     "someoneNeedsSub": "See requests nearby",
     "nearbyMap": "Help nearby",
@@ -170,7 +171,8 @@
     "findSomeone": "See who needs help →",
     "hello": "Hi, {{name}}!",
     "ask": "Ask for help",
-    "orPick": "Or pick what it's about:"
+    "orPick": "Or pick what it's about:",
+    "createRequest": "Create a request"
   },
   "availability": {
     "title": "I can help right now",
@@ -428,7 +430,8 @@
     "iosHint": "On iPhone, add the app to your Home Screen (Share → Add to Home Screen) to get notifications.",
     "enabled": "Push notifications on",
     "enable": "Turn on push notifications",
-    "disable": "Turn off push on this device"
+    "disable": "Turn off push on this device",
+    "enabledHint": "New requests nearby will reach you right away. You can turn this off in Settings."
   },
   "profile": {
     "title": "Profile",
@@ -469,7 +472,9 @@
     "sendConfirmation": "Send confirmation",
     "emailSent": "Email sent to {{email}}. Open the link in it.",
     "emailPending": "Waiting for confirmation: {{email}}",
-    "contactsPrivacy": "Your phone and email are shown only to helpers you choose and to authors who choose you."
+    "contactsPrivacy": "Your phone and email are shown only to helpers you choose and to authors who choose you.",
+    "declinedTab": "Didn't work out",
+    "noDeclined": "Requests where the author chose another helper will appear here"
   },
   "settings": {
     "title": "Settings",

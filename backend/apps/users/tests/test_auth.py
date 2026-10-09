@@ -150,6 +150,22 @@ def test_password_reset_flow(api_client, user):
     assert again.status_code == 400
 
 
+def test_password_reset_lets_a_google_only_account_set_a_password(api_client, user):
+    user.set_unusable_password()
+    user.save()
+    assert api_client.post(reverse("auth-password-reset"), {"email": user.email}, format="json").status_code == 204
+    body = mail.outbox[-1].body
+    assert "Google" in body
+    uid = re.search(r"uid=([^&\s]+)", body).group(1)
+    token = re.search(r"token=([^&\s]+)", body).group(1)
+    response = api_client.post(
+        reverse("auth-password-reset-confirm"), {"uid": uid, "token": token, "password": PASSWORD}, format="json"
+    )
+    assert response.status_code == 204
+    user.refresh_from_db()
+    assert user.check_password(PASSWORD)
+
+
 def test_password_reset_unknown_email_does_not_leak(api_client):
     assert api_client.post(reverse("auth-password-reset"), {"email": "nobody@x.com"}, format="json").status_code == 204
     assert len(mail.outbox) == 0

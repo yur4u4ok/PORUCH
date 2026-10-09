@@ -25,7 +25,7 @@ export interface NearbyQuery {
 }
 
 export interface HistoryQuery {
-  role: "author" | "helper" | "responded";
+  role: "author" | "helper" | "responded" | "declined";
   status?: HelpRequestStatus[];
   page?: number;
 }

@@ -80,6 +80,8 @@ def nearby_requests(
         )
         .exclude(author=viewer)
         .exclude(author_id__in=blocked)
+        # The author already chose someone else / declined this viewer: nothing left to do here.
+        .exclude(responses__helper=viewer, responses__status="REJECTED")
     )
     if categories:
         qs = qs.filter(category__in=categories)
@@ -102,6 +104,9 @@ def requests_by_role(viewer: User, role: str, statuses: list[str] | None = None)
     elif role == "responded":
         # Offers still waiting for the author's decision (chosen ones are under role=helper).
         qs = qs.filter(responses__helper=viewer, responses__status="PENDING").distinct()
+    elif role == "declined":
+        # Offers that didn't work out: the author chose someone else or declined.
+        qs = qs.filter(responses__helper=viewer, responses__status="REJECTED").distinct()
     else:
         return qs.none()
     if statuses:

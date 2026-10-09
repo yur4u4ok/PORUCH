@@ -1,5 +1,7 @@
 /* Sits on the light page background (landing, share): a tinted pill, not a white one. */
 .compact {
+  position: relative;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
@@ -12,7 +14,15 @@
   font-size: 14px;
 }
 
+.current {
+  font-weight: 700;
+}
+
 .compact select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
   appearance: none;
   border: 0;
   background: transparent;

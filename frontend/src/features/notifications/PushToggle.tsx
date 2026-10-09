@@ -4,13 +4,9 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui";
 import { toast } from "@/stores/toastStore";
 
-import {
-  disablePushOnThisDevice,
-  enablePush,
-  hasActivePushSubscription,
-  notificationPermission,
-  pushSupport,
-} from "./push";
+import styles from "./PushToggle.module.css";
+
+import { enablePush, hasActivePushSubscription, notificationPermission, pushSupport } from "./push";
 
 /** hideWhenActive: where a separate on/off switch already exists (settings), show only the «enable» step. */
 export function PushToggle({
@@ -50,26 +46,20 @@ export function PushToggle({
     }
   };
 
-  const onDisable = async () => {
-    setBusy(true);
-    try {
-      await disablePushOnThisDevice();
-      setActive(false);
-    } finally {
-      setBusy(false);
-    }
-  };
-
   if (active) {
     if (hideWhenActive) return null;
+    // Turning push off lives in Settings; here we only confirm it's on.
     return compact ? (
       <span className="muted">✓ {t("notifications.enabled")}</span>
     ) : (
-      <div className="row-between">
-        <span>✓ {t("notifications.enabled")}</span>
-        <Button variant="ghost" size="sm" onClick={onDisable} loading={busy}>
-          {t("notifications.disable")}
-        </Button>
+      <div className={styles.on} role="status">
+        <span className={styles.onIcon} aria-hidden>
+          ✓
+        </span>
+        <span>
+          <strong>{t("notifications.enabled")}</strong>
+          <span className={styles.onHint}>{t("notifications.enabledHint")}</span>
+        </span>
       </div>
     );
   }

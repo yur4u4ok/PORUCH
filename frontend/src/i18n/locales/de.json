@@ -42,7 +42,8 @@
     "selectNone": "Alle abwählen",
     "less": "Weniger",
     "more": "Mehr",
-    "previous": "Zurück"
+    "previous": "Zurück",
+    "selectedOf": "{{count}} von {{total}} ausgewählt"
   },
   "time": {
     "justNow": "gerade eben",
@@ -151,8 +152,8 @@
     "changeLater": "Das kannst du später in den Einstellungen ändern."
   },
   "home": {
-    "needHelp": "Ich brauche Hilfe",
-    "needHelpSub": "Menschen in der Nähe Bescheid sagen",
+    "needHelp": "Brauchst du Hilfe",
+    "needHelpSub": "Jemand in der Nähe kann helfen.",
     "someoneNeeds": "Jemand braucht Hilfe",
     "someoneNeedsSub": "Anfragen in der Nähe ansehen",
     "nearbyMap": "Hilfe in der Nähe",
@@ -170,7 +171,8 @@
     "findSomeone": "Schau, wer Hilfe braucht →",
     "hello": "Hallo, {{name}}!",
     "ask": "Um Hilfe bitten",
-    "orPick": "Oder gleich wählen, worum es geht:"
+    "orPick": "Oder gleich wählen, worum es geht:",
+    "createRequest": "Anfrage erstellen"
   },
   "availability": {
     "title": "Ich kann jetzt helfen",
@@ -428,7 +430,8 @@
     "iosHint": "Füge die App auf dem iPhone zum Home-Bildschirm hinzu (Teilen → Zum Home-Bildschirm), um Mitteilungen zu bekommen.",
     "enabled": "Push-Mitteilungen an",
     "enable": "Push-Mitteilungen einschalten",
-    "disable": "Push auf diesem Gerät ausschalten"
+    "disable": "Push auf diesem Gerät ausschalten",
+    "enabledHint": "Neue Anfragen in der Nähe erreichen dich sofort. Abschalten kannst du das in den Einstellungen."
   },
   "profile": {
     "title": "Profil",
@@ -469,7 +472,9 @@
     "sendConfirmation": "Bestätigung senden",
     "emailSent": "E-Mail an {{email}} gesendet. Öffne den Link darin.",
     "emailPending": "Wartet auf Bestätigung: {{email}}",
-    "contactsPrivacy": "Telefon und E-Mail sehen nur Helfer, die du auswählst, und Autoren, die dich auswählen."
+    "contactsPrivacy": "Telefon und E-Mail sehen nur Helfer, die du auswählst, und Autoren, die dich auswählen.",
+    "declinedTab": "Nicht geklappt",
+    "noDeclined": "Hier erscheinen Anfragen, bei denen jemand anderes gewählt wurde"
   },
   "settings": {
     "title": "Einstellungen",

@@ -61,5 +61,5 @@ export async function registerAndOnboard(page: Page, name: string, email: string
   await page.getByRole("button", { name: "Далі" }).click();
   await page.getByRole("button", { name: "Далі" }).click();
   await page.getByRole("button", { name: "Готово" }).click();
-  await expect(page.getByRole("link", { name: "Попросити допомогу" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Створити запит/ })).toBeVisible();
 }

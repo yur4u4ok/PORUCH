@@ -63,7 +63,7 @@ class HelpRequestViewSet(viewsets.ViewSet):
             OpenApiParameter("category", str),
             OpenApiParameter("urgency", str),
             OpenApiParameter("status", str),
-            OpenApiParameter("role", str, enum=["author", "helper", "responded"]),
+            OpenApiParameter("role", str, enum=["author", "helper", "responded", "declined"]),
         ],
         responses=HelpRequestSerializer(many=True),
     )

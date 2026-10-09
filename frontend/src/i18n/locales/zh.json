@@ -42,7 +42,8 @@
     "selectNone": "全部取消",
     "less": "减少",
     "more": "增加",
-    "previous": "上一张"
+    "previous": "上一张",
+    "selectedOf": "已选 {{count}}/{{total}}"
   },
   "time": {
     "justNow": "刚刚",
@@ -145,8 +146,8 @@
     "changeLater": "之后可以在设置中更改。"
   },
   "home": {
-    "needHelp": "我需要帮助",
-    "needHelpSub": "告诉附近的人",
+    "needHelp": "需要帮助吗",
+    "needHelpSub": "附近有人可以帮你。",
     "someoneNeeds": "有人需要帮助",
     "someoneNeedsSub": "查看附近的求助",
     "nearbyMap": "附近互助",
@@ -164,7 +165,8 @@
     "findSomeone": "看看谁需要帮助 →",
     "hello": "你好，{{name}}！",
     "ask": "请求帮助",
-    "orPick": "或直接选择类别："
+    "orPick": "或直接选择类别：",
+    "createRequest": "发布请求"
   },
   "availability": {
     "title": "我现在可以帮忙",
@@ -420,7 +422,8 @@
     "iosHint": "在 iPhone 上，请将应用添加到主屏幕（分享 → 添加到主屏幕）以接收通知。",
     "enabled": "推送通知已开启",
     "enable": "开启推送通知",
-    "disable": "关闭此设备的推送"
+    "disable": "关闭此设备的推送",
+    "enabledHint": "附近的新请求会立即通知你。可在设置中关闭。"
   },
   "profile": {
     "title": "我的",
@@ -461,7 +464,9 @@
     "sendConfirmation": "发送确认",
     "emailSent": "已发送至 {{email}}，请打开其中的链接。",
     "emailPending": "等待确认：{{email}}",
-    "contactsPrivacy": "你的电话和邮箱仅对你选中的帮助者和选中你的发布者可见。"
+    "contactsPrivacy": "你的电话和邮箱仅对你选中的帮助者和选中你的发布者可见。",
+    "declinedTab": "未被选中",
+    "noDeclined": "作者选择了其他人的请求会显示在这里"
   },
   "settings": {
     "title": "设置",

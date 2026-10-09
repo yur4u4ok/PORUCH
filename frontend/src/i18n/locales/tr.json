@@ -42,7 +42,8 @@
     "selectNone": "Tümünü kaldır",
     "less": "Azalt",
     "more": "Artır",
-    "previous": "Önceki"
+    "previous": "Önceki",
+    "selectedOf": "{{total}} içinden {{count}} seçildi"
   },
   "time": {
     "justNow": "az önce",
@@ -151,8 +152,8 @@
     "changeLater": "Bunu daha sonra ayarlardan değiştirebilirsin."
   },
   "home": {
-    "needHelp": "Yardıma ihtiyacım var",
-    "needHelpSub": "Yakındakilere haber ver",
+    "needHelp": "Yardım mı lazım",
+    "needHelpSub": "Yakınında biri yardım edebilir.",
     "someoneNeeds": "Birinin yardıma ihtiyacı var",
     "someoneNeedsSub": "Yakındaki isteklere bak",
     "nearbyMap": "Yakında yardım",
@@ -170,7 +171,8 @@
     "findSomeone": "Kimin yardıma ihtiyacı var, gör →",
     "hello": "Merhaba, {{name}}!",
     "ask": "Yardım iste",
-    "orPick": "Ya da konuyu hemen seç:"
+    "orPick": "Ya da konuyu hemen seç:",
+    "createRequest": "Talep oluştur"
   },
   "availability": {
     "title": "Şu an yardım edebilirim",
@@ -428,7 +430,8 @@
     "iosHint": "iPhone'da bildirim almak için uygulamayı Ana Ekrana ekle (Paylaş → Ana Ekrana Ekle).",
     "enabled": "Anlık bildirimler açık",
     "enable": "Anlık bildirimleri aç",
-    "disable": "Bu cihazda bildirimleri kapat"
+    "disable": "Bu cihazda bildirimleri kapat",
+    "enabledHint": "Yakındaki yeni talepler hemen ulaşır. Ayarlar'dan kapatabilirsiniz."
   },
   "profile": {
     "title": "Profil",
@@ -469,7 +472,9 @@
     "sendConfirmation": "Onay gönder",
     "emailSent": "{{email}} adresine e-posta gönderildi. Bağlantıyı açın.",
     "emailPending": "Onay bekleniyor: {{email}}",
-    "contactsPrivacy": "Telefon ve e-postanızı yalnızca seçtiğiniz yardımcılar ve sizi seçen yazarlar görür."
+    "contactsPrivacy": "Telefon ve e-postanızı yalnızca seçtiğiniz yardımcılar ve sizi seçen yazarlar görür.",
+    "declinedTab": "Olmadı",
+    "noDeclined": "Başka birinin seçildiği talepler burada görünecek"
   },
   "settings": {
     "title": "Ayarlar",

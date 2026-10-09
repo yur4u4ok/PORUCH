@@ -18,6 +18,10 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
     return (
       <label className={styles.compact}>
         <span aria-hidden>🌐</span>
+        <span className={styles.current} aria-hidden>
+          {LANGUAGES.find((l) => l.code === value)?.name ?? value}
+        </span>
+        {/* invisible native select over the whole pill, so a tap anywhere opens it */}
         <select
           aria-label={t("settings.language")}
           value={value}

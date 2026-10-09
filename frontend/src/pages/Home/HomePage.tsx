@@ -46,7 +46,7 @@ function AskNotice() {
         </h2>
         <p className={styles.noticeText}>{t("home.needHelpSub")}</p>
         <Link to="/help/create" className={styles.askButton}>
-          {t("home.ask")}
+          <span aria-hidden>＋</span> {t("home.createRequest")}
         </Link>
       </div>
       <p className={styles.tabsHint}>{t("home.orPick")}</p>

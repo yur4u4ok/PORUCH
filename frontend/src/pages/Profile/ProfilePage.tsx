@@ -31,7 +31,7 @@ import styles from "./Profile.module.css";
 
 function History() {
   const { t } = useTranslation();
-  const [tab, setTab] = useState<"author" | "helper">("author");
+  const [tab, setTab] = useState<"author" | "helper" | "declined">("author");
   const history = useHelpHistory({ role: tab });
   const items = history.data?.pages.flatMap((p) => p.results) ?? [];
   return (
@@ -43,6 +43,7 @@ function History() {
         options={[
           { value: "author", label: t("profile.asked") },
           { value: "helper", label: t("profile.helpedTab") },
+          { value: "declined", label: t("profile.declinedTab") },
         ]}
       />
       {history.isPending ? (
@@ -50,7 +51,7 @@ function History() {
       ) : history.isError ? (
         <ErrorState onRetry={() => void history.refetch()} />
       ) : items.length === 0 ? (
-        <EmptyState icon="📜" title={t("profile.noHistory")} />
+        <EmptyState icon="📜" title={t(tab === "declined" ? "profile.noDeclined" : "profile.noHistory")} />
       ) : (
         <>
           {items.map((r) => (

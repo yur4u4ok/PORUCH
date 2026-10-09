@@ -211,6 +211,17 @@ export default function ChatPage() {
   const [openImage, setOpenImage] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [replyTo, setReplyTo] = useState<Message | null>(null);
+  // A tap anywhere outside the opened message (and its reaction bar) closes the bar.
+  useEffect(() => {
+    if (!selectedId) return;
+    const close = (e: PointerEvent) => {
+      const row = document.getElementById(`m-${selectedId}`);
+      if (row && e.target instanceof Node && row.contains(e.target)) return;
+      setSelectedId(null);
+    };
+    document.addEventListener("pointerdown", close);
+    return () => document.removeEventListener("pointerdown", close);
+  }, [selectedId]);
   const react = useReact(id);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const listRef = useRef<HTMLDivElement>(null);

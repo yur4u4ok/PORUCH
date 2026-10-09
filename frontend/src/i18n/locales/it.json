@@ -42,7 +42,8 @@
     "selectNone": "Deseleziona tutto",
     "less": "Meno",
     "more": "Più",
-    "previous": "Precedente"
+    "previous": "Precedente",
+    "selectedOf": "{{count}} di {{total}} selezionate"
   },
   "time": {
     "justNow": "proprio ora",
@@ -151,8 +152,8 @@
     "changeLater": "Puoi cambiarlo più tardi nelle impostazioni."
   },
   "home": {
-    "needHelp": "Ho bisogno di aiuto",
-    "needHelpSub": "Avvisa chi ti sta vicino",
+    "needHelp": "Ti serve aiuto",
+    "needHelpSub": "Qualcuno vicino può aiutarti.",
     "someoneNeeds": "Qualcuno ha bisogno di aiuto",
     "someoneNeedsSub": "Vedi le richieste vicine",
     "nearbyMap": "Aiuto vicino",
@@ -170,7 +171,8 @@
     "findSomeone": "Guarda chi ha bisogno di aiuto →",
     "hello": "Ciao, {{name}}!",
     "ask": "Chiedi aiuto",
-    "orPick": "Oppure scegli subito di cosa si tratta:"
+    "orPick": "Oppure scegli subito di cosa si tratta:",
+    "createRequest": "Crea richiesta"
   },
   "availability": {
     "title": "Posso aiutare ora",
@@ -428,7 +430,8 @@
     "iosHint": "Su iPhone aggiungi l'app alla schermata Home (Condividi → Aggiungi alla schermata Home) per ricevere le notifiche.",
     "enabled": "Notifiche push attive",
     "enable": "Attiva notifiche push",
-    "disable": "Disattiva push su questo dispositivo"
+    "disable": "Disattiva push su questo dispositivo",
+    "enabledHint": "Le nuove richieste vicine ti arriveranno subito. Puoi disattivarle nelle Impostazioni."
   },
   "profile": {
     "title": "Profilo",
@@ -469,7 +472,9 @@
     "sendConfirmation": "Invia conferma",
     "emailSent": "Email inviata a {{email}}. Apri il link.",
     "emailPending": "In attesa di conferma: {{email}}",
-    "contactsPrivacy": "Telefono ed email li vedono solo gli aiutanti che scegli e gli autori che scelgono te."
+    "contactsPrivacy": "Telefono ed email li vedono solo gli aiutanti che scegli e gli autori che scelgono te.",
+    "declinedTab": "Non andata",
+    "noDeclined": "Qui compariranno le richieste in cui è stato scelto qualcun altro"
   },
   "settings": {
     "title": "Impostazioni",

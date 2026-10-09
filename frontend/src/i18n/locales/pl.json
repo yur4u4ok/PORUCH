@@ -42,7 +42,8 @@
     "selectNone": "Odznacz wszystko",
     "less": "Mniej",
     "more": "Więcej",
-    "previous": "Wstecz"
+    "previous": "Wstecz",
+    "selectedOf": "Wybrano {{count}} z {{total}}"
   },
   "time": {
     "justNow": "przed chwilą",
@@ -163,8 +164,8 @@
     "changeLater": "Możesz to później zmienić w ustawieniach."
   },
   "home": {
-    "needHelp": "Potrzebuję pomocy",
-    "needHelpSub": "Daj znać ludziom w pobliżu",
+    "needHelp": "Potrzebujesz pomocy",
+    "needHelpSub": "Ktoś w pobliżu może pomóc.",
     "someoneNeeds": "Ktoś potrzebuje pomocy",
     "someoneNeedsSub": "Zobacz prośby w pobliżu",
     "nearbyMap": "Pomoc w pobliżu",
@@ -182,7 +183,8 @@
     "findSomeone": "Zobacz, kto potrzebuje pomocy →",
     "hello": "Cześć, {{name}}!",
     "ask": "Poproś o pomoc",
-    "orPick": "Albo od razu wybierz, w czym:"
+    "orPick": "Albo od razu wybierz, w czym:",
+    "createRequest": "Utwórz prośbę"
   },
   "availability": {
     "title": "Mogę teraz pomóc",
@@ -444,7 +446,8 @@
     "iosHint": "Na iPhonie dodaj aplikację do ekranu początkowego (Udostępnij → Do ekranu początkowego), aby dostawać powiadomienia.",
     "enabled": "Powiadomienia push włączone",
     "enable": "Włącz powiadomienia push",
-    "disable": "Wyłącz push na tym urządzeniu"
+    "disable": "Wyłącz push na tym urządzeniu",
+    "enabledHint": "Nowe prośby w pobliżu dotrą od razu. Wyłączysz to w ustawieniach."
   },
   "profile": {
     "title": "Profil",
@@ -485,7 +488,9 @@
     "sendConfirmation": "Wyślij potwierdzenie",
     "emailSent": "Wysłano wiadomość na {{email}}. Otwórz link.",
     "emailPending": "Czeka na potwierdzenie: {{email}}",
-    "contactsPrivacy": "Telefon i e-mail widzą tylko pomocnicy, których wybierzesz, i autorzy, którzy wybiorą ciebie."
+    "contactsPrivacy": "Telefon i e-mail widzą tylko pomocnicy, których wybierzesz, i autorzy, którzy wybiorą ciebie.",
+    "declinedTab": "Nie wyszło",
+    "noDeclined": "Tu pojawią się prośby, w których wybrano kogoś innego"
   },
   "settings": {
     "title": "Ustawienia",

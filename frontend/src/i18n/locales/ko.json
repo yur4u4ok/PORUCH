@@ -42,7 +42,8 @@
     "selectNone": "모두 해제",
     "less": "줄이기",
     "more": "늘리기",
-    "previous": "이전"
+    "previous": "이전",
+    "selectedOf": "{{total}}개 중 {{count}}개 선택"
   },
   "time": {
     "justNow": "방금",
@@ -145,8 +146,8 @@
     "changeLater": "나중에 설정에서 바꿀 수 있어요."
   },
   "home": {
-    "needHelp": "도움이 필요해요",
-    "needHelpSub": "근처 사람들에게 알리기",
+    "needHelp": "도움이 필요하세요",
+    "needHelpSub": "근처의 누군가가 도울 수 있어요.",
     "someoneNeeds": "도움이 필요한 사람이 있어요",
     "someoneNeedsSub": "주변 요청 보기",
     "nearbyMap": "내 주변 도움",
@@ -164,7 +165,8 @@
     "findSomeone": "도움이 필요한 사람 보기 →",
     "hello": "안녕하세요, {{name}}님!",
     "ask": "도움 요청하기",
-    "orPick": "또는 바로 종류를 고르세요:"
+    "orPick": "또는 바로 종류를 고르세요:",
+    "createRequest": "요청 만들기"
   },
   "availability": {
     "title": "지금 도울 수 있어요",
@@ -420,7 +422,8 @@
     "iosHint": "iPhone에서 알림을 받으려면 앱을 홈 화면에 추가하세요(공유 → 홈 화면에 추가).",
     "enabled": "푸시 알림 켜짐",
     "enable": "푸시 알림 켜기",
-    "disable": "이 기기에서 푸시 끄기"
+    "disable": "이 기기에서 푸시 끄기",
+    "enabledHint": "근처 새 요청을 바로 받아요. 설정에서 끌 수 있어요."
   },
   "profile": {
     "title": "프로필",
@@ -461,7 +464,9 @@
     "sendConfirmation": "확인 메일 보내기",
     "emailSent": "{{email}}(으)로 보냈어요. 링크를 열어 주세요.",
     "emailPending": "확인 대기 중: {{email}}",
-    "contactsPrivacy": "전화번호와 이메일은 내가 고른 도우미와 나를 고른 요청자에게만 보여요."
+    "contactsPrivacy": "전화번호와 이메일은 내가 고른 도우미와 나를 고른 요청자에게만 보여요.",
+    "declinedTab": "선택되지 않음",
+    "noDeclined": "다른 사람이 선택된 요청이 여기에 표시됩니다"
   },
   "settings": {
     "title": "설정",

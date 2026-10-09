@@ -299,3 +299,11 @@ class TestHistory:
         assert [r["id"] for r in me.get(LIST_URL, {"role": "responded"}).data["results"]] == [str(responded.id)]
         active = me.get(LIST_URL, {"role": "author", "status": "ACTIVE,IN_PROGRESS"}).data["results"]
         assert active == []
+
+    def test_declined_offers_leave_the_feed_and_show_in_history(self, make_client):
+        me = make_client()
+        declined = HelpRequestFactory(location=make_point(*offset_point(*LVIV, north_m=300)))
+        still_open = HelpRequestFactory(location=make_point(*offset_point(*LVIV, north_m=300)))
+        HelpResponse.objects.create(help_request=declined, helper=me.user, status="REJECTED")
+        assert [r["id"] for r in me.get(LIST_URL, {"role": "declined"}).data["results"]] == [str(declined.id)]
+        assert [r["id"] for r in nearby(me, radius=3000).data["results"]] == [str(still_open.id)]

@@ -42,7 +42,8 @@
     "selectNone": "Limpar tudo",
     "less": "Menos",
     "more": "Mais",
-    "previous": "Anterior"
+    "previous": "Anterior",
+    "selectedOf": "{{count}} de {{total}} selecionadas"
   },
   "time": {
     "justNow": "agora mesmo",
@@ -151,8 +152,8 @@
     "changeLater": "Pode alterar isto mais tarde nas definições."
   },
   "home": {
-    "needHelp": "Preciso de ajuda",
-    "needHelpSub": "Avisar as pessoas perto",
+    "needHelp": "Precisa de ajuda",
+    "needHelpSub": "Alguém por perto pode ajudar.",
     "someoneNeeds": "Alguém precisa de ajuda",
     "someoneNeedsSub": "Ver pedidos perto",
     "nearbyMap": "Ajuda perto",
@@ -170,7 +171,8 @@
     "findSomeone": "Veja quem precisa de ajuda →",
     "hello": "Olá, {{name}}!",
     "ask": "Pedir ajuda",
-    "orPick": "Ou escolha logo o assunto:"
+    "orPick": "Ou escolha logo o assunto:",
+    "createRequest": "Criar pedido"
   },
   "availability": {
     "title": "Posso ajudar agora",
@@ -428,7 +430,8 @@
     "iosHint": "No iPhone, adicione a app ao ecrã principal (Partilhar → Adicionar ao ecrã principal) para receber notificações.",
     "enabled": "Notificações push ativadas",
     "enable": "Ativar notificações push",
-    "disable": "Desativar push neste dispositivo"
+    "disable": "Desativar push neste dispositivo",
+    "enabledHint": "Novos pedidos por perto chegam na hora. Pode desligar nas Definições."
   },
   "profile": {
     "title": "Perfil",
@@ -469,7 +472,9 @@
     "sendConfirmation": "Enviar confirmação",
     "emailSent": "E-mail enviado para {{email}}. Abra o link.",
     "emailPending": "Aguardando confirmação: {{email}}",
-    "contactsPrivacy": "Telefone e e-mail só aparecem para ajudantes que você escolher e autores que escolherem você."
+    "contactsPrivacy": "Telefone e e-mail só aparecem para ajudantes que você escolher e autores que escolherem você.",
+    "declinedTab": "Não deu certo",
+    "noDeclined": "Aqui aparecerão os pedidos em que outra pessoa foi escolhida"
   },
   "settings": {
     "title": "Definições",

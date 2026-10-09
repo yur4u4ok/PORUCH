@@ -42,7 +42,8 @@
     "selectNone": "Tout désélectionner",
     "less": "Moins",
     "more": "Plus",
-    "previous": "Précédent"
+    "previous": "Précédent",
+    "selectedOf": "{{count}} sur {{total}} sélectionnées"
   },
   "time": {
     "justNow": "à l'instant",
@@ -151,8 +152,8 @@
     "changeLater": "Vous pourrez le modifier plus tard dans les réglages."
   },
   "home": {
-    "needHelp": "J'ai besoin d'aide",
-    "needHelpSub": "Prévenir les gens à proximité",
+    "needHelp": "Besoin d'aide",
+    "needHelpSub": "Quelqu'un près de chez vous peut aider.",
     "someoneNeeds": "Quelqu'un a besoin d'aide",
     "someoneNeedsSub": "Voir les demandes à proximité",
     "nearbyMap": "Aide à proximité",
@@ -170,7 +171,8 @@
     "findSomeone": "Voir qui a besoin d’aide →",
     "hello": "Bonjour, {{name}} !",
     "ask": "Demander de l’aide",
-    "orPick": "Ou choisissez tout de suite le sujet :"
+    "orPick": "Ou choisissez tout de suite le sujet :",
+    "createRequest": "Créer une demande"
   },
   "availability": {
     "title": "Je peux aider maintenant",
@@ -428,7 +430,8 @@
     "iosHint": "Sur iPhone, ajoutez l'app à l'écran d'accueil (Partager → Sur l'écran d'accueil) pour recevoir les notifications.",
     "enabled": "Notifications push activées",
     "enable": "Activer les notifications push",
-    "disable": "Désactiver le push sur cet appareil"
+    "disable": "Désactiver le push sur cet appareil",
+    "enabledHint": "Les nouvelles demandes proches vous parviendront tout de suite. Désactivable dans les Réglages."
   },
   "profile": {
     "title": "Profil",
@@ -469,7 +472,9 @@
     "sendConfirmation": "Envoyer la confirmation",
     "emailSent": "E-mail envoyé à {{email}}. Ouvrez le lien qu’il contient.",
     "emailPending": "En attente de confirmation : {{email}}",
-    "contactsPrivacy": "Votre téléphone et votre e-mail ne sont visibles que par les aidants choisis et les auteurs qui vous choisissent."
+    "contactsPrivacy": "Votre téléphone et votre e-mail ne sont visibles que par les aidants choisis et les auteurs qui vous choisissent.",
+    "declinedTab": "Pas retenu",
+    "noDeclined": "Ici apparaîtront les demandes où une autre personne a été choisie"
   },
   "settings": {
     "title": "Réglages",

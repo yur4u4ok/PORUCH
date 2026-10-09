@@ -42,7 +42,8 @@
     "selectNone": "すべて解除",
     "less": "減らす",
     "more": "増やす",
-    "previous": "前へ"
+    "previous": "前へ",
+    "selectedOf": "{{total}}件中{{count}}件を選択"
   },
   "time": {
     "justNow": "たった今",
@@ -145,8 +146,8 @@
     "changeLater": "あとで設定から変更できます。"
   },
   "home": {
-    "needHelp": "助けが必要",
-    "needHelpSub": "近くの人に知らせる",
+    "needHelp": "助けが必要ですか",
+    "needHelpSub": "近くの誰かが助けてくれます。",
     "someoneNeeds": "助けを求めている人がいます",
     "someoneNeedsSub": "近くの依頼を見る",
     "nearbyMap": "近くの助け合い",
@@ -164,7 +165,8 @@
     "findSomeone": "助けが必要な人を見る →",
     "hello": "こんにちは、{{name}}さん",
     "ask": "助けを求める",
-    "orPick": "または内容を選ぶ:"
+    "orPick": "または内容を選ぶ:",
+    "createRequest": "依頼を作成"
   },
   "availability": {
     "title": "今すぐ手伝えます",
@@ -420,7 +422,8 @@
     "iosHint": "iPhoneで通知を受け取るには、アプリをホーム画面に追加してください（共有 → ホーム画面に追加）。",
     "enabled": "プッシュ通知はオンです",
     "enable": "プッシュ通知をオンにする",
-    "disable": "この端末のプッシュ通知をオフにする"
+    "disable": "この端末のプッシュ通知をオフにする",
+    "enabledHint": "近くの新しい依頼がすぐ届きます。設定でオフにできます。"
   },
   "profile": {
     "title": "プロフィール",
@@ -461,7 +464,9 @@
     "sendConfirmation": "確認を送信",
     "emailSent": "{{email}} に送信しました。リンクを開いてください。",
     "emailPending": "確認待ち: {{email}}",
-    "contactsPrivacy": "電話とメールは、あなたが選んだ手伝う人と、あなたを選んだ依頼者にだけ表示されます。"
+    "contactsPrivacy": "電話とメールは、あなたが選んだ手伝う人と、あなたを選んだ依頼者にだけ表示されます。",
+    "declinedTab": "選ばれなかった",
+    "noDeclined": "別の人が選ばれた依頼がここに表示されます"
   },
   "settings": {
     "title": "設定",

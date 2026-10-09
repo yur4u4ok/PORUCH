@@ -172,16 +172,25 @@ def request_email_change(user: User, new_email: str, password: str | None) -> No
 def request_password_reset(email: str) -> None:
     """Always succeeds silently to avoid account enumeration."""
     user = User.objects.filter(email__iexact=email.strip(), is_active=True).first()
-    if user is None or not user.has_usable_password():
+    if user is None:
         return
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     token = default_token_generator.make_token(user)
     link = _frontend_url("/auth/reset-password", uid=uid, token=token)
+    # Google-only accounts have no password yet: the same link lets them set one.
+    text = (
+        _("Ви запросили відновлення пароля в Poruch. Натисніть кнопку, щоб встановити новий.")
+        if user.has_usable_password()
+        else _(
+            "Ви входили в Poruch через Google, тому пароля у вас ще немає. Натисніть кнопку, щоб створити його — "
+            "тоді зможете входити і за email, і через Google."
+        )
+    )
     send_service_email(
         user.email,
         _("Відновлення пароля в Poruch"),
         heading=_("Новий пароль"),
-        paragraphs=[_("Ви запросили відновлення пароля в Poruch. Натисніть кнопку, щоб встановити новий.")],
+        paragraphs=[text],
         button_text=_("Встановити новий пароль"),
         button_url=link,
         note=_("Якщо це були не ви — проігноруйте цей лист, ваш пароль не зміниться."),

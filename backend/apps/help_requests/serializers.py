@@ -61,7 +61,7 @@ class HelpRequestListQuerySerializer(serializers.Serializer):
     category = serializers.CharField(required=False)
     urgency = serializers.CharField(required=False)
     status = serializers.CharField(required=False)
-    role = serializers.ChoiceField(choices=["author", "helper", "responded"], required=False)
+    role = serializers.ChoiceField(choices=["author", "helper", "responded", "declined"], required=False)
 
     def _csv(self, value: str | None, allowed: set[str], field: str) -> list[str]:
         if not value:
