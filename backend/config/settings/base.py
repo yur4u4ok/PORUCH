@@ -207,6 +207,7 @@ REST_FRAMEWORK = {
         "support": env("RATE_LIMIT_SUPPORT", default="5/hour"),
         "media_upload": env("RATE_LIMIT_MEDIA_UPLOAD", default="60/hour"),
         "share_preview": env("RATE_LIMIT_SHARE_PREVIEW", default="120/minute"),
+        "client_events": env("RATE_LIMIT_CLIENT_EVENTS", default="60/minute"),
     },
     "DATETIME_FORMAT": "iso-8601",
     "TEST_REQUEST_DEFAULT_FORMAT": "json",

@@ -19,11 +19,11 @@ test("help request end-to-end flow", async ({ browser }) => {
   const helper = await helperContext.newPage();
 
   // 1-2. Register both users (email verification through Mailpit)
-  await registerAndOnboard(author, "Автор", authorEmail);
+  // The author starts as a guest on the landing and picks «Попросити про допомогу».
+  await registerAndOnboard(author, "Автор", authorEmail, { fromLanding: true });
   await registerAndOnboard(helper, "Помічник", helperEmail);
 
-  // 3. Author creates a request through the wizard
-  await author.getByRole("link", { name: "Попросити допомогу" }).click();
+  // 3. Author is already on the wizard (returned there after sign-up) and creates a request
   await author.getByRole("radio", { name: /Автомобіль/ }).click();
   await author.getByRole("button", { name: "Пробите колесо" }).click();
   await author.getByRole("button", { name: "Далі" }).click();

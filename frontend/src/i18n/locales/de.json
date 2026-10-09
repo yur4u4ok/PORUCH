@@ -81,7 +81,16 @@
       "Alle Mitglieder bestätigen ihre E-Mail, und Profile zeigen echte Hilfe und erhaltenen Dank.",
       "Keine Zahlungen, keine Gebühren. Wie du dich bedankst, entscheidest du.",
       "Melde oder blockiere jede Person mit einem Tippen."
-    ]
+    ],
+    "heroTitle": "Brauchst du Hilfe? Jemand in der Nähe kann helfen.",
+    "heroText": "Finde Menschen in der Nähe, bitte um Hilfe oder hilf anderen in deinem Viertel.",
+    "examplesLabel": "Zum Beispiel",
+    "example1": "Werkzeug ausleihen",
+    "example2": "Beim Tragen helfen",
+    "example3": "Im Haushalt helfen oder mit dem Hund rausgehen",
+    "askCta": "Um Hilfe bitten",
+    "nearbyCta": "Anfragen in der Nähe finden",
+    "haveAccount": "Schon ein Konto?"
   },
   "auth": {
     "loginTitle": "Anmelden",
@@ -324,7 +333,10 @@
     "helpersNeeded": "Wie viele Personen werden gebraucht",
     "helpersNeededHint": "Sobald so viele Personen zusagen, ist die Anfrage für andere geschlossen.",
     "activeHours": "Wie lange die Anfrage aktiv bleibt",
-    "activeHoursHint": "Danach wird sie automatisch geschlossen."
+    "activeHoursHint": "Danach wird sie automatisch geschlossen.",
+    "locationManual": "Dein Standort konnte nicht ermittelt werden. Zieh die Markierung dorthin, wo Hilfe gebraucht wird.",
+    "locationManualDenied": "Standortzugriff ist aus. Zieh die Markierung dorthin, wo Hilfe gebraucht wird, oder erlaube den Standort in den Browsereinstellungen.",
+    "locationPickPrompt": "Zieh die Markierung, um den Ort festzulegen"
   },
   "nearby": {
     "title": "Hilfe in der Nähe",

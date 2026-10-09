@@ -127,6 +127,8 @@ def verify_email(token: str) -> User:
         user.email_verified = True
         user.save(update_fields=["email_verified"])
         analytics.track(user_id=user.id, event="email_verified")
+        # Funnel: an email sign-up counts as completed once the address is confirmed.
+        analytics.track(user_id=user.id, event="signup_completed", properties={"method": "email"})
     return user
 
 

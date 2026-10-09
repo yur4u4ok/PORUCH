@@ -19,15 +19,10 @@
   gap: var(--space-2);
 }
 
-/* ── Hero: two notices on the wall, the ways in right under them ───────────── */
+/* ── Hero: the notice, the ways in right under it ──────────────────────────── */
 .hero {
   display: grid;
   gap: var(--space-6);
-}
-.wall {
-  display: grid;
-  gap: var(--space-6);
-  padding-top: var(--space-3);
 }
 .paper {
   position: relative;
@@ -48,12 +43,6 @@
   color: var(--color-notice-ink);
   transform: rotate(-1deg);
 }
-.offer {
-  margin-left: var(--space-6);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  transform: rotate(0.8deg);
-}
 .paperTitle {
   font-size: clamp(24px, 6.6vw, 32px);
   font-weight: 700;
@@ -70,11 +59,6 @@
   background: rgb(255 255 255 / 0.6);
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.15);
 }
-.offer .tape {
-  background:
-    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.18) 0 2px, transparent 2px 6px),
-    rgb(214 192 140 / 0.85);
-}
 
 .actions {
   display: flex;
@@ -83,6 +67,10 @@
 }
 .join,
 .login {
+  width: 100%;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,6 +105,38 @@
 .login:focus-visible {
   outline: 3px solid var(--color-text);
   outline-offset: 3px;
+}
+.signIn {
+  text-align: center;
+  font-weight: 600;
+}
+.signIn a {
+  color: var(--color-primary);
+  font-weight: 800;
+}
+/* three concrete things people do here */
+.examples {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.examples li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 700;
+}
+.examples li span {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.55);
+  font-size: 17px;
 }
 .free {
   font-size: var(--text-sm);
@@ -207,7 +227,7 @@
   color: var(--color-text-muted);
 }
 
-/* ── Wide screens: notices left, the ways in right ─────────────────────────── */
+/* ── Wide screens: the notice left, the ways in right ──────────────────────── */
 @media (min-width: 860px) {
   .page {
     padding-top: var(--space-6);

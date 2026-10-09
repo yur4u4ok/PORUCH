@@ -71,6 +71,7 @@ class LoginView(APIView):
         if user is None:
             raise DomainError(_("Неправильний email або пароль."), code="INVALID_CREDENTIALS")
         analytics.track(user_id=user.id, event="user_logged_in")
+        analytics.track(user_id=user.id, event="login_completed", properties={"method": "email"})
         return set_auth_cookies(Response(_me(user)), issue_tokens(user))
 
 
@@ -144,6 +145,8 @@ class GoogleAuthView(APIView):
         data = ser.validated_data
         credential = data.get("credential") or accounts.exchange_google_code(data["code"])
         user, created = accounts.authenticate_google(credential)
+        funnel_event = "signup_completed" if created else "login_completed"
+        analytics.track(user_id=user.id, event=funnel_event, properties={"method": "google"})
         response = Response(_me(user), status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
         return set_auth_cookies(response, issue_tokens(user))
 

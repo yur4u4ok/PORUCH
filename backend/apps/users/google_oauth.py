@@ -89,6 +89,8 @@ def google_callback(request: HttpRequest) -> HttpResponseRedirect:
             return HttpResponseRedirect(_frontend("/auth/login?error=inactive"))
         return failure
     analytics.track(user_id=user.id, event="user_logged_in", properties={"method": "google", "created": created})
+    funnel_event = "signup_completed" if created else "login_completed"
+    analytics.track(user_id=user.id, event=funnel_event, properties={"method": "google"})
     response = HttpResponseRedirect(_frontend(_safe_next(saved.get("next"))))
     response.delete_cookie(STATE_COOKIE, path="/api/v1/auth/google/")
     return set_auth_cookies(response, issue_tokens(user))

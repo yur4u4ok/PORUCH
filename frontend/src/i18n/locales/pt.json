@@ -81,7 +81,16 @@
       "Todos os membros confirmam o email, e os perfis mostram a ajuda dada e os agradecimentos recebidos.",
       "Sem pagamentos nem comissões. A forma de agradecer é consigo.",
       "Denuncie ou bloqueie qualquer pessoa com um toque."
-    ]
+    ],
+    "heroTitle": "Precisa de ajuda? Alguém por perto pode ajudar.",
+    "heroText": "Encontre pessoas por perto, peça ajuda ou ajude outros no seu bairro.",
+    "examplesLabel": "Por exemplo",
+    "example1": "Pedir uma ferramenta emprestada",
+    "example2": "Ajudar a carregar coisas",
+    "example3": "Ajudar nas tarefas de casa ou passear um cão",
+    "askCta": "Pedir ajuda",
+    "nearbyCta": "Encontrar pedidos por perto",
+    "haveAccount": "Já tem conta?"
   },
   "auth": {
     "loginTitle": "Entrar",
@@ -324,7 +333,10 @@
     "helpersNeeded": "Quantas pessoas são precisas",
     "helpersNeededHint": "Quando esse número de pessoas aceitar ajudar, o pedido fecha para os outros.",
     "activeHours": "Quanto tempo o pedido fica ativo",
-    "activeHoursHint": "Depois disso, fecha automaticamente."
+    "activeHoursHint": "Depois disso, fecha automaticamente.",
+    "locationManual": "Não conseguimos detetar a sua localização. Arraste o marcador para onde é precisa ajuda.",
+    "locationManualDenied": "O acesso à localização está desligado. Arraste o marcador para onde é precisa ajuda ou permita a localização no navegador.",
+    "locationPickPrompt": "Arraste o marcador para marcar o local"
   },
   "nearby": {
     "title": "Ajuda perto",

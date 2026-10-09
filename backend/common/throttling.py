@@ -55,3 +55,7 @@ class SharePreviewThrottle(IPScopedThrottle):
 
 class MediaUploadThrottle(UserScopedThrottle):
     scope = "media_upload"
+
+
+class ClientEventsThrottle(IPScopedThrottle):
+    scope = "client_events"

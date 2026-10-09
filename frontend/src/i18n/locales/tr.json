@@ -81,7 +81,16 @@
       "Her üye e-postasını doğrular; profiller gerçek yardımları ve alınan teşekkürleri gösterir.",
       "Ödeme ya da komisyon yok. Nasıl teşekkür edeceğine sen karar verirsin.",
       "Herkesi tek dokunuşla şikâyet edebilir ya da engelleyebilirsin."
-    ]
+    ],
+    "heroTitle": "Yardım mı lazım? Yakınında biri yardım edebilir.",
+    "heroText": "Yakınındaki insanları bul, yardım iste ya da mahallende başkalarına yardım et.",
+    "examplesLabel": "Örneğin",
+    "example1": "Alet ödünç almak",
+    "example2": "Eşya taşımaya yardım etmek",
+    "example3": "Ev işlerine yardım etmek ya da köpek gezdirmek",
+    "askCta": "Yardım iste",
+    "nearbyCta": "Yakındaki talepleri bul",
+    "haveAccount": "Zaten hesabın var mı?"
   },
   "auth": {
     "loginTitle": "Giriş yap",
@@ -324,7 +333,10 @@
     "helpersNeeded": "Kaç kişi gerekiyor",
     "helpersNeededHint": "Bu kadar kişi yardım etmeyi kabul edince istek diğerlerine kapanır.",
     "activeHours": "İstek ne kadar süre aktif kalsın",
-    "activeHoursHint": "Sonra otomatik olarak kapanır."
+    "activeHoursHint": "Sonra otomatik olarak kapanır.",
+    "locationManual": "Konumun belirlenemedi. İşareti yardımın gerektiği yere sürükle.",
+    "locationManualDenied": "Konum erişimi kapalı. İşareti yardımın gerektiği yere sürükle ya da tarayıcı ayarlarından konuma izin ver.",
+    "locationPickPrompt": "Yeri işaretlemek için işareti sürükle"
   },
   "nearby": {
     "title": "Yakında yardım",

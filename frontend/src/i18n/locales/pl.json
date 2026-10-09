@@ -93,7 +93,16 @@
       "Każdy członek potwierdza e-mail, a profile pokazują prawdziwą pomoc i otrzymane podziękowania.",
       "Bez płatności i prowizji. Jak podziękować – decydujesz ty.",
       "Zgłoś lub zablokuj każdego jednym dotknięciem."
-    ]
+    ],
+    "heroTitle": "Potrzebujesz pomocy? Ktoś w pobliżu może pomóc.",
+    "heroText": "Znajdź ludzi w pobliżu, poproś o pomoc albo pomagaj innym w swojej okolicy.",
+    "examplesLabel": "Na przykład",
+    "example1": "Pożyczyć narzędzie",
+    "example2": "Pomóc przenieść rzeczy",
+    "example3": "Pomóc w domu lub wyprowadzić psa",
+    "askCta": "Poproś o pomoc",
+    "nearbyCta": "Znajdź prośby w pobliżu",
+    "haveAccount": "Masz już konto?"
   },
   "auth": {
     "loginTitle": "Logowanie",
@@ -336,7 +345,10 @@
     "helpersNeeded": "Ile osób potrzeba",
     "helpersNeededHint": "Gdy tyle osób zgodzi się pomóc, prośba zamknie się dla innych.",
     "activeHours": "Jak długo prośba będzie aktywna",
-    "activeHoursHint": "Potem zamknie się automatycznie."
+    "activeHoursHint": "Potem zamknie się automatycznie.",
+    "locationManual": "Nie udało się ustalić Twojej lokalizacji. Przeciągnij pinezkę tam, gdzie potrzebna jest pomoc.",
+    "locationManualDenied": "Dostęp do lokalizacji jest wyłączony. Przeciągnij pinezkę tam, gdzie potrzebna jest pomoc, lub zezwól na lokalizację w przeglądarce.",
+    "locationPickPrompt": "Przeciągnij pinezkę, aby oznaczyć miejsce"
   },
   "nearby": {
     "title": "Pomoc w pobliżu",

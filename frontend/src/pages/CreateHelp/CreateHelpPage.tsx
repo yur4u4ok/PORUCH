@@ -1,11 +1,14 @@
 import clsx from "clsx";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router";
 
 import { ApiError } from "@/api/client";
+import { queryKeys } from "@/api/queryKeys";
+import { usersApi } from "@/api/users";
 import { errorMessage } from "@/app/queryClient";
 import { PageHeader } from "@/components/layout/AppLayout";
 import { Button, Card, Chip, Input, Select, Textarea } from "@/components/ui";
@@ -112,6 +115,19 @@ export default function CreateHelpPage() {
 
   const place = usePlace();
   const fallbackCenter = position ?? approximateCenter(place, me?.city?.center);
+  // No GPS and no known city (location denied, Google sign-up without a city): the map still opens
+  // on a rough guess — the IP-based city, else the default city from the server — and the pin stays
+  // unset until the person drags it, so a guess is never published as the place.
+  const cities = useQuery({
+    queryKey: queryKeys.cities,
+    queryFn: usersApi.cities,
+    staleTime: Infinity,
+    enabled: step === 2 && !fallbackCenter,
+  });
+  const roughCenter =
+    place?.center ?? (cities.data?.find((c) => c.is_default) ?? cities.data?.[0])?.center ?? null;
+  const mapCenter = fallbackCenter ?? roughCenter;
+  const manual = !position && geoStatus !== "locating" && geoStatus !== "idle";
 
   // Explicit action with visible feedback: moves the pin (and the map) to a fresh GPS fix.
   const useMyLocation = async () => {
@@ -294,13 +310,18 @@ export default function CreateHelpPage() {
 
       {step === 2 && (
         <div className="stack">
-          {fallbackCenter ? (
+          {manual && (
+            <p role="status" className={styles.manualHint}>
+              📍 {t(geoStatus === "denied" ? "create.locationManualDenied" : "create.locationManual")}
+            </p>
+          )}
+          {mapCenter ? (
             <LazyMap
-              center={values.location ?? fallbackCenter}
+              center={values.location ?? mapCenter}
               me={position}
-              zoom={15}
+              zoom={fallbackCenter ? 15 : 12}
               height={340}
-              picker={values.location ?? fallbackCenter}
+              picker={values.location ?? mapCenter}
               onPickerChange={(pos) =>
                 setValue("location", { ...pos, accuracy: null }, { shouldValidate: true })
               }
@@ -314,7 +335,7 @@ export default function CreateHelpPage() {
               ? t("create.locating")
               : values.location
                 ? t("create.youAreHere")
-                : t("create.locationError")}
+                : t("create.locationPickPrompt")}
           </p>
           <p className="muted" style={{ fontSize: 13 }}>
             🔒 {t("create.locationPrivacy")} · {t("create.locationHint")}

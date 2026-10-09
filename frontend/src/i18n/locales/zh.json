@@ -75,7 +75,16 @@
       "每位成员都验证了邮箱，个人主页会显示真实的帮助记录和收到的感谢。",
       "没有付款，也没有佣金。如何道谢由你决定。",
       "一键即可举报或屏蔽任何人。"
-    ]
+    ],
+    "heroTitle": "需要帮助吗？附近有人可以帮你。",
+    "heroText": "找到附近的人，寻求帮助或帮助你所在社区的其他人。",
+    "examplesLabel": "例如",
+    "example1": "借一件工具",
+    "example2": "帮忙搬东西",
+    "example3": "帮忙做家务或遛狗",
+    "askCta": "寻求帮助",
+    "nearbyCta": "查看附近的请求",
+    "haveAccount": "已有账号？"
   },
   "auth": {
     "loginTitle": "登录",
@@ -318,7 +327,10 @@
     "helpersNeeded": "需要多少人",
     "helpersNeededHint": "当这么多人同意帮忙后，求助将不再对其他人开放。",
     "activeHours": "求助保持有效的时长",
-    "activeHoursHint": "到期后会自动关闭。"
+    "activeHoursHint": "到期后会自动关闭。",
+    "locationManual": "无法获取你的位置。请把图钉拖到需要帮助的地方。",
+    "locationManualDenied": "位置权限已关闭。请把图钉拖到需要帮助的地方，或在浏览器设置中允许定位。",
+    "locationPickPrompt": "拖动图钉标记地点"
   },
   "nearby": {
     "title": "附近互助",

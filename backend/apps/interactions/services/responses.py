@@ -101,6 +101,7 @@ def respond(
                 "seconds": int((now - help_request.created_at).total_seconds()),
             },
         )
+        analytics.track(user_id=help_request.author_id, event="first_response_received")
     notify(
         help_request.author,
         NotificationType.HELP_RESPONSE_RECEIVED,

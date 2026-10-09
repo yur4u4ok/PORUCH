@@ -81,7 +81,16 @@
       "Every member confirms their email, and profiles show real help given and thanks received.",
       "No payments or fees. Saying thanks is up to you.",
       "Report or block anyone with one tap."
-    ]
+    ],
+    "heroTitle": "Need help? Someone nearby can help.",
+    "heroText": "Find people nearby, ask for help or help others in your neighbourhood.",
+    "examplesLabel": "For example",
+    "example1": "Borrow a tool",
+    "example2": "Help carry things",
+    "example3": "Help with chores or walk a dog",
+    "askCta": "Ask for help",
+    "nearbyCta": "Find requests nearby",
+    "haveAccount": "Already have an account?"
   },
   "auth": {
     "loginTitle": "Log in",
@@ -324,7 +333,10 @@
     "helpersNeeded": "How many people are needed",
     "helpersNeededHint": "Once that many people agree to help, the request closes to others.",
     "activeHours": "How long the request stays active",
-    "activeHoursHint": "After that, the request closes automatically."
+    "activeHoursHint": "After that, the request closes automatically.",
+    "locationManual": "We couldn't detect your location. Drag the pin on the map to where help is needed.",
+    "locationManualDenied": "Location access is off. Drag the pin on the map to where help is needed, or allow location in your browser settings.",
+    "locationPickPrompt": "Drag the pin to mark the place"
   },
   "nearby": {
     "title": "Help nearby",

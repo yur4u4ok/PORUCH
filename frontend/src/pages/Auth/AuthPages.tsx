@@ -24,6 +24,7 @@ import {
 import { useFieldError } from "@/hooks/useFieldError";
 import { toast } from "@/stores/toastStore";
 import { consumeAfterAuth, peekAfterAuth } from "@/utils/afterAuth";
+import { track } from "@/utils/analytics";
 
 import styles from "../Landing/Landing.module.css";
 import { region } from "@/utils/format";
@@ -67,6 +68,7 @@ export function LoginPage() {
   const [params] = useSearchParams();
   const googleError = params.get("error");
   const login = useLogin();
+  useEffect(() => track("login_started", "auth"), []);
   const { register, handleSubmit, setError, formState } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
   });
@@ -129,6 +131,7 @@ export function RegisterPage() {
   const fe = useFieldError();
   const navigate = useNavigate();
   const registerMutation = useRegister();
+  useEffect(() => track("signup_started", "auth"), []);
   const { register, handleSubmit, setError, formState, control } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
     defaultValues: { age_confirmed: false },
@@ -230,7 +233,9 @@ export function VerifyPendingPage() {
   const [resent, setResent] = useState(false);
 
   useEffect(() => {
-    if (me?.email_verified) navigate("/", { replace: true });
+    // Verified (in this or another tab): continue with what the guest came for.
+    // Only peek: onboarding (or the page itself) consumes the choice at the very end.
+    if (me?.email_verified) navigate(peekAfterAuth() ?? "/", { replace: true });
   }, [me, navigate]);
 
   const resend = async () => {
@@ -267,10 +272,9 @@ export function VerifyEmailPage() {
     if (!token) return;
     authApi
       .verifyEmail(token)
-      .then(() => {
-        setState("ok");
-        void refetch();
-      })
+      // Refresh «me» first: «Continue» must not bounce through the «confirm your email» screen.
+      .then(() => refetch())
+      .then(() => setState("ok"))
       .catch(() => setState("failed"));
   }, [token, refetch]);
 
