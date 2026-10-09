@@ -152,8 +152,8 @@
     "changeLater": "Bunu daha sonra ayarlardan değiştirebilirsin."
   },
   "home": {
-    "needHelp": "Yardım mı lazım",
-    "needHelpSub": "Yakınında biri yardım edebilir.",
+    "needHelp": "Yardıma ihtiyacım var",
+    "needHelpSub": "Yakındakilere haber ver",
     "someoneNeeds": "Birinin yardıma ihtiyacı var",
     "someoneNeedsSub": "Yakındaki isteklere bak",
     "nearbyMap": "Yakında yardım",
@@ -171,8 +171,7 @@
     "findSomeone": "Kimin yardıma ihtiyacı var, gör →",
     "hello": "Merhaba, {{name}}!",
     "ask": "Yardım iste",
-    "orPick": "Ya da konuyu hemen seç:",
-    "createRequest": "Talep oluştur"
+    "orPick": "Ya da konuyu hemen seç:"
   },
   "availability": {
     "title": "Şu an yardım edebilirim",

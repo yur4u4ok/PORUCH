@@ -152,8 +152,8 @@
     "changeLater": "Vous pourrez le modifier plus tard dans les réglages."
   },
   "home": {
-    "needHelp": "Besoin d'aide",
-    "needHelpSub": "Quelqu'un près de chez vous peut aider.",
+    "needHelp": "J'ai besoin d'aide",
+    "needHelpSub": "Prévenir les gens à proximité",
     "someoneNeeds": "Quelqu'un a besoin d'aide",
     "someoneNeedsSub": "Voir les demandes à proximité",
     "nearbyMap": "Aide à proximité",
@@ -171,8 +171,7 @@
     "findSomeone": "Voir qui a besoin d’aide →",
     "hello": "Bonjour, {{name}} !",
     "ask": "Demander de l’aide",
-    "orPick": "Ou choisissez tout de suite le sujet :",
-    "createRequest": "Créer une demande"
+    "orPick": "Ou choisissez tout de suite le sujet :"
   },
   "availability": {
     "title": "Je peux aider maintenant",

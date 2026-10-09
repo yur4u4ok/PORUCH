@@ -146,8 +146,8 @@
     "changeLater": "あとで設定から変更できます。"
   },
   "home": {
-    "needHelp": "助けが必要ですか",
-    "needHelpSub": "近くの誰かが助けてくれます。",
+    "needHelp": "助けが必要",
+    "needHelpSub": "近くの人に知らせる",
     "someoneNeeds": "助けを求めている人がいます",
     "someoneNeedsSub": "近くの依頼を見る",
     "nearbyMap": "近くの助け合い",
@@ -165,8 +165,7 @@
     "findSomeone": "助けが必要な人を見る →",
     "hello": "こんにちは、{{name}}さん",
     "ask": "助けを求める",
-    "orPick": "または内容を選ぶ:",
-    "createRequest": "依頼を作成"
+    "orPick": "または内容を選ぶ:"
   },
   "availability": {
     "title": "今すぐ手伝えます",

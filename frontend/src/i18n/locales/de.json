@@ -152,8 +152,8 @@
     "changeLater": "Das kannst du später in den Einstellungen ändern."
   },
   "home": {
-    "needHelp": "Brauchst du Hilfe",
-    "needHelpSub": "Jemand in der Nähe kann helfen.",
+    "needHelp": "Ich brauche Hilfe",
+    "needHelpSub": "Menschen in der Nähe Bescheid sagen",
     "someoneNeeds": "Jemand braucht Hilfe",
     "someoneNeedsSub": "Anfragen in der Nähe ansehen",
     "nearbyMap": "Hilfe in der Nähe",
@@ -171,8 +171,7 @@
     "findSomeone": "Schau, wer Hilfe braucht →",
     "hello": "Hallo, {{name}}!",
     "ask": "Um Hilfe bitten",
-    "orPick": "Oder gleich wählen, worum es geht:",
-    "createRequest": "Anfrage erstellen"
+    "orPick": "Oder gleich wählen, worum es geht:"
   },
   "availability": {
     "title": "Ich kann jetzt helfen",

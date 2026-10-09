@@ -146,8 +146,8 @@
     "changeLater": "之后可以在设置中更改。"
   },
   "home": {
-    "needHelp": "需要帮助吗",
-    "needHelpSub": "附近有人可以帮你。",
+    "needHelp": "我需要帮助",
+    "needHelpSub": "告诉附近的人",
     "someoneNeeds": "有人需要帮助",
     "someoneNeedsSub": "查看附近的求助",
     "nearbyMap": "附近互助",
@@ -165,8 +165,7 @@
     "findSomeone": "看看谁需要帮助 →",
     "hello": "你好，{{name}}！",
     "ask": "请求帮助",
-    "orPick": "或直接选择类别：",
-    "createRequest": "发布请求"
+    "orPick": "或直接选择类别："
   },
   "availability": {
     "title": "我现在可以帮忙",

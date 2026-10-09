@@ -54,11 +54,11 @@ describe("i18n", () => {
 
   it("switches language, loads it on demand and persists it", async () => {
     await setLocale("en");
-    expect(i18n.t("home.needHelp")).toBe("Need help");
+    expect(i18n.t("home.needHelp")).toBe("I need help");
     expect(localStorage.getItem("poruch.lang")).toBe("en");
     expect(document.documentElement.lang).toBe("en");
     await setLocale("de");
-    expect(i18n.t("home.needHelp")).not.toBe("Need help");
+    expect(i18n.t("home.needHelp")).not.toBe("I need help");
     await setLocale("uk");
     expect(i18n.t("home.needHelp")).toBe("Потрібна допомога");
   });
