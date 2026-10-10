@@ -199,12 +199,12 @@ export function Loader({ label }: { label?: string }) {
       <span className={styles.loaderMark} aria-hidden>
         <svg viewBox="0 0 512 512" className={styles.loaderPin}>
           <path
-            d="M256 20c-108 0-196 86-196 194 0 132 150 248 186 274a17 17 0 0 0 20 0c36-26 186-142 186-274 0-108-88-194-196-194z"
+            d="M256 16c-86 0-156 68-156 154 0 118 128 254 146 304a10 10 0 0 0 20 0c18-50 146-186 146-304 0-86-70-154-156-154z"
             fill="var(--color-brand)"
           />
           <path
             className={styles.loaderHeart}
-            d="M256 300c-58-40-84-70-84-101 0-26 20-45 45-45 18 0 32 9 39 24 7-15 21-24 39-24 25 0 45 19 45 45 0 31-26 61-84 101z"
+            d="M256 318c-72-50-100-94-100-134 0-35 26-60 57-60 20 0 35 11 43 28 8-17 23-28 43-28 31 0 57 25 57 60 0 40-28 84-100 134z"
             fill="#FFFFFF"
           />
         </svg>
