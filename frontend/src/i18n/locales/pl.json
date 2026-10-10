@@ -775,5 +775,9 @@
     "save": "Zapisz zmiany",
     "saved": "Zmiany zapisane",
     "fixedFields": "Kategorii, miejsca i pilności nie można zmienić — ludzie w pobliżu już na nich polegają. Anuluj prośbę i utwórz nową."
+  },
+  "location": {
+    "rough": "Lokalizacja jest przybliżona (±{{metres}}). Podejdź do okna lub wyjdź na zewnątrz albo włącz „Dokładną lokalizację” w ustawieniach telefonu.",
+    "roughDrag": "Lokalizacja jest przybliżona (±{{metres}}). Przeciągnij pinezkę w dokładne miejsce albo włącz „Dokładną lokalizację” w ustawieniach telefonu."
   }
 }

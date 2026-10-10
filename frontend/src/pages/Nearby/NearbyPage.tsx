@@ -9,6 +9,7 @@ import type { MapMarker } from "@/components/ui/Map";
 import { useMe } from "@/features/auth/hooks";
 import { CategoryChips, HelpRequestCard, RadiusChips } from "@/features/help/components";
 import { useHelpRequests } from "@/features/help/hooks";
+import { RoughLocationHint } from "@/features/location/RoughLocationHint";
 import { useGeolocation } from "@/features/location/useGeolocation";
 import { useSyncNotificationLocation } from "@/features/location/useSyncNotificationLocation";
 import { PushToggle } from "@/features/notifications/PushToggle";
@@ -189,11 +190,13 @@ export default function NearbyPage() {
             height="calc(100vh - 300px)"
             markers={markers}
             me={geoPosition}
+            meAccuracy={geoPosition?.accuracy}
             onMarkerClick={onMarkerClick}
             fitMarkers
             ariaLabel={t("nearby.map")}
           />
           {markers.some((m) => m.approximate) && <p className="muted">◌ {t("nearby.approximate")}</p>}
+          <RoughLocationHint position={geoPosition} />
         </>
       ) : nearby.isPending ? (
         <SkeletonList />

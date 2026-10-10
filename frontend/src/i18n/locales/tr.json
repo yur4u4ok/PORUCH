@@ -761,5 +761,9 @@
     "save": "Değişiklikleri kaydet",
     "saved": "Değişiklikler kaydedildi",
     "fixedFields": "Kategori, yer ve aciliyet değiştirilemez — yakındakiler bunlara güveniyor. Değiştirmek için talebi iptal edip yenisini oluşturun."
+  },
+  "location": {
+    "rough": "Konum yaklaşık (±{{metres}}). Pencereye yaklaşın ya da dışarı çıkın veya telefon ayarlarından «Hassas konum»u açın.",
+    "roughDrag": "Konum yaklaşık (±{{metres}}). İşareti tam yere sürükleyin veya telefon ayarlarından «Hassas konum»u açın."
   }
 }

@@ -759,5 +759,9 @@
     "save": "Guardar cambios",
     "saved": "Cambios guardados",
     "fixedFields": "La categoría, el lugar y la urgencia no se pueden cambiar: la gente cercana ya cuenta con ellos. Cancela la solicitud y crea una nueva."
+  },
+  "location": {
+    "rough": "La ubicación es aproximada (±{{metres}}). Acércate a una ventana o sal afuera, o activa «Ubicación precisa» en los ajustes del teléfono.",
+    "roughDrag": "La ubicación es aproximada (±{{metres}}). Arrastra el marcador al punto exacto o activa «Ubicación precisa» en los ajustes del teléfono."
   }
 }

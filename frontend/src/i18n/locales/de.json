@@ -761,5 +761,9 @@
     "save": "Änderungen speichern",
     "saved": "Änderungen gespeichert",
     "fixedFields": "Kategorie, Ort und Dringlichkeit lassen sich nicht ändern – Leute in der Nähe verlassen sich darauf. Storniere die Anfrage und erstelle eine neue."
+  },
+  "location": {
+    "rough": "Standort ist ungenau (±{{metres}}). Geh näher ans Fenster oder nach draußen oder aktiviere „Genauer Standort“ in den Telefoneinstellungen.",
+    "roughDrag": "Standort ist ungenau (±{{metres}}). Zieh die Markierung an die genaue Stelle oder aktiviere „Genauer Standort“ in den Telefoneinstellungen."
   }
 }

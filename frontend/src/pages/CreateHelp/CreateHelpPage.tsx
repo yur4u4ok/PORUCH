@@ -21,6 +21,7 @@ import { useCreateHelpRequest } from "@/features/help/hooks";
 import { PhotoUploader } from "@/features/help/PhotoUploader";
 import { ScheduleInput } from "@/features/help/ScheduleInput";
 import { fallbackCenter as approximateCenter, placeNameFor, usePlace } from "@/features/location/place";
+import { RoughLocationHint } from "@/features/location/RoughLocationHint";
 import { useGeolocation } from "@/features/location/useGeolocation";
 import { usePublicConfig } from "@/features/profile/hooks";
 import { useOnline } from "@/hooks/useOnline";
@@ -319,6 +320,7 @@ export default function CreateHelpPage() {
             <LazyMap
               center={values.location ?? mapCenter}
               me={position}
+              meAccuracy={position?.accuracy}
               zoom={fallbackCenter ? 15 : 12}
               height={340}
               picker={values.location ?? mapCenter}
@@ -330,6 +332,17 @@ export default function CreateHelpPage() {
           ) : (
             <Card>{t("create.locating")}</Card>
           )}
+          {/* once the person placed the pin themselves, the device's rough fix no longer matters */}
+          <RoughLocationHint
+            position={
+              values.location &&
+              (values.location.latitude !== position?.latitude ||
+                values.location.longitude !== position?.longitude)
+                ? null
+                : position
+            }
+            canDrag
+          />
           <p className="muted">
             {geoStatus === "locating"
               ? t("create.locating")

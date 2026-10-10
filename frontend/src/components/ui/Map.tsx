@@ -2,7 +2,14 @@
  * MapLibre wrapper. Tile provider is configured by VITE_MAP_STYLE_URL (any MapLibre style JSON),
  * so the app is not tied to a specific provider.
  */
-import { LngLatBounds, Map as MapLibreMap, Marker, NavigationControl, setWorkerUrl } from "maplibre-gl";
+import {
+  type GeoJSONSource,
+  LngLatBounds,
+  Map as MapLibreMap,
+  Marker,
+  NavigationControl,
+  setWorkerUrl,
+} from "maplibre-gl";
 import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import { useEffect, useRef } from "react";
 
@@ -30,6 +37,8 @@ interface MapProps {
   height?: number | string;
   markers?: MapMarker[];
   me?: LatLng | null;
+  /** Uncertainty of `me`, metres: drawn as a translucent circle around it. */
+  meAccuracy?: number | null;
   onMarkerClick?: (id: string) => void;
   /** Draggable picker marker (create request). */
   picker?: LatLng | null;
@@ -65,12 +74,34 @@ function markerElement(marker: MapMarker, onClick?: (id: string) => void): HTMLE
   return el;
 }
 
+const ACCURACY_SOURCE = "me-accuracy";
+type PolygonFeature = {
+  type: "Feature";
+  properties: Record<string, never>;
+  geometry: { type: "Polygon"; coordinates: [number, number][][] };
+};
+const EMPTY = { type: "FeatureCollection" as const, features: [] as PolygonFeature[] };
+
+/** A circle of `radius` metres around a point, as a 64-sided polygon. */
+function circle(center: LatLng, radius: number): PolygonFeature {
+  const points: [number, number][] = [];
+  const latRad = (center.latitude * Math.PI) / 180;
+  const dLat = radius / 111_320;
+  const dLng = radius / (111_320 * Math.cos(latRad));
+  for (let i = 0; i <= 64; i++) {
+    const a = (i / 64) * 2 * Math.PI;
+    points.push([center.longitude + dLng * Math.cos(a), center.latitude + dLat * Math.sin(a)]);
+  }
+  return { type: "Feature", properties: {}, geometry: { type: "Polygon", coordinates: [points] } };
+}
+
 export function MapView({
   center,
   zoom = 13,
   height = 320,
   markers = [],
   me,
+  meAccuracy,
   onMarkerClick,
   picker,
   onPickerChange,
@@ -145,6 +176,39 @@ export function MapView({
     el.className = styles.me ?? "";
     meRef.current = new Marker({ element: el }).setLngLat([me.longitude, me.latitude]).addTo(map);
   }, [me]);
+
+  // Accuracy circle: shows how far off «you are here» may be (a rough fix draws a big circle).
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    const radius = me && meAccuracy && meAccuracy > 0 ? meAccuracy : 0;
+    const draw = () => {
+      const data = radius && me ? circle(me, radius) : EMPTY;
+      const source = map.getSource(ACCURACY_SOURCE) as GeoJSONSource | undefined;
+      if (source) return source.setData(data);
+      map.addSource(ACCURACY_SOURCE, { type: "geojson", data });
+      map.addLayer({
+        id: `${ACCURACY_SOURCE}-fill`,
+        type: "fill",
+        source: ACCURACY_SOURCE,
+        paint: { "fill-color": "#2b7cff", "fill-opacity": 0.12 },
+      });
+      map.addLayer({
+        id: `${ACCURACY_SOURCE}-line`,
+        type: "line",
+        source: ACCURACY_SOURCE,
+        paint: { "line-color": "#2b7cff", "line-opacity": 0.5, "line-width": 1.5 },
+      });
+    };
+    if (map.isStyleLoaded()) draw();
+    else map.once("load", draw);
+    // A wide circle (rough fix) is only useful if it is visible as a whole: zoom out to it.
+    if (me && radius > 150) {
+      const ring = circle(me, radius).geometry.coordinates[0]!;
+      const bounds = ring.reduce((b, point) => b.extend(point), new LngLatBounds());
+      map.fitBounds(bounds, { padding: 24, maxZoom: 16, duration: 0 });
+    }
+  }, [me, meAccuracy]);
 
   useEffect(() => {
     const map = mapRef.current;
