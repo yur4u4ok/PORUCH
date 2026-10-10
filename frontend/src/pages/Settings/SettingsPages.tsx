@@ -141,16 +141,21 @@ export function NotificationSettingsPage() {
           labelKey="notificationCategories"
         />
       </Card>
-      <Card className="stack-sm">
-        <span className="muted" style={{ fontSize: 14 }}>
-          📍 {geoState === "denied" ? t("settings.locationAutoDenied") : t("settings.locationAuto")}
-        </span>
-        {geoState === "prompt" && (
-          <Button variant="secondary" onClick={allowLocation} loading={status === "locating"}>
-            {t("nearby.allowLocation")}
-          </Button>
-        )}
-      </Card>
+      {/* Shown only when something needs doing: location blocked, or not asked yet. */}
+      {(geoState === "denied" || geoState === "prompt") && (
+        <Card className="stack-sm">
+          {geoState === "denied" && (
+            <span className="muted" style={{ fontSize: 14 }}>
+              📍 {t("settings.locationAutoDenied")}
+            </span>
+          )}
+          {geoState === "prompt" && (
+            <Button variant="secondary" onClick={allowLocation} loading={status === "locating"}>
+              {t("nearby.allowLocation")}
+            </Button>
+          )}
+        </Card>
+      )}
     </main>
   );
 }

@@ -4,6 +4,10 @@ import { useLocationStore } from "@/stores/locationStore";
 import type { GeoPosition } from "@/types/api";
 
 const MAX_AGE_MS = 2 * 60 * 1000;
+/** A fix this precise is good enough to stop waiting. */
+const GOOD_ACCURACY_M = 30;
+/** Longest we keep refining before using the best fix so far. */
+const REFINE_MS = 8000;
 
 /** One-shot foreground geolocation (navigator.geolocation.getCurrentPosition). */
 export function useGeolocation() {
@@ -20,20 +24,40 @@ export function useGeolocation() {
         return Promise.resolve(null);
       }
       setStatus("locating");
+      // The first fix a phone reports is often a rough Wi-Fi/cell guess (hundreds of metres off);
+      // GPS sharpens it within seconds. Watch briefly and keep the best fix: done as soon as it is
+      // precise enough, otherwise after REFINE_MS with whatever is best by then.
       return new Promise((resolve) => {
-        navigator.geolocation.getCurrentPosition(
+        let best: GeoPosition | null = null;
+        let watchId: number | null = null;
+        let finished = false;
+        const finish = (result: GeoPosition | null, error?: GeolocationPositionError) => {
+          if (finished) return;
+          finished = true;
+          if (watchId !== null) navigator.geolocation.clearWatch(watchId);
+          clearTimeout(timer);
+          if (result) setPosition(result);
+          else setStatus(error?.code === error?.PERMISSION_DENIED ? "denied" : "unavailable");
+          resolve(result);
+        };
+        const timer = setTimeout(() => finish(best), REFINE_MS);
+        watchId = navigator.geolocation.watchPosition(
           (pos) => {
             const next = {
               latitude: pos.coords.latitude,
               longitude: pos.coords.longitude,
               accuracy: Math.round(pos.coords.accuracy),
             };
-            setPosition(next);
-            resolve(next);
+            if (!best || (next.accuracy ?? Infinity) <= (best.accuracy ?? Infinity)) {
+              best = next;
+              setPosition(next); // the map follows the fix as it improves
+            }
+            if ((next.accuracy ?? Infinity) <= GOOD_ACCURACY_M) finish(next);
           },
           (error) => {
-            setStatus(error.code === error.PERMISSION_DENIED ? "denied" : "unavailable");
-            resolve(null);
+            // A failure after some fix already arrived just ends the wait with that fix.
+            if (best) finish(best);
+            else finish(null, error);
           },
           // A forced request must be a fresh fix, never one the browser cached earlier.
           { enableHighAccuracy: true, timeout: 15000, maximumAge: options.force ? 0 : 60000 },
