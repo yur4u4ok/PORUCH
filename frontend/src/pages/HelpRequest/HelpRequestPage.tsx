@@ -292,6 +292,13 @@ function AuthorActions({ request }: { request: HelpRequest }) {
               ✓ {t("request.complete")}
             </Button>
           )}
+          {request.status === "ACTIVE" && (
+            <Link to={`/help/${request.id}/edit`}>
+              <Button variant="secondary" block>
+                ✏️ {t("edit.button")}
+              </Button>
+            </Link>
+          )}
           <Button variant="danger" onClick={() => setConfirm("cancel")}>
             {t("request.cancel")}
           </Button>

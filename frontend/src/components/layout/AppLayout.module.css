@@ -192,3 +192,15 @@
     padding: 0;
   }
 }
+
+/* «Back»: a visible round button, arrow centred in it */
+.back {
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+.back svg {
+  display: block;
+  margin-left: -2px; /* optical centre of a chevron */
+}

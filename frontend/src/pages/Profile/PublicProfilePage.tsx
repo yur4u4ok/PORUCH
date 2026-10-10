@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { ZoomableAvatar } from "@/features/profile/ZoomableAvatar";
+
 import { RatingSummary, ReviewsList } from "@/features/reviews/Reviews";
 import { Navigate, useNavigate, useParams } from "react-router";
 
 import { PageHeader } from "@/components/layout/AppLayout";
-import { Avatar, Button, EmptyState, Loader } from "@/components/ui";
+import { Button, EmptyState, Loader } from "@/components/ui";
 import { useMe } from "@/features/auth/hooks";
 import { ConfirmDialog, ReportDialog } from "@/features/help/components";
 import { useBlockUser, usePublicProfile } from "@/features/profile/hooks";
@@ -40,7 +42,7 @@ export default function PublicProfilePage() {
     <main className="page stack">
       <PageHeader title={name} />
       <div className={styles.head}>
-        <Avatar name={name} media={user.avatar} size={96} />
+        <ZoomableAvatar name={name} media={user.avatar} size={96} />
         <h1>{name}</h1>
         <div className={styles.stats}>
           <span>{t("profile.helped", { count: user.helped_count })}</span>

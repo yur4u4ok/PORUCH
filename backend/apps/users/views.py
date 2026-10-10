@@ -52,7 +52,6 @@ class RegisterView(APIView):
         ser = s.RegisterSerializer(data=request.data)
         ser.is_valid(raise_exception=True)
         data = dict(ser.validated_data)
-        data.pop("age_confirmed")
         user = accounts.register_user(**data)
         response = Response(_me(user), status=status.HTTP_201_CREATED)
         return set_auth_cookies(response, issue_tokens(user))

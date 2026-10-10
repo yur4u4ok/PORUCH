@@ -10,6 +10,7 @@ import { GuestOnly, RequireAuth } from "./guards";
 
 // Route-level code splitting keeps the initial load small (LCP < 2.5s target).
 const LandingPage = lazy(() => import("@/pages/Landing/LandingPage"));
+const EditHelpPage = lazy(() => import("@/pages/EditHelp/EditHelpPage"));
 const HomePage = lazy(() => import("@/pages/Home/HomePage"));
 const NearbyPage = lazy(() => import("@/pages/Nearby/NearbyPage"));
 const CreateHelpPage = lazy(() => import("@/pages/CreateHelp/CreateHelpPage"));
@@ -115,6 +116,7 @@ export const router = createBrowserRouter([
               { path: "nearby", element: page(<NearbyPage />) },
               { path: "help/create", element: page(<CreateHelpPage />) },
               { path: "help/:id", element: page(<HelpRequestPage />) },
+              { path: "help/:id/edit", element: page(<EditHelpPage />) },
               { path: "chats", element: page(<ConversationsPage />) },
               { path: "chats/:id", element: page(<ChatPage />) },
               { path: "chat/:id", element: <LegacyChatRedirect /> },

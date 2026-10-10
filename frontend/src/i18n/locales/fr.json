@@ -124,7 +124,7 @@
     "newPassword": "Nouveau mot de passe",
     "setPassword": "Enregistrer le mot de passe",
     "passwordChanged": "Mot de passe modifié. Vous pouvez vous connecter.",
-    "terms": "En vous inscrivant, vous vous engagez à aider en toute sécurité et avec respect.",
+    "terms": "En vous inscrivant, vous confirmez avoir au moins 16 ans et vous engagez à aider en toute sécurité et avec respect.",
     "googleFailed": "Connexion avec Google impossible. Réessayez.",
     "googleInactive": "Ce compte a été désactivé.",
     "checkSpam": "Vous ne voyez pas l'email ? Attendez une minute et vérifiez les dossiers Spam et Promotions. S'il y est, marquez-le « Non spam » pour que les suivants arrivent dans votre boîte de réception.",
@@ -485,7 +485,8 @@
     "emailPending": "En attente de confirmation : {{email}}",
     "contactsPrivacy": "Votre téléphone et votre e-mail ne sont visibles que par les aidants choisis et les auteurs qui vous choisissent.",
     "declinedTab": "Pas retenu",
-    "noDeclined": "Ici apparaîtront les demandes où une autre personne a été choisie"
+    "noDeclined": "Ici apparaîtront les demandes où une autre personne a été choisie",
+    "viewPhoto": "Ouvrir la photo : {{name}}"
   },
   "settings": {
     "title": "Réglages",
@@ -753,5 +754,12 @@
     "none": "Pas encore d'avis",
     "count_one": "{{count}} avis",
     "count_other": "{{count}} avis"
+  },
+  "edit": {
+    "button": "Modifier",
+    "title": "Modifier la demande",
+    "save": "Enregistrer",
+    "saved": "Modifications enregistrées",
+    "fixedFields": "La catégorie, le lieu et l'urgence ne peuvent pas changer : les voisins s'y fient déjà. Annulez la demande et créez-en une nouvelle."
   }
 }

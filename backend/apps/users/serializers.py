@@ -121,15 +121,9 @@ class RegisterSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, min_length=8, max_length=128)
     display_name = serializers.CharField(max_length=50)
     city_id = serializers.UUIDField(required=False, allow_null=True)
-    phone = serializers.CharField(max_length=32)
+    # Optional: not asked at sign-up any more, can be added later in the profile.
+    phone = serializers.CharField(max_length=32, required=False, allow_blank=True)
     phone_region = serializers.CharField(max_length=2, required=False)
-    # Terms of Service: users must be at least 16.
-    age_confirmed = serializers.BooleanField()
-
-    def validate_age_confirmed(self, value: bool) -> bool:
-        if not value:
-            raise serializers.ValidationError("Потрібно підтвердити, що вам виповнилося 16 років.")
-        return value
 
 
 class LoginSerializer(serializers.Serializer):

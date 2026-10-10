@@ -9,6 +9,51 @@
   flex-direction: column;
   gap: var(--space-1);
 }
+.greetingTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.bell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-surface);
+  font-size: 20px;
+  line-height: 1;
+  text-decoration: none;
+}
+.bell:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+.bellBadge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: var(--radius-full);
+  background: var(--color-danger);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 20px;
+  text-align: center;
+}
+/* computers: the sidebar already has «Сповіщення» */
+@media (min-width: 1024px) {
+  .bell {
+    display: none;
+  }
+}
 .place {
   font-size: var(--text-sm);
   font-weight: 600;

@@ -1,23 +1,15 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { ZoomableAvatar } from "@/features/profile/ZoomableAvatar";
+
 import { RatingSummary, ReviewsList } from "@/features/reviews/Reviews";
 import { Link } from "react-router";
 
 import { mediaApi } from "@/api/media";
 import { PageHeader } from "@/components/layout/AppLayout";
 import { allResults } from "@/api/paging";
-import {
-  Avatar,
-  Button,
-  Card,
-  EmptyState,
-  ErrorState,
-  Loader,
-  LoadMore,
-  SkeletonList,
-  Tabs,
-} from "@/components/ui";
+import { Button, Card, EmptyState, ErrorState, Loader, LoadMore, SkeletonList, Tabs } from "@/components/ui";
 import { useMe } from "@/features/auth/hooks";
 import { useLogoutConfirm } from "@/features/auth/LogoutConfirm";
 import { ContactsCard } from "@/features/profile/ContactsCard";
@@ -142,7 +134,7 @@ export default function ProfilePage() {
         }
       />
       <div className={styles.head}>
-        <Avatar name={me.display_name} media={me.avatar} size={96} />
+        <ZoomableAvatar name={me.display_name} media={me.avatar} size={96} />
         <div className="row">
           <label className={styles.avatarEdit}>
             {uploading ? t("create.uploading") : t("profile.changeAvatar")}

@@ -1,5 +1,7 @@
 import { timeAgo } from "@/utils/format";
 import clsx from "clsx";
+
+import { BackButton } from "@/components/layout/AppLayout";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router";
@@ -334,9 +336,7 @@ export default function ChatPage() {
   return (
     <div className={styles.screen}>
       <header className={styles.top}>
-        <IconButton label={t("nav.back")} onClick={() => navigate("/chats")}>
-          ←
-        </IconButton>
+        <BackButton label={t("nav.back")} onClick={() => navigate("/chats")} />
         <Link to={other ? `/profile/${other.id}` : "#"}>
           <Avatar
             name={name}

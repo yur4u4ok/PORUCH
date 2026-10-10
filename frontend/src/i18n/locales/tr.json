@@ -124,7 +124,7 @@
     "newPassword": "Yeni şifre",
     "setPassword": "Şifreyi kaydet",
     "passwordChanged": "Şifre değiştirildi. Artık giriş yapabilirsin.",
-    "terms": "Kayıt olarak güvenli ve saygılı bir şekilde yardım etmeyi kabul edersin.",
+    "terms": "Kaydolarak en az 16 yaşında olduğunu onaylar, güvenli ve saygılı şekilde yardım etmeyi kabul edersin.",
     "googleFailed": "Google ile giriş yapılamadı. Tekrar dene.",
     "googleInactive": "Bu hesap devre dışı bırakıldı.",
     "checkSpam": "E-postayı göremiyor musun? Bir dakika bekle ve Spam ile Promosyonlar klasörlerine bak. Oradaysa “Spam değil” olarak işaretle, sonrakiler gelen kutuna düşsün.",
@@ -485,7 +485,8 @@
     "emailPending": "Onay bekleniyor: {{email}}",
     "contactsPrivacy": "Telefon ve e-postanızı yalnızca seçtiğiniz yardımcılar ve sizi seçen yazarlar görür.",
     "declinedTab": "Olmadı",
-    "noDeclined": "Başka birinin seçildiği talepler burada görünecek"
+    "noDeclined": "Başka birinin seçildiği talepler burada görünecek",
+    "viewPhoto": "Fotoğrafı aç: {{name}}"
   },
   "settings": {
     "title": "Ayarlar",
@@ -753,5 +754,12 @@
     "none": "Henüz değerlendirme yok",
     "count_one": "{{count}} değerlendirme",
     "count_other": "{{count}} değerlendirme"
+  },
+  "edit": {
+    "button": "Düzenle",
+    "title": "Talebi düzenle",
+    "save": "Değişiklikleri kaydet",
+    "saved": "Değişiklikler kaydedildi",
+    "fixedFields": "Kategori, yer ve aciliyet değiştirilemez — yakındakiler bunlara güveniyor. Değiştirmek için talebi iptal edip yenisini oluşturun."
   }
 }

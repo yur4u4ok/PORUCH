@@ -75,7 +75,10 @@ export const helpRequestsApi = {
   update: (
     id: string,
     input: Partial<
-      Pick<CreateHelpRequestInput, "title" | "description" | "reward_type" | "reward_amount" | "photo_ids">
+      Pick<
+        CreateHelpRequestInput,
+        "title" | "description" | "reward_type" | "reward_amount" | "reward_options" | "photo_ids"
+      >
     >,
   ) => http.patch<HelpRequest>(`/help-requests/${id}/`, input),
   cancel: (id: string) => http.post<HelpRequest>(`/help-requests/${id}/cancel/`),

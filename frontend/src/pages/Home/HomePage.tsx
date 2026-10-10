@@ -8,6 +8,7 @@ import { useHelpHistory } from "@/features/help/hooks";
 import { usePlace } from "@/features/location/place";
 import { useGeolocation } from "@/features/location/useGeolocation";
 import { useSyncNotificationLocation } from "@/features/location/useSyncNotificationLocation";
+import { useUnreadCount } from "@/features/notifications/hooks";
 import { InstallCard } from "@/features/pwa/InstallPrompt";
 import type { Category } from "@/types/api";
 import { CATEGORY_EMOJI } from "@/utils/categories";
@@ -25,9 +26,25 @@ function Greeting() {
   const name = place?.name ?? (me?.city ? cityName(me.city, i18n.language) : null);
   return (
     <header className={styles.greeting}>
-      <span className={styles.place}>📍 {name ?? t("home.locationUnknown")}</span>
+      <div className={styles.greetingTop}>
+        <span className={styles.place}>📍 {name ?? t("home.locationUnknown")}</span>
+        <NotificationsBell />
+      </div>
       {me?.display_name && <h1 className={styles.hello}>{t("home.hello", { name: me.display_name })}</h1>}
     </header>
+  );
+}
+
+/** Phones: notifications live here, top right, instead of a bottom-menu tab (the sidebar keeps it). */
+function NotificationsBell() {
+  const { t } = useTranslation();
+  const { data: unread = 0 } = useUnreadCount(true);
+  const label = unread ? `${t("nav.notifications")}: ${unread}` : t("nav.notifications");
+  return (
+    <Link to="/notifications" className={styles.bell} aria-label={label} title={t("nav.notifications")}>
+      <span aria-hidden>🔔</span>
+      {unread > 0 && <span className={styles.bellBadge}>{unread > 99 ? "99+" : unread}</span>}
+    </Link>
   );
 }
 

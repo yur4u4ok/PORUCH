@@ -1,57 +1,41 @@
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui";
-import { toast } from "@/stores/toastStore";
 
+import { notificationPermission, pushSupport } from "./push";
 import styles from "./PushToggle.module.css";
+import { useEnablePush, usePushOn } from "./usePush";
 
-import { enablePush, hasActivePushSubscription, notificationPermission, pushSupport } from "./push";
-
-/** hideWhenActive: where a separate on/off switch already exists (settings), show only the «enable» step. */
-export function PushToggle({
-  compact = false,
-  hideWhenActive = false,
-}: {
-  compact?: boolean;
-  hideWhenActive?: boolean;
-}) {
+/** Why push can't be turned on here, or null. */
+export function PushUnavailable() {
   const { t } = useTranslation();
   const support = pushSupport();
-  const [active, setActive] = useState(false);
-  const [busy, setBusy] = useState(false);
-  const permission = notificationPermission();
-
-  useEffect(() => {
-    void hasActivePushSubscription()
-      .then(setActive)
-      .catch(() => setActive(false));
-  }, []);
-
   if (support === "unsupported") return <p className="muted">{t("notifications.unsupported")}</p>;
   if (support === "ios-needs-install") return <p className="muted">{t("notifications.iosHint")}</p>;
-  if (permission === "denied") return <p className="muted">{t("notifications.denied")}</p>;
+  if (notificationPermission() === "denied") return <p className="muted">{t("notifications.denied")}</p>;
+  return null;
+}
 
-  const onEnable = async () => {
-    setBusy(true);
-    try {
-      const ok = await enablePush();
-      setActive(ok);
-      if (ok) toast.success(t("notifications.enabled"));
-      else if (notificationPermission() === "denied") toast.error(t("notifications.denied"));
-    } catch {
-      toast.error(t("common.error"));
-    } finally {
-      setBusy(false);
-    }
-  };
+/**
+ * «Turn on notifications» prompt. Shows nothing once push is on — except in onboarding
+ * (`confirmWhenOn`), where a calm «enabled» line confirms the step.
+ */
+export function PushToggle({
+  compact = false,
+  confirmWhenOn = false,
+}: {
+  compact?: boolean;
+  confirmWhenOn?: boolean;
+}) {
+  const { t } = useTranslation();
+  const on = usePushOn();
+  const enable = useEnablePush();
+  const unavailable = <PushUnavailable />;
 
-  if (active) {
-    if (hideWhenActive) return null;
-    // Turning push off lives in Settings; here we only confirm it's on.
-    return compact ? (
-      <span className="muted">✓ {t("notifications.enabled")}</span>
-    ) : (
+  if (on === null) return null;
+  if (on) {
+    if (!confirmWhenOn) return null;
+    return (
       <div className={styles.on} role="status">
         <span className={styles.onIcon} aria-hidden>
           ✓
@@ -63,8 +47,9 @@ export function PushToggle({
       </div>
     );
   }
+  if (pushSupport() !== "supported" || notificationPermission() === "denied") return unavailable;
   return (
-    <Button variant="help" onClick={onEnable} loading={busy} block={!compact}>
+    <Button variant="help" onClick={() => void enable.run()} loading={enable.busy} block={!compact}>
       🔔 {t("notifications.enable")}
     </Button>
   );

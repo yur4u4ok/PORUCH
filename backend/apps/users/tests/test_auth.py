@@ -26,20 +26,18 @@ def register(client, email="new@example.com", password=PASSWORD):
             "password": password,
             "display_name": "Остап",
             "phone": "067 123 45 67",
-            "age_confirmed": True,
         },
         format="json",
     )
 
 
-def test_register_requires_age_confirmation(api_client):
+def test_register_without_phone(api_client):
     response = api_client.post(
         reverse("auth-register"),
-        {"email": "young@example.com", "password": PASSWORD, "display_name": "Юний", "age_confirmed": False},
+        {"email": "nophone@example.com", "password": PASSWORD, "display_name": "Без телефону"},
         format="json",
     )
-    assert response.status_code == 400 and "age_confirmed" in response.data["details"]
-    assert not User.objects.filter(email="young@example.com").exists()
+    assert response.status_code == 201 and response.data["phone"] is None
 
 
 def test_register_creates_user_profile_preferences_and_sends_email(api_client):
@@ -295,7 +293,7 @@ class TestContacts:
     def test_invalid_phone_rejected(self, api_client):
         response = api_client.post(
             reverse("auth-register"),
-            {"email": "x@example.com", "password": PASSWORD, "display_name": "X", "phone": "12", "age_confirmed": True},
+            {"email": "x@example.com", "password": PASSWORD, "display_name": "X", "phone": "12"},
             format="json",
         )
         assert response.status_code == 400 and "phone" in response.data["details"]

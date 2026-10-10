@@ -124,7 +124,7 @@
     "newPassword": "Nova palavra-passe",
     "setPassword": "Guardar palavra-passe",
     "passwordChanged": "Palavra-passe alterada. Já pode entrar.",
-    "terms": "Ao criar conta, compromete-se a ajudar com segurança e respeito.",
+    "terms": "Ao registar-se, confirma que tem pelo menos 16 anos e concorda em ajudar com segurança e respeito.",
     "googleFailed": "Não foi possível entrar com o Google. Tente de novo.",
     "googleInactive": "Esta conta foi desativada.",
     "checkSpam": "Não vê o email? Aguarde um minuto e verifique as pastas Spam e Promoções. Se estiver lá, marque-o como «Não é spam» para que os próximos cheguem à caixa de entrada.",
@@ -485,7 +485,8 @@
     "emailPending": "Aguardando confirmação: {{email}}",
     "contactsPrivacy": "Telefone e e-mail só aparecem para ajudantes que você escolher e autores que escolherem você.",
     "declinedTab": "Não deu certo",
-    "noDeclined": "Aqui aparecerão os pedidos em que outra pessoa foi escolhida"
+    "noDeclined": "Aqui aparecerão os pedidos em que outra pessoa foi escolhida",
+    "viewPhoto": "Abrir foto: {{name}}"
   },
   "settings": {
     "title": "Definições",
@@ -751,5 +752,12 @@
     "none": "Ainda sem avaliações",
     "count_one": "{{count}} avaliação",
     "count_other": "{{count}} avaliações"
+  },
+  "edit": {
+    "button": "Editar",
+    "title": "Editar pedido",
+    "save": "Guardar alterações",
+    "saved": "Alterações guardadas",
+    "fixedFields": "Categoria, local e urgência não podem ser alterados — quem está perto já conta com eles. Cancele o pedido e crie um novo."
   }
 }

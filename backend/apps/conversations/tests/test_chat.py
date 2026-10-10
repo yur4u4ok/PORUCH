@@ -54,6 +54,14 @@ class TestChatApi:
         unread = make_client(helper).get("/api/v1/conversations/").data["results"][0]["unread_count"]
         assert unread == 1
 
+    def test_push_shows_the_message_text_shortened(self, make_client, no_push):
+        conversation, author, helper = setup_conversation()
+        long_text = "Я біля входу " + "дуже " * 60
+        make_client(author).post(url(conversation, "messages/"), {"text": long_text}, format="json")
+        notification = Notification.objects.filter(user=helper, type="NEW_MESSAGE").latest("created_at")
+        assert notification.body.startswith("Я біля входу") and notification.body.endswith("…")
+        assert len(notification.body) <= 120
+
     def test_online_recipient_gets_no_push_notification(self, make_client):
         conversation, author, helper = setup_conversation()
         presence.connect(conversation.id, helper.pk)

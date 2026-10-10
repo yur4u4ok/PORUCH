@@ -49,5 +49,13 @@ test("request can be published with a hand-placed pin when location is denied", 
   await page.getByRole("button", { name: "Попросити про допомогу" }).click();
   await expect(page).toHaveURL(/\/help\/[0-9a-f-]{36}$/);
   await expect(page.getByText(`Без геолокації ${run}`)).toBeVisible();
+
+  // The author edits their own active request.
+  await page.getByRole("button", { name: /Редагувати/ }).click();
+  await expect(page).toHaveURL(/\/edit$/);
+  await page.getByLabel("Коротко").fill(`Виправлено ${run}`);
+  await page.getByRole("button", { name: "Зберегти зміни" }).click();
+  await expect(page).toHaveURL(/\/help\/[0-9a-f-]{36}$/);
+  await expect(page.getByText(`Виправлено ${run}`)).toBeVisible();
   await context.close();
 });

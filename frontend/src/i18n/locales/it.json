@@ -124,7 +124,7 @@
     "newPassword": "Nuova password",
     "setPassword": "Imposta password",
     "passwordChanged": "Password cambiata. Ora puoi accedere.",
-    "terms": "Registrandoti, ti impegni ad aiutare in modo sicuro e rispettoso.",
+    "terms": "Registrandoti confermi di avere almeno 16 anni e accetti di aiutare in modo sicuro e rispettoso.",
     "googleFailed": "Accesso con Google non riuscito. Riprova.",
     "googleInactive": "Questo account è stato disattivato.",
     "checkSpam": "Non vedi l'email? Aspetta un minuto e controlla le cartelle Spam e Promozioni. Se è lì, segnala che «Non è spam», così le prossime arriveranno nella posta in arrivo.",
@@ -485,7 +485,8 @@
     "emailPending": "In attesa di conferma: {{email}}",
     "contactsPrivacy": "Telefono ed email li vedono solo gli aiutanti che scegli e gli autori che scelgono te.",
     "declinedTab": "Non andata",
-    "noDeclined": "Qui compariranno le richieste in cui è stato scelto qualcun altro"
+    "noDeclined": "Qui compariranno le richieste in cui è stato scelto qualcun altro",
+    "viewPhoto": "Apri foto: {{name}}"
   },
   "settings": {
     "title": "Impostazioni",
@@ -753,5 +754,12 @@
     "none": "Ancora nessuna recensione",
     "count_one": "{{count}} recensione",
     "count_other": "{{count}} recensioni"
+  },
+  "edit": {
+    "button": "Modifica",
+    "title": "Modifica richiesta",
+    "save": "Salva modifiche",
+    "saved": "Modifiche salvate",
+    "fixedFields": "Categoria, luogo e urgenza non si possono cambiare: chi è vicino ci conta già. Annulla la richiesta e creane una nuova."
   }
 }

@@ -117,22 +117,46 @@ export function AppLayout() {
         <Outlet />
       </div>
       <nav className={styles.bottomNav} aria-label={BRAND}>
-        {entries.map((entry) => (
-          <NavLink
-            key={entry.to}
-            to={entry.to}
-            end={entry.end}
-            className={({ isActive }) => clsx(styles.navItem, isActive && styles.navActive)}
-          >
-            <span className={styles.navIcon} aria-hidden>
-              {entry.icon}
-            </span>
-            {entry.label}
-            {!!entry.badge && <span className={styles.dot}>{entry.badge}</span>}
-          </NavLink>
-        ))}
+        {/* phones: notifications are the bell on the home screen, not a tab */}
+        {entries
+          .filter((entry) => entry.to !== "/notifications")
+          .map((entry) => (
+            <NavLink
+              key={entry.to}
+              to={entry.to}
+              end={entry.end}
+              className={({ isActive }) => clsx(styles.navItem, isActive && styles.navActive)}
+            >
+              <span className={styles.navIcon} aria-hidden>
+                {entry.icon}
+              </span>
+              {entry.label}
+              {!!entry.badge && <span className={styles.dot}>{entry.badge}</span>}
+            </NavLink>
+          ))}
       </nav>
     </div>
+  );
+}
+
+/** Round «back» button with a drawn arrow: a text «←» sits off-centre in most fonts. */
+export function BackButton({ onClick, label }: { onClick: () => void; label: string }) {
+  return (
+    <IconButton label={label} onClick={onClick} className={styles.back}>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        aria-hidden
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M15 5l-7 7 7 7" />
+      </svg>
+    </IconButton>
   );
 }
 
@@ -150,12 +174,10 @@ export function PageHeader({
   return (
     <header className={styles.header}>
       {back && (
-        <IconButton
-          label={t("nav.back")}
+        <BackButton
           onClick={() => (window.history.length > 1 ? navigate(-1) : navigate("/"))}
-        >
-          ←
-        </IconButton>
+          label={t("nav.back")}
+        />
       )}
       <h1 className={styles.headerTitle}>{title}</h1>
       {actions}

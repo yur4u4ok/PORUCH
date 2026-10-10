@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Trans, useTranslation } from "react-i18next";
 
 import { BRAND } from "@/app/brand";
@@ -27,7 +27,6 @@ import { consumeAfterAuth, peekAfterAuth } from "@/utils/afterAuth";
 import { track } from "@/utils/analytics";
 
 import styles from "../Landing/Landing.module.css";
-import { region } from "@/utils/format";
 
 function applyServerErrors<T extends Record<string, unknown>>(
   error: unknown,
@@ -132,25 +131,19 @@ export function RegisterPage() {
   const navigate = useNavigate();
   const registerMutation = useRegister();
   useEffect(() => track("signup_started", "auth"), []);
-  const { register, handleSubmit, setError, formState, control } = useForm<RegisterForm>({
+  const { register, handleSubmit, setError, formState } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
-    defaultValues: { age_confirmed: false },
   });
-  const ageConfirmed = useWatch({ control, name: "age_confirmed" });
 
   const onSubmit = handleSubmit((values) =>
-    registerMutation.mutate(
-      { ...values, phone_region: region().country },
-      {
-        onSuccess: () => navigate("/auth/verify-pending", { replace: true }),
-        onError: (error) => {
-          if (error instanceof ApiError && error.code === "EMAIL_TAKEN")
-            setError("email", { message: t("errors.EMAIL_TAKEN") });
-          else
-            applyServerErrors<RegisterForm>(error, setError, ["email", "password", "display_name", "phone"]);
-        },
+    registerMutation.mutate(values, {
+      onSuccess: () => navigate("/auth/verify-pending", { replace: true }),
+      onError: (error) => {
+        if (error instanceof ApiError && error.code === "EMAIL_TAKEN")
+          setError("email", { message: t("errors.EMAIL_TAKEN") });
+        else applyServerErrors<RegisterForm>(error, setError, ["email", "password", "display_name"]);
       },
-    ),
+    }),
   );
 
   return (
@@ -159,22 +152,7 @@ export function RegisterPage() {
         <BrandMark />
       </Link>
       <h1>{t("auth.registerTitle")}</h1>
-      {/* The age check comes first: it's needed both for Google and for the form below. */}
-      <label className={styles.check}>
-        <input type="checkbox" {...register("age_confirmed")} />
-        <span>{t("auth.ageConfirm")}</span>
-      </label>
-      {formState.errors.age_confirmed && (
-        <p role="alert" className={styles.checkError}>
-          {fe(formState.errors.age_confirmed.message)}
-        </p>
-      )}
-      <GoogleButton disabled={!ageConfirmed} />
-      {!ageConfirmed && (
-        <p className="muted" style={{ fontSize: 13, marginTop: -8 }}>
-          {t("auth.ageForGoogle")}
-        </p>
-      )}
+      <GoogleButton />
       <div className={styles.divider}>{t("auth.or")}</div>
       <form className="stack" onSubmit={onSubmit} noValidate>
         <Input
@@ -189,16 +167,6 @@ export function RegisterPage() {
           autoComplete="email"
           {...register("email")}
           error={fe(formState.errors.email?.message)}
-        />
-        <Input
-          label={t("auth.phone")}
-          type="tel"
-          inputMode="tel"
-          autoComplete="tel"
-          placeholder="+380 67 123 45 67"
-          hint={t("auth.phoneHint")}
-          {...register("phone")}
-          error={fe(formState.errors.phone?.message)}
         />
         <Input
           label={t("auth.password")}

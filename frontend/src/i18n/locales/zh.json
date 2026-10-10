@@ -118,7 +118,7 @@
     "newPassword": "新密码",
     "setPassword": "设置密码",
     "passwordChanged": "密码已修改，现在可以登录了。",
-    "terms": "注册即表示你同意以安全、尊重的方式互相帮助。",
+    "terms": "注册即表示你确认已年满 16 岁，并同意以安全、尊重的方式互助。",
     "googleFailed": "无法使用 Google 登录，请重试。",
     "googleInactive": "该账号已被停用。",
     "checkSpam": "没看到邮件？请等一分钟，再查看垃圾邮件和推广邮件文件夹。如果在那里，请标记为“非垃圾邮件”，以后的邮件就会进入收件箱。",
@@ -477,7 +477,8 @@
     "emailPending": "等待确认：{{email}}",
     "contactsPrivacy": "你的电话和邮箱仅对你选中的帮助者和选中你的发布者可见。",
     "declinedTab": "未被选中",
-    "noDeclined": "作者选择了其他人的请求会显示在这里"
+    "noDeclined": "作者选择了其他人的请求会显示在这里",
+    "viewPhoto": "打开照片：{{name}}"
   },
   "settings": {
     "title": "设置",
@@ -736,5 +737,12 @@
     "none": "暂无评价",
     "count_one": "{{count}} 条评价",
     "count_other": "{{count}} 条评价"
+  },
+  "edit": {
+    "button": "编辑",
+    "title": "编辑请求",
+    "save": "保存更改",
+    "saved": "已保存更改",
+    "fixedFields": "类别、地点和紧急程度无法修改——附近的人已据此行动。如需修改，请取消请求并重新发布。"
   }
 }

@@ -136,7 +136,7 @@
     "newPassword": "Nowe hasło",
     "setPassword": "Ustaw hasło",
     "passwordChanged": "Hasło zmienione. Możesz się zalogować.",
-    "terms": "Rejestrując się, zobowiązujesz się pomagać bezpiecznie i z szacunkiem.",
+    "terms": "Rejestrując się, potwierdzasz, że masz co najmniej 16 lat, i zgadzasz się pomagać bezpiecznie i z szacunkiem.",
     "googleFailed": "Nie udało się zalogować przez Google. Spróbuj ponownie.",
     "googleInactive": "To konto zostało dezaktywowane.",
     "checkSpam": "Nie widzisz wiadomości? Poczekaj minutę i sprawdź foldery Spam i Oferty. Jeśli tam jest, oznacz ją jako „To nie spam”, żeby kolejne trafiały do skrzynki odbiorczej.",
@@ -501,7 +501,8 @@
     "emailPending": "Czeka na potwierdzenie: {{email}}",
     "contactsPrivacy": "Telefon i e-mail widzą tylko pomocnicy, których wybierzesz, i autorzy, którzy wybiorą ciebie.",
     "declinedTab": "Nie wyszło",
-    "noDeclined": "Tu pojawią się prośby, w których wybrano kogoś innego"
+    "noDeclined": "Tu pojawią się prośby, w których wybrano kogoś innego",
+    "viewPhoto": "Otwórz zdjęcie: {{name}}"
   },
   "settings": {
     "title": "Ustawienia",
@@ -767,5 +768,12 @@
     "none": "Brak opinii",
     "count_one": "{{count}} opinia",
     "count_other": "{{count}} opinii"
+  },
+  "edit": {
+    "button": "Edytuj",
+    "title": "Edycja prośby",
+    "save": "Zapisz zmiany",
+    "saved": "Zmiany zapisane",
+    "fixedFields": "Kategorii, miejsca i pilności nie można zmienić — ludzie w pobliżu już na nich polegają. Anuluj prośbę i utwórz nową."
   }
 }

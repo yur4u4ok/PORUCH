@@ -11,7 +11,8 @@ import { SelectAll } from "@/features/help/SelectAll";
 import { playChime, setSoundEnabled, soundEnabled } from "@/features/attention/sound";
 import { geolocationPermission, useGeolocation } from "@/features/location/useGeolocation";
 import { MuteNotifications } from "@/features/notifications/MuteNotifications";
-import { PushToggle } from "@/features/notifications/PushToggle";
+import { PushUnavailable } from "@/features/notifications/PushToggle";
+import { useEnablePush, usePushOn } from "@/features/notifications/usePush";
 import {
   useBlocks,
   useChangePassword,
@@ -62,6 +63,8 @@ export function NotificationSettingsPage() {
   const { data: prefs, isPending } = usePreferences();
   const { data: config } = usePublicConfig();
   const update = useUpdatePreferences();
+  const pushOn = usePushOn();
+  const enablePush = useEnablePush();
   const { locate, status } = useGeolocation();
   const [geoState, setGeoState] = useState<string>("granted");
 
@@ -90,12 +93,13 @@ export function NotificationSettingsPage() {
     <main className="page stack">
       <PageHeader title={t("settings.notifications")} />
       <Card className="stack-sm">
-        <PushToggle hideWhenActive />
         <Switch
           label={t("settings.push")}
-          checked={prefs.push_enabled}
-          onChange={(v) => update.mutate({ push_enabled: v })}
+          checked={!!pushOn}
+          disabled={enablePush.busy}
+          onChange={(v) => (v ? void enablePush.run() : update.mutate({ push_enabled: false }))}
         />
+        <PushUnavailable />
         <Switch
           label={t("settings.email")}
           checked={prefs.email_enabled}

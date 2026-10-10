@@ -127,6 +127,10 @@ def _other_participant_id(conversation: Conversation, user: User):
     return None
 
 
+# Long messages are cut in the push; the full text is in the chat.
+PUSH_PREVIEW_CHARS = 120
+
+
 @transaction.atomic
 def send_message(
     user: User, conversation_id, *, text: str = "", attachment_id=None, client_id=None, reply_to_id=None
@@ -174,11 +178,17 @@ def send_message(
         from apps.notifications.services.notify import notify
 
         name = user.profile.display_name if user.profile.show_name else _("Сусід")
+        # Show what was written (shortened), so the push itself is useful: «💬 Олена: Я біля входу…».
+        if message.message_type == Message.Type.IMAGE:
+            preview = _("📷 Фото")
+        else:
+            text_line = " ".join((message.text or "").split())
+            preview = text_line if len(text_line) <= PUSH_PREVIEW_CHARS else text_line[: PUSH_PREVIEW_CHARS - 1] + "…"
         notify(
             other,
             NotificationType.NEW_MESSAGE,
-            title=_("💬 Нове повідомлення"),
-            body=_("{name} надіслав(-ла) вам повідомлення").format(name=name),
+            title=_("💬 {name}").format(name=name),
+            body=preview,
             url=f"/chats/{conversation.id}",
             data={"conversation_id": str(conversation.id)},
         )

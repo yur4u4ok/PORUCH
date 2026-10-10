@@ -124,7 +124,7 @@
     "newPassword": "Neues Passwort",
     "setPassword": "Passwort festlegen",
     "passwordChanged": "Passwort geändert. Du kannst dich jetzt anmelden.",
-    "terms": "Mit der Registrierung sagst du zu, sicher und respektvoll zu helfen.",
+    "terms": "Mit der Registrierung bestätigst du, dass du mindestens 16 bist, und versprichst, sicher und respektvoll zu helfen.",
     "googleFailed": "Anmeldung mit Google fehlgeschlagen. Bitte versuche es erneut.",
     "googleInactive": "Dieses Konto wurde deaktiviert.",
     "checkSpam": "Keine E-Mail da? Warte eine Minute und sieh im Spam- und im Werbung-Ordner nach. Liegt sie dort, markiere sie als „Kein Spam“, damit die nächsten im Posteingang landen.",
@@ -485,7 +485,8 @@
     "emailPending": "Wartet auf Bestätigung: {{email}}",
     "contactsPrivacy": "Telefon und E-Mail sehen nur Helfer, die du auswählst, und Autoren, die dich auswählen.",
     "declinedTab": "Nicht geklappt",
-    "noDeclined": "Hier erscheinen Anfragen, bei denen jemand anderes gewählt wurde"
+    "noDeclined": "Hier erscheinen Anfragen, bei denen jemand anderes gewählt wurde",
+    "viewPhoto": "Foto öffnen: {{name}}"
   },
   "settings": {
     "title": "Einstellungen",
@@ -753,5 +754,12 @@
     "none": "Noch keine Bewertungen",
     "count_one": "{{count}} Bewertung",
     "count_other": "{{count}} Bewertungen"
+  },
+  "edit": {
+    "button": "Bearbeiten",
+    "title": "Anfrage bearbeiten",
+    "save": "Änderungen speichern",
+    "saved": "Änderungen gespeichert",
+    "fixedFields": "Kategorie, Ort und Dringlichkeit lassen sich nicht ändern – Leute in der Nähe verlassen sich darauf. Storniere die Anfrage und erstelle eine neue."
   }
 }

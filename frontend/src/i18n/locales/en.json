@@ -124,7 +124,7 @@
     "newPassword": "New password",
     "setPassword": "Set password",
     "passwordChanged": "Password changed. You can log in now.",
-    "terms": "By signing up, you agree to help safely and respectfully.",
+    "terms": "By signing up, you confirm you are at least 16 and agree to help safely and respectfully.",
     "googleFailed": "Couldn't sign in with Google. Please try again.",
     "googleInactive": "This account has been deactivated.",
     "checkSpam": "Can't see the email? Wait a minute and check your Spam and Promotions folders. If it's there, mark it “Not spam” so future emails reach your inbox.",
@@ -485,7 +485,8 @@
     "emailPending": "Waiting for confirmation: {{email}}",
     "contactsPrivacy": "Your phone and email are shown only to helpers you choose and to authors who choose you.",
     "declinedTab": "Didn't work out",
-    "noDeclined": "Requests where the author chose another helper will appear here"
+    "noDeclined": "Requests where the author chose another helper will appear here",
+    "viewPhoto": "Open photo: {{name}}"
   },
   "settings": {
     "title": "Settings",
@@ -753,5 +754,12 @@
     "none": "No reviews yet",
     "count_one": "{{count}} review",
     "count_other": "{{count}} reviews"
+  },
+  "edit": {
+    "button": "Edit",
+    "title": "Edit request",
+    "save": "Save changes",
+    "saved": "Changes saved",
+    "fixedFields": "Category, place and urgency can't be changed — people nearby already rely on them. To change them, cancel the request and create a new one."
   }
 }

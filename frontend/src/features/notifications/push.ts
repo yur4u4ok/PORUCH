@@ -4,6 +4,15 @@
  */
 import { notificationsApi } from "@/api/notifications";
 import { usersApi } from "@/api/users";
+import { create } from "zustand";
+
+/**
+ * Whether THIS device has a live push subscription. One shared value, so every screen (Nearby,
+ * Notifications, Settings) agrees, and it updates as soon as the app re-subscribes after sign-in.
+ * null = not checked yet.
+ */
+export const usePushDevice = create<{ active: boolean | null }>(() => ({ active: null }));
+const setActive = (active: boolean) => usePushDevice.setState({ active });
 
 const STORAGE_KEY = "poruch.pushSubscriptionId";
 
@@ -38,7 +47,10 @@ export async function enablePush(): Promise<boolean> {
   if (pushSupport() !== "supported") return false;
   const permission =
     Notification.permission === "default" ? await Notification.requestPermission() : Notification.permission;
-  if (permission !== "granted") return false;
+  if (permission !== "granted") {
+    setActive(false);
+    return false;
+  }
   return syncPushSubscription();
 }
 
@@ -61,6 +73,7 @@ export async function syncPushSubscription(): Promise<boolean> {
   } catch {
     /* storage unavailable */
   }
+  setActive(true);
   return true;
 }
 
@@ -77,10 +90,16 @@ export async function disablePushOnThisDevice(): Promise<void> {
   const reg = await registration();
   const subscription = await reg.pushManager.getSubscription();
   await subscription?.unsubscribe();
+  setActive(false);
 }
 
 export async function hasActivePushSubscription(): Promise<boolean> {
-  if (pushSupport() !== "supported" || Notification.permission !== "granted") return false;
+  if (pushSupport() !== "supported" || Notification.permission !== "granted") {
+    setActive(false);
+    return false;
+  }
   const reg = await registration();
-  return !!(await reg.pushManager.getSubscription());
+  const active = !!(await reg.pushManager.getSubscription());
+  setActive(active);
+  return active;
 }
