@@ -166,7 +166,7 @@
   animation: pinHop 1s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 .loaderHeart {
-  transform-origin: 256px 221px;
+  transform-origin: 256px 224px;
   animation: heartBeat 1s ease-in-out infinite;
 }
 .loaderShadow {
