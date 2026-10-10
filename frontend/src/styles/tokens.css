@@ -1,44 +1,48 @@
 :root {
   color-scheme: light;
-  /* «Під'їзд» palette: cool courtyard paper, ink-green text, the brand teal, notice-board yellow
-     for asking and a heart red for helping. */
-  --color-bg: #eef2ed;
+  /* Slate + green: a calm, trustworthy base (#0F172A ink on #F8FAFC) where green means
+     «act / it worked», red means danger and amber means «careful». Status is never colour alone —
+     every pill also carries text and an icon. */
+  --color-bg: #f8fafc;
   --color-surface: #ffffff;
-  --color-surface-2: #e8eeec;
-  --color-border: #d4ddd5;
-  --color-text: #183330;
-  --color-text-muted: #546b67;
-  --color-primary: #0e5a54;
-  --color-primary-hover: #0a4843;
-  --color-primary-soft: #dcefeb;
+  --color-surface-2: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
+  /* Brand green #16A34A has 3.3:1 with white — fine for icons, rings and fills without text.
+     Filled buttons and green text use one step darker (#15803D, 5:1) to stay readable (WCAG AA). */
+  --color-brand: #16a34a;
+  --color-primary: #15803d;
+  --color-primary-hover: #166534;
+  --color-primary-soft: #dcfce7;
   --color-on-primary: #ffffff;
-  --color-accent: #f2b544;
-  --color-notice: #ffd54a;
-  --color-notice-ink: #2b2410;
-  --color-heart: #d93a2f;
-  --color-accent-soft: #fdf0d3;
-  --color-help: #1f7a4d;
-  --color-help-hover: #18633e;
-  --color-help-soft: #dcf0e3;
-  --color-warning: #b54708;
-  --color-warning-soft: #fef0c7;
-  --color-danger: #b42318;
-  --color-success: #1f7a4d;
-  --color-urgent-now: #b54708;
-  --color-urgent-today: #a87a12;
-  --color-urgent-whenever: #1f7a4d;
-  --color-urgent-scheduled: #2f5f9e;
-  --color-overlay: rgb(10 30 28 / 0.5);
-  --color-sidebar: color-mix(in srgb, color-mix(in srgb, #0e5a54 68%, #66807c) 90%, transparent);
+  --color-accent: #16a34a;
+  --color-notice: #fcd34d;
+  --color-notice-ink: #1c1917;
+  --color-heart: #dc2626;
+  --color-accent-soft: #fef3c7;
+  --color-help: #15803d;
+  --color-help-hover: #166534;
+  --color-help-soft: #dcfce7;
+  --color-warning: #b45309;
+  --color-warning-soft: #fef3c7;
+  --color-danger: #dc2626;
+  --color-success: #15803d;
+  --color-urgent-now: #dc2626;
+  --color-urgent-today: #b45309;
+  --color-urgent-whenever: #64748b;
+  --color-urgent-scheduled: #334155;
+  --color-overlay: rgb(15 23 42 / 0.5);
+  --color-sidebar: #0f172a;
 
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 18px;
   --radius-xl: 28px;
   --radius-full: 999px;
-  --shadow-sm: 0 1px 2px rgb(14 60 56 / 0.06), 0 1px 3px rgb(14 60 56 / 0.08);
-  --shadow-md: 0 6px 20px rgb(14 60 56 / 0.1);
-  --shadow-lg: 0 18px 50px rgb(14 60 56 / 0.18);
+  --shadow-sm: 0 1px 2px rgb(15 23 42 / 0.05), 0 1px 3px rgb(15 23 42 / 0.07);
+  --shadow-md: 0 6px 20px rgb(15 23 42 / 0.08);
+  --shadow-lg: 0 18px 50px rgb(15 23 42 / 0.16);
 
   --space-1: 4px;
   --space-2: 8px;
@@ -69,25 +73,32 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-bg: #0f1a19;
-  --color-notice: #e9bf35;
-  --color-heart: #ef5a4e;
-  --color-overlay: rgb(0 0 0 / 0.72);
-  --color-sidebar: color-mix(in srgb, #1c3b37 88%, transparent);
-  --color-surface: #162523;
-  --color-surface-2: #1e302d;
-  --color-border: #2c4440;
-  --color-text: #ecf3f1;
-  --color-text-muted: #9fb3ae;
-  --color-primary: #237a70;
-  --color-primary-hover: #2b8a7f;
-  --color-primary-soft: #183a36;
+  --color-bg: #0b1120;
+  --color-notice: #facc15;
+  --color-heart: #f87171;
+  --color-overlay: rgb(2 6 23 / 0.72);
+  --color-sidebar: #111a2e;
+  --color-surface: #131c31;
+  --color-surface-2: #1c2740;
+  --color-border: #2a3651;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+  --color-brand: #22c55e;
+  --color-primary: #15803d;
+  --color-primary-hover: #16a34a;
+  --color-primary-soft: #12321f;
   --color-on-primary: #ffffff;
-  --color-accent-soft: #3a3016;
-  --color-help: #3f9d6b;
-  --color-help-hover: #4fae7b;
-  --color-help-soft: #173326;
-  --color-warning-soft: #3a2a14;
+  --color-accent: #22c55e;
+  --color-accent-soft: #3a2e0b;
+  --color-help: #15803d;
+  --color-help-hover: #16a34a;
+  --color-help-soft: #12321f;
+  --color-warning: #f59e0b;
+  --color-warning-soft: #3a2a0b;
+  --color-danger: #ef4444;
+  --color-success: #22c55e;
+  --color-urgent-whenever: #64748b;
+  --color-urgent-scheduled: #475569;
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
   --shadow-md: 0 6px 20px rgb(0 0 0 / 0.45);
 }
@@ -95,25 +106,32 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --color-bg: #0f1a19;
-    --color-notice: #e9bf35;
-    --color-heart: #ef5a4e;
-    --color-overlay: rgb(0 0 0 / 0.72);
-    --color-sidebar: color-mix(in srgb, #1c3b37 88%, transparent);
-    --color-surface: #162523;
-    --color-surface-2: #1e302d;
-    --color-border: #2c4440;
-    --color-text: #ecf3f1;
-    --color-text-muted: #9fb3ae;
-    --color-primary: #237a70;
-    --color-primary-hover: #2b8a7f;
-    --color-primary-soft: #183a36;
+    --color-bg: #0b1120;
+    --color-notice: #facc15;
+    --color-heart: #f87171;
+    --color-overlay: rgb(2 6 23 / 0.72);
+    --color-sidebar: #111a2e;
+    --color-surface: #131c31;
+    --color-surface-2: #1c2740;
+    --color-border: #2a3651;
+    --color-text: #f1f5f9;
+    --color-text-muted: #94a3b8;
+    --color-brand: #22c55e;
+    --color-primary: #15803d;
+    --color-primary-hover: #16a34a;
+    --color-primary-soft: #12321f;
     --color-on-primary: #ffffff;
-    --color-accent-soft: #3a3016;
-    --color-help: #3f9d6b;
-    --color-help-hover: #4fae7b;
-    --color-help-soft: #173326;
-    --color-warning-soft: #3a2a14;
+    --color-accent: #22c55e;
+    --color-accent-soft: #3a2e0b;
+    --color-help: #15803d;
+    --color-help-hover: #16a34a;
+    --color-help-soft: #12321f;
+    --color-warning: #f59e0b;
+    --color-warning-soft: #3a2a0b;
+    --color-danger: #ef4444;
+    --color-success: #22c55e;
+    --color-urgent-whenever: #64748b;
+    --color-urgent-scheduled: #475569;
     --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
     --shadow-md: 0 6px 20px rgb(0 0 0 / 0.45);
   }

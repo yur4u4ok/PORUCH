@@ -205,7 +205,7 @@ export function Loader({ label }: { label?: string }) {
           <path
             className={styles.loaderHeart}
             d="M256 290c-6 0-52-33-52-69 0-18 14-32 31-32 9 0 17 4 21 11 4-7 12-11 21-11 17 0 31 14 31 32 0 36-46 69-52 69z"
-            fill="#F2B544"
+            fill="#16A34A"
           />
         </svg>
         <span className={styles.loaderShadow} />

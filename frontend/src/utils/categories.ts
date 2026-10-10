@@ -55,10 +55,10 @@ export const URGENCY_COLOR: Record<Urgency, string> = {
 
 /** Raw colors for MapLibre DOM markers (CSS vars resolve too, but keep explicit for contrast). */
 export const URGENCY_HEX: Record<Urgency, string> = {
-  NOW: "#d93a2f",
-  TODAY: "#a87a12",
-  WHENEVER: "#1f7a4d",
-  SCHEDULED: "#2f5f9e",
+  NOW: "#dc2626",
+  TODAY: "#b45309",
+  WHENEVER: "#64748b",
+  SCHEDULED: "#334155",
 };
 
 export function requestEmoji(category: Category, subcategory?: string | null): string {

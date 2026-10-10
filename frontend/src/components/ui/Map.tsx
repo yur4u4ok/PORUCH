@@ -218,7 +218,7 @@ export function MapView({
       return;
     }
     if (!pickerRef.current) {
-      const marker = new Marker({ draggable: true, color: "#0e5a54" })
+      const marker = new Marker({ draggable: true, color: "#15803d" })
         .setLngLat([picker.longitude, picker.latitude])
         .addTo(map);
       marker.on("dragend", () => {

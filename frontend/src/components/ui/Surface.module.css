@@ -72,7 +72,7 @@
   right: 0;
   bottom: 0;
   border-radius: 50%;
-  background: #22a559;
+  background: var(--color-brand);
   box-shadow: 0 0 0 2px var(--color-surface);
 }
 .avatar img {

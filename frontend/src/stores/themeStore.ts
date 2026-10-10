@@ -3,7 +3,7 @@ import { create } from "zustand";
 export type ThemePreference = "system" | "light" | "dark";
 
 const STORAGE_KEY = "poruch.theme";
-const THEME_COLORS = { light: "#0E5A54", dark: "#0F1A19" };
+const THEME_COLORS = { light: "#0F172A", dark: "#0B1120" };
 
 function read(): ThemePreference {
   try {
