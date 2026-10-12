@@ -155,3 +155,9 @@
   background: #fff;
   box-shadow: 0 0 0 2px rgb(255 255 255 / 0.35);
 }
+
+/* «На коли» next to the status on your own lists */
+.when {
+  font-weight: 700;
+  color: var(--color-text);
+}

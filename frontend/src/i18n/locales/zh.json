@@ -748,5 +748,10 @@
   "location": {
     "rough": "位置是大概的（±{{metres}}）。请靠近窗户或到室外，或在手机设置中开启“精确位置”。",
     "roughDrag": "位置是大概的（±{{metres}}）。请把图钉拖到准确位置，或在手机设置中开启“精确位置”。"
+  },
+  "when": {
+    "todayAt": "今天 {{time}}",
+    "tomorrowAt": "明天 {{time}}",
+    "dateAt": "{{date}} {{time}}"
   }
 }

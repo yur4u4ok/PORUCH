@@ -763,5 +763,10 @@
   "location": {
     "rough": "A localização é aproximada (±{{metres}}). Aproxime-se de uma janela ou vá para fora, ou ative «Localização exata» nas definições do telemóvel.",
     "roughDrag": "A localização é aproximada (±{{metres}}). Arraste o marcador para o local exato ou ative «Localização exata» nas definições do telemóvel."
+  },
+  "when": {
+    "todayAt": "hoje às {{time}}",
+    "tomorrowAt": "amanhã às {{time}}",
+    "dateAt": "{{date}} às {{time}}"
   }
 }

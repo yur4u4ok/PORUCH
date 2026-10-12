@@ -765,5 +765,10 @@
   "location": {
     "rough": "Location is approximate (±{{metres}}). Move closer to a window or outside, or turn on «Precise location» in your phone settings.",
     "roughDrag": "Location is approximate (±{{metres}}). Drag the pin to the exact spot, or turn on «Precise location» in your phone settings."
+  },
+  "when": {
+    "todayAt": "today at {{time}}",
+    "tomorrowAt": "tomorrow at {{time}}",
+    "dateAt": "{{date}} at {{time}}"
   }
 }

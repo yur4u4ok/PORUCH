@@ -779,5 +779,10 @@
   "location": {
     "rough": "Lokalizacja jest przybliżona (±{{metres}}). Podejdź do okna lub wyjdź na zewnątrz albo włącz „Dokładną lokalizację” w ustawieniach telefonu.",
     "roughDrag": "Lokalizacja jest przybliżona (±{{metres}}). Przeciągnij pinezkę w dokładne miejsce albo włącz „Dokładną lokalizację” w ustawieniach telefonu."
+  },
+  "when": {
+    "todayAt": "dziś o {{time}}",
+    "tomorrowAt": "jutro o {{time}}",
+    "dateAt": "{{date}} o {{time}}"
   }
 }

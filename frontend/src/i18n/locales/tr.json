@@ -765,5 +765,10 @@
   "location": {
     "rough": "Konum yaklaşık (±{{metres}}). Pencereye yaklaşın ya da dışarı çıkın veya telefon ayarlarından «Hassas konum»u açın.",
     "roughDrag": "Konum yaklaşık (±{{metres}}). İşareti tam yere sürükleyin veya telefon ayarlarından «Hassas konum»u açın."
+  },
+  "when": {
+    "todayAt": "bugün {{time}}",
+    "tomorrowAt": "yarın {{time}}",
+    "dateAt": "{{date}} {{time}}"
   }
 }

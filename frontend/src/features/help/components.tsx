@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import type { TFunction } from "i18next";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
@@ -15,7 +16,14 @@ import type {
   Urgency,
 } from "@/types/api";
 import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
-import { formatDateTime, formatDistance, formatRadius, timeAgo } from "@/utils/format";
+import {
+  formatDate,
+  formatDateTime,
+  formatDistance,
+  formatRadius,
+  formatTime,
+  timeAgo,
+} from "@/utils/format";
 import { emergencyVars } from "@/utils/emergency";
 import { REWARD_TYPE_EMOJI, rewardSummary } from "@/utils/reward";
 
@@ -55,6 +63,26 @@ export function StatusBadge({ status }: { status: HelpRequestStatus }) {
   );
 }
 
+/** «На коли»: the planned time for scheduled requests, otherwise what the urgency means in days. */
+function whenText(request: HelpRequest, t: TFunction): string {
+  const now = new Date();
+  const sameDay = (a: Date, b: Date) => a.toDateString() === b.toDateString();
+  if (request.urgency === "SCHEDULED" && request.needed_at) {
+    const at = new Date(request.needed_at);
+    const tomorrow = new Date(now);
+    tomorrow.setDate(now.getDate() + 1);
+    const time = formatTime(at);
+    if (sameDay(at, now)) return t("when.todayAt", { time });
+    if (sameDay(at, tomorrow)) return t("when.tomorrowAt", { time });
+    return t("when.dateAt", { date: formatDate(at), time });
+  }
+  if (request.urgency === "TODAY") {
+    const created = new Date(request.created_at);
+    return sameDay(created, now) ? t("urgency.TODAY") : formatDate(created);
+  }
+  return t(`urgency.${request.urgency}`);
+}
+
 export function HelpRequestCard({
   request,
   showStatus = false,
@@ -79,7 +107,10 @@ export function HelpRequestCard({
           <div className={styles.description}>{request.description}</div>
           <div className={styles.meta}>
             {showStatus ? (
-              <StatusBadge status={request.status} />
+              <>
+                <StatusBadge status={request.status} />
+                <span className={styles.when}>🗓 {whenText(request, t)}</span>
+              </>
             ) : (
               <UrgencyBadge urgency={request.urgency} neededAt={request.needed_at} />
             )}

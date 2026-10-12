@@ -765,5 +765,10 @@
   "location": {
     "rough": "Standort ist ungenau (±{{metres}}). Geh näher ans Fenster oder nach draußen oder aktiviere „Genauer Standort“ in den Telefoneinstellungen.",
     "roughDrag": "Standort ist ungenau (±{{metres}}). Zieh die Markierung an die genaue Stelle oder aktiviere „Genauer Standort“ in den Telefoneinstellungen."
+  },
+  "when": {
+    "todayAt": "heute um {{time}}",
+    "tomorrowAt": "morgen um {{time}}",
+    "dateAt": "{{date}} um {{time}}"
   }
 }

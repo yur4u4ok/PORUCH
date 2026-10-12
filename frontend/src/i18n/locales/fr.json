@@ -765,5 +765,10 @@
   "location": {
     "rough": "Position approximative (±{{metres}}). Approchez-vous d'une fenêtre ou sortez, ou activez « Position exacte » dans les réglages du téléphone.",
     "roughDrag": "Position approximative (±{{metres}}). Faites glisser le repère au bon endroit ou activez « Position exacte » dans les réglages du téléphone."
+  },
+  "when": {
+    "todayAt": "aujourd'hui à {{time}}",
+    "tomorrowAt": "demain à {{time}}",
+    "dateAt": "{{date}} à {{time}}"
   }
 }
