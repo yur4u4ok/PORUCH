@@ -104,7 +104,9 @@ export function HelpRequestCard({
         </div>
         <div className={styles.body}>
           <div className={styles.title}>{request.title}</div>
-          <div className={styles.description}>{request.description}</div>
+          <div className={clsx(styles.description, showStatus && styles.descriptionShort)}>
+            {request.description}
+          </div>
           <div className={styles.meta}>
             {showStatus ? (
               <>
