@@ -5,7 +5,7 @@ import { queryKeys } from "@/api/queryKeys";
 
 import { playChime, soundEnabled } from "./sound";
 
-const FAVICON = "/icons/favicon.svg";
+const FAVICON = "/icons/tab.svg"; // tightly cropped so the pin fills the tab
 
 /**
  * Favicon with a red dot (canvas over the normal icon); restores the plain icons at 0.
