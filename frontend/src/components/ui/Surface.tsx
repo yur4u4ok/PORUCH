@@ -198,9 +198,16 @@ export function Loader({ label }: { label?: string }) {
       {/* The logo's pin hops over its shadow while the heart inside beats. */}
       <span className={styles.loaderMark} aria-hidden>
         <svg viewBox="0 0 512 512" className={styles.loaderPin}>
+          {/* same green gradient as the logo (public/icons/favicon.svg) */}
+          <defs>
+            <linearGradient id="loader-pin" x1="0.2" y1="0" x2="0.8" y2="1">
+              <stop offset="0" stopColor="#22C55E" />
+              <stop offset="1" stopColor="#15803D" />
+            </linearGradient>
+          </defs>
           <path
             d="M256 20c-94 0-170 74-170 168 0 128 136 250 160 282a13 13 0 0 0 20 0c24-32 160-154 160-282 0-94-76-168-170-168z"
-            fill="var(--color-brand)"
+            fill="url(#loader-pin)"
           />
           <path
             className={styles.loaderHeart}

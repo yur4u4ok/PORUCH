@@ -26,7 +26,12 @@ export function UrgencyBadge({ urgency, neededAt }: { urgency: Urgency; neededAt
   const { t } = useTranslation();
   return (
     <span className={styles.pill} style={{ background: URGENCY_HEX[urgency] }}>
-      {URGENCY_EMOJI[urgency]}{" "}
+      {/* a coloured circle emoji vanishes on a pill of the same colour — draw a white dot instead */}
+      {urgency === "SCHEDULED" ? (
+        `${URGENCY_EMOJI[urgency]} `
+      ) : (
+        <span className={styles.pillDot} aria-hidden />
+      )}
       {urgency === "SCHEDULED" && neededAt ? formatDateTime(neededAt) : t(`urgency.${urgency}`)}
     </span>
   );
@@ -34,16 +39,16 @@ export function UrgencyBadge({ urgency, neededAt }: { urgency: Urgency; neededAt
 
 const STATUS_COLOR: Record<HelpRequestStatus, string> = {
   ACTIVE: "var(--color-primary)",
-  IN_PROGRESS: "#0f172a",
-  COMPLETED: "#15803d",
-  CANCELLED: "#64748b",
-  EXPIRED: "#64748b",
+  IN_PROGRESS: "#6a4c9c",
+  COMPLETED: "#1f7a4d",
+  CANCELLED: "#4b5856",
+  EXPIRED: "#4b5856",
 };
 
 export function StatusBadge({ status }: { status: HelpRequestStatus }) {
   const { t } = useTranslation();
   return (
-    <span className={styles.pill} style={{ background: STATUS_COLOR[status] ?? "#64748b" }}>
+    <span className={styles.pill} style={{ background: STATUS_COLOR[status] ?? "#4b5856" }}>
       {status === "COMPLETED" ? "✓ " : ""}
       {t(`status.${status}`)}
     </span>

@@ -63,8 +63,8 @@
   height: 18px;
   padding: 0 5px;
   border-radius: 9px;
-  background: var(--color-primary);
-  color: #ffffff;
+  background: var(--color-accent);
+  color: #16202b;
   font-size: 11px;
   display: flex;
   align-items: center;

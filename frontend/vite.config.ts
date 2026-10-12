@@ -41,8 +41,8 @@ export default defineConfig(({ mode }) => {
           scope: "/",
           display: "standalone",
           orientation: "portrait",
-          theme_color: "#0F172A",
-          background_color: "#F8FAFC",
+          theme_color: "#0E5A54",
+          background_color: "#F3F6F5",
           categories: ["social", "lifestyle"],
           // Lets Chrome answer navigator.getInstalledRelatedApps() — hides «install» once installed.
           related_applications: [
