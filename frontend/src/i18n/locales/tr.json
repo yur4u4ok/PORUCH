@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "Ana sayfa",
-    "nearby": "Yakında",
-    "help": "İste",
+    "nearby": "Çevre",
+    "help": "Oluştur",
     "chats": "Sohbetler",
     "profile": "Profil",
     "notifications": "Bildirimler",
@@ -43,7 +43,8 @@
     "less": "Azalt",
     "more": "Artır",
     "previous": "Önceki",
-    "selectedOf": "{{total}} içinden {{count}} seçildi"
+    "selectedOf": "{{total}} içinden {{count}} seçildi",
+    "moreInfo": "Daha fazla bilgi"
   },
   "time": {
     "justNow": "az önce",
@@ -180,7 +181,8 @@
     "findSomeone": "Kimin yardıma ihtiyacı var, gör →",
     "hello": "Merhaba, {{name}}!",
     "ask": "Yardım iste",
-    "orPick": "Ya da konuyu hemen seç:"
+    "orPick": "Ya da konuyu hemen seç:",
+    "myActivity": "Etkinliğim"
   },
   "availability": {
     "title": "Şu an yardım edebilirim",
@@ -484,9 +486,10 @@
     "emailSent": "{{email}} adresine e-posta gönderildi. Bağlantıyı açın.",
     "emailPending": "Onay bekleniyor: {{email}}",
     "contactsPrivacy": "Telefon ve e-postanızı yalnızca seçtiğiniz yardımcılar ve sizi seçen yazarlar görür.",
-    "declinedTab": "Olmadı",
-    "noDeclined": "Başka birinin seçildiği talepler burada görünecek",
-    "viewPhoto": "Fotoğrafı aç: {{name}}"
+    "declinedTab": "Başvurdum",
+    "noDeclined": "Yardım teklif ettiğin talepler burada görünecek",
+    "viewPhoto": "Fotoğrafı aç: {{name}}",
+    "emailNotVerified": "E-posta doğrulanmadı"
   },
   "settings": {
     "title": "Ayarlar",
@@ -769,6 +772,24 @@
   "when": {
     "todayAt": "bugün {{time}}",
     "tomorrowAt": "yarın {{time}}",
-    "dateAt": "{{date}} {{time}}"
+    "dateAt": "{{date}} {{time}}",
+    "yesterday": "Dün"
+  },
+  "pager": {
+    "label": "Sayfalar",
+    "previous": "Önceki sayfa",
+    "next": "Sonraki sayfa"
+  },
+  "listTools": {
+    "search": "Ara",
+    "sort": "Sırala",
+    "nothingFound": "Hiçbir şey bulunamadı",
+    "sorts": {
+      "distance": "En yakın",
+      "newest": "En yeni",
+      "oldest": "En eski",
+      "urgency": "En acil",
+      "soon": "Yardım tarihine göre"
+    }
   }
 }

@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "Start",
-    "nearby": "In der Nähe",
-    "help": "Bitten",
+    "nearby": "Umgebung",
+    "help": "Erstellen",
     "chats": "Chats",
     "profile": "Profil",
     "notifications": "Mitteilungen",
@@ -43,7 +43,8 @@
     "less": "Weniger",
     "more": "Mehr",
     "previous": "Zurück",
-    "selectedOf": "{{count}} von {{total}} ausgewählt"
+    "selectedOf": "{{count}} von {{total}} ausgewählt",
+    "moreInfo": "Mehr Infos"
   },
   "time": {
     "justNow": "gerade eben",
@@ -180,7 +181,8 @@
     "findSomeone": "Schau, wer Hilfe braucht →",
     "hello": "Hallo, {{name}}!",
     "ask": "Um Hilfe bitten",
-    "orPick": "Oder gleich wählen, worum es geht:"
+    "orPick": "Oder gleich wählen, worum es geht:",
+    "myActivity": "Meine Aktivität"
   },
   "availability": {
     "title": "Ich kann jetzt helfen",
@@ -446,8 +448,8 @@
   },
   "profile": {
     "title": "Profil",
-    "helped": "🤝 Geholfen: {{count}}",
-    "thanks": "❤️ Dank erhalten: {{count}}",
+    "helped": "🤝 Hilfen: {{count}}",
+    "thanks": "❤️ Danke: {{count}}",
     "helpedShort": "🤝 {{count}}× geholfen",
     "thanksShort": "❤️ {{count}}× Dank",
     "canHelp": "Ich kann helfen bei:",
@@ -484,9 +486,10 @@
     "emailSent": "E-Mail an {{email}} gesendet. Öffne den Link darin.",
     "emailPending": "Wartet auf Bestätigung: {{email}}",
     "contactsPrivacy": "Telefon und E-Mail sehen nur Helfer, die du auswählst, und Autoren, die dich auswählen.",
-    "declinedTab": "Nicht geklappt",
-    "noDeclined": "Hier erscheinen Anfragen, bei denen jemand anderes gewählt wurde",
-    "viewPhoto": "Foto öffnen: {{name}}"
+    "declinedTab": "Beworben",
+    "noDeclined": "Hier erscheinen Anfragen, bei denen du Hilfe angeboten hast",
+    "viewPhoto": "Foto öffnen: {{name}}",
+    "emailNotVerified": "E-Mail nicht bestätigt"
   },
   "settings": {
     "title": "Einstellungen",
@@ -769,6 +772,24 @@
   "when": {
     "todayAt": "heute um {{time}}",
     "tomorrowAt": "morgen um {{time}}",
-    "dateAt": "{{date}} um {{time}}"
+    "dateAt": "{{date}} um {{time}}",
+    "yesterday": "Gestern"
+  },
+  "pager": {
+    "label": "Seiten",
+    "previous": "Vorherige Seite",
+    "next": "Nächste Seite"
+  },
+  "listTools": {
+    "search": "Suche",
+    "sort": "Sortieren",
+    "nothingFound": "Nichts gefunden",
+    "sorts": {
+      "distance": "Am nächsten",
+      "newest": "Neueste",
+      "oldest": "Älteste",
+      "urgency": "Am dringendsten",
+      "soon": "Nach Hilfedatum"
+    }
   }
 }

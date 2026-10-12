@@ -43,15 +43,10 @@ import { LeaveReviews } from "@/features/reviews/Reviews";
 import { toast } from "@/stores/toastStore";
 import type { Contact, HelpRequest, HelpResponse, OfferType } from "@/types/api";
 import { URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
-import {
-  currencySymbol,
-  formatDateTime,
-  formatDistance,
-  formatMoney,
-  timeAgo,
-  timeLeft,
-} from "@/utils/format";
+import { currencySymbol, formatDistance, formatMoney, timeAgo, timeLeft } from "@/utils/format";
 import { agreedSummary, offerSummary, rewardSummary } from "@/utils/reward";
+
+import { urgencyText } from "@/utils/urgencyText";
 
 import styles from "./HelpRequest.module.css";
 
@@ -458,10 +453,7 @@ function HelperActions({ request }: { request: HelpRequest }) {
 
 /** Message sent with the link: a few short lines that read well in Telegram/Viber/WhatsApp. */
 function shareMessage(request: HelpRequest, t: TFunction): string {
-  const when =
-    request.urgency === "SCHEDULED" && request.needed_at
-      ? formatDateTime(request.needed_at)
-      : t(`urgency.${request.urgency}`);
+  const when = urgencyText(t, request.urgency, request.needed_at, request.created_at);
   const details = [
     request.place_name ? `📍 ${request.place_name}` : null,
     `${URGENCY_EMOJI[request.urgency]} ${when}`,
@@ -537,7 +529,11 @@ export default function HelpRequestPage() {
             <h1 style={{ fontSize: "var(--text-xl)" }}>{request.title}</h1>
             <div className={styles.meta}>
               <StatusBadge status={request.status} />
-              <UrgencyBadge urgency={request.urgency} neededAt={request.needed_at} />
+              <UrgencyBadge
+                urgency={request.urgency}
+                neededAt={request.needed_at}
+                createdAt={request.created_at}
+              />
               {request.distance_m != null && (
                 <span>📍 {t("common.fromYou", { distance: formatDistance(request.distance_m) })}</span>
               )}

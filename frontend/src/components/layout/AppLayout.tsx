@@ -11,6 +11,16 @@ import { AttentionSignals } from "@/features/attention/AttentionSignals";
 import { InstallPrompt } from "@/features/pwa/InstallPrompt";
 
 import { BrandMark } from "./BrandMark";
+import {
+  AroundIcon,
+  BellIcon,
+  ChatIcon,
+  CreateIcon,
+  HomeIcon,
+  LogoutIcon,
+  ProfileIcon,
+  SupportIcon,
+} from "./NavIcons";
 import { PullToRefresh } from "./PullToRefresh";
 import { useConversations } from "@/features/chat/hooks";
 import { useMarkNotificationRead, useUnreadCount } from "@/features/notifications/hooks";
@@ -20,7 +30,7 @@ import styles from "./AppLayout.module.css";
 
 interface NavEntry {
   to: string;
-  icon: string;
+  icon: ReactNode;
   label: string;
   badge?: number;
   end?: boolean;
@@ -32,12 +42,12 @@ function useNavEntries(): NavEntry[] {
   const unreadChats = conversations?.results.reduce((sum, c) => sum + c.unread_count, 0) ?? 0;
   const { data: unread = 0 } = useUnreadCount(true);
   return [
-    { to: "/", icon: "🏠", label: t("nav.home"), end: true },
-    { to: "/nearby", icon: "🗺", label: t("nav.nearby") },
-    { to: "/help/create", icon: "❤️", label: t("nav.help") },
-    { to: "/chats", icon: "💬", label: t("nav.chats"), badge: unreadChats },
-    { to: "/notifications", icon: "🔔", label: t("nav.notifications"), badge: unread },
-    { to: "/profile", icon: "👤", label: t("nav.profile"), end: true },
+    { to: "/", icon: <HomeIcon />, label: t("nav.home"), end: true },
+    { to: "/nearby", icon: <AroundIcon />, label: t("nav.nearby") },
+    { to: "/help/create", icon: <CreateIcon />, label: t("nav.help") },
+    { to: "/chats", icon: <ChatIcon />, label: t("nav.chats"), badge: unreadChats },
+    { to: "/notifications", icon: <BellIcon />, label: t("nav.notifications"), badge: unread },
+    { to: "/profile", icon: <ProfileIcon />, label: t("nav.profile"), end: true },
   ];
 }
 
@@ -103,11 +113,11 @@ export function AppLayout() {
             clsx(styles.sideItem, styles.sideBottom, isActive && styles.sideActive)
           }
         >
-          <span aria-hidden>💬</span>
+          <SupportIcon />
           {t("support.title")}
         </NavLink>
         <button type="button" className={styles.sideItem} onClick={logout.ask}>
-          <span aria-hidden>🚪</span>
+          <LogoutIcon />
           {t("auth.logout")}
         </button>
         {logout.dialog}

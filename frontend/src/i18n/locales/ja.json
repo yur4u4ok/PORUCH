@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "ホーム",
-    "nearby": "近く",
-    "help": "頼む",
+    "nearby": "周辺",
+    "help": "作成",
     "chats": "チャット",
     "profile": "プロフィール",
     "notifications": "通知",
@@ -43,7 +43,8 @@
     "less": "減らす",
     "more": "増やす",
     "previous": "前へ",
-    "selectedOf": "{{total}}件中{{count}}件を選択"
+    "selectedOf": "{{total}}件中{{count}}件を選択",
+    "moreInfo": "詳細"
   },
   "time": {
     "justNow": "たった今",
@@ -174,7 +175,8 @@
     "findSomeone": "助けが必要な人を見る →",
     "hello": "こんにちは、{{name}}さん",
     "ask": "助けを求める",
-    "orPick": "または内容を選ぶ:"
+    "orPick": "または内容を選ぶ:",
+    "myActivity": "自分のアクティビティ"
   },
   "availability": {
     "title": "今すぐ手伝えます",
@@ -476,9 +478,10 @@
     "emailSent": "{{email}} に送信しました。リンクを開いてください。",
     "emailPending": "確認待ち: {{email}}",
     "contactsPrivacy": "電話とメールは、あなたが選んだ手伝う人と、あなたを選んだ依頼者にだけ表示されます。",
-    "declinedTab": "選ばれなかった",
-    "noDeclined": "別の人が選ばれた依頼がここに表示されます",
-    "viewPhoto": "写真を開く: {{name}}"
+    "declinedTab": "応募した",
+    "noDeclined": "手伝いを申し出た依頼がここに表示されます",
+    "viewPhoto": "写真を開く: {{name}}",
+    "emailNotVerified": "メール未確認"
   },
   "settings": {
     "title": "設定",
@@ -761,6 +764,24 @@
   "when": {
     "todayAt": "今日 {{time}}",
     "tomorrowAt": "明日 {{time}}",
-    "dateAt": "{{date}} {{time}}"
+    "dateAt": "{{date}} {{time}}",
+    "yesterday": "昨日"
+  },
+  "pager": {
+    "label": "ページ",
+    "previous": "前のページ",
+    "next": "次のページ"
+  },
+  "listTools": {
+    "search": "検索",
+    "sort": "並べ替え",
+    "nothingFound": "見つかりません",
+    "sorts": {
+      "distance": "近い順",
+      "newest": "新しい順",
+      "oldest": "古い順",
+      "urgency": "緊急度順",
+      "soon": "手伝う日付順"
+    }
   }
 }

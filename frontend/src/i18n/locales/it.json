@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "Home",
-    "nearby": "Vicino",
-    "help": "Chiedi",
+    "nearby": "Intorno",
+    "help": "Crea",
     "chats": "Chat",
     "profile": "Profilo",
     "notifications": "Notifiche",
@@ -43,7 +43,8 @@
     "less": "Meno",
     "more": "Più",
     "previous": "Precedente",
-    "selectedOf": "{{count}} di {{total}} selezionate"
+    "selectedOf": "{{count}} di {{total}} selezionate",
+    "moreInfo": "Maggiori informazioni"
   },
   "time": {
     "justNow": "proprio ora",
@@ -180,7 +181,8 @@
     "findSomeone": "Guarda chi ha bisogno di aiuto →",
     "hello": "Ciao, {{name}}!",
     "ask": "Chiedi aiuto",
-    "orPick": "Oppure scegli subito di cosa si tratta:"
+    "orPick": "Oppure scegli subito di cosa si tratta:",
+    "myActivity": "La mia attività"
   },
   "availability": {
     "title": "Posso aiutare ora",
@@ -484,9 +486,10 @@
     "emailSent": "Email inviata a {{email}}. Apri il link.",
     "emailPending": "In attesa di conferma: {{email}}",
     "contactsPrivacy": "Telefono ed email li vedono solo gli aiutanti che scegli e gli autori che scelgono te.",
-    "declinedTab": "Non andata",
-    "noDeclined": "Qui compariranno le richieste in cui è stato scelto qualcun altro",
-    "viewPhoto": "Apri foto: {{name}}"
+    "declinedTab": "Mi sono offerto",
+    "noDeclined": "Qui compariranno le richieste a cui hai offerto aiuto",
+    "viewPhoto": "Apri foto: {{name}}",
+    "emailNotVerified": "Email non verificata"
   },
   "settings": {
     "title": "Impostazioni",
@@ -769,6 +772,24 @@
   "when": {
     "todayAt": "oggi alle {{time}}",
     "tomorrowAt": "domani alle {{time}}",
-    "dateAt": "{{date}} alle {{time}}"
+    "dateAt": "{{date}} alle {{time}}",
+    "yesterday": "Ieri"
+  },
+  "pager": {
+    "label": "Pagine",
+    "previous": "Pagina precedente",
+    "next": "Pagina successiva"
+  },
+  "listTools": {
+    "search": "Cerca",
+    "sort": "Ordina",
+    "nothingFound": "Nessun risultato",
+    "sorts": {
+      "distance": "Più vicini",
+      "newest": "Più recenti",
+      "oldest": "Meno recenti",
+      "urgency": "Più urgenti",
+      "soon": "Per data dell’aiuto"
+    }
   }
 }

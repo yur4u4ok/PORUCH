@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "Home",
-    "nearby": "Nearby",
-    "help": "Ask",
+    "nearby": "Around",
+    "help": "Create",
     "chats": "Chats",
     "profile": "Profile",
     "notifications": "Notifications",
@@ -43,7 +43,8 @@
     "less": "Less",
     "more": "More",
     "previous": "Previous",
-    "selectedOf": "{{count}} of {{total}} selected"
+    "selectedOf": "{{count}} of {{total}} selected",
+    "moreInfo": "More info"
   },
   "time": {
     "justNow": "just now",
@@ -180,7 +181,8 @@
     "findSomeone": "See who needs help →",
     "hello": "Hi, {{name}}!",
     "ask": "Ask for help",
-    "orPick": "Or pick what it's about:"
+    "orPick": "Or pick what it's about:",
+    "myActivity": "My activity"
   },
   "availability": {
     "title": "I can help right now",
@@ -446,8 +448,8 @@
   },
   "profile": {
     "title": "Profile",
-    "helped": "🤝 Helped: {{count}}",
-    "thanks": "❤️ Thanks received: {{count}}",
+    "helped": "🤝 Helps: {{count}}",
+    "thanks": "❤️ Thanks: {{count}}",
     "helpedShort": "🤝 {{count}} helped",
     "thanksShort": "❤️ {{count}} thanks",
     "canHelp": "I can help with:",
@@ -484,9 +486,10 @@
     "emailSent": "Email sent to {{email}}. Open the link in it.",
     "emailPending": "Waiting for confirmation: {{email}}",
     "contactsPrivacy": "Your phone and email are shown only to helpers you choose and to authors who choose you.",
-    "declinedTab": "Didn't work out",
-    "noDeclined": "Requests where the author chose another helper will appear here",
-    "viewPhoto": "Open photo: {{name}}"
+    "declinedTab": "I applied",
+    "noDeclined": "Requests you offered to help with will appear here",
+    "viewPhoto": "Open photo: {{name}}",
+    "emailNotVerified": "Email not verified"
   },
   "settings": {
     "title": "Settings",
@@ -769,6 +772,24 @@
   "when": {
     "todayAt": "today at {{time}}",
     "tomorrowAt": "tomorrow at {{time}}",
-    "dateAt": "{{date}} at {{time}}"
+    "dateAt": "{{date}} at {{time}}",
+    "yesterday": "Yesterday"
+  },
+  "pager": {
+    "label": "Pages",
+    "previous": "Previous page",
+    "next": "Next page"
+  },
+  "listTools": {
+    "search": "Search",
+    "sort": "Sort",
+    "nothingFound": "Nothing found",
+    "sorts": {
+      "distance": "Nearest",
+      "newest": "Newest",
+      "oldest": "Oldest",
+      "urgency": "Most urgent",
+      "soon": "By help date"
+    }
   }
 }

@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "Start",
-    "nearby": "W pobliżu",
-    "help": "Poproś",
+    "nearby": "Wokół",
+    "help": "Utwórz",
     "chats": "Czaty",
     "profile": "Profil",
     "notifications": "Powiadomienia",
@@ -43,7 +43,8 @@
     "less": "Mniej",
     "more": "Więcej",
     "previous": "Wstecz",
-    "selectedOf": "Wybrano {{count}} z {{total}}"
+    "selectedOf": "Wybrano {{count}} z {{total}}",
+    "moreInfo": "Więcej informacji"
   },
   "time": {
     "justNow": "przed chwilą",
@@ -192,7 +193,8 @@
     "findSomeone": "Zobacz, kto potrzebuje pomocy →",
     "hello": "Cześć, {{name}}!",
     "ask": "Poproś o pomoc",
-    "orPick": "Albo od razu wybierz, w czym:"
+    "orPick": "Albo od razu wybierz, w czym:",
+    "myActivity": "Moja aktywność"
   },
   "availability": {
     "title": "Mogę teraz pomóc",
@@ -462,8 +464,8 @@
   },
   "profile": {
     "title": "Profil",
-    "helped": "🤝 Pomógł(-ogła): {{count}}",
-    "thanks": "❤️ Otrzymane podziękowania: {{count}}",
+    "helped": "🤝 Pomoc: {{count}}",
+    "thanks": "❤️ Podziękowania: {{count}}",
     "helpedShort": "🤝 pomoc: {{count}}",
     "thanksShort": "❤️ podziękowania: {{count}}",
     "canHelp": "Mogę pomóc w:",
@@ -500,9 +502,10 @@
     "emailSent": "Wysłano wiadomość na {{email}}. Otwórz link.",
     "emailPending": "Czeka na potwierdzenie: {{email}}",
     "contactsPrivacy": "Telefon i e-mail widzą tylko pomocnicy, których wybierzesz, i autorzy, którzy wybiorą ciebie.",
-    "declinedTab": "Nie wyszło",
-    "noDeclined": "Tu pojawią się prośby, w których wybrano kogoś innego",
-    "viewPhoto": "Otwórz zdjęcie: {{name}}"
+    "declinedTab": "Zgłosiłem się",
+    "noDeclined": "Tu pojawią się prośby, do których się zgłosiłeś",
+    "viewPhoto": "Otwórz zdjęcie: {{name}}",
+    "emailNotVerified": "E-mail niepotwierdzony"
   },
   "settings": {
     "title": "Ustawienia",
@@ -783,6 +786,24 @@
   "when": {
     "todayAt": "dziś o {{time}}",
     "tomorrowAt": "jutro o {{time}}",
-    "dateAt": "{{date}} o {{time}}"
+    "dateAt": "{{date}} o {{time}}",
+    "yesterday": "Wczoraj"
+  },
+  "pager": {
+    "label": "Strony",
+    "previous": "Poprzednia strona",
+    "next": "Następna strona"
+  },
+  "listTools": {
+    "search": "Szukaj",
+    "sort": "Sortuj",
+    "nothingFound": "Nic nie znaleziono",
+    "sorts": {
+      "distance": "Najbliższe",
+      "newest": "Najnowsze",
+      "oldest": "Najstarsze",
+      "urgency": "Najpilniejsze",
+      "soon": "Według daty pomocy"
+    }
   }
 }

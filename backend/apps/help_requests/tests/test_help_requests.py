@@ -307,3 +307,40 @@ class TestHistory:
         HelpResponse.objects.create(help_request=declined, helper=me.user, status="REJECTED")
         assert [r["id"] for r in me.get(LIST_URL, {"role": "declined"}).data["results"]] == [str(declined.id)]
         assert [r["id"] for r in nearby(me, radius=3000).data["results"]] == [str(still_open.id)]
+        HelpResponse.objects.create(help_request=still_open, helper=me.user)  # pending
+        applied = {r["id"] for r in me.get(LIST_URL, {"role": "applied"}).data["results"]}
+        assert applied == {str(declined.id), str(still_open.id)}
+
+
+class TestSearchAndSort:
+    def test_nearby_search_and_sort(self, auth_client):
+        old = HelpRequestFactory(
+            title="Полити квіти", urgency="WEEK", location=make_point(*offset_point(*LVIV, 100, 0))
+        )
+        new = HelpRequestFactory(title="Купити ліки", urgency="NOW", location=make_point(*offset_point(*LVIV, 900, 0)))
+        HelpRequest.objects.filter(pk=old.pk).update(created_at=timezone.now() - timedelta(hours=3))
+
+        found = nearby(auth_client, q="квіт").data["results"]
+        assert [r["id"] for r in found] == [str(old.id)]
+        assert [r["id"] for r in nearby(auth_client).data["results"]] == [str(old.id), str(new.id)]
+        assert [r["id"] for r in nearby(auth_client, sort="newest").data["results"]] == [str(new.id), str(old.id)]
+        assert nearby(auth_client, sort="bogus").status_code == 400
+
+    def test_history_search_and_sort(self, auth_client, user):
+        first = HelpRequestFactory(author=user, title="Перший", urgency="WEEK")
+        second = HelpRequestFactory(author=user, title="Другий", urgency="NOW")
+        HelpRequest.objects.filter(pk=first.pk).update(created_at=timezone.now() - timedelta(hours=3))
+
+        def ids(**params):
+            return [r["id"] for r in auth_client.get(LIST_URL, {"role": "author", **params}).data["results"]]
+
+        assert ids() == [str(second.id), str(first.id)]
+        assert ids(sort="oldest") == [str(first.id), str(second.id)]
+        assert ids(q="перш") == [str(first.id)]
+
+    def test_sort_by_when_help_is_needed(self, auth_client, user):
+        later = HelpRequestFactory(author=user, urgency="SCHEDULED", needed_at=timezone.now() + timedelta(days=1))
+        today = HelpRequestFactory(author=user, urgency="TODAY")
+        whenever = HelpRequestFactory(author=user, urgency="WHENEVER")
+        results = auth_client.get(LIST_URL, {"role": "author", "sort": "soon"}).data["results"]
+        assert [r["id"] for r in results] == [str(today.id), str(later.id), str(whenever.id)]

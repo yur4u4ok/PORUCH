@@ -69,6 +69,12 @@
   justify-content: flex-end;
   flex-wrap: wrap;
 }
+/* a centred dialog has no screen edge under it: no sticky footer, no safe-area gap */
+.modal > .actions {
+  position: static;
+  margin: 0;
+  padding: var(--space-3) 0 0;
+}
 @media (min-width: 768px) {
   .sheetBackdrop {
     align-items: center;

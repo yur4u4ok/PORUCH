@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "Inicio",
-    "nearby": "Cerca",
-    "help": "Pedir",
+    "nearby": "Alrededor",
+    "help": "Crear",
     "chats": "Chats",
     "profile": "Perfil",
     "notifications": "Notificaciones",
@@ -43,7 +43,8 @@
     "less": "Menos",
     "more": "Más",
     "previous": "Anterior",
-    "selectedOf": "{{count}} de {{total}} seleccionadas"
+    "selectedOf": "{{count}} de {{total}} seleccionadas",
+    "moreInfo": "Más información"
   },
   "time": {
     "justNow": "ahora mismo",
@@ -180,7 +181,8 @@
     "findSomeone": "Mira quién necesita ayuda →",
     "hello": "¡Hola, {{name}}!",
     "ask": "Pedir ayuda",
-    "orPick": "O elige de qué se trata:"
+    "orPick": "O elige de qué se trata:",
+    "myActivity": "Mi actividad"
   },
   "availability": {
     "title": "Puedo ayudar ahora",
@@ -484,9 +486,10 @@
     "emailSent": "Correo enviado a {{email}}. Abre el enlace.",
     "emailPending": "Pendiente de confirmar: {{email}}",
     "contactsPrivacy": "Tu teléfono y email solo los ven quienes eliges como ayudantes y los autores que te eligen.",
-    "declinedTab": "No salió",
-    "noDeclined": "Aquí aparecerán las solicitudes en las que se eligió a otra persona",
-    "viewPhoto": "Abrir foto: {{name}}"
+    "declinedTab": "Me ofrecí",
+    "noDeclined": "Aquí aparecerán las solicitudes en las que te ofreciste",
+    "viewPhoto": "Abrir foto: {{name}}",
+    "emailNotVerified": "Email no verificado"
   },
   "settings": {
     "title": "Ajustes",
@@ -767,6 +770,24 @@
   "when": {
     "todayAt": "hoy a las {{time}}",
     "tomorrowAt": "mañana a las {{time}}",
-    "dateAt": "{{date}} a las {{time}}"
+    "dateAt": "{{date}} a las {{time}}",
+    "yesterday": "Ayer"
+  },
+  "pager": {
+    "label": "Páginas",
+    "previous": "Página anterior",
+    "next": "Página siguiente"
+  },
+  "listTools": {
+    "search": "Buscar",
+    "sort": "Ordenar",
+    "nothingFound": "No se encontró nada",
+    "sorts": {
+      "distance": "Más cercanos",
+      "newest": "Más recientes",
+      "oldest": "Más antiguos",
+      "urgency": "Más urgentes",
+      "soon": "Por fecha de ayuda"
+    }
   }
 }

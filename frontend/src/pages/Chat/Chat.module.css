@@ -4,7 +4,7 @@
   height: 100dvh;
   max-width: var(--content-max);
   margin: 0 auto;
-  padding-bottom: calc(var(--nav-height) + var(--safe-bottom));
+  padding-bottom: calc(var(--nav-height) + var(--space-3) + var(--safe-bottom));
 }
 @media (min-width: 1024px) {
   .screen {

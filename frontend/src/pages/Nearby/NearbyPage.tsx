@@ -3,7 +3,16 @@ import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router";
 
 import { PageHeader } from "@/components/layout/AppLayout";
-import { BottomSheet, Button, EmptyState, ErrorState, LoadMore, SkeletonList, Tabs } from "@/components/ui";
+import {
+  BottomSheet,
+  Button,
+  EmptyState,
+  ErrorState,
+  ListTools,
+  LoadMore,
+  SkeletonList,
+  Tabs,
+} from "@/components/ui";
 import { LazyMap } from "@/components/ui/LazyMap";
 import type { MapMarker } from "@/components/ui/Map";
 import { useMe } from "@/features/auth/hooks";
@@ -27,6 +36,8 @@ import {
   requestEmoji,
 } from "@/utils/categories";
 import { DEFAULT_RADII } from "@/utils/radius";
+
+import { NEARBY_SORTS, useListFilter } from "@/hooks/useListFilter";
 
 import styles from "./Nearby.module.css";
 
@@ -59,6 +70,7 @@ export default function NearbyPage() {
   const [manualCenter, setManualCenter] = useState<LatLng | null>(null);
   const position = geoPosition ?? manualCenter;
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const listFilter = useListFilter("distance");
   const view = (params.get("view") as "list" | "map" | null) ?? filters.view;
 
   useEffect(() => {
@@ -75,9 +87,11 @@ export default function NearbyPage() {
             radius: filters.radius,
             category: filters.categories,
             urgency: filters.urgencies,
+            q: listFilter.q || undefined,
+            sort: listFilter.sort,
           }
         : null,
-    [position, filters.radius, filters.categories, filters.urgencies],
+    [position, filters.radius, filters.categories, filters.urgencies, listFilter.q, listFilter.sort],
   );
   const nearby = useHelpRequests(query);
   // The map shows everything within the radius at once (up to MAP_LIMIT), not just the first page.
@@ -162,6 +176,7 @@ export default function NearbyPage() {
         value={filters.radius}
         onChange={filters.setRadius}
       />
+      {view === "list" && position && <ListTools filter={listFilter} sorts={NEARBY_SORTS} />}
 
       {!position ? (
         status === "locating" || status === "idle" ? (
@@ -202,6 +217,8 @@ export default function NearbyPage() {
         <SkeletonList />
       ) : nearby.isError ? (
         <ErrorState onRetry={() => void nearby.refetch()} />
+      ) : requests.length === 0 && listFilter.active ? (
+        <EmptyState icon="🔍" title={t("listTools.nothingFound")} />
       ) : requests.length === 0 ? (
         <EmptyState
           icon="🌤"

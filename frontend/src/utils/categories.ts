@@ -44,7 +44,7 @@ export const URGENCY_EMOJI: Record<Urgency, string> = {
 };
 
 /** Order shown in forms and filters. */
-export const URGENCIES: Urgency[] = ["NOW", "TODAY", "SCHEDULED", "WHENEVER"];
+export const URGENCIES: Urgency[] = ["NOW", "TODAY", "WHENEVER", "SCHEDULED"];
 
 export const URGENCY_COLOR: Record<Urgency, string> = {
   NOW: "var(--color-urgent-now)",

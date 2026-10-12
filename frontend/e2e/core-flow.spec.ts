@@ -85,8 +85,8 @@ test("help request end-to-end flow", async ({ browser }) => {
 
   // 9. Helper's reputation increased
   await helper.goto("/profile");
-  await expect(helper.getByText("🤝 Допоміг: 1")).toBeVisible();
-  await expect(helper.getByText("❤️ Отримав подяк: 1")).toBeVisible();
+  await expect(helper.getByText("🤝 Допомоги: 1")).toBeVisible();
+  await expect(helper.getByText("❤️ Подяки: 1")).toBeVisible();
 
   await authorContext.close();
   await helperContext.close();

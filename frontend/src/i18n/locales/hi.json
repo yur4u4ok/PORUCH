@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "होम",
-    "nearby": "आस-पास",
-    "help": "मदद माँगें",
+    "nearby": "आसपास",
+    "help": "बनाएँ",
     "chats": "चैट",
     "profile": "प्रोफ़ाइल",
     "notifications": "सूचनाएँ",
@@ -43,7 +43,8 @@
     "less": "कम",
     "more": "ज़्यादा",
     "previous": "पिछला",
-    "selectedOf": "{{total}} में से {{count}} चुने गए"
+    "selectedOf": "{{total}} में से {{count}} चुने गए",
+    "moreInfo": "अधिक जानकारी"
   },
   "time": {
     "justNow": "अभी-अभी",
@@ -180,7 +181,8 @@
     "findSomeone": "देखें किसे मदद चाहिए →",
     "hello": "नमस्ते, {{name}}!",
     "ask": "मदद माँगें",
-    "orPick": "या सीधे चुनें, किस बारे में:"
+    "orPick": "या सीधे चुनें, किस बारे में:",
+    "myActivity": "मेरी गतिविधि"
   },
   "availability": {
     "title": "मैं अभी मदद कर सकता/सकती हूँ",
@@ -484,9 +486,10 @@
     "emailSent": "{{email}} पर ईमेल भेजा गया। उसमें दिया लिंक खोलें।",
     "emailPending": "पुष्टि की प्रतीक्षा: {{email}}",
     "contactsPrivacy": "आपका फ़ोन और ईमेल केवल आपके चुने मददगारों और आपको चुनने वाले लेखकों को दिखता है।",
-    "declinedTab": "नहीं चुना गया",
-    "noDeclined": "जहाँ किसी और को चुना गया, वे अनुरोध यहाँ दिखेंगे",
-    "viewPhoto": "फ़ोटो खोलें: {{name}}"
+    "declinedTab": "मैंने आवेदन किया",
+    "noDeclined": "जिन अनुरोधों पर आपने मदद की पेशकश की, वे यहाँ दिखेंगे",
+    "viewPhoto": "फ़ोटो खोलें: {{name}}",
+    "emailNotVerified": "ईमेल सत्यापित नहीं"
   },
   "settings": {
     "title": "सेटिंग्स",
@@ -767,6 +770,24 @@
   "when": {
     "todayAt": "आज {{time}}",
     "tomorrowAt": "कल {{time}}",
-    "dateAt": "{{date}} {{time}}"
+    "dateAt": "{{date}} {{time}}",
+    "yesterday": "कल"
+  },
+  "pager": {
+    "label": "पेज",
+    "previous": "पिछला पेज",
+    "next": "अगला पेज"
+  },
+  "listTools": {
+    "search": "खोजें",
+    "sort": "क्रमबद्ध करें",
+    "nothingFound": "कुछ नहीं मिला",
+    "sorts": {
+      "distance": "सबसे पास",
+      "newest": "सबसे नए",
+      "oldest": "सबसे पुराने",
+      "urgency": "सबसे ज़रूरी",
+      "soon": "मदद की तारीख़ से"
+    }
   }
 }

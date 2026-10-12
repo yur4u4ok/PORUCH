@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "Головна",
-    "nearby": "Поруч",
-    "help": "Допомога",
+    "nearby": "Навколо",
+    "help": "Створити",
     "chats": "Чати",
     "profile": "Профіль",
     "notifications": "Сповіщення",
@@ -43,7 +43,8 @@
     "less": "Менше",
     "more": "Більше",
     "previous": "Назад",
-    "selectedOf": "Обрано {{count}} з {{total}}"
+    "selectedOf": "Обрано {{count}} з {{total}}",
+    "moreInfo": "Докладніше"
   },
   "time": {
     "justNow": "щойно",
@@ -192,7 +193,8 @@
     "findSomeone": "Подивіться, кому потрібна допомога →",
     "hello": "Привіт, {{name}}!",
     "ask": "Попросити допомогу",
-    "orPick": "Або одразу оберіть, з чим:"
+    "orPick": "Або одразу оберіть, з чим:",
+    "myActivity": "Моя активність"
   },
   "availability": {
     "title": "Я зараз можу допомогти",
@@ -462,8 +464,8 @@
   },
   "profile": {
     "title": "Профіль",
-    "helped": "🤝 Допоміг: {{count}}",
-    "thanks": "❤️ Отримав подяк: {{count}}",
+    "helped": "🤝 Допомоги: {{count}}",
+    "thanks": "❤️ Подяки: {{count}}",
     "helpedShort": "🤝 {{count}} допомог",
     "thanksShort": "❤️ {{count}} подяк",
     "canHelp": "Можу допомогти:",
@@ -500,9 +502,10 @@
     "emailSent": "Лист надіслано на {{email}}. Відкрийте посилання з нього.",
     "emailPending": "Очікує підтвердження: {{email}}",
     "contactsPrivacy": "Телефон і email бачать лише ті, кого ви обрали помічником, і автори запитів, де обрали вас.",
-    "declinedTab": "Не вийшло",
-    "noDeclined": "Тут будуть запити, де автор обрав іншого помічника",
-    "viewPhoto": "Відкрити фото: {{name}}"
+    "declinedTab": "Я подавався",
+    "noDeclined": "Тут будуть запити, на які ви відгукнулися",
+    "viewPhoto": "Відкрити фото: {{name}}",
+    "emailNotVerified": "Email не підтверджено"
   },
   "settings": {
     "title": "Налаштування",
@@ -785,6 +788,24 @@
   "when": {
     "todayAt": "сьогодні о {{time}}",
     "tomorrowAt": "завтра о {{time}}",
-    "dateAt": "{{date}} о {{time}}"
+    "dateAt": "{{date}} о {{time}}",
+    "yesterday": "Вчора"
+  },
+  "pager": {
+    "label": "Сторінки",
+    "previous": "Попередня сторінка",
+    "next": "Наступна сторінка"
+  },
+  "listTools": {
+    "search": "Пошук",
+    "sort": "Сортування",
+    "nothingFound": "Нічого не знайдено",
+    "sorts": {
+      "distance": "Найближчі",
+      "newest": "Найновіші",
+      "oldest": "Найстаріші",
+      "urgency": "Найтерміновіші",
+      "soon": "За датою допомоги"
+    }
   }
 }

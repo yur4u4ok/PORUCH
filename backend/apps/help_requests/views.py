@@ -5,6 +5,7 @@ from rest_framework.response import Response
 
 from apps.help_requests import selectors
 from apps.help_requests.serializers import (
+    SORT_CHOICES,
     HelpRequestCreateSerializer,
     HelpRequestListQuerySerializer,
     HelpRequestSerializer,
@@ -63,7 +64,9 @@ class HelpRequestViewSet(viewsets.ViewSet):
             OpenApiParameter("category", str),
             OpenApiParameter("urgency", str),
             OpenApiParameter("status", str),
-            OpenApiParameter("role", str, enum=["author", "helper", "responded", "declined"]),
+            OpenApiParameter("role", str, enum=["author", "helper", "responded", "declined", "applied"]),
+            OpenApiParameter("q", str, description="Search in title, description and place name."),
+            OpenApiParameter("sort", str, enum=SORT_CHOICES),
         ],
         responses=HelpRequestSerializer(many=True),
     )
@@ -72,7 +75,9 @@ class HelpRequestViewSet(viewsets.ViewSet):
         query.is_valid(raise_exception=True)
         params = query.validated_data
         if params.get("role"):
-            qs = selectors.requests_by_role(request.user, params["role"], params["statuses"])
+            qs = selectors.requests_by_role(
+                request.user, params["role"], params["statuses"], query=params.get("q"), sort=params.get("sort")
+            )
             qs = selectors.with_distance(qs, _viewer_point(request))
         else:
             point = validate_coordinates(params["lat"], params["lng"]).to_point()
@@ -82,6 +87,8 @@ class HelpRequestViewSet(viewsets.ViewSet):
                 normalize_radius(params.get("radius")),
                 categories=params["categories"],
                 urgencies=params["urgencies"],
+                query=params.get("q"),
+                sort=params.get("sort"),
             )
         from common.pagination import DefaultPagination
 

@@ -1,10 +1,7 @@
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
-import { infiniteList } from "@/api/paging";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { queryKeys } from "@/api/queryKeys";
 import { usersApi, type AvailabilityInput, type MeUpdate, type PreferencesUpdate } from "@/api/users";
-import type { ThankYou } from "@/types/api";
 
 export function usePublicConfig() {
   return useQuery({ queryKey: queryKeys.config, queryFn: usersApi.config, staleTime: Infinity });
@@ -89,14 +86,6 @@ export function useChangeEmail() {
     mutationFn: usersApi.changeEmail,
     onSuccess: (me) => qc.setQueryData(queryKeys.me, me),
     meta: { inlineErrors: true },
-  });
-}
-
-export function useThanks(id: string | undefined) {
-  return useInfiniteQuery({
-    queryKey: queryKeys.thanks(id ?? ""),
-    ...infiniteList<ThankYou>(`/users/${id}/thanks/`),
-    enabled: !!id,
   });
 }
 

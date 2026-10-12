@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "Início",
-    "nearby": "Perto",
-    "help": "Pedir",
+    "nearby": "Por perto",
+    "help": "Criar",
     "chats": "Conversas",
     "profile": "Perfil",
     "notifications": "Notificações",
@@ -43,7 +43,8 @@
     "less": "Menos",
     "more": "Mais",
     "previous": "Anterior",
-    "selectedOf": "{{count}} de {{total}} selecionadas"
+    "selectedOf": "{{count}} de {{total}} selecionadas",
+    "moreInfo": "Mais informações"
   },
   "time": {
     "justNow": "agora mesmo",
@@ -180,7 +181,8 @@
     "findSomeone": "Veja quem precisa de ajuda →",
     "hello": "Olá, {{name}}!",
     "ask": "Pedir ajuda",
-    "orPick": "Ou escolha logo o assunto:"
+    "orPick": "Ou escolha logo o assunto:",
+    "myActivity": "A minha atividade"
   },
   "availability": {
     "title": "Posso ajudar agora",
@@ -484,9 +486,10 @@
     "emailSent": "E-mail enviado para {{email}}. Abra o link.",
     "emailPending": "Aguardando confirmação: {{email}}",
     "contactsPrivacy": "Telefone e e-mail só aparecem para ajudantes que você escolher e autores que escolherem você.",
-    "declinedTab": "Não deu certo",
-    "noDeclined": "Aqui aparecerão os pedidos em que outra pessoa foi escolhida",
-    "viewPhoto": "Abrir foto: {{name}}"
+    "declinedTab": "Candidatei-me",
+    "noDeclined": "Aqui aparecerão os pedidos a que se ofereceu",
+    "viewPhoto": "Abrir foto: {{name}}",
+    "emailNotVerified": "Email não verificado"
   },
   "settings": {
     "title": "Definições",
@@ -767,6 +770,24 @@
   "when": {
     "todayAt": "hoje às {{time}}",
     "tomorrowAt": "amanhã às {{time}}",
-    "dateAt": "{{date}} às {{time}}"
+    "dateAt": "{{date}} às {{time}}",
+    "yesterday": "Ontem"
+  },
+  "pager": {
+    "label": "Páginas",
+    "previous": "Página anterior",
+    "next": "Página seguinte"
+  },
+  "listTools": {
+    "search": "Pesquisar",
+    "sort": "Ordenar",
+    "nothingFound": "Nada encontrado",
+    "sorts": {
+      "distance": "Mais próximos",
+      "newest": "Mais recentes",
+      "oldest": "Mais antigos",
+      "urgency": "Mais urgentes",
+      "soon": "Pela data da ajuda"
+    }
   }
 }

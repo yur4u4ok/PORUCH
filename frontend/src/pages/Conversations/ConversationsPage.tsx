@@ -1,7 +1,17 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { PageHeader } from "@/components/layout/AppLayout";
-import { Avatar, Badge, Card, EmptyState, ErrorState, LoadMore, SkeletonList } from "@/components/ui";
+import {
+  Avatar,
+  Badge,
+  Card,
+  EmptyState,
+  ErrorState,
+  LoadMore,
+  SearchField,
+  SkeletonList,
+} from "@/components/ui";
 import { allResults } from "@/api/paging";
 import { useAllConversations } from "@/features/chat/hooks";
 import { CATEGORY_EMOJI } from "@/utils/categories";
@@ -12,14 +22,27 @@ import styles from "../HelpRequest/HelpRequest.module.css";
 export default function ConversationsPage() {
   const { t } = useTranslation();
   const query = useAllConversations();
-  const conversations = allResults(query.data);
+  const [search, setSearch] = useState("");
+  const all = allResults(query.data);
+  const needle = search.trim().toLocaleLowerCase();
+  // Every chat is already loaded, so search right here: the person, the request and the last message.
+  const conversations = needle
+    ? all.filter((c) =>
+        [c.other_participant?.display_name, c.help_request.title, c.last_message?.text]
+          .filter(Boolean)
+          .some((text) => text!.toLocaleLowerCase().includes(needle)),
+      )
+    : all;
   return (
     <main className="page stack">
       <PageHeader title={t("chat.title")} />
+      {all.length > 0 && <SearchField value={search} onChange={setSearch} />}
       {query.isPending ? (
         <SkeletonList count={4} height={76} />
       ) : query.isError ? (
         <ErrorState onRetry={() => void query.refetch()} />
+      ) : all.length > 0 && conversations.length === 0 ? (
+        <EmptyState icon="🔍" title={t("listTools.nothingFound")} />
       ) : conversations.length === 0 ? (
         <EmptyState icon="💬" title={t("chat.empty")} text={t("chat.emptyText")} />
       ) : (

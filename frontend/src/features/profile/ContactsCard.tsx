@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ApiError } from "@/api/client";
-import { Button, Card, Input, Modal } from "@/components/ui";
+import { Button, Card, Input, Modal, InfoTip } from "@/components/ui";
 import { toast } from "@/stores/toastStore";
 import type { Me } from "@/types/api";
 import { region } from "@/utils/format";
@@ -123,7 +123,10 @@ export function ContactsCard({ me }: { me: Me }) {
   const [editing, setEditing] = useState<"email" | "phone" | null>(null);
   return (
     <Card className="stack-sm">
-      <strong>{t("profile.contacts")}</strong>
+      <strong className="row" style={{ gap: 8 }}>
+        {t("profile.contacts")}
+        <InfoTip text={t("profile.contactsPrivacy")} />
+      </strong>
       <div className="row-between">
         <span style={{ overflowWrap: "anywhere" }}>📧 {me.email}</span>
         <Button variant="ghost" size="sm" onClick={() => setEditing("email")}>
@@ -141,9 +144,6 @@ export function ContactsCard({ me }: { me: Me }) {
           {me.phone ? t("profile.change") : t("profile.addPhone")}
         </Button>
       </div>
-      <span className="muted" style={{ fontSize: 13 }}>
-        🔒 {t("profile.contactsPrivacy")}
-      </span>
       {editing === "email" && <EmailDialog me={me} onClose={() => setEditing(null)} />}
       {editing === "phone" && <PhoneDialog me={me} onClose={() => setEditing(null)} />}
     </Card>

@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "Accueil",
-    "nearby": "À proximité",
-    "help": "Demander",
+    "nearby": "Autour",
+    "help": "Créer",
     "chats": "Messages",
     "profile": "Profil",
     "notifications": "Notifications",
@@ -43,7 +43,8 @@
     "less": "Moins",
     "more": "Plus",
     "previous": "Précédent",
-    "selectedOf": "{{count}} sur {{total}} sélectionnées"
+    "selectedOf": "{{count}} sur {{total}} sélectionnées",
+    "moreInfo": "Plus d'infos"
   },
   "time": {
     "justNow": "à l'instant",
@@ -180,7 +181,8 @@
     "findSomeone": "Voir qui a besoin d’aide →",
     "hello": "Bonjour, {{name}} !",
     "ask": "Demander de l’aide",
-    "orPick": "Ou choisissez tout de suite le sujet :"
+    "orPick": "Ou choisissez tout de suite le sujet :",
+    "myActivity": "Mon activité"
   },
   "availability": {
     "title": "Je peux aider maintenant",
@@ -484,9 +486,10 @@
     "emailSent": "E-mail envoyé à {{email}}. Ouvrez le lien qu’il contient.",
     "emailPending": "En attente de confirmation : {{email}}",
     "contactsPrivacy": "Votre téléphone et votre e-mail ne sont visibles que par les aidants choisis et les auteurs qui vous choisissent.",
-    "declinedTab": "Pas retenu",
-    "noDeclined": "Ici apparaîtront les demandes où une autre personne a été choisie",
-    "viewPhoto": "Ouvrir la photo : {{name}}"
+    "declinedTab": "J'ai proposé",
+    "noDeclined": "Ici apparaîtront les demandes où vous avez proposé votre aide",
+    "viewPhoto": "Ouvrir la photo : {{name}}",
+    "emailNotVerified": "E-mail non vérifié"
   },
   "settings": {
     "title": "Réglages",
@@ -769,6 +772,24 @@
   "when": {
     "todayAt": "aujourd'hui à {{time}}",
     "tomorrowAt": "demain à {{time}}",
-    "dateAt": "{{date}} à {{time}}"
+    "dateAt": "{{date}} à {{time}}",
+    "yesterday": "Hier"
+  },
+  "pager": {
+    "label": "Pages",
+    "previous": "Page précédente",
+    "next": "Page suivante"
+  },
+  "listTools": {
+    "search": "Rechercher",
+    "sort": "Trier",
+    "nothingFound": "Aucun résultat",
+    "sorts": {
+      "distance": "Les plus proches",
+      "newest": "Les plus récents",
+      "oldest": "Les plus anciens",
+      "urgency": "Les plus urgents",
+      "soon": "Par date d’aide"
+    }
   }
 }

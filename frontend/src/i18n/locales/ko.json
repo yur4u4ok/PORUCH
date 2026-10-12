@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "홈",
-    "nearby": "내 주변",
-    "help": "요청",
+    "nearby": "주변",
+    "help": "만들기",
     "chats": "채팅",
     "profile": "프로필",
     "notifications": "알림",
@@ -43,7 +43,8 @@
     "less": "줄이기",
     "more": "늘리기",
     "previous": "이전",
-    "selectedOf": "{{total}}개 중 {{count}}개 선택"
+    "selectedOf": "{{total}}개 중 {{count}}개 선택",
+    "moreInfo": "자세히"
   },
   "time": {
     "justNow": "방금",
@@ -174,7 +175,8 @@
     "findSomeone": "도움이 필요한 사람 보기 →",
     "hello": "안녕하세요, {{name}}님!",
     "ask": "도움 요청하기",
-    "orPick": "또는 바로 종류를 고르세요:"
+    "orPick": "또는 바로 종류를 고르세요:",
+    "myActivity": "내 활동"
   },
   "availability": {
     "title": "지금 도울 수 있어요",
@@ -476,9 +478,10 @@
     "emailSent": "{{email}}(으)로 보냈어요. 링크를 열어 주세요.",
     "emailPending": "확인 대기 중: {{email}}",
     "contactsPrivacy": "전화번호와 이메일은 내가 고른 도우미와 나를 고른 요청자에게만 보여요.",
-    "declinedTab": "선택되지 않음",
-    "noDeclined": "다른 사람이 선택된 요청이 여기에 표시됩니다",
-    "viewPhoto": "사진 열기: {{name}}"
+    "declinedTab": "지원함",
+    "noDeclined": "도움을 제안한 요청이 여기에 표시됩니다",
+    "viewPhoto": "사진 열기: {{name}}",
+    "emailNotVerified": "이메일 미인증"
   },
   "settings": {
     "title": "설정",
@@ -756,6 +759,24 @@
   "when": {
     "todayAt": "오늘 {{time}}",
     "tomorrowAt": "내일 {{time}}",
-    "dateAt": "{{date}} {{time}}"
+    "dateAt": "{{date}} {{time}}",
+    "yesterday": "어제"
+  },
+  "pager": {
+    "label": "페이지",
+    "previous": "이전 페이지",
+    "next": "다음 페이지"
+  },
+  "listTools": {
+    "search": "검색",
+    "sort": "정렬",
+    "nothingFound": "결과 없음",
+    "sorts": {
+      "distance": "가까운 순",
+      "newest": "최신순",
+      "oldest": "오래된 순",
+      "urgency": "긴급한 순",
+      "soon": "도움 날짜순"
+    }
   }
 }

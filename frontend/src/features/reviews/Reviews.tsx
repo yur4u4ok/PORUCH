@@ -1,14 +1,12 @@
-import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { http } from "@/api/client";
-import { allResults, infiniteList } from "@/api/paging";
 import { queryKeys } from "@/api/queryKeys";
-import { Avatar, Button, Card, LoadMore, Modal, SkeletonList, Textarea } from "@/components/ui";
+import { Avatar, Button, Card, Modal, Textarea } from "@/components/ui";
 import { toast } from "@/stores/toastStore";
 import type { HelpRequest, PublicUser, Review } from "@/types/api";
-import { timeAgo } from "@/utils/format";
 
 import styles from "./Reviews.module.css";
 
@@ -126,13 +124,6 @@ export function LeaveReviews({ request }: { request: HelpRequest }) {
   );
 }
 
-function useReviews(userId: string) {
-  return useInfiniteQuery({
-    queryKey: queryKeys.reviews(userId),
-    ...infiniteList<Review>(`/users/${userId}/reviews/`),
-  });
-}
-
 /** «4.8 ★ · 12 відгуків» next to the profile stats. */
 export function RatingSummary({ user }: { user: { rating: number | null; reviews_count: number } }) {
   const { t } = useTranslation();
@@ -142,37 +133,5 @@ export function RatingSummary({ user }: { user: { rating: number | null; reviews
       <Stars value={user.rating} /> {user.rating.toFixed(1)} ·{" "}
       {t("reviews.count", { count: user.reviews_count })}
     </span>
-  );
-}
-
-export function ReviewsList({ userId }: { userId: string }) {
-  const { t } = useTranslation();
-  const reviews = useReviews(userId);
-  const items = allResults(reviews.data);
-  return (
-    <section className="stack-sm">
-      <h2>{t("reviews.heading")}</h2>
-      {reviews.isPending ? (
-        <SkeletonList count={1} height={64} />
-      ) : items.length === 0 ? (
-        <p className="muted">{t("reviews.none")}</p>
-      ) : (
-        items.map((review) => (
-          <Card key={review.id} className="stack-sm">
-            <Stars value={review.rating} />
-            {review.text && <p>{review.text}</p>}
-            <span className="muted" style={{ fontSize: 13 }}>
-              {review.from_user.display_name ?? t("common.anonymous")} · {review.help_request.title} ·{" "}
-              {timeAgo(review.created_at)}
-            </span>
-          </Card>
-        ))
-      )}
-      <LoadMore
-        hasNextPage={reviews.hasNextPage}
-        isFetching={reviews.isFetchingNextPage}
-        onLoad={() => void reviews.fetchNextPage()}
-      />
-    </section>
   );
 }

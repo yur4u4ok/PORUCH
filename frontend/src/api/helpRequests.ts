@@ -21,13 +21,22 @@ export interface NearbyQuery {
   radius: number;
   category?: Category[];
   urgency?: Urgency[];
+  q?: string;
+  sort?: ListSort;
   page?: number;
+  page_size?: number;
 }
 
+/** Order of a request list; «distance» only makes sense for «Поруч». */
+export type ListSort = "distance" | "newest" | "oldest" | "urgency" | "soon";
+
 export interface HistoryQuery {
-  role: "author" | "helper" | "responded" | "declined";
+  role: "author" | "helper" | "responded" | "declined" | "applied";
   status?: HelpRequestStatus[];
+  q?: string;
+  sort?: ListSort;
   page?: number;
+  page_size?: number;
 }
 
 export interface CreateHelpRequestInput {
@@ -58,14 +67,31 @@ export interface RespondInput {
 const csv = (values?: string[]) => (values && values.length ? values.join(",") : undefined);
 
 export const helpRequestsApi = {
-  nearby: ({ lat, lng, radius, category, urgency, page }: NearbyQuery, signal?: AbortSignal) =>
+  nearby: (
+    { lat, lng, radius, category, urgency, q, sort, page, page_size }: NearbyQuery,
+    signal?: AbortSignal,
+  ) =>
     http.get<Paginated<HelpRequest>>(
       "/help-requests/",
-      { lat, lng, radius, category: csv(category), urgency: csv(urgency), page },
+      {
+        lat,
+        lng,
+        radius,
+        category: csv(category),
+        urgency: csv(urgency),
+        q: q || undefined,
+        sort,
+        page,
+        page_size,
+      },
       signal,
     ),
-  history: ({ role, status, page }: HistoryQuery, signal?: AbortSignal) =>
-    http.get<Paginated<HelpRequest>>("/help-requests/", { role, status: csv(status), page }, signal),
+  history: ({ role, status, q, sort, page, page_size }: HistoryQuery, signal?: AbortSignal) =>
+    http.get<Paginated<HelpRequest>>(
+      "/help-requests/",
+      { role, status: csv(status), q: q || undefined, sort, page, page_size },
+      signal,
+    ),
   get: (id: string, position?: GeoPosition | null) =>
     http.get<HelpRequest>(
       `/help-requests/${id}/`,

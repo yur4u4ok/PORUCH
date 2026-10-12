@@ -11,6 +11,7 @@
 }
 .greetingTop {
   display: flex;
+  margin-bottom: var(--space-3);
   align-items: center;
   justify-content: space-between;
   gap: var(--space-2);
@@ -50,14 +51,14 @@
 }
 /* computers: the sidebar already has «Сповіщення» */
 @media (min-width: 1024px) {
-  .bell {
+  .bell,
+  .brand {
     display: none;
   }
-}
-.place {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-text-muted);
+  /* nothing else left in the top row */
+  .greetingTop:not(:has(> :not(.bell, .brand))) {
+    display: none;
+  }
 }
 .hello {
   font-size: var(--text-2xl);
@@ -217,19 +218,6 @@
   align-items: center;
   gap: var(--space-2);
   font-size: var(--text-lg);
-}
-.count {
-  display: inline-grid;
-  place-items: center;
-  min-width: 24px;
-  height: 24px;
-  padding: 0 6px;
-  border-radius: var(--radius-full);
-  background: var(--color-text);
-  color: var(--color-bg);
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 800;
 }
 .empty {
   display: block;

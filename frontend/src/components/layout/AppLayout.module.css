@@ -6,19 +6,24 @@
   flex: 1;
   min-width: 0;
 }
+/* Phones: a rounded bar floating above the bottom edge (like the sidebar on computers). */
 .bottomNav {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: var(--space-3);
+  right: var(--space-3);
+  bottom: calc(var(--space-2) + var(--safe-bottom));
   z-index: 50;
   display: flex;
   justify-content: space-around;
-  height: calc(var(--nav-height) + var(--safe-bottom));
-  padding-bottom: var(--safe-bottom);
-  background: color-mix(in srgb, var(--color-surface) 94%, transparent);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid var(--color-border);
+  height: var(--nav-height);
+  padding: 0 var(--space-1);
+  /* solid surface + a brand-tinted rim + a deeper shadow, so it lifts off any background */
+  border: 1.5px solid color-mix(in srgb, var(--color-primary) 35%, var(--color-border));
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow:
+    0 10px 30px rgb(10 40 36 / 0.22),
+    0 2px 6px rgb(10 40 36 / 0.12);
 }
 .navItem {
   position: relative;

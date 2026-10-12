@@ -54,6 +54,9 @@ class HelpRequestUpdateSerializer(serializers.Serializer):
     )
 
 
+SORT_CHOICES = ["distance", "newest", "oldest", "urgency", "soon"]
+
+
 class HelpRequestListQuerySerializer(serializers.Serializer):
     lat = serializers.FloatField(required=False)
     lng = serializers.FloatField(required=False)
@@ -61,7 +64,9 @@ class HelpRequestListQuerySerializer(serializers.Serializer):
     category = serializers.CharField(required=False)
     urgency = serializers.CharField(required=False)
     status = serializers.CharField(required=False)
-    role = serializers.ChoiceField(choices=["author", "helper", "responded", "declined"], required=False)
+    role = serializers.ChoiceField(choices=["author", "helper", "responded", "declined", "applied"], required=False)
+    q = serializers.CharField(required=False, allow_blank=True, max_length=100)
+    sort = serializers.ChoiceField(choices=SORT_CHOICES, required=False)
 
     def _csv(self, value: str | None, allowed: set[str], field: str) -> list[str]:
         if not value:

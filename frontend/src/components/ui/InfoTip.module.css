@@ -1,0 +1,62 @@
+.wrap {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+.button {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1.5px solid var(--color-text-muted);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-muted);
+  font:
+    italic 800 12px/1 Georgia,
+    serif;
+  cursor: help;
+}
+.button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+.tip {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: -8px;
+  z-index: 30;
+  width: max-content;
+  max-width: min(280px, calc(100vw - 48px));
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: 1.4;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 120ms ease;
+}
+.wrap:hover .tip,
+.wrap:focus-within .tip,
+.wrap[data-open] .tip {
+  opacity: 1;
+  visibility: visible;
+}
+.plain {
+  display: inline-flex;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: help;
+}
+/* an icon tip sits mid-row (e.g. next to a centred name): centre the text under it */
+.wrap:has(> .plain) .tip {
+  left: 50%;
+  transform: translateX(-50%);
+}

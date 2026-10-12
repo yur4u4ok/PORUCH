@@ -3,7 +3,8 @@ import { useTranslation } from "react-i18next";
 
 import { ZoomableAvatar } from "@/features/profile/ZoomableAvatar";
 
-import { RatingSummary, ReviewsList } from "@/features/reviews/Reviews";
+import { FeedbackSection } from "@/features/reviews/Feedback";
+import { RatingSummary } from "@/features/reviews/Reviews";
 import { Navigate, useNavigate, useParams } from "react-router";
 
 import { PageHeader } from "@/components/layout/AppLayout";
@@ -14,7 +15,6 @@ import { useBlockUser, usePublicProfile } from "@/features/profile/hooks";
 import { toast } from "@/stores/toastStore";
 
 import styles from "./Profile.module.css";
-import { ThanksList } from "./ProfilePage";
 
 export default function PublicProfilePage() {
   const { id = "" } = useParams();
@@ -54,8 +54,7 @@ export default function PublicProfilePage() {
           {user.is_verified && ` · ✓ ${t("profile.verified")}`}
         </span>
       </div>
-      <ReviewsList userId={user.id} />
-      <ThanksList userId={user.id} />
+      <FeedbackSection userId={user.id} />
       <div className="row" style={{ justifyContent: "center" }}>
         <Button variant="ghost" size="sm" onClick={() => setReportOpen(true)}>
           🚩 {t("request.report")}
