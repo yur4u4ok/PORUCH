@@ -62,6 +62,8 @@ export default defineConfig(({ mode }) => {
     server: {
       host: true,
       port: 5173,
+      // In Docker the file events from the host mount get lost now and then: poll instead.
+      watch: process.env.VITE_WATCH_POLLING ? { usePolling: true, interval: 300 } : undefined,
       proxy: {
         "/api": { target: proxyTarget },
         // Share links are rendered by the backend (Open Graph tags for messengers).

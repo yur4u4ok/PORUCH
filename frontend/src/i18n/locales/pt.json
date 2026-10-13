@@ -311,7 +311,7 @@
     "descriptionPlaceholder": "Descreva a ajuda de que precisa. Não indique a morada exata nem o telefone: pode partilhá-los na conversa.",
     "locationHint": "Mova o marcador se for preciso",
     "youAreHere": "📍 Está aqui",
-    "locationPrivacy": "Só quem responder vê o local exato. Os outros veem uma distância aproximada.",
+    "locationPrivacy": "Só quem responder vê o local exato. Os outros veem uma distância aproximada. Mova o marcador se for preciso",
     "locating": "A procurar a sua localização…",
     "locationError": "Não foi possível obter a sua localização. Mova o marcador no mapa manualmente.",
     "useMyLocation": "A minha localização atual",
@@ -351,7 +351,8 @@
       "DISTRICT": "Por exemplo: pneu furado",
       "URGENT": "Por exemplo: pneu furado",
       "OTHER": "Por exemplo: pneu furado"
-    }
+    },
+    "pickDate": "Escolha uma data"
   },
   "nearby": {
     "title": "Ajuda perto",
@@ -504,7 +505,9 @@
     "declinedTab": "Candidatei-me",
     "noDeclined": "Aqui aparecerão os pedidos a que se ofereceu",
     "viewPhoto": "Abrir foto: {{name}}",
-    "emailNotVerified": "Email não verificado"
+    "emailNotVerified": "Email não verificado",
+    "editPhoto": "Editar",
+    "deletePhoto": "Excluir"
   },
   "settings": {
     "title": "Definições",

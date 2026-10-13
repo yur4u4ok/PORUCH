@@ -11,7 +11,7 @@ import { queryKeys } from "@/api/queryKeys";
 import { usersApi } from "@/api/users";
 import { errorMessage } from "@/app/queryClient";
 import { PageHeader } from "@/components/layout/AppLayout";
-import { Button, Card, Input, Select, Textarea } from "@/components/ui";
+import { Button, Card, InfoTip, Input, Select, Textarea } from "@/components/ui";
 import { Stepper } from "@/components/ui/Stepper";
 import { LazyMap } from "@/components/ui/LazyMap";
 import { useMe } from "@/features/auth/hooks";
@@ -28,7 +28,7 @@ import { useOnline } from "@/hooks/useOnline";
 import { useFieldError } from "@/hooks/useFieldError";
 import { toast } from "@/stores/toastStore";
 import type { Category, Media, Urgency } from "@/types/api";
-import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCIES, URGENCY_EMOJI } from "@/utils/categories";
+import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCIES, URGENCY_HEX } from "@/utils/categories";
 import { currencySymbol, region } from "@/utils/format";
 import { REWARD_OPTION_EMOJI, REWARD_OPTIONS, REWARD_TYPE_EMOJI, rewardSummary } from "@/utils/reward";
 
@@ -297,7 +297,6 @@ export default function CreateHelpPage() {
             valueLength={values.description.length}
             {...register("description")}
             error={fe(formState.errors.description?.message)}
-            autoFocus
           />
           <Controller
             control={control}
@@ -350,15 +349,13 @@ export default function CreateHelpPage() {
             }
             canDrag
           />
-          <p className="muted">
-            {geoStatus === "locating"
-              ? t("create.locating")
-              : values.location
-                ? t("create.youAreHere")
-                : t("create.locationPickPrompt")}
-          </p>
+          {(geoStatus === "locating" || !values.location) && (
+            <p className="muted">
+              {geoStatus === "locating" ? t("create.locating") : t("create.locationPickPrompt")}
+            </p>
+          )}
           <p className="muted" style={{ fontSize: 13 }}>
-            🔒 {t("create.locationPrivacy")} · {t("create.locationHint")}
+            🔒 {t("create.locationPrivacy")}
           </p>
           <Button variant="secondary" loading={geoStatus === "locating"} onClick={useMyLocation}>
             🎯 {t("create.useMyLocation")}
@@ -395,7 +392,7 @@ export default function CreateHelpPage() {
                 }}
                 options={URGENCIES.filter((u) => values.category !== "URGENT" || u === "NOW").map((u) => ({
                   value: u,
-                  icon: URGENCY_EMOJI[u],
+                  accent: URGENCY_HEX[u],
                   label: t(`urgency.${u}`),
                 }))}
               />
@@ -407,8 +404,12 @@ export default function CreateHelpPage() {
               name="active_hours"
               render={({ field }) => (
                 <Select
-                  label={t("create.activeHours")}
-                  hint={t("create.activeHoursHint")}
+                  label={
+                    <span className="row" style={{ gap: 6, display: "inline-flex" }}>
+                      {t("create.activeHours")}
+                      <InfoTip text={t("create.activeHoursHint")} />
+                    </span>
+                  }
                   value={field.value}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                 >

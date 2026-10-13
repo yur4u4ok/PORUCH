@@ -48,6 +48,12 @@ const STEP_ICONS = {
       <path d="M8 10.5l4 4 4-4" />
     </>,
   ),
+  install: glyph(
+    <>
+      <rect x="3" y="4" width="18" height="12" rx="2" />
+      <path d="M8 20h8M12 7v6M9.5 10.5 12 13l2.5-2.5" />
+    </>,
+  ),
   add: glyph(
     <>
       <rect x="4" y="4" width="16" height="16" rx="3" />

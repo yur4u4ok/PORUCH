@@ -311,7 +311,7 @@
     "descriptionPlaceholder": "Décrivez l'aide dont vous avez besoin. N'indiquez ni adresse exacte ni téléphone : vous pourrez les partager dans le chat.",
     "locationHint": "Déplacez le repère si besoin",
     "youAreHere": "📍 Vous êtes ici",
-    "locationPrivacy": "Seules les personnes qui répondent voient l'endroit exact. Les autres voient une distance approximative.",
+    "locationPrivacy": "Seules les personnes qui répondent voient l'endroit exact. Les autres voient une distance approximative. Déplacez le repère si besoin",
     "locating": "Recherche de votre position…",
     "locationError": "Impossible d'obtenir votre position. Déplacez le repère sur la carte à la main.",
     "useMyLocation": "Ma position actuelle",
@@ -351,7 +351,8 @@
       "DISTRICT": "Par exemple : pneu crevé",
       "URGENT": "Par exemple : pneu crevé",
       "OTHER": "Par exemple : pneu crevé"
-    }
+    },
+    "pickDate": "Choisir une date"
   },
   "nearby": {
     "title": "Aide à proximité",
@@ -504,7 +505,9 @@
     "declinedTab": "J'ai proposé",
     "noDeclined": "Ici apparaîtront les demandes où vous avez proposé votre aide",
     "viewPhoto": "Ouvrir la photo : {{name}}",
-    "emailNotVerified": "E-mail non vérifié"
+    "emailNotVerified": "E-mail non vérifié",
+    "editPhoto": "Modifier",
+    "deletePhoto": "Supprimer"
   },
   "settings": {
     "title": "Réglages",

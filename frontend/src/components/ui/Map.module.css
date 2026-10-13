@@ -52,28 +52,24 @@
   border: 3px solid #fff;
   box-shadow: 0 0 0 6px rgb(43 124 255 / 0.25);
 }
-.footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-}
+/* round «my location» button under the zoom controls, same look as them */
 .reset {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 40px;
-  padding: 0 var(--space-4);
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-full);
-  background: var(--color-surface);
-  color: var(--color-text);
-  font: inherit;
-  font-size: var(--text-sm);
-  font-weight: 700;
+  position: absolute;
+  top: 88px;
+  right: 10px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+  box-shadow: 0 0 0 2px rgb(0 0 0 / 0.1);
   cursor: pointer;
 }
 .reset:hover {
-  border-color: var(--color-primary);
+  background: #f2f2f2;
 }

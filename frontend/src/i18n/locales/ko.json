@@ -305,7 +305,7 @@
     "descriptionPlaceholder": "어떤 도움이 필요한지 적어 주세요. 정확한 주소나 전화번호는 적지 마세요. 채팅에서 알려 줄 수 있어요.",
     "locationHint": "필요하면 핀을 옮기세요",
     "youAreHere": "📍 현재 위치",
-    "locationPrivacy": "정확한 위치는 응답한 사람만 볼 수 있습니다. 다른 사람에게는 대략적인 거리만 보여요.",
+    "locationPrivacy": "정확한 위치는 응답한 사람만 볼 수 있습니다. 다른 사람에게는 대략적인 거리만 보여요. 필요하면 핀을 옮기세요",
     "locating": "위치를 찾는 중…",
     "locationError": "위치를 가져오지 못했습니다. 지도에서 핀을 직접 옮겨 주세요.",
     "useMyLocation": "현재 위치",
@@ -345,7 +345,8 @@
       "DISTRICT": "예: 타이어 펑크",
       "URGENT": "예: 타이어 펑크",
       "OTHER": "예: 타이어 펑크"
-    }
+    },
+    "pickDate": "날짜 선택"
   },
   "nearby": {
     "title": "내 주변 도움",
@@ -496,7 +497,9 @@
     "declinedTab": "지원함",
     "noDeclined": "도움을 제안한 요청이 여기에 표시됩니다",
     "viewPhoto": "사진 열기: {{name}}",
-    "emailNotVerified": "이메일 미인증"
+    "emailNotVerified": "이메일 미인증",
+    "editPhoto": "편집",
+    "deletePhoto": "삭제"
   },
   "settings": {
     "title": "설정",

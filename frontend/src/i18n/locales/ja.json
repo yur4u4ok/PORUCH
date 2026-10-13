@@ -305,7 +305,7 @@
     "descriptionPlaceholder": "どんな助けが必要か書いてください。正確な住所や電話番号は書かないでください。チャットで伝えられます。",
     "locationHint": "必要ならピンを動かしてください",
     "youAreHere": "📍 現在地",
-    "locationPrivacy": "正確な場所は、応答した人だけに表示されます。ほかの人にはおおよその距離だけが見えます。",
+    "locationPrivacy": "正確な場所は、応答した人だけに表示されます。ほかの人にはおおよその距離だけが見えます。 必要ならピンを動かしてください",
     "locating": "現在地を取得しています…",
     "locationError": "現在地を取得できませんでした。地図上のピンを手で動かしてください。",
     "useMyLocation": "現在地",
@@ -345,7 +345,8 @@
       "DISTRICT": "例：タイヤがパンクした",
       "URGENT": "例：タイヤがパンクした",
       "OTHER": "例：タイヤがパンクした"
-    }
+    },
+    "pickDate": "日付を選択"
   },
   "nearby": {
     "title": "近くの助け合い",
@@ -496,7 +497,9 @@
     "declinedTab": "応募した",
     "noDeclined": "手伝いを申し出た依頼がここに表示されます",
     "viewPhoto": "写真を開く: {{name}}",
-    "emailNotVerified": "メール未確認"
+    "emailNotVerified": "メール未確認",
+    "editPhoto": "編集",
+    "deletePhoto": "削除"
   },
   "settings": {
     "title": "設定",

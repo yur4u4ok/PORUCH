@@ -305,7 +305,7 @@
     "descriptionPlaceholder": "描述你需要什么帮助。不要填写确切地址或电话，可以在聊天中告诉对方。",
     "locationHint": "如有需要，拖动标记",
     "youAreHere": "📍 你在这里",
-    "locationPrivacy": "只有回应的人能看到确切位置，其他人只能看到大致距离。",
+    "locationPrivacy": "只有回应的人能看到确切位置，其他人只能看到大致距离。 如有需要，拖动标记",
     "locating": "正在定位…",
     "locationError": "无法获取你的位置，请在地图上手动拖动标记。",
     "useMyLocation": "我的当前位置",
@@ -345,7 +345,8 @@
       "DISTRICT": "例如：轮胎没气了",
       "URGENT": "例如：轮胎没气了",
       "OTHER": "例如：轮胎没气了"
-    }
+    },
+    "pickDate": "选择日期"
   },
   "nearby": {
     "title": "附近互助",
@@ -496,7 +497,9 @@
     "declinedTab": "我报名的",
     "noDeclined": "你主动提出帮助的请求会显示在这里",
     "viewPhoto": "打开照片：{{name}}",
-    "emailNotVerified": "邮箱未验证"
+    "emailNotVerified": "邮箱未验证",
+    "editPhoto": "编辑",
+    "deletePhoto": "删除"
   },
   "settings": {
     "title": "设置",

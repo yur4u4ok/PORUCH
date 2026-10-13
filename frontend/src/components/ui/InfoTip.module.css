@@ -37,15 +37,13 @@
   font-weight: 500;
   line-height: 1.4;
   box-shadow: var(--shadow-md);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 120ms ease;
+  /* closed: out of the layout entirely, or its width widens the page and phones zoom out */
+  display: none;
 }
 .wrap:hover .tip,
 .wrap:focus-within .tip,
 .wrap[data-open] .tip {
-  opacity: 1;
-  visibility: visible;
+  display: block;
 }
 .plain {
   display: inline-flex;

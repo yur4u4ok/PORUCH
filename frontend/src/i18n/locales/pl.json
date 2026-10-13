@@ -323,7 +323,7 @@
     "descriptionPlaceholder": "Opisz, jakiej pomocy potrzebujesz. Nie podawaj dokładnego adresu ani telefonu – możesz je przekazać na czacie.",
     "locationHint": "W razie potrzeby przesuń znacznik",
     "youAreHere": "📍 Jesteś tutaj",
-    "locationPrivacy": "Dokładne miejsce zobaczą tylko osoby, które odpowiedzą. Pozostali widzą przybliżoną odległość.",
+    "locationPrivacy": "Dokładne miejsce zobaczą tylko osoby, które odpowiedzą. Pozostali widzą przybliżoną odległość. W razie potrzeby przesuń znacznik",
     "locating": "Ustalamy twoją lokalizację…",
     "locationError": "Nie udało się ustalić lokalizacji. Przesuń znacznik na mapie ręcznie.",
     "useMyLocation": "Moja obecna lokalizacja",
@@ -363,7 +363,8 @@
       "DISTRICT": "Na przykład: przebita opona",
       "URGENT": "Na przykład: przebita opona",
       "OTHER": "Na przykład: przebita opona"
-    }
+    },
+    "pickDate": "Wybierz datę"
   },
   "nearby": {
     "title": "Pomoc w pobliżu",
@@ -520,7 +521,9 @@
     "declinedTab": "Zgłosiłem się",
     "noDeclined": "Tu pojawią się prośby, do których się zgłosiłeś",
     "viewPhoto": "Otwórz zdjęcie: {{name}}",
-    "emailNotVerified": "E-mail niepotwierdzony"
+    "emailNotVerified": "E-mail niepotwierdzony",
+    "editPhoto": "Edytuj",
+    "deletePhoto": "Usuń"
   },
   "settings": {
     "title": "Ustawienia",

@@ -311,7 +311,7 @@
     "descriptionPlaceholder": "Descrivi l'aiuto che ti serve. Non scrivere l'indirizzo esatto né il telefono: puoi condividerli in chat.",
     "locationHint": "Sposta il segnaposto se serve",
     "youAreHere": "📍 Sei qui",
-    "locationPrivacy": "Solo chi risponde vedrà il punto esatto. Gli altri vedono una distanza approssimativa.",
+    "locationPrivacy": "Solo chi risponde vedrà il punto esatto. Gli altri vedono una distanza approssimativa. Sposta il segnaposto se serve",
     "locating": "Ricerca della tua posizione…",
     "locationError": "Impossibile ottenere la posizione. Sposta il segnaposto sulla mappa a mano.",
     "useMyLocation": "La mia posizione attuale",
@@ -351,7 +351,8 @@
       "DISTRICT": "Per esempio: gomma a terra",
       "URGENT": "Per esempio: gomma a terra",
       "OTHER": "Per esempio: gomma a terra"
-    }
+    },
+    "pickDate": "Scegli una data"
   },
   "nearby": {
     "title": "Aiuto vicino",
@@ -504,7 +505,9 @@
     "declinedTab": "Mi sono offerto",
     "noDeclined": "Qui compariranno le richieste a cui hai offerto aiuto",
     "viewPhoto": "Apri foto: {{name}}",
-    "emailNotVerified": "Email non verificata"
+    "emailNotVerified": "Email non verificata",
+    "editPhoto": "Modifica",
+    "deletePhoto": "Elimina"
   },
   "settings": {
     "title": "Impostazioni",

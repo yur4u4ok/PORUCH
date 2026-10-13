@@ -129,6 +129,10 @@
     font-weight: 600;
     color: rgb(255 255 255 / 0.78);
   }
+  /* an inline box around the svg would sit it on the text baseline, i.e. too high */
+  .sideIcon {
+    display: inline-flex;
+  }
   button.sideItem {
     border: 0;
     background: none;

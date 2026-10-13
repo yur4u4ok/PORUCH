@@ -311,7 +311,7 @@
     "descriptionPlaceholder": "Describe qué ayuda necesitas. No pongas tu dirección exacta ni tu teléfono: puedes compartirlos en el chat.",
     "locationHint": "Mueve el marcador si hace falta",
     "youAreHere": "📍 Estás aquí",
-    "locationPrivacy": "Solo quien responda verá el lugar exacto. El resto ve una distancia aproximada.",
+    "locationPrivacy": "Solo quien responda verá el lugar exacto. El resto ve una distancia aproximada. Mueve el marcador si hace falta",
     "locating": "Buscando tu ubicación…",
     "locationError": "No se pudo obtener tu ubicación. Mueve el marcador en el mapa manualmente.",
     "useMyLocation": "Mi ubicación actual",
@@ -351,7 +351,8 @@
       "DISTRICT": "Por ejemplo: rueda pinchada",
       "URGENT": "Por ejemplo: rueda pinchada",
       "OTHER": "Por ejemplo: rueda pinchada"
-    }
+    },
+    "pickDate": "Elige una fecha"
   },
   "nearby": {
     "title": "Ayuda cerca",
@@ -504,7 +505,9 @@
     "declinedTab": "Me ofrecí",
     "noDeclined": "Aquí aparecerán las solicitudes en las que te ofreciste",
     "viewPhoto": "Abrir foto: {{name}}",
-    "emailNotVerified": "Email no verificado"
+    "emailNotVerified": "Email no verificado",
+    "editPhoto": "Editar",
+    "deletePhoto": "Eliminar"
   },
   "settings": {
     "title": "Ajustes",

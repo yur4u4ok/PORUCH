@@ -311,7 +311,7 @@
     "descriptionPlaceholder": "Nasıl bir yardıma ihtiyacın olduğunu anlat. Tam adres ya da telefon yazma — bunları sohbette paylaşabilirsin.",
     "locationHint": "Gerekirse işareti taşı",
     "youAreHere": "📍 Buradasın",
-    "locationPrivacy": "Tam yeri yalnızca yanıt verenler görür. Diğerleri yaklaşık mesafeyi görür.",
+    "locationPrivacy": "Tam yeri yalnızca yanıt verenler görür. Diğerleri yaklaşık mesafeyi görür. Gerekirse işareti taşı",
     "locating": "Konumun bulunuyor…",
     "locationError": "Konumun alınamadı. İşareti haritada elle taşı.",
     "useMyLocation": "Şu anki konumum",
@@ -351,7 +351,8 @@
       "DISTRICT": "Örneğin: lastik patladı",
       "URGENT": "Örneğin: lastik patladı",
       "OTHER": "Örneğin: lastik patladı"
-    }
+    },
+    "pickDate": "Tarih seçin"
   },
   "nearby": {
     "title": "Yakında yardım",
@@ -504,7 +505,9 @@
     "declinedTab": "Başvurdum",
     "noDeclined": "Yardım teklif ettiğin talepler burada görünecek",
     "viewPhoto": "Fotoğrafı aç: {{name}}",
-    "emailNotVerified": "E-posta doğrulanmadı"
+    "emailNotVerified": "E-posta doğrulanmadı",
+    "editPhoto": "Düzenle",
+    "deletePhoto": "Sil"
   },
   "settings": {
     "title": "Ayarlar",

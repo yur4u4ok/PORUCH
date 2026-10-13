@@ -311,7 +311,7 @@
     "descriptionPlaceholder": "Describe the help you need. Don't include your exact address or phone — you can share them in chat.",
     "locationHint": "Move the pin if needed",
     "youAreHere": "📍 You are here",
-    "locationPrivacy": "Only people who respond will see the exact spot. Others see an approximate distance.",
+    "locationPrivacy": "Only people who respond will see the exact location. Move the pin if needed.",
     "locating": "Finding your location…",
     "locationError": "Couldn't get your location. Move the pin on the map manually.",
     "useMyLocation": "My current location",
@@ -351,7 +351,8 @@
       "DISTRICT": "For example: tidy up the yard",
       "URGENT": "For example: someone felt unwell on the street",
       "OTHER": "For example: help with a laptop"
-    }
+    },
+    "pickDate": "Pick a date"
   },
   "nearby": {
     "title": "Help nearby",
@@ -504,7 +505,9 @@
     "declinedTab": "I applied",
     "noDeclined": "Requests you offered to help with will appear here",
     "viewPhoto": "Open photo: {{name}}",
-    "emailNotVerified": "Email not verified"
+    "emailNotVerified": "Email not verified",
+    "editPhoto": "Edit",
+    "deletePhoto": "Delete"
   },
   "settings": {
     "title": "Settings",
@@ -714,7 +717,7 @@
         "Confirm — Poruch appears with your apps"
       ],
       "desktop": [
-        "Click the install icon ⊕ in the address bar (or menu ⋮ → “Install Poruch”)",
+        "Click the install icon <install></install> in the address bar (or menu ⋮ → “Install Poruch”)",
         "Confirm the installation"
       ]
     },

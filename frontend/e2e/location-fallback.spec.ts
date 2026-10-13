@@ -37,7 +37,7 @@ test("request can be published with a hand-placed pin when location is denied", 
   await page.mouse.down();
   await page.mouse.move(box.x + box.width / 2 + 40, box.y + box.height / 2 + 30, { steps: 8 });
   await page.mouse.up();
-  await expect(page.getByText("📍 Ви знаходитесь тут")).toBeVisible();
+  await expect(page.getByText("Перетягніть мітку, щоб позначити місце")).toBeHidden();
 
   await page.getByRole("button", { name: "Далі" }).click();
   await page.getByRole("radio", { name: /Зараз/ }).click();

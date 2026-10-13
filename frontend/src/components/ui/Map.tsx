@@ -46,9 +46,9 @@ interface MapProps {
   ariaLabel?: string;
   /** Zoom out/in so that all markers (and "me") are visible. */
   fitMarkers?: boolean;
-  /** Label of a button under the map that centres it on «me» (or the starting view). */
+  /** Label (tooltip) of the round button on the map that centres it on «me» (or the starting view). */
   resetLabel?: string;
-  /** Shown on the same row as that button (e.g. a legend). */
+  /** Shown under the map (e.g. a legend). */
   footer?: React.ReactNode;
 }
 
@@ -252,41 +252,38 @@ export function MapView({
     <>
       <div className={styles.wrap} style={{ height }} role="region" aria-label={ariaLabel}>
         <div ref={containerRef} className={styles.map} />
-      </div>
-      {(resetLabel || footer) && (
-        <div className={styles.footer}>
-          {footer ?? <span />}
-          {resetLabel && (
-            <button
-              type="button"
-              className={styles.reset}
-              onClick={() => {
-                const map = mapRef.current;
-                if (!map) return;
-                // back to where I am (or the starting view when my position isn't known)
-                if (me) map.easeTo({ center: [me.longitude, me.latitude], zoom, duration: 600 });
-                else startView(map);
-              }}
+        {resetLabel && (
+          <button
+            type="button"
+            className={styles.reset}
+            title={resetLabel}
+            aria-label={resetLabel}
+            onClick={() => {
+              const map = mapRef.current;
+              if (!map) return;
+              // back to where I am (or the starting view when my position isn't known)
+              if (me) map.easeTo({ center: [me.longitude, me.latitude], zoom, duration: 600 });
+              else startView(map);
+            }}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              aria-hidden
             >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                aria-hidden
-              >
-                <circle cx="12" cy="12" r="7" />
-                <circle cx="12" cy="12" r="2" fill="currentColor" />
-                <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
-              </svg>
-              {resetLabel}
-            </button>
-          )}
-        </div>
-      )}
+              <circle cx="12" cy="12" r="7" />
+              <circle cx="12" cy="12" r="2" fill="currentColor" />
+              <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+            </svg>
+          </button>
+        )}
+      </div>
+      {footer}
     </>
   );
 }

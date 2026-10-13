@@ -1,22 +1,35 @@
 .note {
   position: relative;
   display: block;
-  padding: var(--space-5) var(--space-4) var(--space-4);
+  padding: var(--space-5) var(--space-4);
   border: 1px solid var(--color-border);
-  border-radius: 6px 6px var(--radius-lg) var(--radius-lg);
+  border-radius: var(--radius-lg);
   background: var(--color-surface);
   color: inherit;
   text-decoration: none;
   transition: transform var(--transition);
 }
-/* coloured top edge = urgency */
-.note::before {
+/* urgency colour on two opposite corners: top right and bottom left */
+.note::before,
+.note::after {
   content: "";
   position: absolute;
-  inset: -1px -1px auto;
-  height: 6px;
-  border-radius: 6px 6px 0 0;
-  background: var(--urgency, var(--color-primary));
+  width: 34px;
+  height: 34px;
+  border: 0 solid var(--urgency, var(--color-primary));
+  pointer-events: none;
+}
+.note::before {
+  top: -1px;
+  right: -1px;
+  border-width: 5px 5px 0 0;
+  border-top-right-radius: var(--radius-lg);
+}
+.note::after {
+  bottom: -1px;
+  left: -1px;
+  border-width: 0 0 5px 5px;
+  border-bottom-left-radius: var(--radius-lg);
 }
 .note:hover {
   transform: translateY(-1px);
@@ -37,14 +50,16 @@
 }
 .emoji {
   flex-shrink: 0;
-  width: 48px;
-  height: 48px;
+  /* small, tucked into the top left corner */
+  margin: -4px 0 0 -2px;
+  width: 36px;
+  height: 36px;
   border-radius: var(--radius-md);
   background: var(--color-surface-2);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
+  font-size: 20px;
 }
 .body {
   flex: 1;
@@ -53,18 +68,11 @@
   flex-direction: column;
   gap: var(--space-1);
 }
-/* title on the left, how long ago it was posted in the top-right corner */
-.titleRow {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
-}
-.titleRow .title {
-  flex: 1;
-  min-width: 0;
-}
+/* time since posting sits above the title, in the top right corner */
 .age {
-  flex-shrink: 0;
+  position: absolute;
+  top: 13px;
+  right: var(--space-4);
   font-size: var(--text-xs);
   color: var(--color-text-muted);
   white-space: nowrap;
@@ -72,11 +80,33 @@
 .title {
   font-weight: 800;
   font-size: var(--text-md);
+  /* the first line starts where the icon starts */
+  margin-top: -4px;
+  line-height: 1.2;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.textRow {
+  display: flex;
+  gap: var(--space-2);
+}
+.texts {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.ageSpacer {
+  composes: age;
+  position: static;
+  visibility: hidden;
+  height: 0;
+}
 .description {
+  /* cut a good bit before the right edge */
+  padding-right: var(--space-8);
   color: var(--color-text-muted);
   font-size: var(--text-sm);
   display: -webkit-box;
@@ -121,6 +151,75 @@
 }
 .tile span:first-child {
   font-size: 28px;
+}
+/* choices two per row, each a rounded pill */
+.optionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 56px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 22px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: left;
+  cursor: pointer;
+}
+.option > span:last-child {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+.option > span:not(:last-child) {
+  flex-shrink: 0;
+  font-size: 22px;
+}
+/* urgency choice: its colour on the top right and bottom left corners */
+.optionAccent {
+  position: relative;
+  justify-content: center;
+  text-align: center;
+  padding-left: var(--space-4);
+}
+.optionAccent::before,
+.optionAccent::after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 0 solid var(--urgency);
+  pointer-events: none;
+}
+.optionAccent::before {
+  top: -1px;
+  right: -1px;
+  border-width: 3px 3px 0 0;
+  border-top-right-radius: 22px;
+}
+.optionAccent::after {
+  bottom: -1px;
+  left: -1px;
+  border-width: 0 0 3px 3px;
+  border-bottom-left-radius: 22px;
+}
+/* the ones not chosen step back a little */
+.optionAccent:not(.tileActive) {
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
+}
+/* chosen urgency: the whole outline in its colour */
+.optionAccent.tileActive {
+  border-color: var(--urgency);
+  box-shadow: inset 0 0 0 3px var(--urgency);
 }
 .tileActive {
   border-color: var(--color-text);

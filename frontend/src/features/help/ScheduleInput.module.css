@@ -25,3 +25,89 @@
   grid-template-columns: 1fr minmax(110px, 0.7fr);
   gap: var(--space-2);
 }
+.timeWrap {
+  position: relative;
+}
+.timeWrap > .control {
+  width: 100%;
+  text-align: left;
+}
+.timeList {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  max-height: 240px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+.timeOption {
+  padding: 8px var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--color-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.timeOption:hover {
+  background: var(--color-surface-2);
+}
+.timeOption[aria-selected="true"] {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 700;
+}
+.dateButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  text-align: left;
+  color: var(--color-text);
+}
+/* react-day-picker in the app's colours */
+.calendar {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 20;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+.calendar :global(.rdp-root) {
+  --rdp-accent-color: var(--color-primary);
+  --rdp-accent-background-color: var(--color-primary-soft);
+  --rdp-day-height: 40px;
+  --rdp-day-width: 40px;
+  --rdp-day_button-height: 38px;
+  --rdp-day_button-width: 38px;
+  --rdp-today-color: var(--color-primary);
+  --rdp-selected-border: 2px solid var(--color-primary);
+}
+.calendar :global(.rdp-chevron) {
+  fill: var(--color-primary);
+}
+.calendar :global(.rdp-today:not(.rdp-outside)) {
+  font-weight: 800;
+}
+.calendar :global(.rdp-selected .rdp-day_button) {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
+}
+.calendar :global(.rdp-caption_label) {
+  text-transform: capitalize;
+}

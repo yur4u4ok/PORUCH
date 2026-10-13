@@ -102,12 +102,19 @@ export function HelpRequestCard({
           {requestEmoji(request.category, request.subcategory)}
         </div>
         <div className={styles.body}>
-          <div className={styles.titleRow}>
-            <div className={styles.title}>{request.title}</div>
-            <span className={styles.age}>{timeAgo(request.created_at)}</span>
-          </div>
-          <div className={clsx(styles.description, showStatus && styles.descriptionShort)}>
-            {request.description}
+          <span className={styles.age}>{timeAgo(request.created_at)}</span>
+          {/* title and description end where the time above them begins: an invisible copy of the
+              time takes exactly that width on the right */}
+          <div className={styles.textRow}>
+            <div className={styles.texts}>
+              <div className={styles.title}>{request.title}</div>
+              <div className={clsx(styles.description, showStatus && styles.descriptionShort)}>
+                {request.description}
+              </div>
+            </div>
+            <span className={styles.ageSpacer} aria-hidden>
+              {timeAgo(request.created_at)}
+            </span>
           </div>
           <div className={styles.meta}>
             {showStatus ? (
@@ -223,22 +230,27 @@ export function OptionTiles<T extends string>({
   onChange,
 }: {
   value: T;
-  options: { value: T; icon: ReactNode; label: ReactNode }[];
+  /** `accent`: a colour shown as two corners (like on the request cards) instead of the icon. */
+  options: { value: T; icon?: ReactNode; label: ReactNode; accent?: string }[];
   onChange: (value: T) => void;
 }) {
   return (
-    <div className="stack-sm" role="radiogroup">
+    <div className={styles.optionGrid} role="radiogroup">
       {options.map((option) => (
         <button
           key={option.value}
           type="button"
           role="radio"
           aria-checked={value === option.value}
-          className={clsx(styles.tile, value === option.value && styles.tileActive)}
-          style={{ flexDirection: "row", alignItems: "center", minHeight: 64 }}
+          className={clsx(
+            styles.option,
+            option.accent && styles.optionAccent,
+            value === option.value && styles.tileActive,
+          )}
+          style={option.accent ? ({ "--urgency": option.accent } as CSSProperties) : undefined}
           onClick={() => onChange(option.value)}
         >
-          <span aria-hidden>{option.icon}</span>
+          {option.icon && <span aria-hidden>{option.icon}</span>}
           <span>{option.label}</span>
         </button>
       ))}

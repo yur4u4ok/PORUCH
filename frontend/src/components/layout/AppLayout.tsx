@@ -102,7 +102,9 @@ export function AppLayout() {
             end={entry.end}
             className={({ isActive }) => clsx(styles.sideItem, isActive && styles.sideActive)}
           >
-            <span aria-hidden>{entry.icon}</span>
+            <span className={styles.sideIcon} aria-hidden>
+              {entry.icon}
+            </span>
             {entry.label}
             {!!entry.badge && <span className={styles.dot}>{entry.badge}</span>}
           </NavLink>

@@ -17,7 +17,6 @@ import {
   Button,
   EmptyState,
   ErrorState,
-  InfoTip,
   ListTools,
   Loader,
   PagedBlock,
@@ -27,6 +26,7 @@ import {
 import { useMe } from "@/features/auth/hooks";
 import { useLogoutConfirm } from "@/features/auth/LogoutConfirm";
 import { ContactsCard } from "@/features/profile/ContactsCard";
+import { VerifiedBadge } from "@/features/profile/VerifiedBadge";
 import { HelpRequestCard } from "@/features/help/components";
 import { useUpdateMe } from "@/features/profile/hooks";
 import { HISTORY_SORTS, useListFilter } from "@/hooks/useListFilter";
@@ -117,6 +117,7 @@ export default function ProfilePage() {
   const [editName, setEditName] = useState(false);
   const [name, setName] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [photoMenu, setPhotoMenu] = useState(false);
 
   if (isPending || !me) return <Loader />;
 
@@ -152,33 +153,46 @@ export default function ProfilePage() {
         }
       />
       <div className={styles.head}>
-        <div className={styles.avatarBox}>
+        {/* hover (or a first tap on touch screens) shows «Редагувати» / «Видалити» over the photo */}
+        <div
+          className={styles.avatarBox}
+          data-open={photoMenu || undefined}
+          onClickCapture={(e) => {
+            if (!photoMenu && window.matchMedia("(hover: none)").matches) {
+              e.preventDefault();
+              e.stopPropagation();
+              setPhotoMenu(true);
+            }
+          }}
+          onMouseLeave={() => setPhotoMenu(false)}
+        >
           <ZoomableAvatar name={me.display_name} media={me.avatar} size={96} />
-          <label
-            className={`${styles.avatarAction} ${styles.avatarChange}`}
-            title={t("profile.changeAvatar")}
-            aria-busy={uploading}
-          >
-            <span aria-hidden>{uploading ? "⏳" : "✏️"}</span>
-            <input
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              className="visually-hidden"
-              aria-label={t("profile.changeAvatar")}
-              onChange={(e) => void onAvatar(e.target.files?.[0])}
-            />
-          </label>
-          {me.avatar && (
-            <button
-              type="button"
-              className={`${styles.avatarAction} ${styles.avatarRemove}`}
-              title={t("profile.removeAvatar")}
-              aria-label={t("profile.removeAvatar")}
-              onClick={() => updateMe.mutate({ avatar_id: null })}
-            >
-              <span aria-hidden>🗑️</span>
-            </button>
-          )}
+          <div className={styles.photoMenu}>
+            <label className={styles.photoAction} aria-busy={uploading}>
+              {uploading ? t("create.uploading") : t("profile.editPhoto")}
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                className="visually-hidden"
+                onChange={(e) => {
+                  setPhotoMenu(false);
+                  void onAvatar(e.target.files?.[0]);
+                }}
+              />
+            </label>
+            {me.avatar && (
+              <button
+                type="button"
+                className={styles.photoAction}
+                onClick={() => {
+                  setPhotoMenu(false);
+                  updateMe.mutate({ avatar_id: null });
+                }}
+              >
+                {t("profile.deletePhoto")}
+              </button>
+            )}
+          </div>
         </div>
         <div className={styles.nameRow}>
           {editName ? (
@@ -205,30 +219,7 @@ export default function ProfilePage() {
               <h1>{me.display_name}</h1>
             </button>
           )}
-          <InfoTip
-            label={t(me.email_verified ? "profile.verified" : "profile.emailNotVerified")}
-            text={
-              <>
-                {t(me.email_verified ? "profile.verified" : "profile.emailNotVerified")}
-                <br />
-                {t("common.since", { year: new Date(me.date_joined).getFullYear() })}
-              </>
-            }
-            className={me.email_verified ? styles.verified : styles.unverified}
-            icon={
-              <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden>
-                <circle cx="12" cy="12" r="11" fill="currentColor" />
-                <path
-                  d="M7 12.5l3.2 3.2L17 9"
-                  fill="none"
-                  stroke="#fff"
-                  strokeWidth="2.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            }
-          />
+          <VerifiedBadge verified={me.email_verified} since={me.date_joined} />
         </div>
         <div className={styles.stats}>
           <span>{t("profile.helped", { count: me.helped_count })}</span>

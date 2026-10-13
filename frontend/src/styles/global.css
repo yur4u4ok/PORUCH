@@ -14,6 +14,11 @@ body,
 #root {
   height: 100%;
 }
+/* nothing may widen the page sideways: phones would zoom out and the floating menu would slide down */
+html,
+body {
+  overflow-x: clip;
+}
 
 body {
   margin: 0;

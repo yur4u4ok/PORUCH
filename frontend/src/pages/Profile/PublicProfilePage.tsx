@@ -14,6 +14,8 @@ import { ConfirmDialog, ReportDialog } from "@/features/help/components";
 import { useBlockUser, usePublicProfile } from "@/features/profile/hooks";
 import { toast } from "@/stores/toastStore";
 
+import { VerifiedBadge } from "@/features/profile/VerifiedBadge";
+
 import styles from "./Profile.module.css";
 
 export default function PublicProfilePage() {
@@ -40,19 +42,18 @@ export default function PublicProfilePage() {
   const name = user.display_name ?? t("common.anonymous");
   return (
     <main className="page stack">
-      <PageHeader title={name} />
+      <PageHeader title="" />
       <div className={styles.head}>
         <ZoomableAvatar name={name} media={user.avatar} size={96} />
-        <h1>{name}</h1>
+        <div className={styles.nameRow}>
+          <h1>{name}</h1>
+          <VerifiedBadge verified={user.is_verified} since={user.member_since} />
+        </div>
         <div className={styles.stats}>
           <span>{t("profile.helped", { count: user.helped_count })}</span>
           <span>{t("profile.thanks", { count: user.thanks_received_count })}</span>
           <RatingSummary user={user} />
         </div>
-        <span className="muted">
-          {t("common.since", { year: new Date(user.member_since).getFullYear() })}
-          {user.is_verified && ` · ✓ ${t("profile.verified")}`}
-        </span>
       </div>
       <FeedbackSection userId={user.id} />
       <div className="row" style={{ justifyContent: "center" }}>

@@ -311,7 +311,7 @@
     "descriptionPlaceholder": "Beschreibe, welche Hilfe du brauchst. Keine genaue Adresse oder Telefonnummer – die kannst du im Chat teilen.",
     "locationHint": "Verschiebe die Markierung, falls nötig",
     "youAreHere": "📍 Du bist hier",
-    "locationPrivacy": "Nur wer sich meldet, sieht den genauen Ort. Alle anderen sehen eine ungefähre Entfernung.",
+    "locationPrivacy": "Nur wer sich meldet, sieht den genauen Ort. Alle anderen sehen eine ungefähre Entfernung. Verschiebe die Markierung, falls nötig",
     "locating": "Standort wird ermittelt…",
     "locationError": "Standort konnte nicht ermittelt werden. Verschiebe die Markierung auf der Karte von Hand.",
     "useMyLocation": "Mein aktueller Standort",
@@ -351,7 +351,8 @@
       "DISTRICT": "Zum Beispiel: platter Reifen",
       "URGENT": "Zum Beispiel: platter Reifen",
       "OTHER": "Zum Beispiel: platter Reifen"
-    }
+    },
+    "pickDate": "Datum wählen"
   },
   "nearby": {
     "title": "Hilfe in der Nähe",
@@ -504,7 +505,9 @@
     "declinedTab": "Beworben",
     "noDeclined": "Hier erscheinen Anfragen, bei denen du Hilfe angeboten hast",
     "viewPhoto": "Foto öffnen: {{name}}",
-    "emailNotVerified": "E-Mail nicht bestätigt"
+    "emailNotVerified": "E-Mail nicht bestätigt",
+    "editPhoto": "Bearbeiten",
+    "deletePhoto": "Löschen"
   },
   "settings": {
     "title": "Einstellungen",

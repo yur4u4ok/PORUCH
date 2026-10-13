@@ -29,7 +29,7 @@ test("help request end-to-end flow", async ({ browser }) => {
   await author.getByLabel("Коротко").fill(title);
   await author.getByLabel("Що сталося?").fill("Пробив колесо біля парку, потрібен домкрат.");
   await author.getByRole("button", { name: "Далі" }).click();
-  await expect(author.getByText("📍 Ви знаходитесь тут")).toBeVisible();
+  await expect(author.getByText("Перетягніть мітку, щоб позначити місце")).toBeHidden();
   await author.getByRole("button", { name: "Далі" }).click();
   await author.getByRole("radio", { name: /Зараз/ }).click();
   await author.getByRole("button", { name: "Далі" }).click();
@@ -43,7 +43,7 @@ test("help request end-to-end flow", async ({ browser }) => {
   // 4. Helper sees it nearby (approximate distance) and responds
   await helper.goto("/nearby");
   await helper.getByText(title).click();
-  await expect(helper.getByText(/Приблизне місце/)).toBeVisible();
+  await expect(helper.getByText(/Приблизна локація/)).toBeVisible();
   await helper.getByRole("button", { name: /Можу допомогти/ }).click();
   await helper.getByLabel("Повідомлення автору (необов'язково)").fill("Маю домкрат, буду за 10 хв");
   await helper.getByRole("dialog").getByRole("button", { name: "Можу допомогти" }).click();
