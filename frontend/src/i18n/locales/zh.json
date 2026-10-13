@@ -69,7 +69,7 @@
     "step2": "附近的人会收到通知",
     "step3": "有人回应后，在聊天中商量细节",
     "step4": "得到帮助后说声谢谢 ❤️",
-    "notMarketplace": "这不是服务平台，而是互助社区。帮助身边的人，无需强制付费或佣金。",
+    "notMarketplace": "这不是服务平台，而是互助社区。",
     "trustTitle": "为什么这里安全",
     "trust": [
       "你的确切地址会被隐藏，只有答应帮忙的人才能看到。",
@@ -332,7 +332,20 @@
     "activeHoursHint": "到期后会自动关闭。",
     "locationManual": "无法获取你的位置。请把图钉拖到需要帮助的地方。",
     "locationManualDenied": "位置权限已关闭。请把图钉拖到需要帮助的地方，或在浏览器设置中允许定位。",
-    "locationPickPrompt": "拖动图钉标记地点"
+    "locationPickPrompt": "拖动图钉标记地点",
+    "categoryLabel": "类别",
+    "categoryPlaceholder": "—",
+    "subcategoryLabel": "选择合适的一项（选填）",
+    "titlePlaceholders": {
+      "AUTO": "例如：轮胎没气了",
+      "HOME": "例如：轮胎没气了",
+      "ITEMS": "例如：轮胎没气了",
+      "ANIMALS": "例如：轮胎没气了",
+      "PEOPLE": "例如：轮胎没气了",
+      "DISTRICT": "例如：轮胎没气了",
+      "URGENT": "例如：轮胎没气了",
+      "OTHER": "例如：轮胎没气了"
+    }
   },
   "nearby": {
     "title": "附近互助",
@@ -351,7 +364,9 @@
     "approximate": "大致位置",
     "loadMore": "加载更多",
     "useCityCenter": "显示市中心附近：{{city}}",
-    "cityCenterNotice": "正在显示市中心附近的求助。允许定位可以让距离更准确。"
+    "cityCenterNotice": "正在显示市中心附近的求助。允许定位可以让距离更准确。",
+    "selectAll": "全选",
+    "resetMap": "我的位置"
   },
   "request": {
     "canHelp": "我可以帮忙",

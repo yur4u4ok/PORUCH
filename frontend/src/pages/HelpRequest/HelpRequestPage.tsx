@@ -80,7 +80,7 @@ function ResponsesSection({ request }: { request: HelpRequest }) {
               <div
                 className={clsx(styles.offerTag, response.offer_type === "COUNTER" && styles.offerCounter)}
               >
-                💰 {offerSummary(response, request.reward_currency, t)}
+                💵 {offerSummary(response, request.reward_currency, t)}
               </div>
             )}
             {response.message && <p>«{response.message}»</p>}

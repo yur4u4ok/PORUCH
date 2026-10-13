@@ -53,8 +53,7 @@ export const createHelpSchema = z
 export type CreateHelpForm = z.infer<typeof createHelpSchema>;
 
 export const STEP_FIELDS: (keyof CreateHelpForm)[][] = [
-  ["category"],
-  ["title", "description", "helpers_needed"],
+  ["category", "title", "description", "helpers_needed"],
   ["location"],
   ["urgency", "needed_at", "active_hours"],
   ["reward_type", "reward_amount", "reward_options"],

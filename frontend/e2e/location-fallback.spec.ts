@@ -24,8 +24,7 @@ test("request can be published with a hand-placed pin when location is denied", 
   });
   await page.goto("/help/create");
 
-  await page.getByRole("radio", { name: /Дім/ }).click();
-  await page.getByRole("button", { name: "Далі" }).click();
+  await page.getByLabel("Категорія").selectOption("HOME");
   await page.getByLabel("Коротко").fill(`Без геолокації ${run}`);
   await page.getByLabel("Що сталося?").fill("Геолокацію заборонено, місце позначено вручну.");
   await page.getByRole("button", { name: "Далі" }).click();

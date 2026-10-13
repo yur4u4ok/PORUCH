@@ -75,7 +75,7 @@
     "step2": "Menschen in der Nähe werden benachrichtigt",
     "step3": "Jemand meldet sich – Details klärt ihr im Chat",
     "step4": "Bedanke dich, wenn dir geholfen wurde ❤️",
-    "notMarketplace": "Kein Dienstleistungsportal, sondern eine Gemeinschaft gegenseitiger Hilfe. Hilf Menschen in deiner Nähe – ohne Pflichtzahlungen und Gebühren.",
+    "notMarketplace": "Kein Dienstleistungsportal, sondern eine Gemeinschaft gegenseitiger Hilfe.",
     "trustTitle": "Warum es hier sicher ist",
     "trust": [
       "Deine genaue Adresse bleibt verborgen. Nur wer zugesagt hat zu helfen, kann sie sehen.",
@@ -338,7 +338,20 @@
     "activeHoursHint": "Danach wird sie automatisch geschlossen.",
     "locationManual": "Dein Standort konnte nicht ermittelt werden. Zieh die Markierung dorthin, wo Hilfe gebraucht wird.",
     "locationManualDenied": "Standortzugriff ist aus. Zieh die Markierung dorthin, wo Hilfe gebraucht wird, oder erlaube den Standort in den Browsereinstellungen.",
-    "locationPickPrompt": "Zieh die Markierung, um den Ort festzulegen"
+    "locationPickPrompt": "Zieh die Markierung, um den Ort festzulegen",
+    "categoryLabel": "Kategorie",
+    "categoryPlaceholder": "—",
+    "subcategoryLabel": "Wähle, was passt (optional)",
+    "titlePlaceholders": {
+      "AUTO": "Zum Beispiel: platter Reifen",
+      "HOME": "Zum Beispiel: platter Reifen",
+      "ITEMS": "Zum Beispiel: platter Reifen",
+      "ANIMALS": "Zum Beispiel: platter Reifen",
+      "PEOPLE": "Zum Beispiel: platter Reifen",
+      "DISTRICT": "Zum Beispiel: platter Reifen",
+      "URGENT": "Zum Beispiel: platter Reifen",
+      "OTHER": "Zum Beispiel: platter Reifen"
+    }
   },
   "nearby": {
     "title": "Hilfe in der Nähe",
@@ -357,7 +370,9 @@
     "approximate": "Ungefährer Standort",
     "loadMore": "Mehr anzeigen",
     "useCityCenter": "Nahe dem Zentrum zeigen: {{city}}",
-    "cityCenterNotice": "Anfragen nahe dem Stadtzentrum. Erlaube den Standort für genauere Entfernungen."
+    "cityCenterNotice": "Anfragen nahe dem Stadtzentrum. Erlaube den Standort für genauere Entfernungen.",
+    "selectAll": "Alle auswählen",
+    "resetMap": "Mein Standort"
   },
   "request": {
     "canHelp": "Ich kann helfen",

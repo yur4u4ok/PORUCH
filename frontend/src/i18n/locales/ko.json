@@ -69,7 +69,7 @@
     "step2": "근처 사람들에게 알림이 갑니다",
     "step3": "누군가 응답하면 채팅으로 자세한 내용을 정하세요",
     "step4": "도움을 받으면 고마움을 전하세요 ❤️",
-    "notMarketplace": "서비스가 아니라 서로 돕는 공동체예요. 필수 결제나 수수료 없이 가까운 이웃을 도와주세요.",
+    "notMarketplace": "서비스가 아니라 서로 돕는 공동체예요.",
     "trustTitle": "안심할 수 있는 이유",
     "trust": [
       "정확한 주소는 숨겨집니다. 돕기로 한 사람만 볼 수 있어요.",
@@ -332,7 +332,20 @@
     "activeHoursHint": "시간이 지나면 자동으로 닫혀요.",
     "locationManual": "위치를 확인하지 못했어요. 도움이 필요한 곳으로 핀을 끌어 놓으세요.",
     "locationManualDenied": "위치 접근이 꺼져 있어요. 도움이 필요한 곳으로 핀을 끌어 놓거나 브라우저 설정에서 위치를 허용하세요.",
-    "locationPickPrompt": "핀을 끌어 장소를 표시하세요"
+    "locationPickPrompt": "핀을 끌어 장소를 표시하세요",
+    "categoryLabel": "카테고리",
+    "categoryPlaceholder": "—",
+    "subcategoryLabel": "해당하는 것을 고르세요(선택)",
+    "titlePlaceholders": {
+      "AUTO": "예: 타이어 펑크",
+      "HOME": "예: 타이어 펑크",
+      "ITEMS": "예: 타이어 펑크",
+      "ANIMALS": "예: 타이어 펑크",
+      "PEOPLE": "예: 타이어 펑크",
+      "DISTRICT": "예: 타이어 펑크",
+      "URGENT": "예: 타이어 펑크",
+      "OTHER": "예: 타이어 펑크"
+    }
   },
   "nearby": {
     "title": "내 주변 도움",
@@ -351,7 +364,9 @@
     "approximate": "대략적인 위치",
     "loadMore": "더 보기",
     "useCityCenter": "중심가 근처 보기: {{city}}",
-    "cityCenterNotice": "도심 근처의 요청을 보여 주고 있어요. 위치를 허용하면 거리가 더 정확해집니다."
+    "cityCenterNotice": "도심 근처의 요청을 보여 주고 있어요. 위치를 허용하면 거리가 더 정확해집니다.",
+    "selectAll": "모두 선택",
+    "resetMap": "내 위치"
   },
   "request": {
     "canHelp": "도울 수 있어요",

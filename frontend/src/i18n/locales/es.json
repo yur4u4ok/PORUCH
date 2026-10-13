@@ -75,7 +75,7 @@
     "step2": "La gente cercana recibe un aviso",
     "step3": "Alguien responde y acordáis los detalles en el chat",
     "step4": "Da las gracias cuando te hayan ayudado ❤️",
-    "notMarketplace": "No es un servicio, sino una comunidad de ayuda mutua. Ayuda a quien tienes cerca, sin pagos ni comisiones obligatorias.",
+    "notMarketplace": "No es un servicio, sino una comunidad de ayuda mutua.",
     "trustTitle": "Por qué es seguro",
     "trust": [
       "Tu dirección exacta está oculta. Solo la ve quien ha aceptado ayudarte.",
@@ -338,7 +338,20 @@
     "activeHoursHint": "Después se cerrará automáticamente.",
     "locationManual": "No pudimos detectar tu ubicación. Arrastra el marcador al lugar donde se necesita ayuda.",
     "locationManualDenied": "El acceso a la ubicación está desactivado. Arrastra el marcador al lugar donde se necesita ayuda o permite la ubicación en el navegador.",
-    "locationPickPrompt": "Arrastra el marcador para marcar el lugar"
+    "locationPickPrompt": "Arrastra el marcador para marcar el lugar",
+    "categoryLabel": "Categoría",
+    "categoryPlaceholder": "—",
+    "subcategoryLabel": "Elige lo que encaje (opcional)",
+    "titlePlaceholders": {
+      "AUTO": "Por ejemplo: rueda pinchada",
+      "HOME": "Por ejemplo: rueda pinchada",
+      "ITEMS": "Por ejemplo: rueda pinchada",
+      "ANIMALS": "Por ejemplo: rueda pinchada",
+      "PEOPLE": "Por ejemplo: rueda pinchada",
+      "DISTRICT": "Por ejemplo: rueda pinchada",
+      "URGENT": "Por ejemplo: rueda pinchada",
+      "OTHER": "Por ejemplo: rueda pinchada"
+    }
   },
   "nearby": {
     "title": "Ayuda cerca",
@@ -357,7 +370,9 @@
     "approximate": "Ubicación aproximada",
     "loadMore": "Mostrar más",
     "useCityCenter": "Mostrar cerca del centro: {{city}}",
-    "cityCenterNotice": "Mostrando peticiones cerca del centro de la ciudad. Permite la ubicación para distancias más precisas."
+    "cityCenterNotice": "Mostrando peticiones cerca del centro de la ciudad. Permite la ubicación para distancias más precisas.",
+    "selectAll": "Seleccionar todo",
+    "resetMap": "Mi ubicación"
   },
   "request": {
     "canHelp": "Puedo ayudar",

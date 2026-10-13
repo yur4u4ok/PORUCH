@@ -75,7 +75,7 @@
     "step2": "As pessoas perto recebem um aviso",
     "step3": "Alguém responde e combinam os detalhes na conversa",
     "step4": "Agradeça depois de ser ajudado ❤️",
-    "notMarketplace": "Não é um serviço, é uma comunidade de ajuda mútua. Ajude quem está por perto, sem pagamentos nem taxas obrigatórias.",
+    "notMarketplace": "Não é um serviço, é uma comunidade de ajuda mútua.",
     "trustTitle": "Porque é seguro",
     "trust": [
       "A sua morada exata fica escondida. Só a vê quem aceitou ajudar.",
@@ -338,7 +338,20 @@
     "activeHoursHint": "Depois disso, fecha automaticamente.",
     "locationManual": "Não conseguimos detetar a sua localização. Arraste o marcador para onde é precisa ajuda.",
     "locationManualDenied": "O acesso à localização está desligado. Arraste o marcador para onde é precisa ajuda ou permita a localização no navegador.",
-    "locationPickPrompt": "Arraste o marcador para marcar o local"
+    "locationPickPrompt": "Arraste o marcador para marcar o local",
+    "categoryLabel": "Categoria",
+    "categoryPlaceholder": "—",
+    "subcategoryLabel": "Escolha o que se aplica (opcional)",
+    "titlePlaceholders": {
+      "AUTO": "Por exemplo: pneu furado",
+      "HOME": "Por exemplo: pneu furado",
+      "ITEMS": "Por exemplo: pneu furado",
+      "ANIMALS": "Por exemplo: pneu furado",
+      "PEOPLE": "Por exemplo: pneu furado",
+      "DISTRICT": "Por exemplo: pneu furado",
+      "URGENT": "Por exemplo: pneu furado",
+      "OTHER": "Por exemplo: pneu furado"
+    }
   },
   "nearby": {
     "title": "Ajuda perto",
@@ -357,7 +370,9 @@
     "approximate": "Localização aproximada",
     "loadMore": "Mostrar mais",
     "useCityCenter": "Mostrar perto do centro: {{city}}",
-    "cityCenterNotice": "A mostrar pedidos perto do centro da cidade. Permita a localização para distâncias mais precisas."
+    "cityCenterNotice": "A mostrar pedidos perto do centro da cidade. Permita a localização para distâncias mais precisas.",
+    "selectAll": "Selecionar tudo",
+    "resetMap": "Minha localização"
   },
   "request": {
     "canHelp": "Posso ajudar",

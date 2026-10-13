@@ -87,7 +87,7 @@
     "step2": "Ludzie w pobliżu dostają powiadomienie",
     "step3": "Ktoś odpowiada – szczegóły ustalacie na czacie",
     "step4": "Podziękuj, gdy ktoś ci pomoże ❤️",
-    "notMarketplace": "To nie serwis usług, ale społeczność wzajemnej pomocy. Pomagaj tym, którzy są obok, bez obowiązkowych opłat i prowizji.",
+    "notMarketplace": "To nie serwis usług, ale społeczność wzajemnej pomocy.",
     "trustTitle": "Dlaczego tu jest bezpiecznie",
     "trust": [
       "Twój dokładny adres jest ukryty. Widzą go tylko osoby, które zgodziły się pomóc.",
@@ -350,7 +350,20 @@
     "activeHoursHint": "Potem zamknie się automatycznie.",
     "locationManual": "Nie udało się ustalić Twojej lokalizacji. Przeciągnij pinezkę tam, gdzie potrzebna jest pomoc.",
     "locationManualDenied": "Dostęp do lokalizacji jest wyłączony. Przeciągnij pinezkę tam, gdzie potrzebna jest pomoc, lub zezwól na lokalizację w przeglądarce.",
-    "locationPickPrompt": "Przeciągnij pinezkę, aby oznaczyć miejsce"
+    "locationPickPrompt": "Przeciągnij pinezkę, aby oznaczyć miejsce",
+    "categoryLabel": "Kategoria",
+    "categoryPlaceholder": "—",
+    "subcategoryLabel": "Wybierz, co pasuje (opcjonalnie)",
+    "titlePlaceholders": {
+      "AUTO": "Na przykład: przebita opona",
+      "HOME": "Na przykład: przebita opona",
+      "ITEMS": "Na przykład: przebita opona",
+      "ANIMALS": "Na przykład: przebita opona",
+      "PEOPLE": "Na przykład: przebita opona",
+      "DISTRICT": "Na przykład: przebita opona",
+      "URGENT": "Na przykład: przebita opona",
+      "OTHER": "Na przykład: przebita opona"
+    }
   },
   "nearby": {
     "title": "Pomoc w pobliżu",
@@ -369,7 +382,9 @@
     "approximate": "Przybliżona lokalizacja",
     "loadMore": "Pokaż więcej",
     "useCityCenter": "Pokaż w pobliżu centrum: {{city}}",
-    "cityCenterNotice": "Pokazujemy prośby w pobliżu centrum miasta. Zezwól na lokalizację, aby odległości były dokładniejsze."
+    "cityCenterNotice": "Pokazujemy prośby w pobliżu centrum miasta. Zezwól na lokalizację, aby odległości były dokładniejsze.",
+    "selectAll": "Zaznacz wszystko",
+    "resetMap": "Moja lokalizacja"
   },
   "request": {
     "canHelp": "Mogę pomóc",

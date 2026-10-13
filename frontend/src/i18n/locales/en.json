@@ -75,7 +75,7 @@
     "step2": "People nearby get notified",
     "step3": "Someone responds — agree on details in chat",
     "step4": "Say thanks after you're helped ❤️",
-    "notMarketplace": "Not a service marketplace — a mutual-aid community. Help the people around you, with no required payments or fees.",
+    "notMarketplace": "Not a service marketplace — a mutual-aid community.",
     "trustTitle": "Why it's safe here",
     "trust": [
       "Your exact address is hidden. Only people who agreed to help can see it.",
@@ -338,7 +338,20 @@
     "activeHoursHint": "After that, the request closes automatically.",
     "locationManual": "We couldn't detect your location. Drag the pin on the map to where help is needed.",
     "locationManualDenied": "Location access is off. Drag the pin on the map to where help is needed, or allow location in your browser settings.",
-    "locationPickPrompt": "Drag the pin to mark the place"
+    "locationPickPrompt": "Drag the pin to mark the place",
+    "categoryLabel": "Category",
+    "categoryPlaceholder": "Choose a category",
+    "subcategoryLabel": "Details (optional)",
+    "titlePlaceholders": {
+      "AUTO": "For example: flat tyre",
+      "HOME": "For example: carry a wardrobe to the 3rd floor",
+      "ITEMS": "For example: borrow a drill for an hour",
+      "ANIMALS": "For example: walk the dog tonight",
+      "PEOPLE": "For example: bring groceries to grandma",
+      "DISTRICT": "For example: tidy up the yard",
+      "URGENT": "For example: someone felt unwell on the street",
+      "OTHER": "For example: help with a laptop"
+    }
   },
   "nearby": {
     "title": "Help nearby",
@@ -349,15 +362,17 @@
     "category": "Category",
     "urgency": "Urgency",
     "all": "All",
-    "emptyTitle": "No requests nearby right now.",
-    "emptyText": "That doesn't mean nobody needs help. Turn on notifications and we'll let you know when someone nearby does.",
+    "emptyTitle": "No requests right now.",
+    "emptyText": "Turn on notifications and we'll let you know when someone needs help.",
     "enableNotifications": "Turn on notifications",
     "needLocation": "To see requests nearby, allow location access.",
     "allowLocation": "Allow location",
     "approximate": "Approximate location",
     "loadMore": "Show more",
     "useCityCenter": "Show near the centre: {{city}}",
-    "cityCenterNotice": "Showing requests near the city centre. Allow location for more accurate distances."
+    "cityCenterNotice": "Showing requests near the city centre. Allow location for more accurate distances.",
+    "selectAll": "Select all",
+    "resetMap": "My location"
   },
   "request": {
     "canHelp": "I can help",
@@ -680,9 +695,9 @@
     "howTo": "How to install:",
     "steps": {
       "ios": [
-        "Tap Share ⬆️ — at the bottom of the screen or in the “⋯” menu",
-        "Choose “Add to Home Screen”",
-        "Tap “Add” — Poruch appears with your apps"
+        "Tap «Share <share></share>» in the «<dots></dots>» menu at the bottom, next to the address bar",
+        "Choose «View more <more></more>» and tap «<add></add> Add to Home Screen»",
+        "Tap «Add»"
       ],
       "ios-other-browser": [
         "Tap Share ⬆️ in the address bar",

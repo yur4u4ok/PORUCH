@@ -11,11 +11,11 @@ import { queryKeys } from "@/api/queryKeys";
 import { usersApi } from "@/api/users";
 import { errorMessage } from "@/app/queryClient";
 import { PageHeader } from "@/components/layout/AppLayout";
-import { Button, Card, Chip, Input, Select, Textarea } from "@/components/ui";
+import { Button, Card, Input, Select, Textarea } from "@/components/ui";
 import { Stepper } from "@/components/ui/Stepper";
 import { LazyMap } from "@/components/ui/LazyMap";
 import { useMe } from "@/features/auth/hooks";
-import { CategoryGrid, EmergencyDisclaimer, OptionTiles, UrgencyBadge } from "@/features/help/components";
+import { EmergencyDisclaimer, OptionTiles, UrgencyBadge } from "@/features/help/components";
 import { createHelpSchema, STEP_FIELDS, type CreateHelpForm } from "@/features/help/createSchema";
 import { useCreateHelpRequest } from "@/features/help/hooks";
 import { PhotoUploader } from "@/features/help/PhotoUploader";
@@ -49,7 +49,6 @@ const DEFAULT_ACTIVE_HOURS: Record<Exclude<Urgency, "SCHEDULED">, number> = {
 };
 
 const STEP_TITLES = [
-  "create.stepCategory",
   "create.stepDetails",
   "create.stepLocation",
   "create.stepUrgency",
@@ -108,7 +107,7 @@ export default function CreateHelpPage() {
 
   // Location: ask once when reaching the location step; user may drag the marker.
   useEffect(() => {
-    if (step !== 2 || values.location) return;
+    if (step !== 1 || values.location) return;
     void locate({ force: true }).then((pos) => {
       if (pos) setValue("location", pos, { shouldValidate: true });
     });
@@ -123,7 +122,7 @@ export default function CreateHelpPage() {
     queryKey: queryKeys.cities,
     queryFn: usersApi.cities,
     staleTime: Infinity,
-    enabled: step === 2 && !fallbackCenter,
+    enabled: step === 1 && !fallbackCenter,
   });
   const roughCenter =
     place?.center ?? (cities.data?.find((c) => c.is_default) ?? cities.data?.[0])?.center ?? null;
@@ -151,7 +150,7 @@ export default function CreateHelpPage() {
   };
 
   const selectSubcategory = (code: string) => {
-    const next = values.subcategory === code ? null : code;
+    const next = code || null;
     setValue("subcategory", next);
     if (next && !values.title) setValue("title", t(`subcategories.${next}`));
   };
@@ -204,12 +203,12 @@ export default function CreateHelpPage() {
             const fieldErrors = error.fieldErrors();
             const map: Record<string, number> = {
               category: 0,
-              description: 1,
-              title: 1,
-              location: 2,
-              latitude: 2,
-              reward_amount: 4,
-              needed_at: 3,
+              description: 0,
+              title: 0,
+              location: 1,
+              latitude: 1,
+              reward_amount: 3,
+              needed_at: 2,
             };
             const first = Object.keys(fieldErrors).find((k) => k in map);
             Object.entries(fieldErrors).forEach(([k, msg]) => {
@@ -247,36 +246,44 @@ export default function CreateHelpPage() {
 
       {step === 0 && (
         <div className="stack">
-          <CategoryGrid value={values.category ?? null} onChange={selectCategory} />
-          {formState.errors.category && (
-            <p role="alert" style={{ color: "var(--color-danger)" }}>
-              {fe(formState.errors.category.message)}
-            </p>
-          )}
+          <Select
+            label={t("create.categoryLabel")}
+            value={values.category ?? ""}
+            onChange={(e) => selectCategory(e.target.value as Category)}
+            error={fe(formState.errors.category?.message)}
+          >
+            <option value="" disabled>
+              {t("create.categoryPlaceholder")}
+            </option>
+            {CATEGORY_ORDER.map((c) => (
+              <option key={c} value={c}>
+                {CATEGORY_EMOJI[c]} {t(`categories.${c}`)}
+              </option>
+            ))}
+          </Select>
           {subcategories.length > 0 && (
-            <div className="stack-sm">
-              <p className="muted">{t("create.chooseSubcategory")}</p>
-              <div className="row wrap">
-                {subcategories.map((code) => (
-                  <Chip
-                    key={code}
-                    active={values.subcategory === code}
-                    onClick={() => selectSubcategory(code)}
-                  >
-                    {t(`subcategories.${code}`)}
-                  </Chip>
-                ))}
-              </div>
-            </div>
+            <Select
+              label={t("create.subcategoryLabel")}
+              value={values.subcategory ?? ""}
+              onChange={(e) => selectSubcategory(e.target.value)}
+            >
+              <option value="">—</option>
+              {subcategories.map((code) => (
+                <option key={code} value={code}>
+                  {t(`subcategories.${code}`)}
+                </option>
+              ))}
+            </Select>
           )}
-        </div>
-      )}
-
-      {step === 1 && (
-        <div className="stack">
           <Input
             label={t("create.titleLabel")}
-            placeholder={t("create.titlePlaceholder")}
+            placeholder={
+              values.category
+                ? t(`create.titlePlaceholders.${values.category}`, {
+                    defaultValue: t("create.titlePlaceholder"),
+                  })
+                : t("create.titlePlaceholder")
+            }
             maxLength={120}
             {...register("title")}
             error={fe(formState.errors.title?.message)}
@@ -309,7 +316,7 @@ export default function CreateHelpPage() {
         </div>
       )}
 
-      {step === 2 && (
+      {step === 1 && (
         <div className="stack">
           {manual && (
             <p role="status" className={styles.manualHint}>
@@ -374,7 +381,7 @@ export default function CreateHelpPage() {
         </div>
       )}
 
-      {step === 3 && (
+      {step === 2 && (
         <div className="stack">
           <Controller
             control={control}
@@ -434,7 +441,7 @@ export default function CreateHelpPage() {
         </div>
       )}
 
-      {step === 4 && (
+      {step === 3 && (
         <div className="stack">
           <Controller
             control={control}
@@ -496,9 +503,9 @@ export default function CreateHelpPage() {
         </div>
       )}
 
-      {step === 5 && <PhotoUploader value={photos} onChange={setPhotos} />}
+      {step === 4 && <PhotoUploader value={photos} onChange={setPhotos} />}
 
-      {step === 6 && values.category && (
+      {step === 5 && values.category && (
         <Card>
           <dl className={styles.summary}>
             <dt>{t("nearby.category")}</dt>

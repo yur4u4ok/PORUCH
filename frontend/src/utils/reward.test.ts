@@ -28,7 +28,7 @@ describe("reward formatting", () => {
         },
         t,
       ),
-    ).toBe("🎁 Віддам/позичу річ");
+    ).toBe("📦 Віддам/позичу річ");
     expect(
       rewardSummary(
         { reward_type: "NONE", reward_amount: null, reward_currency: "UAH", reward_options: [] },

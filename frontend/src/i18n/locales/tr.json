@@ -75,7 +75,7 @@
     "step2": "Yakındaki insanlara bildirim gider",
     "step3": "Biri yanıt verir, ayrıntıları sohbette konuşursunuz",
     "step4": "Yardım aldıktan sonra teşekkür et ❤️",
-    "notMarketplace": "Bir hizmet platformu değil, bir dayanışma topluluğu. Yakınındakilere zorunlu ödeme ve komisyon olmadan yardım et.",
+    "notMarketplace": "Bir hizmet platformu değil, bir dayanışma topluluğu.",
     "trustTitle": "Neden güvenli",
     "trust": [
       "Tam adresin gizli kalır. Onu yalnızca yardım etmeyi kabul edenler görür.",
@@ -338,7 +338,20 @@
     "activeHoursHint": "Sonra otomatik olarak kapanır.",
     "locationManual": "Konumun belirlenemedi. İşareti yardımın gerektiği yere sürükle.",
     "locationManualDenied": "Konum erişimi kapalı. İşareti yardımın gerektiği yere sürükle ya da tarayıcı ayarlarından konuma izin ver.",
-    "locationPickPrompt": "Yeri işaretlemek için işareti sürükle"
+    "locationPickPrompt": "Yeri işaretlemek için işareti sürükle",
+    "categoryLabel": "Kategori",
+    "categoryPlaceholder": "—",
+    "subcategoryLabel": "Uygun olanı seç (isteğe bağlı)",
+    "titlePlaceholders": {
+      "AUTO": "Örneğin: lastik patladı",
+      "HOME": "Örneğin: lastik patladı",
+      "ITEMS": "Örneğin: lastik patladı",
+      "ANIMALS": "Örneğin: lastik patladı",
+      "PEOPLE": "Örneğin: lastik patladı",
+      "DISTRICT": "Örneğin: lastik patladı",
+      "URGENT": "Örneğin: lastik patladı",
+      "OTHER": "Örneğin: lastik patladı"
+    }
   },
   "nearby": {
     "title": "Yakında yardım",
@@ -357,7 +370,9 @@
     "approximate": "Yaklaşık konum",
     "loadMore": "Daha fazla göster",
     "useCityCenter": "Merkeze yakın göster: {{city}}",
-    "cityCenterNotice": "Şehir merkezine yakın istekler gösteriliyor. Daha doğru mesafeler için konuma izin ver."
+    "cityCenterNotice": "Şehir merkezine yakın istekler gösteriliyor. Daha doğru mesafeler için konuma izin ver.",
+    "selectAll": "Tümünü seç",
+    "resetMap": "Konumum"
   },
   "request": {
     "canHelp": "Yardım edebilirim",

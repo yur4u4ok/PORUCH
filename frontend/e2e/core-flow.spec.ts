@@ -24,9 +24,8 @@ test("help request end-to-end flow", async ({ browser }) => {
   await registerAndOnboard(helper, "Помічник", helperEmail);
 
   // 3. Author is already on the wizard (returned there after sign-up) and creates a request
-  await author.getByRole("radio", { name: /Автомобіль/ }).click();
-  await author.getByRole("button", { name: "Пробите колесо" }).click();
-  await author.getByRole("button", { name: "Далі" }).click();
+  await author.getByLabel("Категорія").selectOption("AUTO");
+  await author.getByLabel("Уточнення (необов'язково)").selectOption({ label: "Пробите колесо" });
   await author.getByLabel("Коротко").fill(title);
   await author.getByLabel("Що сталося?").fill("Пробив колесо біля парку, потрібен домкрат.");
   await author.getByRole("button", { name: "Далі" }).click();

@@ -69,7 +69,7 @@
     "step2": "近くの人に通知が届く",
     "step3": "誰かが応答したら、チャットで詳細を決める",
     "step4": "助けてもらったらお礼を伝える ❤️",
-    "notMarketplace": "サービスではなく、助け合いのコミュニティです。必須の支払いや手数料なしで、近くの人を助けましょう。",
+    "notMarketplace": "サービスではなく、助け合いのコミュニティです。",
     "trustTitle": "安心して使える理由",
     "trust": [
       "正確な住所は表示されません。見られるのは、手伝うと決めた人だけです。",
@@ -332,7 +332,20 @@
     "activeHoursHint": "時間が過ぎると自動で締め切られます。",
     "locationManual": "現在地を取得できませんでした。助けが必要な場所までピンをドラッグしてください。",
     "locationManualDenied": "位置情報がオフです。助けが必要な場所までピンをドラッグするか、ブラウザ設定で位置情報を許可してください。",
-    "locationPickPrompt": "ピンをドラッグして場所を指定"
+    "locationPickPrompt": "ピンをドラッグして場所を指定",
+    "categoryLabel": "カテゴリ",
+    "categoryPlaceholder": "—",
+    "subcategoryLabel": "当てはまるものを選択（任意）",
+    "titlePlaceholders": {
+      "AUTO": "例：タイヤがパンクした",
+      "HOME": "例：タイヤがパンクした",
+      "ITEMS": "例：タイヤがパンクした",
+      "ANIMALS": "例：タイヤがパンクした",
+      "PEOPLE": "例：タイヤがパンクした",
+      "DISTRICT": "例：タイヤがパンクした",
+      "URGENT": "例：タイヤがパンクした",
+      "OTHER": "例：タイヤがパンクした"
+    }
   },
   "nearby": {
     "title": "近くの助け合い",
@@ -351,7 +364,9 @@
     "approximate": "おおよその場所",
     "loadMore": "もっと見る",
     "useCityCenter": "中心部付近を表示：{{city}}",
-    "cityCenterNotice": "市の中心部付近の依頼を表示しています。位置情報を許可すると距離がより正確になります。"
+    "cityCenterNotice": "市の中心部付近の依頼を表示しています。位置情報を許可すると距離がより正確になります。",
+    "selectAll": "すべて選択",
+    "resetMap": "現在地"
   },
   "request": {
     "canHelp": "手伝えます",

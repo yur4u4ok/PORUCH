@@ -75,7 +75,7 @@
     "step2": "Les gens à proximité sont prévenus",
     "step3": "Quelqu'un répond, vous réglez les détails dans le chat",
     "step4": "Dites merci une fois aidé ❤️",
-    "notMarketplace": "Pas un service, mais une communauté d’entraide. Aidez les gens près de chez vous, sans paiement ni commission obligatoires.",
+    "notMarketplace": "Pas un service, mais une communauté d’entraide.",
     "trustTitle": "Pourquoi c'est sûr",
     "trust": [
       "Votre adresse exacte est masquée. Seules les personnes qui ont accepté d'aider la voient.",
@@ -338,7 +338,20 @@
     "activeHoursHint": "Ensuite, elle se ferme automatiquement.",
     "locationManual": "Impossible de détecter votre position. Faites glisser le repère là où l'aide est nécessaire.",
     "locationManualDenied": "L'accès à la position est désactivé. Faites glisser le repère là où l'aide est nécessaire ou autorisez la position dans le navigateur.",
-    "locationPickPrompt": "Faites glisser le repère pour indiquer le lieu"
+    "locationPickPrompt": "Faites glisser le repère pour indiquer le lieu",
+    "categoryLabel": "Catégorie",
+    "categoryPlaceholder": "—",
+    "subcategoryLabel": "Choisissez ce qui convient (facultatif)",
+    "titlePlaceholders": {
+      "AUTO": "Par exemple : pneu crevé",
+      "HOME": "Par exemple : pneu crevé",
+      "ITEMS": "Par exemple : pneu crevé",
+      "ANIMALS": "Par exemple : pneu crevé",
+      "PEOPLE": "Par exemple : pneu crevé",
+      "DISTRICT": "Par exemple : pneu crevé",
+      "URGENT": "Par exemple : pneu crevé",
+      "OTHER": "Par exemple : pneu crevé"
+    }
   },
   "nearby": {
     "title": "Aide à proximité",
@@ -357,7 +370,9 @@
     "approximate": "Position approximative",
     "loadMore": "Voir plus",
     "useCityCenter": "Afficher près du centre : {{city}}",
-    "cityCenterNotice": "Demandes affichées près du centre-ville. Autorisez la localisation pour des distances plus précises."
+    "cityCenterNotice": "Demandes affichées près du centre-ville. Autorisez la localisation pour des distances plus précises.",
+    "selectAll": "Tout sélectionner",
+    "resetMap": "Ma position"
   },
   "request": {
     "canHelp": "Je peux aider",

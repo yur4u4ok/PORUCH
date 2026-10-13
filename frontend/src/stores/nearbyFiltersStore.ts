@@ -15,6 +15,8 @@ interface NearbyFiltersState {
   toggleUrgency: (urgency: Urgency) => void;
   setView: (view: "list" | "map") => void;
   reset: () => void;
+  /** Every category and urgency again; the radius stays. */
+  selectAll: () => void;
 }
 
 /** An empty list means «all». Unticking one from «all» keeps the rest; ticking everything is «all» again. */
@@ -38,4 +40,5 @@ export const useNearbyFilters = create<NearbyFiltersState>((set) => ({
   toggleUrgency: (urgency) => set((s) => ({ urgencies: toggle(s.urgencies, urgency, URGENCIES) })),
   setView: (view) => set({ view }),
   reset: () => set({ categories: [], urgencies: [], radius: NEARBY_DEFAULT_RADIUS }),
+  selectAll: () => set({ categories: [], urgencies: [] }),
 }));

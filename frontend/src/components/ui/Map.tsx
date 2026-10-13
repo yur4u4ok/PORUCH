@@ -46,6 +46,10 @@ interface MapProps {
   ariaLabel?: string;
   /** Zoom out/in so that all markers (and "me") are visible. */
   fitMarkers?: boolean;
+  /** Label of a button under the map that centres it on «me» (or the starting view). */
+  resetLabel?: string;
+  /** Shown on the same row as that button (e.g. a legend). */
+  footer?: React.ReactNode;
 }
 
 function markerElement(marker: MapMarker, onClick?: (id: string) => void): HTMLElement {
@@ -107,6 +111,8 @@ export function MapView({
   onPickerChange,
   ariaLabel,
   fitMarkers = false,
+  resetLabel,
+  footer,
 }: MapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
@@ -117,6 +123,18 @@ export function MapView({
   useEffect(() => {
     onPickerChangeRef.current = onPickerChange;
   }, [onPickerChange]);
+
+  /** The view the map opened with: all markers (and «me») in sight, or the centre at the start zoom. */
+  const startView = (map: MapLibreMap, duration = 600) => {
+    if (fitMarkers && markers.length) {
+      const bounds = new LngLatBounds();
+      markers.forEach((m) => bounds.extend([m.position.longitude, m.position.latitude]));
+      if (me) bounds.extend([me.longitude, me.latitude]);
+      map.fitBounds(bounds, { padding: 56, maxZoom: 15, duration });
+    } else {
+      map.easeTo({ center: [center.longitude, center.latitude], zoom, duration });
+    }
+  };
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -157,12 +175,7 @@ export function MapView({
         .setLngLat([marker.position.longitude, marker.position.latitude])
         .addTo(map),
     );
-    if (fitMarkers && markers.length) {
-      const bounds = new LngLatBounds();
-      markers.forEach((m) => bounds.extend([m.position.longitude, m.position.latitude]));
-      if (me) bounds.extend([me.longitude, me.latitude]);
-      map.fitBounds(bounds, { padding: 56, maxZoom: 15, duration: 0 });
-    }
+    if (fitMarkers && markers.length) startView(map, 0);
     // `me` is intentionally not a dependency: refit only when the result set changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [markers, onMarkerClick, fitMarkers]);
@@ -236,8 +249,44 @@ export function MapView({
   }, [picker]);
 
   return (
-    <div className={styles.wrap} style={{ height }} role="region" aria-label={ariaLabel}>
-      <div ref={containerRef} className={styles.map} />
-    </div>
+    <>
+      <div className={styles.wrap} style={{ height }} role="region" aria-label={ariaLabel}>
+        <div ref={containerRef} className={styles.map} />
+      </div>
+      {(resetLabel || footer) && (
+        <div className={styles.footer}>
+          {footer ?? <span />}
+          {resetLabel && (
+            <button
+              type="button"
+              className={styles.reset}
+              onClick={() => {
+                const map = mapRef.current;
+                if (!map) return;
+                // back to where I am (or the starting view when my position isn't known)
+                if (me) map.easeTo({ center: [me.longitude, me.latitude], zoom, duration: 600 });
+                else startView(map);
+              }}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                aria-hidden
+              >
+                <circle cx="12" cy="12" r="7" />
+                <circle cx="12" cy="12" r="2" fill="currentColor" />
+                <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+              </svg>
+              {resetLabel}
+            </button>
+          )}
+        </div>
+      )}
+    </>
   );
 }

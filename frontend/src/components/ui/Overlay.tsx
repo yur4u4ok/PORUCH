@@ -38,6 +38,8 @@ interface OverlayProps {
   title?: ReactNode;
   children: ReactNode;
   actions?: ReactNode;
+  /** Bottom sheet: a small control on the title row, on the right. */
+  headerAction?: ReactNode;
   dismissible?: boolean;
 }
 
@@ -75,7 +77,7 @@ export function Modal({ open, onClose, title, children, actions, dismissible = t
   );
 }
 
-export function BottomSheet({ open, onClose, title, children, actions }: OverlayProps) {
+export function BottomSheet({ open, onClose, title, children, actions, headerAction }: OverlayProps) {
   const titleId = useId();
   const panelRef = useOverlayBehaviour(open, onClose);
   if (!open) return null;
@@ -91,7 +93,12 @@ export function BottomSheet({ open, onClose, title, children, actions }: Overlay
         onClick={(e) => e.stopPropagation()}
       >
         <span className={styles.handle} aria-hidden />
-        {title && <h2 id={titleId}>{title}</h2>}
+        {(title || headerAction) && (
+          <div className={styles.header}>
+            {title && <h2 id={titleId}>{title}</h2>}
+            {headerAction}
+          </div>
+        )}
         {children}
         {actions && <div className={styles.actions}>{actions}</div>}
       </div>

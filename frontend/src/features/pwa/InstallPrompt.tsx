@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { Button, Card, Modal } from "@/components/ui";
 import { toast } from "@/stores/toastStore";
@@ -13,44 +13,61 @@ import {
   type Platform,
 } from "./install";
 
+/** Small inline glyphs of the Safari menu items the steps mention. */
+const glyph = (path: React.ReactNode) => (
+  <svg
+    className={styles.glyph}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden
+  >
+    {path}
+  </svg>
+);
+const STEP_ICONS = {
+  share: glyph(
+    <>
+      <path d="M12 3v12M8 7l4-4 4 4" />
+      <path d="M6 11v9h12v-9" />
+    </>,
+  ),
+  dots: glyph(
+    <>
+      <circle cx="5" cy="12" r="1.3" fill="currentColor" />
+      <circle cx="12" cy="12" r="1.3" fill="currentColor" />
+      <circle cx="19" cy="12" r="1.3" fill="currentColor" />
+    </>,
+  ),
+  more: glyph(
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8 10.5l4 4 4-4" />
+    </>,
+  ),
+  add: glyph(
+    <>
+      <rect x="4" y="4" width="16" height="16" rx="3" />
+      <path d="M12 8v8M8 12h8" />
+    </>,
+  ),
+};
+
 /** Short steps where the browser cannot install on a button press. */
 function Steps({ platform }: { platform: Platform }) {
   const { t } = useTranslation();
   const steps = t(`install.steps.${platform}`, { returnObjects: true }) as string[];
   return (
     <ol className={styles.steps}>
-      {steps.map((step) => (
-        <li key={step}>{step}</li>
+      {steps.map((step, i) => (
+        <li key={step}>
+          <Trans i18nKey={`install.steps.${platform}.${i}`} components={STEP_ICONS} />
+        </li>
       ))}
     </ol>
-  );
-}
-
-/** Collapsed help for the cases that go wrong: in-app browsers, hidden menu items, private mode… */
-function Troubleshooting({ platform }: { platform: Platform }) {
-  const { t } = useTranslation();
-  const tips = t(`install.trouble.${platform}`, { returnObjects: true }) as string[];
-  const copy = async () => {
-    const url = window.location.origin;
-    try {
-      await navigator.clipboard.writeText(url);
-      toast.success(t("install.copied"));
-    } catch {
-      window.prompt(t("install.copyLink"), url);
-    }
-  };
-  return (
-    <details className={styles.trouble}>
-      <summary>{t("install.troubleTitle")}</summary>
-      <ul>
-        {tips.map((tip) => (
-          <li key={tip}>{tip}</li>
-        ))}
-      </ul>
-      <Button variant="secondary" size="sm" onClick={() => void copy()}>
-        🔗 {t("install.copyLink")}
-      </Button>
-    </details>
   );
 }
 
@@ -66,22 +83,12 @@ function InstallBody({ onDone }: { onDone: () => void }) {
   };
   return (
     <div className="stack-sm">
-      <p>{t("install.why")}</p>
-      <ul className={styles.benefits}>
-        {(t("install.benefits", { returnObjects: true }) as string[]).map((b) => (
-          <li key={b}>{b}</li>
-        ))}
-      </ul>
       {canPrompt ? (
         <Button size="lg" block onClick={() => void install()}>
           📲 {t("install.button")}
         </Button>
       ) : (
-        <>
-          <strong>{t("install.howTo")}</strong>
-          <Steps platform={platform} />
-          <Troubleshooting platform={platform} />
-        </>
+        <Steps platform={platform} />
       )}
     </div>
   );

@@ -12,7 +12,15 @@ export function PushUnavailable() {
   const support = pushSupport();
   if (support === "unsupported") return <p className="muted">{t("notifications.unsupported")}</p>;
   if (support === "ios-needs-install") return <p className="muted">{t("notifications.iosHint")}</p>;
-  if (notificationPermission() === "denied") return <p className="muted">{t("notifications.denied")}</p>;
+  if (notificationPermission() === "denied")
+    return (
+      <p
+        className="muted"
+        style={{ textDecoration: "underline var(--color-danger) 2px", textUnderlineOffset: 4 }}
+      >
+        {t("notifications.denied")}
+      </p>
+    );
   return null;
 }
 

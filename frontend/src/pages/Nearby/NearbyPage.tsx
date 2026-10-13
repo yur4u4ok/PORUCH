@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router";
 
 import { PageHeader } from "@/components/layout/AppLayout";
+import { FilterIcon } from "@/components/layout/NavIcons";
 import {
   BottomSheet,
   Button,
@@ -27,19 +28,10 @@ import { shownAsSelected, useNearbyFilters } from "@/stores/nearbyFiltersStore";
 import type { LatLng } from "@/types/api";
 import { cityName } from "@/utils/city";
 import { fallbackCenter, usePlace } from "@/features/location/place";
-import {
-  CATEGORY_EMOJI,
-  CATEGORY_ORDER,
-  URGENCIES,
-  URGENCY_EMOJI,
-  URGENCY_HEX,
-  requestEmoji,
-} from "@/utils/categories";
+import { CATEGORY_ORDER, URGENCIES, URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
 import { DEFAULT_RADII } from "@/utils/radius";
 
 import { NEARBY_SORTS, useListFilter } from "@/hooks/useListFilter";
-
-import styles from "./Nearby.module.css";
 
 const ZOOM_BY_RADIUS: Record<number, number> = {
   500: 15,
@@ -131,7 +123,8 @@ export default function NearbyPage() {
         title={t("nearby.title")}
         actions={
           <Button variant="secondary" size="sm" onClick={() => setFiltersOpen(true)}>
-            ⚙️ {t("nearby.filters")}
+            <FilterIcon />
+            {t("nearby.filters")}
             {activeFilters > 0 && ` (${activeFilters})`}
           </Button>
         }
@@ -145,32 +138,6 @@ export default function NearbyPage() {
           { value: "map", label: `🗺 ${t("nearby.map")}` },
         ]}
       />
-      {/* Quick category filter, like the tear-off tabs on the home screen: one tap shows only that kind. */}
-      <nav className={styles.strip} aria-label={t("nearby.category")}>
-        <button
-          type="button"
-          className={styles.stripTab}
-          aria-pressed={filters.categories.length === 0}
-          onClick={() => filters.setCategories([])}
-        >
-          <span aria-hidden>✳️</span>
-          {t("nearby.all")}
-        </button>
-        {CATEGORY_ORDER.map((c) => (
-          <button
-            key={c}
-            type="button"
-            className={styles.stripTab}
-            aria-pressed={filters.categories.includes(c)}
-            onClick={() =>
-              filters.setCategories(filters.categories.length === 1 && filters.categories[0] === c ? [] : [c])
-            }
-          >
-            <span aria-hidden>{CATEGORY_EMOJI[c]}</span>
-            {t(`categories.${c}`)}
-          </button>
-        ))}
-      </nav>
       <RadiusChips
         radii={config?.radii ?? DEFAULT_RADII}
         value={filters.radius}
@@ -202,15 +169,20 @@ export default function NearbyPage() {
           <LazyMap
             center={position}
             zoom={ZOOM_BY_RADIUS[filters.radius] ?? 13}
-            height="calc(100vh - 300px)"
+            height="max(260px, calc(100dvh - 500px))"
             markers={markers}
             me={geoPosition}
             meAccuracy={geoPosition?.accuracy}
             onMarkerClick={onMarkerClick}
             fitMarkers
+            resetLabel={t("nearby.resetMap")}
+            footer={
+              markers.some((m) => m.approximate) ? (
+                <span className="muted">◌ {t("nearby.approximate")}</span>
+              ) : undefined
+            }
             ariaLabel={t("nearby.map")}
           />
-          {markers.some((m) => m.approximate) && <p className="muted">◌ {t("nearby.approximate")}</p>}
           <RoughLocationHint position={geoPosition} />
         </>
       ) : nearby.isPending ? (
@@ -243,14 +215,12 @@ export default function NearbyPage() {
         open={filtersOpen}
         onClose={() => setFiltersOpen(false)}
         title={t("nearby.filters")}
-        actions={
-          <>
-            <Button variant="soft" onClick={filters.reset}>
-              {t("nearby.all")}
-            </Button>
-            <Button onClick={() => setFiltersOpen(false)}>{t("common.done")}</Button>
-          </>
+        headerAction={
+          <Button variant="soft" size="sm" onClick={filters.selectAll} disabled={activeFilters === 0}>
+            {t("nearby.selectAll")}
+          </Button>
         }
+        actions={<Button onClick={() => setFiltersOpen(false)}>{t("common.done")}</Button>}
       >
         <div className="stack-sm">
           <strong>{t("nearby.category")}</strong>
