@@ -352,7 +352,10 @@
       "URGENT": "Por exemplo: pneu furado",
       "OTHER": "Por exemplo: pneu furado"
     },
-    "pickDate": "Escolha uma data"
+    "pickDate": "Escolha uma data",
+    "leaveTitle": "Sair do pedido?",
+    "leaveText": "O que você preencheu não será salvo.",
+    "leaveConfirm": "Sair"
   },
   "nearby": {
     "title": "Ajuda perto",

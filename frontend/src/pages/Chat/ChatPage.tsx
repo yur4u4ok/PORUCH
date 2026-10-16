@@ -30,6 +30,10 @@ import { formatTime } from "@/utils/format";
 
 import styles from "./Chat.module.css";
 
+/** How far a bubble follows the finger, and how far it must go to start a reply. */
+const SWIPE_MAX = 72;
+const SWIPE_REPLY = 48;
+
 function MessageBubble({
   message,
   mine,
@@ -61,12 +65,49 @@ function MessageBubble({
   actionsAbove?: boolean;
 }) {
   const { t } = useTranslation();
+  const [drag, setDrag] = useState(0);
+  const start = useRef<{ x: number; y: number; horizontal: boolean | null } | null>(null);
+  // a single click waits a moment, so a double click (reply) doesn't also open the actions bar
+  const clickTimer = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearTimeout(clickTimer.current), []);
   if (message.message_type === "SYSTEM") return <div className={styles.system}>{message.text}</div>;
   const local = message.id.startsWith("local-");
   const quote = message.reply_to;
   const reactions = message.reactions ?? [];
+  const canReply = !local && !message.failed;
+  // Phones: drag the bubble a little towards the middle to reply (mine move left, theirs right).
+  const toMiddle = (dx: number) => (mine ? -dx : dx);
+  const swipe = {
+    onTouchStart: (e: React.TouchEvent) => {
+      const touch = e.touches[0];
+      if (canReply && touch) start.current = { x: touch.clientX, y: touch.clientY, horizontal: null };
+    },
+    onTouchMove: (e: React.TouchEvent) => {
+      const s0 = start.current;
+      const touch = e.touches[0];
+      if (!s0 || !touch) return;
+      const dx = touch.clientX - s0.x;
+      const dy = touch.clientY - s0.y;
+      if (s0.horizontal === null && Math.hypot(dx, dy) > 8) s0.horizontal = Math.abs(dx) > Math.abs(dy);
+      if (s0.horizontal) setDrag(Math.max(0, Math.min(SWIPE_MAX, toMiddle(dx))));
+    },
+    onTouchEnd: () => {
+      if (drag >= SWIPE_REPLY) onReply(message);
+      start.current = null;
+      setDrag(0);
+    },
+  };
   return (
-    <div className={clsx(styles.row, mine && styles.rowMine)} id={`m-${message.id}`}>
+    <div className={clsx(styles.row, mine && styles.rowMine)} id={`m-${message.id}`} {...swipe}>
+      {drag > 0 && (
+        <span
+          className={clsx(styles.swipeHint, mine && styles.swipeHintMine)}
+          style={{ opacity: Math.min(1, drag / SWIPE_REPLY) }}
+          aria-hidden
+        >
+          ↩
+        </span>
+      )}
       <div
         className={clsx(
           styles.bubble,
@@ -75,12 +116,24 @@ function MessageBubble({
           message.failed && styles.failed,
           selected && styles.selected,
         )}
+        style={drag ? { transform: `translateX(${mine ? -drag : drag}px)` } : undefined}
+        // computers: a double click replies
+        onDoubleClick={() => {
+          if (!canReply) return;
+          window.clearTimeout(clickTimer.current);
+          window.getSelection()?.removeAllRanges();
+          onSelect(null);
+          onReply(message);
+        }}
         onClick={
           message.failed
             ? () => onRetry(message)
             : local
               ? undefined
-              : () => onSelect(selected ? null : message.id)
+              : () => {
+                  window.clearTimeout(clickTimer.current);
+                  clickTimer.current = window.setTimeout(() => onSelect(selected ? null : message.id), 250);
+                }
         }
         onContextMenu={(e) => {
           if (!mine && !message.id.startsWith("local-")) {
@@ -434,7 +487,20 @@ export default function ChatPage() {
           }}
         >
           <label className={styles.attach} aria-label={t("chat.attach")} title={t("chat.attach")}>
-            {uploading ? "⏳" : "📷"}
+            {/* a plain line «+»: attach a photo */}
+            <svg
+              className={uploading ? styles.attachBusy : undefined}
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              aria-hidden
+            >
+              <path d="M12 5v14M5 12h14" />
+            </svg>
             <input
               type="file"
               accept="image/jpeg,image/png,image/webp"

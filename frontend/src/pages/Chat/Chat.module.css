@@ -140,14 +140,37 @@
   border-color: var(--color-primary);
 }
 .attach {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  /* the hidden file input is taken out of the flow, so only the icon is centred */
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
   width: 44px;
   height: 44px;
+  border: 1.5px solid var(--color-border);
   border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
   cursor: pointer;
-  font-size: 20px;
+  transition:
+    color var(--transition),
+    border-color var(--transition);
+}
+.attach:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.attach > input {
+  position: absolute;
+}
+.attachBusy {
+  opacity: 0.4;
+  animation: attachSpin 1s linear infinite;
+}
+@keyframes attachSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 .send {
   width: 44px;
@@ -412,4 +435,21 @@
   .actionLabel {
     display: none;
   }
+}
+/* reply arrow that appears behind a bubble being dragged towards the middle */
+.swipeHint {
+  position: absolute;
+  top: 50%;
+  left: var(--space-2);
+  transform: translateY(-50%);
+  color: var(--color-primary);
+  font-size: 20px;
+  pointer-events: none;
+}
+.swipeHintMine {
+  left: auto;
+  right: var(--space-2);
+}
+.row {
+  touch-action: pan-y;
 }

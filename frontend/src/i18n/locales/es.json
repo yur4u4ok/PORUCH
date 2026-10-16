@@ -352,7 +352,10 @@
       "URGENT": "Por ejemplo: rueda pinchada",
       "OTHER": "Por ejemplo: rueda pinchada"
     },
-    "pickDate": "Elige una fecha"
+    "pickDate": "Elige una fecha",
+    "leaveTitle": "¿Salir de la solicitud?",
+    "leaveText": "Lo que has rellenado no se guardará.",
+    "leaveConfirm": "Salir"
   },
   "nearby": {
     "title": "Ayuda cerca",

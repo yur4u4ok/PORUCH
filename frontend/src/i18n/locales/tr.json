@@ -352,7 +352,10 @@
       "URGENT": "Örneğin: lastik patladı",
       "OTHER": "Örneğin: lastik patladı"
     },
-    "pickDate": "Tarih seçin"
+    "pickDate": "Tarih seçin",
+    "leaveTitle": "Talepten çıkılsın mı?",
+    "leaveText": "Doldurduklarınız kaydedilmeyecek.",
+    "leaveConfirm": "Çık"
   },
   "nearby": {
     "title": "Yakında yardım",

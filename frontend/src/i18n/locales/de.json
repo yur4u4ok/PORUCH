@@ -352,7 +352,10 @@
       "URGENT": "Zum Beispiel: platter Reifen",
       "OTHER": "Zum Beispiel: platter Reifen"
     },
-    "pickDate": "Datum wählen"
+    "pickDate": "Datum wählen",
+    "leaveTitle": "Anfrage verlassen?",
+    "leaveText": "Ihre Eingaben werden nicht gespeichert.",
+    "leaveConfirm": "Verlassen"
   },
   "nearby": {
     "title": "Hilfe in der Nähe",

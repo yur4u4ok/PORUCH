@@ -352,7 +352,10 @@
       "URGENT": "Par exemple : pneu crevé",
       "OTHER": "Par exemple : pneu crevé"
     },
-    "pickDate": "Choisir une date"
+    "pickDate": "Choisir une date",
+    "leaveTitle": "Quitter la demande ?",
+    "leaveText": "Ce que vous avez saisi ne sera pas enregistré.",
+    "leaveConfirm": "Quitter"
   },
   "nearby": {
     "title": "Aide à proximité",

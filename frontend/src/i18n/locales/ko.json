@@ -346,7 +346,10 @@
       "URGENT": "예: 타이어 펑크",
       "OTHER": "예: 타이어 펑크"
     },
-    "pickDate": "날짜 선택"
+    "pickDate": "날짜 선택",
+    "leaveTitle": "요청 작성을 그만둘까요?",
+    "leaveText": "입력한 내용은 저장되지 않습니다.",
+    "leaveConfirm": "나가기"
   },
   "nearby": {
     "title": "내 주변 도움",

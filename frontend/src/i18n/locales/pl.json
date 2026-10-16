@@ -364,7 +364,10 @@
       "URGENT": "Na przykład: przebita opona",
       "OTHER": "Na przykład: przebita opona"
     },
-    "pickDate": "Wybierz datę"
+    "pickDate": "Wybierz datę",
+    "leaveTitle": "Wyjść z tworzenia prośby?",
+    "leaveText": "To, co wpisano, nie zostanie zapisane.",
+    "leaveConfirm": "Wyjdź"
   },
   "nearby": {
     "title": "Pomoc w pobliżu",

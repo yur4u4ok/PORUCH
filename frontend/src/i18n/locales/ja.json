@@ -346,7 +346,10 @@
       "URGENT": "例：タイヤがパンクした",
       "OTHER": "例：タイヤがパンクした"
     },
-    "pickDate": "日付を選択"
+    "pickDate": "日付を選択",
+    "leaveTitle": "リクエスト作成をやめますか？",
+    "leaveText": "入力した内容は保存されません。",
+    "leaveConfirm": "やめる"
   },
   "nearby": {
     "title": "近くの助け合い",

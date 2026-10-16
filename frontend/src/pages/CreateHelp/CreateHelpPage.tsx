@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useSearchParams } from "react-router";
+import { useBlocker, useNavigate, useSearchParams } from "react-router";
 
 import { ApiError } from "@/api/client";
 import { queryKeys } from "@/api/queryKeys";
@@ -15,7 +15,7 @@ import { Button, Card, InfoTip, Input, Select, Textarea } from "@/components/ui"
 import { Stepper } from "@/components/ui/Stepper";
 import { LazyMap } from "@/components/ui/LazyMap";
 import { useMe } from "@/features/auth/hooks";
-import { EmergencyDisclaimer, OptionTiles, UrgencyBadge } from "@/features/help/components";
+import { ConfirmDialog, EmergencyDisclaimer, OptionTiles, UrgencyBadge } from "@/features/help/components";
 import { createHelpSchema, STEP_FIELDS, type CreateHelpForm } from "@/features/help/createSchema";
 import { useCreateHelpRequest } from "@/features/help/hooks";
 import { PhotoUploader } from "@/features/help/PhotoUploader";
@@ -100,6 +100,25 @@ export default function CreateHelpPage() {
       mode: "onTouched",
     },
   );
+
+  // Leaving with something filled in asks first, so a stray tap doesn't throw the draft away.
+  const hasDraft = formState.isDirty || photos.length > 0;
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) =>
+      hasDraft &&
+      // going to the request just published is not leaving
+      !(nextLocation.state as { published?: boolean } | null)?.published &&
+      currentLocation.pathname !== nextLocation.pathname,
+  );
+  useEffect(() => {
+    if (!hasDraft || create.isSuccess) return;
+    const warn = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [hasDraft, create.isSuccess]);
 
   // All fields have defaults, so the watched form is complete at runtime.
   const values = useWatch({ control }) as CreateHelpForm;
@@ -196,7 +215,7 @@ export default function CreateHelpPage() {
       {
         onSuccess: (created) => {
           toast.success(t("create.success"));
-          navigate(`/help/${created.id}`, { replace: true });
+          navigate(`/help/${created.id}`, { replace: true, state: { published: true } });
         },
         onError: (error) => {
           if (error instanceof ApiError) {
@@ -570,6 +589,15 @@ export default function CreateHelpPage() {
         )}
       </div>
 
+      <ConfirmDialog
+        open={blocker.state === "blocked"}
+        onClose={() => blocker.reset?.()}
+        onConfirm={() => blocker.proceed?.()}
+        title={t("create.leaveTitle")}
+        text={t("create.leaveText")}
+        confirmLabel={t("create.leaveConfirm")}
+        danger
+      />
       <EmergencyDisclaimer
         open={disclaimerOpen}
         onClose={() => setDisclaimerOpen(false)}

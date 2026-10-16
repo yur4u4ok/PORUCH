@@ -352,7 +352,10 @@
       "URGENT": "Per esempio: gomma a terra",
       "OTHER": "Per esempio: gomma a terra"
     },
-    "pickDate": "Scegli una data"
+    "pickDate": "Scegli una data",
+    "leaveTitle": "Uscire dalla richiesta?",
+    "leaveText": "Quello che hai compilato non verrà salvato.",
+    "leaveConfirm": "Esci"
   },
   "nearby": {
     "title": "Aiuto vicino",

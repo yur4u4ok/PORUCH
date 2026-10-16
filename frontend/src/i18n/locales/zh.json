@@ -346,7 +346,10 @@
       "URGENT": "例如：轮胎没气了",
       "OTHER": "例如：轮胎没气了"
     },
-    "pickDate": "选择日期"
+    "pickDate": "选择日期",
+    "leaveTitle": "离开创建请求？",
+    "leaveText": "已填写的内容不会保存。",
+    "leaveConfirm": "离开"
   },
   "nearby": {
     "title": "附近互助",

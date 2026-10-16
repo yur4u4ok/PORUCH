@@ -352,7 +352,10 @@
       "URGENT": "For example: someone felt unwell on the street",
       "OTHER": "For example: help with a laptop"
     },
-    "pickDate": "Pick a date"
+    "pickDate": "Pick a date",
+    "leaveTitle": "Leave this request?",
+    "leaveText": "What you've filled in won't be saved.",
+    "leaveConfirm": "Leave"
   },
   "nearby": {
     "title": "Help nearby",

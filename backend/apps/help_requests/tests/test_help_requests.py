@@ -285,6 +285,16 @@ class TestExpiration:
         expire_help_requests()
         assert Notification.objects.filter(user=hr.author, type="REQUEST_EXPIRING").count() == 1
 
+    def test_expiring_request_is_emailed_to_the_author(self, no_push, django_capture_on_commit_callbacks):
+        from django.core import mail
+
+        hr = HelpRequestFactory(
+            expires_at=timezone.now() + timedelta(minutes=30), author=UserFactory(email_verified=True)
+        )
+        with django_capture_on_commit_callbacks(execute=True):
+            expire_help_requests()
+        assert [m.to for m in mail.outbox] == [[hr.author.email]]
+
 
 class TestHistory:
     def test_roles(self, make_client):
