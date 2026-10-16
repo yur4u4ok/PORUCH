@@ -93,31 +93,31 @@ export default function LandingPage() {
 
       <InstallCard />
 
-      <section className={styles.block} aria-labelledby="how">
-        <h2 id="how" className={styles.blockTitle}>
-          {t("landing.how")}
-        </h2>
-        <ol className={styles.steps}>
-          {steps.map((key) => (
-            <li key={key}>{t(`landing.${key}`)}</li>
-          ))}
-        </ol>
-      </section>
+      {/* closed by default: the welcome screen stays short, details are a tap away */}
+      <div className={styles.blocks}>
+        <details className={styles.block}>
+          <summary className={styles.blockTitle}>{t("landing.how")}</summary>
+          <ol className={styles.steps}>
+            {steps.map((key) => (
+              <li key={key}>{t(`landing.${key}`)}</li>
+            ))}
+          </ol>
+        </details>
 
-      <section className={styles.block} aria-labelledby="trust">
-        <h2 id="trust" className={styles.blockTitle}>
-          {t("landing.trustTitle")}
-        </h2>
-        <ul className={styles.trust}>
-          {(t("landing.trust", { returnObjects: true }) as string[]).map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </section>
+        <details className={styles.block}>
+          <summary className={styles.blockTitle}>{t("landing.trustTitle")}</summary>
+          <ul className={styles.trust}>
+            {(t("landing.trust", { returnObjects: true }) as string[]).map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </details>
+      </div>
 
       <footer className={styles.footer}>
         <Link to="/privacy">{t("legal.privacy")}</Link>
         <Link to="/terms">{t("legal.terms")}</Link>
+        <Link to="/contact">{t("support.title")}</Link>
       </footer>
     </main>
   );

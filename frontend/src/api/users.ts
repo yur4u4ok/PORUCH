@@ -74,6 +74,6 @@ export const usersApi = {
     help_request_id?: string;
     message_id?: string;
   }) => http.post<{ id: string }>("/reports/", input),
-  support: (input: { topic: SupportTopic; message: string; page?: string }) =>
+  support: (input: { topic: SupportTopic; message: string; page?: string; email?: string }) =>
     http.post<void>("/support/", input),
 };

@@ -145,13 +145,55 @@
 }
 
 /* ── Below the fold ────────────────────────────────────────────────────────── */
+/* «Як це працює» / «Чому тут безпечно»: drop-downs, kept close together */
+.blocks {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
 .block {
   display: flex;
   flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+.block[open] {
   gap: var(--space-4);
+  padding-bottom: var(--space-4);
+}
+.block > :not(summary) {
+  padding: 0 var(--space-4);
 }
 .blockTitle {
-  font-size: var(--text-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  list-style: none;
+  cursor: pointer;
+}
+.blockTitle::-webkit-details-marker {
+  display: none;
+}
+.blockTitle::after {
+  content: "";
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-3px);
+  transition: transform var(--transition);
+}
+.block[open] > .blockTitle::after {
+  transform: rotate(-135deg) translateY(-3px);
 }
 /* a real sequence, so numbered */
 .steps {
@@ -219,12 +261,18 @@
   font-size: 13px;
   font-weight: 800;
 }
+/* links wrap onto more rows on narrow screens, each kept on one line */
 .footer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-5);
+  gap: var(--space-2) var(--space-5);
   font-size: var(--text-sm);
   color: var(--color-text-muted);
+  text-align: center;
+}
+.footer > a {
+  white-space: nowrap;
 }
 
 /* ── Wide screens: the notice left, the ways in right ──────────────────────── */
@@ -237,9 +285,6 @@
     align-items: center;
     gap: var(--space-8);
     min-height: 60vh;
-  }
-  .block {
-    max-width: 640px;
   }
 }
 

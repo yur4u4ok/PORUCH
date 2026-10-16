@@ -703,7 +703,8 @@
     "send": "Wyślij",
     "sent": "Wiadomość wysłana",
     "replyNote": "Odpowiemy na {{email}}.",
-    "another": "Napisz kolejną"
+    "another": "Napisz kolejną",
+    "yourEmail": "Twój e-mail do odpowiedzi"
   },
   "install": {
     "title": "Zainstaluj Poruch jako aplikację",

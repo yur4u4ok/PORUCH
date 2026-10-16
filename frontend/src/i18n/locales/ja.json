@@ -679,7 +679,8 @@
     "send": "送信",
     "sent": "送信しました",
     "replyNote": "{{email}} に返信します。",
-    "another": "もう一件書く"
+    "another": "もう一件書く",
+    "yourEmail": "返信先のメールアドレス"
   },
   "install": {
     "title": "Poruchをアプリとしてインストール",

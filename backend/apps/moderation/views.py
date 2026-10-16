@@ -1,6 +1,7 @@
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.generics import ListAPIView
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -14,6 +15,7 @@ from apps.moderation.serializers import (
 )
 from apps.moderation.services import moderation as svc
 from apps.moderation.services.support import send_support_message
+from common.exceptions import ValidationFailed
 from common.throttling import ReportsThrottle, SupportThrottle
 
 
@@ -50,11 +52,18 @@ class BlockDeleteView(APIView):
 
 
 class SupportMessageView(APIView):
+    """Open to everyone: a visitor who can't sign in must still be able to reach the team."""
+
+    permission_classes = [AllowAny]
     throttle_classes = [SupportThrottle]
 
     @extend_schema(request=SupportMessageSerializer, responses={202: None})
     def post(self, request):
         ser = SupportMessageSerializer(data=request.data)
         ser.is_valid(raise_exception=True)
-        send_support_message(request.user, **ser.validated_data)
+        data = ser.validated_data
+        user = request.user if request.user.is_authenticated else None
+        if user is None and not data.get("email"):
+            raise ValidationFailed(details={"email": ["Вкажіть email, щоб ми могли відповісти."]})
+        send_support_message(user, **data)
         return Response(status=status.HTTP_202_ACCEPTED)

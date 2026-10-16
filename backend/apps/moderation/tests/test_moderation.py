@@ -91,5 +91,15 @@ def test_support_message_is_emailed_with_reply_to_user(settings, django_capture_
     assert "Карта не відкривається" in sent.body and "/nearby" in sent.body
 
 
-def test_support_requires_login():
-    assert APIClient().post("/api/v1/support/", {"topic": "BUG", "message": "x"}).status_code == 401
+def test_guest_support_needs_an_email_and_replies_to_it(settings, django_capture_on_commit_callbacks):
+    from django.core import mail
+
+    settings.SUPPORT_EMAIL = "support@example.com"
+    guest = APIClient()
+    assert guest.post("/api/v1/support/", {"topic": "BUG", "message": "x"}).status_code == 400
+    with django_capture_on_commit_callbacks(execute=True):
+        response = guest.post(
+            "/api/v1/support/", {"topic": "QUESTION", "message": "Не можу увійти", "email": "guest@example.com"}
+        )
+    assert response.status_code == 202
+    assert mail.outbox[-1].reply_to == ["guest@example.com"]

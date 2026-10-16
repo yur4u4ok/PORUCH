@@ -679,7 +679,8 @@
     "send": "发送",
     "sent": "已发送",
     "replyNote": "我们会回复到 {{email}}。",
-    "another": "再写一条"
+    "another": "再写一条",
+    "yourEmail": "用于回复的邮箱"
   },
   "install": {
     "title": "将 Poruch 安装为应用",

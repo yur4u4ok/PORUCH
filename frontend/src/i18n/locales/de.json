@@ -687,7 +687,8 @@
     "send": "Senden",
     "sent": "Nachricht gesendet",
     "replyNote": "Wir antworten an {{email}}.",
-    "another": "Noch eine schreiben"
+    "another": "Noch eine schreiben",
+    "yourEmail": "Ihre E-Mail für die Antwort"
   },
   "install": {
     "title": "Installiere Poruch als App",

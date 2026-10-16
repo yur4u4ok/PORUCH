@@ -687,7 +687,8 @@
     "send": "Gönder",
     "sent": "Mesaj gönderildi",
     "replyNote": "{{email}} adresine yanıt vereceğiz.",
-    "another": "Bir tane daha yaz"
+    "another": "Bir tane daha yaz",
+    "yourEmail": "Yanıt için e-postanız"
   },
   "install": {
     "title": "Poruch'u uygulama olarak yükle",
