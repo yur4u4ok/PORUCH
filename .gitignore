@@ -30,3 +30,4 @@ frontend/playwright-report/
 
 # compiled translations: built in the image (compilemessages)
 backend/locale/**/*.mo
+test-results/
