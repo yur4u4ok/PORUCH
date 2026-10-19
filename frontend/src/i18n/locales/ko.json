@@ -334,17 +334,17 @@
     "locationManualDenied": "위치 접근이 꺼져 있어요. 도움이 필요한 곳으로 핀을 끌어 놓거나 브라우저 설정에서 위치를 허용하세요.",
     "locationPickPrompt": "핀을 끌어 장소를 표시하세요",
     "categoryLabel": "카테고리",
-    "categoryPlaceholder": "—",
-    "subcategoryLabel": "해당하는 것을 고르세요(선택)",
+    "categoryPlaceholder": "카테고리 선택",
+    "subcategoryLabel": "세부 항목 (선택)",
     "titlePlaceholders": {
       "AUTO": "예: 타이어 펑크",
-      "HOME": "예: 타이어 펑크",
-      "ITEMS": "예: 타이어 펑크",
-      "ANIMALS": "예: 타이어 펑크",
-      "PEOPLE": "예: 타이어 펑크",
-      "DISTRICT": "예: 타이어 펑크",
-      "URGENT": "예: 타이어 펑크",
-      "OTHER": "예: 타이어 펑크"
+      "HOME": "예: 옷장을 3층까지 옮기기",
+      "ITEMS": "예: 드릴을 한 시간 빌리기",
+      "ANIMALS": "예: 저녁에 강아지 산책",
+      "PEOPLE": "예: 할머니께 장 본 것 가져다드리기",
+      "DISTRICT": "예: 마당 청소",
+      "URGENT": "예: 길에서 누군가 몸이 안 좋아요",
+      "OTHER": "예: 노트북 관련 도움"
     },
     "pickDate": "날짜 선택",
     "leaveTitle": "요청 작성을 그만둘까요?",
@@ -360,8 +360,8 @@
     "category": "카테고리",
     "urgency": "긴급도",
     "all": "전체",
-    "emptyTitle": "지금은 주변에 요청이 없어요.",
-    "emptyText": "그렇다고 도움이 필요한 사람이 없다는 뜻은 아니에요. 알림을 켜 두면 근처에서 도움이 필요할 때 알려 드릴게요.",
+    "emptyTitle": "지금은 요청이 없습니다.",
+    "emptyText": "알림을 켜 두면 누군가 도움이 필요할 때 알려 드릴게요.",
     "enableNotifications": "알림 켜기",
     "needLocation": "주변 요청을 보려면 위치 접근을 허용해 주세요.",
     "allowLocation": "위치 허용",
@@ -459,8 +459,8 @@
   },
   "profile": {
     "title": "프로필",
-    "helped": "🤝 도운 횟수: {{count}}",
-    "thanks": "❤️ 받은 감사: {{count}}",
+    "helped": "🤝 도움: {{count}}",
+    "thanks": "❤️ 감사: {{count}}",
     "helpedShort": "🤝 도움 {{count}}회",
     "thanksShort": "❤️ 감사 {{count}}",
     "canHelp": "도울 수 있는 것:",
@@ -561,7 +561,13 @@
     "currentPassword": "현재 비밀번호",
     "newPassword": "새 비밀번호",
     "passwordChanged": "비밀번호를 변경했어요",
-    "passwordOtherDevices": "다른 기기에서는 다시 로그인해야 해요."
+    "passwordOtherDevices": "다른 기기에서는 다시 로그인해야 해요.",
+    "deleteAccount": "계정 삭제",
+    "deleteTitle": "계정을 영구적으로 삭제할까요?",
+    "deleteText": "이메일, 전화번호, 사진, 알림, 설정이 지워집니다. 다른 사람이 참여한 채팅과 요청에서는 이름이 「삭제된 사용자」로 바뀌고 작성한 내용은 삭제됩니다. 되돌릴 수 없습니다.",
+    "deletePassword": "확인을 위해 비밀번호를 입력하세요",
+    "deleteConfirm": "영구 삭제",
+    "deleted": "계정이 삭제되었습니다"
   },
   "report": {
     "title": "신고",
@@ -694,9 +700,9 @@
     "howTo": "설치 방법:",
     "steps": {
       "ios": [
-        "화면 아래쪽이나 ‘⋯’ 메뉴의 공유 ⬆️ 버튼을 탭하세요",
-        "‘홈 화면에 추가’를 선택하세요",
-        "‘추가’를 탭하면 Poruch가 앱 목록에 생겨요"
+        "주소창 옆 아래쪽 「<dots></dots>」 메뉴에서 「공유 <share></share>」를 누르세요",
+        "「더 보기 <more></more>」를 선택하고 「<add></add> 홈 화면에 추가」를 누르세요",
+        "「추가」를 누르세요"
       ],
       "ios-other-browser": [
         "주소창의 공유 ⬆️ 버튼을 탭하세요",
@@ -712,7 +718,10 @@
         "‘앱 설치’ 또는 ‘홈 화면에 추가’를 선택하세요",
         "확인하면 Poruch가 앱 목록에 생겨요"
       ],
-      "desktop": ["주소창의 설치 아이콘 ⊕ 을 클릭하세요(또는 메뉴 ⋮ → ‘Poruch 설치’)", "설치를 확인하세요"]
+      "desktop": [
+        "주소창의 설치 아이콘 <install></install>을 클릭하세요 (또는 메뉴 ⋮ → 「Poruch 설치」)",
+        "설치를 확인하세요"
+      ]
     },
     "troubleTitle": "설치가 안 되나요?",
     "trouble": {

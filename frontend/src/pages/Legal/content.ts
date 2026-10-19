@@ -4,7 +4,7 @@
  */
 
 export const LEGAL_CONTACT = "help.poruch@gmail.com";
-export const LEGAL_UPDATED = "2026-10-07";
+export const LEGAL_UPDATED = "2026-10-19";
 
 export interface LegalSection {
   title: string;
@@ -87,9 +87,9 @@ const privacy: Record<Lang, LegalDoc> = {
         body: [
           [
             "Дані облікового запису — поки він існує. Деактивація вимикає обліковий запис, скасовує активні запити й видаляє push-підписки, але історію допомог зберігає.",
-            "Повне видалення облікового запису та пов'язаних даних — за запитом на " +
+            "Повне видалення облікового запису — у застосунку: Профіль → Налаштування → Приватність і безпека → «Видалити акаунт» (як саме — на сторінці /delete-account). Email, телефон, фото, сповіщення й налаштування стираються одразу; у чатах і запитах інших людей ваше ім'я замінюється на «Видалений користувач», а ваші тексти прибираються. Без доступу до застосунку — напишіть на " +
               LEGAL_CONTACT +
-              ". Виконуємо протягом 30 днів.",
+              ", виконаємо протягом 30 днів.",
             "Резервні копії бази даних зберігаються 14 днів, після чого видаляються автоматично.",
             "Службові журнали сервера перезаписуються автоматично і не зберігаються довго.",
           ],
@@ -193,9 +193,9 @@ const privacy: Record<Lang, LegalDoc> = {
         body: [
           [
             "Account data — while the account exists. Deactivation turns the account off, cancels active requests and removes push subscriptions, but keeps the help history.",
-            "Full deletion of your account and related data — on request to " +
+            "Full deletion of your account — in the app: Profile → Settings → Privacy and safety → «Delete account» (step by step at /delete-account). Email, phone, photos, notifications and settings are erased at once; in other people's chats and requests your name becomes «Deleted user» and your texts are removed. Without access to the app, write to " +
               LEGAL_CONTACT +
-              ", completed within 30 days.",
+              " and we will do it within 30 days.",
             "Database backups are kept for 14 days and then deleted automatically.",
             "Server logs are overwritten automatically and are not kept for long.",
           ],
@@ -307,7 +307,7 @@ const terms: Record<Lang, LegalDoc> = {
       {
         title: "9. Припинення",
         body: [
-          "Ви можете будь-коли деактивувати обліковий запис у налаштуваннях або попросити його повністю видалити. Ми можемо обмежити чи припинити доступ у разі порушення цих умов.",
+          "Ви можете будь-коли деактивувати або повністю видалити обліковий запис у налаштуваннях. Ми можемо обмежити чи припинити доступ у разі порушення цих умов.",
         ],
       },
       {
@@ -393,7 +393,7 @@ const terms: Record<Lang, LegalDoc> = {
       {
         title: "9. Termination",
         body: [
-          "You can deactivate your account at any time in settings or ask us to delete it completely. We may restrict or end access if these terms are violated.",
+          "You can deactivate or completely delete your account at any time in settings. We may restrict or end access if these terms are violated.",
         ],
       },
       {
@@ -410,5 +410,93 @@ const terms: Record<Lang, LegalDoc> = {
   },
 };
 
-export const LEGAL = { privacy, terms };
+/** Public how-to for deleting an account (the URL Google Play asks for). */
+const deletion: Record<Lang, LegalDoc> = {
+  uk: {
+    title: "Видалення акаунта Poruch",
+    intro: "Ви можете будь-коли назавжди видалити свій акаунт Poruch разом з особистими даними.",
+    sections: [
+      {
+        title: "Як видалити акаунт",
+        body: [
+          [
+            "Увійдіть у Poruch (застосунок або poruch-app.online).",
+            "Відкрийте «Профіль» → «Налаштування» → «Приватність і безпека».",
+            "Натисніть «Видалити акаунт».",
+            "Підтвердіть паролем (якщо входите через Google — пароль не потрібен) і натисніть «Видалити назавжди».",
+          ],
+        ],
+      },
+      {
+        title: "Що видаляється одразу",
+        body: [
+          [
+            "email, телефон, ім'я, фото профілю, фото в запитах і чатах;",
+            "сповіщення, push-підписки, налаштування, статус «Можу допомогти» і його місце;",
+            "вхід через Google, відгуки й подяки, які ви отримали, ваші блокування.",
+          ],
+        ],
+      },
+      {
+        title: "Що залишається знеособленим",
+        body: [
+          "Чати й запити, у яких брали участь інші люди, залишаються в них, але замість вашого імені — «Видалений користувач», ваші повідомлення й тексти запитів замінено на «видалено», а місце запиту огрублено приблизно до 1 км. Відгуки, які ви залишили іншим, залишаються без вашого імені. Скарги на порушення зберігаються для безпеки спільноти.",
+          "Резервні копії бази даних автоматично видаляються через 14 днів.",
+        ],
+      },
+      {
+        title: "Немає доступу до акаунта?",
+        body: [
+          "Напишіть на " +
+            LEGAL_CONTACT +
+            " з адреси, на яку зареєстровано акаунт, або через сторінку підтримки poruch-app.online/contact. Видалимо протягом 30 днів.",
+        ],
+      },
+    ],
+  },
+  en: {
+    title: "Deleting a Poruch account",
+    intro: "You can delete your Poruch account together with your personal data at any time.",
+    sections: [
+      {
+        title: "How to delete your account",
+        body: [
+          [
+            "Sign in to Poruch (the app or poruch-app.online).",
+            "Open «Profile» → «Settings» → «Privacy and safety».",
+            "Tap «Delete account».",
+            "Confirm with your password (no password if you sign in with Google) and tap «Delete for good».",
+          ],
+        ],
+      },
+      {
+        title: "Erased at once",
+        body: [
+          [
+            "email, phone, name, profile photo, photos in requests and chats;",
+            "notifications, push subscriptions, settings, the «I can help» status and its place;",
+            "Google sign-in, reviews and thanks you received, your blocks.",
+          ],
+        ],
+      },
+      {
+        title: "Kept without your identity",
+        body: [
+          "Chats and requests other people took part in stay with them, but your name becomes «Deleted user», your messages and request texts are replaced with «deleted», and the request's place is blurred to about 1 km. Reviews you left for others stay without your name. Abuse reports are kept for community safety.",
+          "Database backups are deleted automatically after 14 days.",
+        ],
+      },
+      {
+        title: "Can't access your account?",
+        body: [
+          "Write to " +
+            LEGAL_CONTACT +
+            " from the address the account was registered with, or use the support page poruch-app.online/contact. We will delete it within 30 days.",
+        ],
+      },
+    ],
+  },
+};
+
+export const LEGAL = { privacy, terms, deletion };
 export type LegalKind = keyof typeof LEGAL;

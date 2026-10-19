@@ -340,17 +340,17 @@
     "locationManualDenied": "El acceso a la ubicación está desactivado. Arrastra el marcador al lugar donde se necesita ayuda o permite la ubicación en el navegador.",
     "locationPickPrompt": "Arrastra el marcador para marcar el lugar",
     "categoryLabel": "Categoría",
-    "categoryPlaceholder": "—",
-    "subcategoryLabel": "Elige lo que encaje (opcional)",
+    "categoryPlaceholder": "Elige una categoría",
+    "subcategoryLabel": "Detalle (opcional)",
     "titlePlaceholders": {
       "AUTO": "Por ejemplo: rueda pinchada",
-      "HOME": "Por ejemplo: rueda pinchada",
-      "ITEMS": "Por ejemplo: rueda pinchada",
-      "ANIMALS": "Por ejemplo: rueda pinchada",
-      "PEOPLE": "Por ejemplo: rueda pinchada",
-      "DISTRICT": "Por ejemplo: rueda pinchada",
-      "URGENT": "Por ejemplo: rueda pinchada",
-      "OTHER": "Por ejemplo: rueda pinchada"
+      "HOME": "Por ejemplo: subir un armario al 3.er piso",
+      "ITEMS": "Por ejemplo: pedir un taladro por una hora",
+      "ANIMALS": "Por ejemplo: sacar al perro por la noche",
+      "PEOPLE": "Por ejemplo: llevarle la compra a la abuela",
+      "DISTRICT": "Por ejemplo: limpiar el patio",
+      "URGENT": "Por ejemplo: alguien se encontró mal en la calle",
+      "OTHER": "Por ejemplo: ayuda con el portátil"
     },
     "pickDate": "Elige una fecha",
     "leaveTitle": "¿Salir de la solicitud?",
@@ -366,8 +366,8 @@
     "category": "Categoría",
     "urgency": "Urgencia",
     "all": "Todas",
-    "emptyTitle": "Ahora mismo no hay peticiones cerca.",
-    "emptyText": "Eso no significa que nadie necesite ayuda. Activa las notificaciones y te avisaremos cuando alguien cerca la necesite.",
+    "emptyTitle": "Ahora no hay solicitudes.",
+    "emptyText": "Activa las notificaciones y te avisaremos cuando alguien necesite ayuda.",
     "enableNotifications": "Activar notificaciones",
     "needLocation": "Para ver peticiones cercanas, permite el acceso a la ubicación.",
     "allowLocation": "Permitir ubicación",
@@ -467,8 +467,8 @@
   },
   "profile": {
     "title": "Perfil",
-    "helped": "🤝 Ha ayudado: {{count}}",
-    "thanks": "❤️ Agradecimientos recibidos: {{count}}",
+    "helped": "🤝 Ayudas: {{count}}",
+    "thanks": "❤️ Agradecimientos: {{count}}",
     "helpedShort": "🤝 {{count}} ayudas",
     "thanksShort": "❤️ {{count}} gracias",
     "canHelp": "Puedo ayudar con:",
@@ -569,7 +569,13 @@
     "currentPassword": "Contraseña actual",
     "newPassword": "Nueva contraseña",
     "passwordChanged": "Contraseña cambiada",
-    "passwordOtherDevices": "Tendrás que volver a iniciar sesión en otros dispositivos."
+    "passwordOtherDevices": "Tendrás que volver a iniciar sesión en otros dispositivos.",
+    "deleteAccount": "Eliminar cuenta",
+    "deleteTitle": "¿Eliminar tu cuenta para siempre?",
+    "deleteText": "Se borrarán tu email, teléfono, fotos, notificaciones y ajustes. En los chats y solicitudes donde participaron otras personas, tu nombre pasará a ser «Usuario eliminado» y tus textos se quitarán. No se puede deshacer.",
+    "deletePassword": "Introduce tu contraseña para confirmar",
+    "deleteConfirm": "Eliminar para siempre",
+    "deleted": "Cuenta eliminada"
   },
   "report": {
     "title": "Denunciar",
@@ -702,9 +708,9 @@
     "howTo": "Cómo instalarla:",
     "steps": {
       "ios": [
-        "Toca Compartir ⬆️, abajo o en el menú «⋯»",
-        "Elige «Añadir a pantalla de inicio»",
-        "Toca «Añadir»: Poruch aparecerá con tus apps"
+        "Toca «Compartir <share></share>» en el menú «<dots></dots>» abajo, junto a la barra de direcciones",
+        "Elige «Ver más <more></more>» y toca «<add></add> Añadir a pantalla de inicio»",
+        "Toca «Añadir»"
       ],
       "ios-other-browser": [
         "Toca Compartir ⬆️ en la barra de direcciones",
@@ -721,7 +727,7 @@
         "Confirma: Poruch aparecerá con tus apps"
       ],
       "desktop": [
-        "Haz clic en el icono de instalar ⊕ de la barra de direcciones (o menú ⋮ → «Instalar Poruch»)",
+        "Haz clic en el icono de instalación <install></install> de la barra de direcciones (o menú ⋮ → «Instalar Poruch»)",
         "Confirma la instalación"
       ]
     },

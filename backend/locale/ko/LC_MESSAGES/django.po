@@ -1,0 +1,639 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-19 20:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: apps/conversations/services/conversations.py:146
+msgid "Розмову закрито."
+msgstr "대화가 종료되었습니다."
+
+#: apps/conversations/services/conversations.py:150
+#: apps/interactions/services/responses.py:251
+msgid "Користувач недоступний."
+msgstr "사용자를 이용할 수 없습니다."
+
+#: apps/conversations/services/conversations.py:152
+msgid "Ви не можете писати цьому користувачу."
+msgstr "이 사용자에게 메시지를 보낼 수 없습니다."
+
+#: apps/conversations/services/conversations.py:182
+#: apps/interactions/services/responses.py:24
+msgid "Сусід"
+msgstr "이웃"
+
+#: apps/conversations/services/conversations.py:185
+msgid "📷 Фото"
+msgstr "📷 사진"
+
+#: apps/conversations/services/conversations.py:194
+#, python-brace-format
+msgid "💬 {name}"
+msgstr "💬 {name}"
+
+#: apps/conversations/services/conversations.py:242
+msgid "Повідомлення не знайдено."
+msgstr "메시지를 찾을 수 없습니다."
+
+#: apps/conversations/services/conversations.py:244
+msgid "Невідома реакція."
+msgstr "알 수 없는 반응입니다."
+
+#: apps/help_requests/services/create_request.py:33
+msgid "Вкажіть дату й час."
+msgstr "날짜와 시간을 입력하세요."
+
+#: apps/help_requests/services/create_request.py:35
+msgid "Оберіть час щонайменше через 15 хвилин."
+msgstr "지금부터 최소 15분 이후의 시간을 선택하세요."
+
+#: apps/help_requests/services/create_request.py:37
+msgid "Не пізніше ніж через 30 днів."
+msgstr "30일 이내여야 합니다."
+
+#: apps/help_requests/services/create_request.py:54
+msgid "Невідомий варіант подяки."
+msgstr "알 수 없는 감사 방식입니다."
+
+#: apps/help_requests/services/create_request.py:56
+msgid "Сума має бути більшою за нуль."
+msgstr "금액은 0보다 커야 합니다."
+
+#: apps/help_requests/services/create_request.py:59
+msgid "Оберіть, як ви віддячите."
+msgstr "어떻게 감사할지 선택하세요."
+
+#: apps/help_requests/services/create_request.py:61
+msgid "Вкажіть суму або оберіть варіант подяки."
+msgstr "금액을 입력하거나 감사 방식을 선택하세요."
+
+#: apps/help_requests/services/create_request.py:70
+msgid "Невідома підкатегорія."
+msgstr "알 수 없는 하위 카테고리입니다."
+
+#: apps/help_requests/services/create_request.py:100
+msgid "Потрібно підтвердити попередження про екстрені служби."
+msgstr "긴급 서비스 안내를 확인해야 합니다."
+
+#: apps/help_requests/services/create_request.py:102
+msgid "Підтвердіть, що ознайомились із попередженням."
+msgstr "안내를 읽었다고 확인해 주세요."
+
+#: apps/help_requests/services/create_request.py:106
+msgid "Опишіть, що сталося."
+msgstr "무슨 일이 있었는지 적어 주세요."
+
+#: apps/help_requests/services/create_request.py:110
+#, python-brace-format
+msgid "Максимум {n} фото."
+msgstr "사진은 최대 {n}장입니다."
+
+#: apps/help_requests/services/lifecycle.py:31
+msgid "Тільки автор може змінювати запит."
+msgstr "요청은 작성자만 변경할 수 있습니다."
+
+#: apps/help_requests/services/lifecycle.py:41
+msgid "Редагувати можна тільки активний запит."
+msgstr "활성 요청만 수정할 수 있습니다."
+
+#: apps/help_requests/services/lifecycle.py:48
+msgid "Поле не може бути порожнім."
+msgstr "이 항목은 비워 둘 수 없습니다."
+
+#: apps/help_requests/services/lifecycle.py:59
+msgid "Максимум 5 фото."
+msgstr "사진은 최대 5장입니다."
+
+#: apps/help_requests/services/lifecycle.py:85
+msgid "Цей запит вже закрито."
+msgstr "이 요청은 이미 종료되었습니다."
+
+#: apps/help_requests/services/lifecycle.py:99
+msgid "Запит скасовано"
+msgstr "요청이 취소되었습니다"
+
+#: apps/help_requests/services/lifecycle.py:100
+msgid "Автор скасував запит, з яким ви допомагали"
+msgstr "돕고 있던 요청을 작성자가 취소했습니다"
+
+#: apps/help_requests/services/lifecycle.py:118
+msgid "Завершити можна тільки запит, з яким вже допомагають."
+msgstr "이미 누군가 돕고 있는 요청만 완료할 수 있습니다."
+
+#: apps/help_requests/services/lifecycle.py:127
+msgid "Допомогу отримано ❤️ Запит завершено."
+msgstr "도움을 받았습니다 ❤️ 요청이 완료되었습니다."
+
+#: apps/help_requests/services/lifecycle.py:132
+msgid "🎉 Допомога завершена"
+msgstr "🎉 도움 완료"
+
+#: apps/help_requests/services/lifecycle.py:133
+msgid "Дякуємо, що допомогли людині поруч!"
+msgstr "가까운 사람을 도와주셔서 감사합니다!"
+
+#: apps/help_requests/services/lifecycle.py:169
+msgid "⏳ Запит скоро завершиться"
+msgstr "⏳ 요청이 곧 종료됩니다"
+
+#: apps/help_requests/services/lifecycle.py:170
+#, python-brace-format
+msgid "Ваш запит «{title}» скоро стане неактивним"
+msgstr "요청 「{title}」이(가) 곧 비활성화됩니다"
+
+#: apps/help_requests/sharing.py:142
+#, python-brace-format
+msgid "🆘 Потрібна допомога: {title}"
+msgstr "🆘 도움이 필요해요: {title}"
+
+#: apps/help_requests/sharing.py:157
+msgid "Можеш допомогти? Відгукнись у Poruch"
+msgstr "도와줄 수 있나요? Poruch에서 응답하세요"
+
+#: apps/help_requests/sharing.py:159
+msgid "✅ Запит уже неактивний"
+msgstr "✅ 요청이 더 이상 활성 상태가 아닙니다"
+
+#: apps/help_requests/sharing.py:160
+msgid "Poruch — локальна мережа взаємодопомоги"
+msgstr "Poruch — 지역 상부상조 네트워크"
+
+#: apps/interactions/services/responses.py:34
+#: apps/interactions/services/responses.py:275
+msgid "Вкажіть суму, яку пропонуєте."
+msgstr "제안할 금액을 입력하세요."
+
+#: apps/interactions/services/responses.py:42
+msgid "Допомога без оплати"
+msgstr "무보수 도움"
+
+#: apps/interactions/services/responses.py:62
+msgid "Не можна відгукнутися на власний запит."
+msgstr "자신의 요청에는 응답할 수 없습니다."
+
+#: apps/interactions/services/responses.py:73
+msgid "Запит вже неактивний."
+msgstr "요청이 더 이상 활성 상태가 아닙니다."
+
+#: apps/interactions/services/responses.py:75
+msgid "Автор вже відхилив вашу пропозицію."
+msgstr "작성자가 이미 제안을 거절했습니다."
+
+#: apps/interactions/services/responses.py:110
+msgid "🤝 Хтось може допомогти"
+msgstr "🤝 도와줄 사람이 있어요"
+
+#: apps/interactions/services/responses.py:111
+#, python-brace-format
+msgid "{name} готовий(-а) допомогти з вашим запитом"
+msgstr "{name}님이 요청을 도울 준비가 되었습니다"
+
+#: apps/interactions/services/responses.py:180
+msgid "Помічника обрано. Домовтеся про деталі в цьому чаті."
+msgstr "돕는 사람이 정해졌습니다. 이 채팅에서 세부 사항을 정하세요."
+
+#: apps/interactions/services/responses.py:184
+#, python-brace-format
+msgid "Домовленість про подяку: {terms}"
+msgstr "합의한 감사: {terms}"
+
+#: apps/interactions/services/responses.py:190
+msgid "✅ Вашу допомогу прийнято"
+msgstr "✅ 도움이 수락되었습니다"
+
+#: apps/interactions/services/responses.py:191
+msgid "Напишіть людині, щоб домовитися про деталі"
+msgstr "세부 사항을 정하려면 상대에게 메시지를 보내세요"
+
+#: apps/interactions/services/responses.py:201
+#: apps/interactions/services/responses.py:341
+msgid "Дякуємо за готовність допомогти"
+msgstr "도우려고 해 주셔서 감사합니다"
+
+#: apps/interactions/services/responses.py:202
+msgid "Автор запиту вже знайшов помічників"
+msgstr "요청 작성자가 이미 돕는 사람을 찾았습니다"
+
+#: apps/interactions/services/responses.py:243
+msgid "Тільки автор може обрати помічника."
+msgstr "돕는 사람은 작성자만 선택할 수 있습니다."
+
+#: apps/interactions/services/responses.py:247
+msgid "Помічників вже обрано або запит закрито."
+msgstr "돕는 사람이 이미 정해졌거나 요청이 종료되었습니다."
+
+#: apps/interactions/services/responses.py:249
+#: apps/interactions/services/responses.py:269
+#: apps/interactions/services/responses.py:302
+#: apps/interactions/services/responses.py:334
+#: apps/interactions/services/responses.py:361
+msgid "Ця пропозиція вже неактивна."
+msgstr "이 제안은 더 이상 유효하지 않습니다."
+
+#: apps/interactions/services/responses.py:267
+msgid "Тільки автор може запропонувати суму."
+msgstr "금액은 작성자만 제안할 수 있습니다."
+
+#: apps/interactions/services/responses.py:271
+msgid "Помічник не пропонував іншу суму."
+msgstr "돕는 사람이 다른 금액을 제안하지 않았습니다."
+
+#: apps/interactions/services/responses.py:273
+msgid "Ви вже запропонували свою суму."
+msgstr "이미 금액을 제안했습니다."
+
+#: apps/interactions/services/responses.py:282
+msgid "💬 Автор пропонує іншу суму"
+msgstr "💬 작성자가 다른 금액을 제안합니다"
+
+#: apps/interactions/services/responses.py:283
+#, python-brace-format
+msgid "Автор запиту пропонує {amount}. Погодитися чи відмовитися?"
+msgstr "작성자가 {amount}을(를) 제안합니다. 수락하시겠어요, 거절하시겠어요?"
+
+#: apps/interactions/services/responses.py:300
+msgid "Автор не пропонував іншої суми."
+msgstr "작성자가 다른 금액을 제안하지 않았습니다."
+
+#: apps/interactions/services/responses.py:310
+msgid "Помічник не погодився на суму"
+msgstr "돕는 사람이 금액에 동의하지 않았습니다"
+
+#: apps/interactions/services/responses.py:311
+#, python-brace-format
+msgid "{name} відмовився(-лась) від вашої пропозиції"
+msgstr "{name}님이 제안을 거절했습니다"
+
+#: apps/interactions/services/responses.py:330
+msgid "Тільки автор може відхилити пропозицію."
+msgstr "제안은 작성자만 거절할 수 있습니다."
+
+#: apps/interactions/services/responses.py:342
+msgid "Цього разу автор обрав інший варіант"
+msgstr "이번에는 작성자가 다른 선택을 했습니다"
+
+#: apps/interactions/services/responses.py:365
+msgid "Запит вже завершено."
+msgstr "요청이 이미 완료되었습니다."
+
+#: apps/interactions/services/responses.py:387
+msgid "Помічник не зможе допомогти"
+msgstr "돕는 사람이 도울 수 없게 되었습니다"
+
+#: apps/interactions/services/responses.py:388
+msgid "Ваш запит знову активний — інші люди поруч можуть відгукнутися"
+msgstr "요청이 다시 활성화되었습니다 — 근처의 다른 사람들이 응답할 수 있습니다"
+
+#: apps/locations/services/availability.py:32
+#, python-brace-format
+msgid "Максимум {h} год."
+msgstr "최대 {h}시간입니다."
+
+#: apps/media/services/media.py:23
+msgid "Дозволені формати: JPEG, PNG, WEBP."
+msgstr "허용 형식: JPEG, PNG, WEBP."
+
+#: apps/media/services/media.py:26
+#, python-brace-format
+msgid "Максимальний розмір файлу — {mb} MB."
+msgstr "최대 파일 크기는 {mb} MB입니다."
+
+#: apps/media/services/media.py:60
+msgid "Файл відхилено."
+msgstr "파일이 거부되었습니다."
+
+#: apps/media/services/media.py:64
+msgid "Файл ще не завантажено."
+msgstr "파일이 아직 업로드되지 않았습니다."
+
+#: apps/media/services/media.py:66
+msgid "Файл занадто великий."
+msgstr "파일이 너무 큽니다."
+
+#: apps/media/services/media.py:96
+msgid "Файл не знайдено."
+msgstr "파일을 찾을 수 없습니다."
+
+#: apps/media/services/media.py:98
+msgid "Файл не готовий або має неправильний тип."
+msgstr "파일이 준비되지 않았거나 형식이 올바르지 않습니다."
+
+#: apps/media/services/media.py:114
+msgid "Файл вже використовується."
+msgstr "파일이 이미 사용 중입니다."
+
+#: apps/moderation/services/moderation.py:13
+msgid "Не можна заблокувати себе."
+msgstr "자기 자신을 차단할 수 없습니다."
+
+#: apps/moderation/services/moderation.py:41
+msgid "Вкажіть, на що скаржитесь."
+msgstr "무엇을 신고하는지 알려 주세요."
+
+#: apps/moderation/services/moderation.py:46
+#: apps/moderation/services/moderation.py:50
+#: apps/moderation/services/moderation.py:56
+msgid "Не знайдено."
+msgstr "찾을 수 없습니다."
+
+#: apps/moderation/services/moderation.py:59
+msgid "Не можна поскаржитися на себе."
+msgstr "자기 자신을 신고할 수 없습니다."
+
+#: apps/notifications/services/nearby_notifications.py:92
+msgid "🆘 Комусь поруч потрібна допомога"
+msgstr "🆘 근처에 도움이 필요한 사람이 있어요"
+
+#: apps/notifications/services/notify.py:59
+msgid "Відкрити в Poruch"
+msgstr "Poruch에서 열기"
+
+#: apps/notifications/services/notify.py:61
+msgid "Сповіщення на пошту можна вимкнути в налаштуваннях застосунку."
+msgstr "이메일 알림은 앱 설정에서 끌 수 있습니다."
+
+#: apps/notifications/services/preferences.py:30
+msgid "Невідома категорія."
+msgstr "알 수 없는 카테고리입니다."
+
+#: apps/notifications/services/texts.py:8
+msgid "Проблема з автомобілем"
+msgstr "자동차 문제"
+
+#: apps/notifications/services/texts.py:9
+msgid "Потрібна допомога вдома"
+msgstr "집에서 도움이 필요해요"
+
+#: apps/notifications/services/texts.py:10
+msgid "Потрібна річ або передача"
+msgstr "물건이나 전달이 필요해요"
+
+#: apps/notifications/services/texts.py:11
+msgid "Допомога з твариною"
+msgstr "동물 관련 도움"
+
+#: apps/notifications/services/texts.py:12
+msgid "Потрібна допомога людині"
+msgstr "사람에게 도움이 필요해요"
+
+#: apps/notifications/services/texts.py:13
+msgid "Ситуація в районі"
+msgstr "동네에서 생긴 일"
+
+#: apps/notifications/services/texts.py:14
+msgid "Термінова ситуація"
+msgstr "긴급 상황"
+
+#: apps/notifications/services/texts.py:15
+msgid "Потрібна допомога"
+msgstr "도움이 필요해요"
+
+#: apps/notifications/services/texts.py:19
+msgid "🔴 Потрібна допомога зараз"
+msgstr "🔴 지금 도움이 필요해요"
+
+#: apps/notifications/services/texts.py:20
+msgid "🟡 Сьогодні"
+msgstr "🟡 오늘"
+
+#: apps/notifications/services/texts.py:21
+msgid "🟢 Коли буде можливість"
+msgstr "🟢 가능할 때"
+
+#: apps/notifications/services/texts.py:22
+msgid "📅 У визначений час"
+msgstr "📅 정해진 시간에"
+
+#: apps/notifications/services/texts.py:31
+#, python-brace-format
+msgid "{m} м від вас"
+msgstr "나에게서 {m} m"
+
+#: apps/notifications/services/texts.py:32
+#, python-brace-format
+msgid "{km} км від вас"
+msgstr "나에게서 {km} km"
+
+#: apps/reputation/services/reviews.py:38
+msgid "Відгук можна залишити після завершення допомоги."
+msgstr "후기는 도움이 완료된 뒤에 남길 수 있습니다."
+
+#: apps/reputation/services/reviews.py:40
+msgid "Залишити відгук можна тільки учаснику цієї допомоги."
+msgstr "후기는 이 도움의 참여자만 남길 수 있습니다."
+
+#: apps/reputation/services/reviews.py:47
+msgid "Ви вже залишили відгук цій людині."
+msgstr "이미 이 사람에게 후기를 남겼습니다."
+
+#: apps/reputation/services/reviews.py:55
+#, python-brace-format
+msgid "⭐ Новий відгук: {stars}"
+msgstr "⭐ 새 후기: {stars}"
+
+#: apps/reputation/services/thanks.py:22
+msgid "Подякувати може тільки автор запиту."
+msgstr "감사는 요청 작성자만 보낼 수 있습니다."
+
+#: apps/reputation/services/thanks.py:24
+msgid "Подякувати можна після завершення допомоги."
+msgstr "감사는 도움이 완료된 뒤에 보낼 수 있습니다."
+
+#: apps/reputation/services/thanks.py:54
+msgid "❤️ Вам подякували"
+msgstr "❤️ 누군가 감사를 보냈어요"
+
+#: apps/reputation/services/thanks.py:55
+msgid "Дякую за допомогу!"
+msgstr "도와주셔서 감사합니다!"
+
+#: apps/users/phone.py:16 apps/users/phone.py:18
+msgid "Невірний номер телефону."
+msgstr "전화번호가 올바르지 않습니다."
+
+#: apps/users/services/accounts.py:52 apps/users/services/profile.py:41
+msgid "Невідоме місто."
+msgstr "알 수 없는 도시입니다."
+
+#: apps/users/services/accounts.py:64 apps/users/services/accounts.py:78
+#: apps/users/services/accounts.py:127 apps/users/services/accounts.py:168
+msgid "Користувач з таким email вже існує."
+msgstr "이 이메일을 사용하는 사용자가 이미 있습니다."
+
+#: apps/users/services/accounts.py:98
+msgid "Підтвердіть email у Poruch"
+msgstr "Poruch에서 이메일을 인증하세요"
+
+#: apps/users/services/accounts.py:99
+msgid "Вітаємо у Poruch!"
+msgstr "Poruch에 오신 것을 환영합니다!"
+
+#: apps/users/services/accounts.py:102
+msgid ""
+"Залишився один крок: підтвердьте свою електронну адресу, щоб просити про "
+"допомогу й допомагати людям поруч."
+msgstr "한 단계만 남았습니다. 도움을 요청하고 이웃을 도우려면 이메일 주소를 인증하세요."
+
+#: apps/users/services/accounts.py:105 apps/users/services/accounts.py:177
+msgid "Підтвердити email"
+msgstr "이메일 인증"
+
+#: apps/users/services/accounts.py:107
+msgid ""
+"Посилання дійсне 3 дні. Якщо ви не реєструвалися в Poruch — просто "
+"проігноруйте цей лист."
+msgstr "링크는 3일 동안 유효합니다. Poruch에 가입하지 않으셨다면 이 메일을 무시하세요."
+
+#: apps/users/services/accounts.py:115
+msgid "Посилання застаріло."
+msgstr "링크가 만료되었습니다."
+
+#: apps/users/services/accounts.py:117 apps/users/services/accounts.py:120
+#: apps/users/services/accounts.py:125 apps/users/services/accounts.py:216
+msgid "Недійсне посилання."
+msgstr "유효하지 않은 링크입니다."
+
+#: apps/users/services/accounts.py:147 apps/users/services/accounts.py:164
+#: apps/users/services/deletion.py:32
+msgid "Неправильний пароль."
+msgstr "비밀번호가 올바르지 않습니다."
+
+#: apps/users/services/accounts.py:166
+msgid "Це ваша поточна адреса."
+msgstr "현재 사용 중인 주소입니다."
+
+#: apps/users/services/accounts.py:174
+msgid "Підтвердіть нову адресу в Poruch"
+msgstr "Poruch에서 새 주소를 인증하세요"
+
+#: apps/users/services/accounts.py:175
+msgid "Нова електронна адреса"
+msgstr "새 이메일 주소"
+
+#: apps/users/services/accounts.py:176
+msgid ""
+"Ви змінюєте email свого акаунта Poruch. Підтвердіть, що ця адреса ваша."
+msgstr "Poruch 계정의 이메일을 변경하고 있습니다. 이 주소가 본인 것인지 확인해 주세요."
+
+#: apps/users/services/accounts.py:179
+msgid ""
+"Якщо це були не ви — просто проігноруйте цей лист, нічого не зміниться."
+msgstr "본인이 아니라면 이 메일을 무시하세요. 아무것도 바뀌지 않습니다."
+
+#: apps/users/services/accounts.py:193
+msgid ""
+"Ви запросили відновлення пароля в Poruch. Натисніть кнопку, щоб встановити "
+"новий."
+msgstr "Poruch 비밀번호 재설정을 요청하셨습니다. 버튼을 눌러 새 비밀번호를 설정하세요."
+
+#: apps/users/services/accounts.py:196
+msgid ""
+"Ви входили в Poruch через Google, тому пароля у вас ще немає. Натисніть "
+"кнопку, щоб створити його — тоді зможете входити і за email, і через Google."
+msgstr ""
+"Google로 Poruch에 로그인하셔서 아직 비밀번호가 없습니다. 버튼을 눌러 만들면 이메일과 Google 모두로 로그인할 수 "
+"있습니다."
+
+#: apps/users/services/accounts.py:202
+msgid "Відновлення пароля в Poruch"
+msgstr "Poruch 비밀번호 재설정"
+
+#: apps/users/services/accounts.py:203
+msgid "Новий пароль"
+msgstr "새 비밀번호"
+
+#: apps/users/services/accounts.py:205
+msgid "Встановити новий пароль"
+msgstr "새 비밀번호 설정"
+
+#: apps/users/services/accounts.py:207
+msgid "Якщо це були не ви — проігноруйте цей лист, ваш пароль не зміниться."
+msgstr "본인이 아니라면 이 메일을 무시하세요. 비밀번호는 바뀌지 않습니다."
+
+#: apps/users/services/accounts.py:218
+msgid "Недійсне або застаріле посилання."
+msgstr "유효하지 않거나 만료된 링크입니다."
+
+#: apps/users/services/accounts.py:238 apps/users/services/accounts.py:256
+msgid "Вхід через Google не налаштовано."
+msgstr "Google 로그인이 설정되지 않았습니다."
+
+#: apps/users/services/accounts.py:242 apps/users/services/accounts.py:273
+msgid "Не вдалося перевірити обліковий запис Google."
+msgstr "Google 계정을 확인하지 못했습니다."
+
+#: apps/users/services/accounts.py:282
+msgid "Email Google-акаунта не підтверджено."
+msgstr "Google 계정의 이메일이 인증되지 않았습니다."
+
+#: apps/users/services/accounts.py:308
+msgid "Обліковий запис деактивовано."
+msgstr "계정이 비활성화되었습니다."
+
+#: apps/users/services/deletion.py:62
+msgid "Повідомлення видалено"
+msgstr "삭제된 메시지"
+
+#: apps/users/services/deletion.py:65
+msgid "Запит видалено"
+msgstr "삭제된 요청"
+
+#: apps/users/services/deletion.py:66
+msgid "Автор видалив свій акаунт."
+msgstr "작성자가 계정을 삭제했습니다."
+
+#: apps/users/services/deletion.py:81
+msgid "Видалений користувач"
+msgstr "삭제된 사용자"
+
+#: apps/users/services/profile.py:21
+msgid "Ім'я не може бути порожнім."
+msgstr "이름은 비워 둘 수 없습니다."
+
+#: apps/users/services/profile.py:33
+msgid "До 10 пунктів, кожен до 40 символів."
+msgstr "최대 10개 항목, 각 40자까지."
+
+#: apps/users/services/profile.py:65
+msgid "Невідомі можливості: "
+msgstr "알 수 없는 능력: "
+
+#: apps/users/views.py:72
+msgid "Неправильний email або пароль."
+msgstr "이메일 또는 비밀번호가 올바르지 않습니다."
+
+#: apps/users/views.py:106
+msgid "Сесію завершено."
+msgstr "세션이 종료되었습니다."
+
+#: templates/emails/base.html:37
+msgid "Якщо кнопка не працює, скопіюйте посилання в браузер:"
+msgstr "버튼이 작동하지 않으면 링크를 브라우저에 복사하세요:"
+
+#: templates/emails/base.html:48
+msgid ""
+"Ви отримали цей лист, бо маєте обліковий запис у Poruch — застосунку "
+"взаємодопомоги між людьми поруч."
+msgstr "이웃 간 상부상조 앱 Poruch에 계정이 있어서 이 메일을 받으셨습니다."
+
+#: templates/emails/base.html:49
+msgid "Питання? Просто дайте відповідь на цей лист."
+msgstr "궁금한 점이 있으면 이 메일에 답장하세요."
+
+#: templates/emails/base.html:50
+msgid "Політика конфіденційності"
+msgstr "개인정보 처리방침"

@@ -340,17 +340,17 @@
     "locationManualDenied": "O acesso à localização está desligado. Arraste o marcador para onde é precisa ajuda ou permita a localização no navegador.",
     "locationPickPrompt": "Arraste o marcador para marcar o local",
     "categoryLabel": "Categoria",
-    "categoryPlaceholder": "—",
-    "subcategoryLabel": "Escolha o que se aplica (opcional)",
+    "categoryPlaceholder": "Escolha uma categoria",
+    "subcategoryLabel": "Detalhe (opcional)",
     "titlePlaceholders": {
       "AUTO": "Por exemplo: pneu furado",
-      "HOME": "Por exemplo: pneu furado",
-      "ITEMS": "Por exemplo: pneu furado",
-      "ANIMALS": "Por exemplo: pneu furado",
-      "PEOPLE": "Por exemplo: pneu furado",
-      "DISTRICT": "Por exemplo: pneu furado",
-      "URGENT": "Por exemplo: pneu furado",
-      "OTHER": "Por exemplo: pneu furado"
+      "HOME": "Por exemplo: levar um armário ao 3º andar",
+      "ITEMS": "Por exemplo: pegar uma furadeira emprestada por uma hora",
+      "ANIMALS": "Por exemplo: passear com o cachorro à noite",
+      "PEOPLE": "Por exemplo: levar as compras para a avó",
+      "DISTRICT": "Por exemplo: limpar o quintal",
+      "URGENT": "Por exemplo: alguém passou mal na rua",
+      "OTHER": "Por exemplo: ajuda com o notebook"
     },
     "pickDate": "Escolha uma data",
     "leaveTitle": "Sair do pedido?",
@@ -366,8 +366,8 @@
     "category": "Categoria",
     "urgency": "Urgência",
     "all": "Todas",
-    "emptyTitle": "Não há pedidos perto neste momento.",
-    "emptyText": "Isso não quer dizer que ninguém precise de ajuda. Ative as notificações e avisamos quando alguém perto precisar.",
+    "emptyTitle": "Nenhum pedido agora.",
+    "emptyText": "Ative as notificações e avisaremos quando alguém precisar de ajuda.",
     "enableNotifications": "Ativar notificações",
     "needLocation": "Para ver pedidos perto, permita o acesso à localização.",
     "allowLocation": "Permitir localização",
@@ -467,8 +467,8 @@
   },
   "profile": {
     "title": "Perfil",
-    "helped": "🤝 Ajudou: {{count}}",
-    "thanks": "❤️ Agradecimentos recebidos: {{count}}",
+    "helped": "🤝 Ajudas: {{count}}",
+    "thanks": "❤️ Agradecimentos: {{count}}",
     "helpedShort": "🤝 {{count}} ajudas",
     "thanksShort": "❤️ {{count}} obrigados",
     "canHelp": "Posso ajudar com:",
@@ -569,7 +569,13 @@
     "currentPassword": "Senha atual",
     "newPassword": "Nova senha",
     "passwordChanged": "Senha alterada",
-    "passwordOtherDevices": "Você precisará entrar novamente em outros dispositivos."
+    "passwordOtherDevices": "Você precisará entrar novamente em outros dispositivos.",
+    "deleteAccount": "Excluir conta",
+    "deleteTitle": "Excluir sua conta para sempre?",
+    "deleteText": "Seu email, telefone, fotos, notificações e configurações serão apagados. Nos chats e pedidos em que outras pessoas participaram, seu nome passará a ser «Usuário excluído» e seus textos serão removidos. Não é possível desfazer.",
+    "deletePassword": "Digite sua senha para confirmar",
+    "deleteConfirm": "Excluir para sempre",
+    "deleted": "Conta excluída"
   },
   "report": {
     "title": "Denunciar",
@@ -702,9 +708,9 @@
     "howTo": "Como instalar:",
     "steps": {
       "ios": [
-        "Toque em Partilhar ⬆️, no fundo ou no menu «⋯»",
-        "Escolha «Adicionar ao ecrã principal»",
-        "Toque em «Adicionar» — o Poruch aparece com as suas apps"
+        "Toque em «Compartilhar <share></share>» no menu «<dots></dots>» embaixo, ao lado da barra de endereço",
+        "Escolha «Ver mais <more></more>» e toque em «<add></add> Adicionar à Tela de Início»",
+        "Toque em «Adicionar»"
       ],
       "ios-other-browser": [
         "Toque em Partilhar ⬆️ na barra de endereço",
@@ -721,7 +727,7 @@
         "Confirme — o Poruch aparece com as suas apps"
       ],
       "desktop": [
-        "Clique no ícone de instalar ⊕ na barra de endereço (ou menu ⋮ → «Instalar Poruch»)",
+        "Clique no ícone de instalação <install></install> na barra de endereço (ou menu ⋮ → «Instalar Poruch»)",
         "Confirme a instalação"
       ]
     },

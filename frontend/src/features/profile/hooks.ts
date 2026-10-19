@@ -127,3 +127,15 @@ export function useDeactivate() {
     },
   });
 }
+
+/** Erases the account for good (the password confirms it when the account has one). */
+export function useDeleteAccount() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (password?: string) => usersApi.deleteAccount(password),
+    onSuccess: () => {
+      qc.clear();
+      qc.setQueryData(queryKeys.me, null);
+    },
+  });
+}

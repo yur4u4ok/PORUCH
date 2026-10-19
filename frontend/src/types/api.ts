@@ -92,6 +92,7 @@ export interface Me {
   show_name: boolean;
   show_avatar: boolean;
   onboarding_completed: boolean;
+  language: string;
   custom_items: string[];
   helped_count: number;
   thanks_received_count: number;

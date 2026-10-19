@@ -65,6 +65,7 @@ class MeSerializer(serializers.Serializer):
     show_name = serializers.BooleanField(source="profile.show_name")
     show_avatar = serializers.BooleanField(source="profile.show_avatar")
     onboarding_completed = serializers.BooleanField(source="profile.onboarding_completed")
+    language = serializers.CharField(source="profile.language", read_only=True)
     custom_items = serializers.ListField(source="profile.custom_items", child=serializers.CharField(), read_only=True)
     helped_count = serializers.IntegerField(source="profile.helped_count", read_only=True)
     thanks_received_count = serializers.IntegerField(source="profile.thanks_received_count", read_only=True)
@@ -98,6 +99,7 @@ class MeUpdateSerializer(serializers.Serializer):
     show_name = serializers.BooleanField(required=False)
     show_avatar = serializers.BooleanField(required=False)
     onboarding_completed = serializers.BooleanField(required=False)
+    language = serializers.CharField(max_length=16, required=False)
     custom_items = serializers.ListField(
         child=serializers.CharField(max_length=40, allow_blank=True), required=False, max_length=10
     )
@@ -159,3 +161,7 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
 
 class CapabilityCodesSerializer(serializers.Serializer):
     codes = serializers.ListField(child=serializers.CharField(max_length=40), max_length=50)
+
+
+class DeleteAccountSerializer(serializers.Serializer):
+    password = serializers.CharField(required=False, allow_blank=True, write_only=True)

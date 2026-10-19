@@ -17,6 +17,7 @@ import {
   useBlocks,
   useChangePassword,
   useDeactivate,
+  useDeleteAccount,
   usePreferences,
   usePublicConfig,
   useUnblockUser,
@@ -244,6 +245,10 @@ export function PrivacySettingsPage() {
   const unblock = useUnblockUser();
   const deactivate = useDeactivate();
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const deleteAccount = useDeleteAccount();
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deletePassword, setDeletePassword] = useState("");
+  const deleteErrors = deleteAccount.error instanceof ApiError ? deleteAccount.error.fieldErrors() : {};
   const [geoState, setGeoState] = useState<string>("prompt");
 
   useEffect(() => {
@@ -299,6 +304,48 @@ export function PrivacySettingsPage() {
       <Button variant="danger" onClick={() => setConfirmOpen(true)}>
         {t("settings.deactivate")}
       </Button>
+      <Button variant="danger" onClick={() => setDeleteOpen(true)}>
+        {t("settings.deleteAccount")}
+      </Button>
+      <Modal
+        open={deleteOpen}
+        onClose={() => setDeleteOpen(false)}
+        title={t("settings.deleteTitle")}
+        actions={
+          <>
+            <Button variant="secondary" onClick={() => setDeleteOpen(false)}>
+              {t("common.cancel")}
+            </Button>
+            <Button
+              variant="danger"
+              loading={deleteAccount.isPending}
+              disabled={me.has_password && !deletePassword}
+              onClick={() =>
+                deleteAccount.mutate(me.has_password ? deletePassword : undefined, {
+                  onSuccess: () => {
+                    toast.success(t("settings.deleted"));
+                    navigate("/", { replace: true });
+                  },
+                })
+              }
+            >
+              {t("settings.deleteConfirm")}
+            </Button>
+          </>
+        }
+      >
+        <p>{t("settings.deleteText")}</p>
+        {me.has_password && (
+          <Input
+            label={t("settings.deletePassword")}
+            type="password"
+            autoComplete="current-password"
+            value={deletePassword}
+            onChange={(e) => setDeletePassword(e.target.value)}
+            error={deleteErrors.password}
+          />
+        )}
+      </Modal>
       <ConfirmDialog
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)}

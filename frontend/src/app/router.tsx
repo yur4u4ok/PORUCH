@@ -94,6 +94,8 @@ export const router = createBrowserRouter([
       // Public legal pages (linked from Google's OAuth consent screen and sign-up).
       { path: "/privacy", element: page(<LegalPage kind="privacy" />) },
       { path: "/terms", element: page(<LegalPage kind="terms" />) },
+      // Public how-to for deleting an account (Google Play asks for this URL).
+      { path: "/delete-account", element: page(<LegalPage kind="deletion" />) },
       // Public: support must be reachable without an account (e.g. can't sign in).
       { path: "/contact", element: page(<SupportPage />) },
       // Public: shared request links work without an account.

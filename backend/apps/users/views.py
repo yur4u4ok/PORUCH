@@ -21,6 +21,7 @@ from apps.users.cookies import clear_auth_cookies, set_auth_cookies
 from apps.users.models import Capability, User, UserCapability
 from apps.users.selectors import users_with_profile
 from apps.users.services import accounts, profile
+from apps.users.services.deletion import delete_account
 from apps.users.services.tokens import issue_tokens
 from common import analytics
 from common.exceptions import DomainError, NotFound
@@ -224,6 +225,19 @@ class DeactivateView(APIView):
     def post(self, request):
         profile.deactivate_user(request.user)
         analytics.track(user_id=request.user.id, event="user_deactivated")
+        return clear_auth_cookies(Response(status=status.HTTP_204_NO_CONTENT))
+
+
+class DeleteAccountView(APIView):
+    """Erase the account for good (the password confirms it, if the account has one)."""
+
+    permission_classes = [IsAuthenticatedUser]
+
+    @extend_schema(request=s.DeleteAccountSerializer, responses={204: None})
+    def post(self, request):
+        ser = s.DeleteAccountSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        delete_account(request.user, ser.validated_data.get("password"))
         return clear_auth_cookies(Response(status=status.HTTP_204_NO_CONTENT))
 
 

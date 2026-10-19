@@ -334,17 +334,17 @@
     "locationManualDenied": "位置情報がオフです。助けが必要な場所までピンをドラッグするか、ブラウザ設定で位置情報を許可してください。",
     "locationPickPrompt": "ピンをドラッグして場所を指定",
     "categoryLabel": "カテゴリ",
-    "categoryPlaceholder": "—",
-    "subcategoryLabel": "当てはまるものを選択（任意）",
+    "categoryPlaceholder": "カテゴリを選択",
+    "subcategoryLabel": "詳細（任意）",
     "titlePlaceholders": {
       "AUTO": "例：タイヤがパンクした",
-      "HOME": "例：タイヤがパンクした",
-      "ITEMS": "例：タイヤがパンクした",
-      "ANIMALS": "例：タイヤがパンクした",
-      "PEOPLE": "例：タイヤがパンクした",
-      "DISTRICT": "例：タイヤがパンクした",
-      "URGENT": "例：タイヤがパンクした",
-      "OTHER": "例：タイヤがパンクした"
+      "HOME": "例：タンスを3階まで運びたい",
+      "ITEMS": "例：ドリルを1時間借りたい",
+      "ANIMALS": "例：夕方に犬の散歩",
+      "PEOPLE": "例：祖母に食料品を届ける",
+      "DISTRICT": "例：中庭の掃除",
+      "URGENT": "例：路上で具合が悪くなった人がいる",
+      "OTHER": "例：ノートパソコンのことで手伝ってほしい"
     },
     "pickDate": "日付を選択",
     "leaveTitle": "リクエスト作成をやめますか？",
@@ -360,8 +360,8 @@
     "category": "カテゴリ",
     "urgency": "緊急度",
     "all": "すべて",
-    "emptyTitle": "今は近くに依頼がありません。",
-    "emptyText": "だからといって、誰も困っていないわけではありません。通知をオンにすれば、近くで助けが必要になったときにお知らせします。",
+    "emptyTitle": "いまはリクエストがありません。",
+    "emptyText": "通知をオンにすると、誰かが助けを必要としたときにお知らせします。",
     "enableNotifications": "通知をオンにする",
     "needLocation": "近くの依頼を見るには、位置情報の利用を許可してください。",
     "allowLocation": "位置情報を許可",
@@ -459,8 +459,8 @@
   },
   "profile": {
     "title": "プロフィール",
-    "helped": "🤝 手助け：{{count}}回",
-    "thanks": "❤️ 受け取ったお礼：{{count}}件",
+    "helped": "🤝 手助け：{{count}}",
+    "thanks": "❤️ お礼：{{count}}",
     "helpedShort": "🤝 手助け{{count}}回",
     "thanksShort": "❤️ お礼{{count}}件",
     "canHelp": "手伝えること：",
@@ -561,7 +561,13 @@
     "currentPassword": "現在のパスワード",
     "newPassword": "新しいパスワード",
     "passwordChanged": "パスワードを変更しました",
-    "passwordOtherDevices": "他の端末では再ログインが必要です。"
+    "passwordOtherDevices": "他の端末では再ログインが必要です。",
+    "deleteAccount": "アカウントを削除",
+    "deleteTitle": "アカウントを完全に削除しますか？",
+    "deleteText": "メールアドレス、電話番号、写真、通知、設定が消去されます。ほかの人が参加したチャットやリクエストでは、あなたの名前は「削除されたユーザー」になり、あなたのテキストは取り除かれます。元に戻すことはできません。",
+    "deletePassword": "確認のためパスワードを入力してください",
+    "deleteConfirm": "完全に削除する",
+    "deleted": "アカウントを削除しました"
   },
   "report": {
     "title": "通報",
@@ -694,9 +700,9 @@
     "howTo": "インストール方法：",
     "steps": {
       "ios": [
-        "画面下部または「⋯」メニューの共有ボタン ⬆️ をタップ",
-        "「ホーム画面に追加」を選択",
-        "「追加」をタップ — Poruchがアプリに並びます"
+        "アドレスバー横の下部にある「<dots></dots>」メニューで「共有 <share></share>」をタップ",
+        "「さらに表示 <more></more>」を選び、「<add></add> ホーム画面に追加」をタップ",
+        "「追加」をタップ"
       ],
       "ios-other-browser": [
         "アドレスバーの共有ボタン ⬆️ をタップ",
@@ -713,7 +719,7 @@
         "確認すると、Poruchがアプリに並びます"
       ],
       "desktop": [
-        "アドレスバーのインストールアイコン ⊕ をクリック（またはメニュー ⋮ →「Poruchをインストール」）",
+        "アドレスバーのインストールアイコン <install></install> をクリック（またはメニュー ⋮ →「Poruch をインストール」）",
         "インストールを確認"
       ]
     },

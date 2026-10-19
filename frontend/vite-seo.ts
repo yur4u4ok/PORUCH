@@ -27,7 +27,7 @@ interface Landing {
   login: string;
 }
 
-const PUBLIC_PAGES = ["/", "/privacy", "/terms"];
+const PUBLIC_PAGES = ["/", "/privacy", "/terms", "/contact", "/delete-account"];
 const PRIVATE_PREFIXES = [
   "/help/",
   "/chats/",

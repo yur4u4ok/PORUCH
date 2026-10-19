@@ -11,6 +11,7 @@ from apps.moderation.selectors import is_blocked_between
 from apps.users.models import User
 from common import analytics
 from common.exceptions import Forbidden, InvalidState, NotFound, ValidationFailed
+from common.i18n import in_language_of
 
 logger = logging.getLogger(__name__)
 
@@ -177,21 +178,24 @@ def send_message(
         from apps.notifications.models import NotificationType
         from apps.notifications.services.notify import notify
 
-        name = user.profile.display_name if user.profile.show_name else _("Сусід")
-        # Show what was written (shortened), so the push itself is useful: «💬 Олена: Я біля входу…».
-        if message.message_type == Message.Type.IMAGE:
-            preview = _("📷 Фото")
-        else:
-            text_line = " ".join((message.text or "").split())
-            preview = text_line if len(text_line) <= PUSH_PREVIEW_CHARS else text_line[: PUSH_PREVIEW_CHARS - 1] + "…"
-        notify(
-            other,
-            NotificationType.NEW_MESSAGE,
-            title=_("💬 {name}").format(name=name),
-            body=preview,
-            url=f"/chats/{conversation.id}",
-            data={"conversation_id": str(conversation.id)},
-        )
+        with in_language_of(other):
+            name = user.profile.display_name if user.profile.show_name else _("Сусід")
+            # Show what was written (shortened), so the push itself is useful: «💬 Олена: Я біля входу…».
+            if message.message_type == Message.Type.IMAGE:
+                preview = _("📷 Фото")
+            else:
+                text_line = " ".join((message.text or "").split())
+                preview = (
+                    text_line if len(text_line) <= PUSH_PREVIEW_CHARS else text_line[: PUSH_PREVIEW_CHARS - 1] + "…"
+                )
+            notify(
+                other,
+                NotificationType.NEW_MESSAGE,
+                title=_("💬 {name}").format(name=name),
+                body=preview,
+                url=f"/chats/{conversation.id}",
+                data={"conversation_id": str(conversation.id)},
+            )
     analytics.track(user_id=user.id, event="message_sent", properties={"type": message.message_type})
     return message, True
 

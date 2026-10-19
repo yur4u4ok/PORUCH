@@ -354,3 +354,13 @@ class TestSearchAndSort:
         whenever = HelpRequestFactory(author=user, urgency="WHENEVER")
         results = auth_client.get(LIST_URL, {"role": "author", "sort": "soon"}).data["results"]
         assert [r["id"] for r in results] == [str(today.id), str(later.id), str(whenever.id)]
+
+
+def test_expiring_notification_is_in_the_authors_language(no_push):
+    author = UserFactory()
+    author.profile.language = "de"
+    author.profile.save(update_fields=["language"])
+    HelpRequestFactory(author=author, expires_at=timezone.now() + timedelta(minutes=30))
+    expire_help_requests()
+    note = Notification.objects.get(user=author, type="REQUEST_EXPIRING")
+    assert note.title == "⏳ Deine Anfrage endet bald"

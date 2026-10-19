@@ -27,3 +27,6 @@ frontend/playwright-report/
 .vscode/*
 !.vscode/extensions.json
 .DS_Store
+
+# compiled translations: built in the image (compilemessages)
+backend/locale/**/*.mo

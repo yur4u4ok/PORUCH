@@ -10,6 +10,7 @@ from apps.reputation.models import ThankYou
 from apps.users.models import Profile, User
 from common import analytics
 from common.exceptions import Forbidden, InvalidState, NotFound
+from common.i18n import in_language_of
 
 
 @transaction.atomic
@@ -46,14 +47,15 @@ def create_thank_you(author: User, help_request_id, message: str = "") -> tuple[
         created = True
         first = first or thank_you
         Profile.objects.filter(user_id=helper_id).update(thanks_received_count=F("thanks_received_count") + 1)
-        notify(
-            User.objects.get(pk=helper_id),
-            NotificationType.THANK_YOU_RECEIVED,
-            title=_("❤️ Вам подякували"),
-            body=thank_you.message[:200] or _("Дякую за допомогу!"),
-            url="/profile",
-            help_request=help_request,
-        )
+        with in_language_of(User.objects.get(pk=helper_id)):
+            notify(
+                User.objects.get(pk=helper_id),
+                NotificationType.THANK_YOU_RECEIVED,
+                title=_("❤️ Вам подякували"),
+                body=thank_you.message[:200] or _("Дякую за допомогу!"),
+                url="/profile",
+                help_request=help_request,
+            )
     assert first is not None
     if not created:
         return first, False

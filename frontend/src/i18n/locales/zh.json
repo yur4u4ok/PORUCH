@@ -334,17 +334,17 @@
     "locationManualDenied": "位置权限已关闭。请把图钉拖到需要帮助的地方，或在浏览器设置中允许定位。",
     "locationPickPrompt": "拖动图钉标记地点",
     "categoryLabel": "类别",
-    "categoryPlaceholder": "—",
-    "subcategoryLabel": "选择合适的一项（选填）",
+    "categoryPlaceholder": "选择类别",
+    "subcategoryLabel": "细分（可选）",
     "titlePlaceholders": {
-      "AUTO": "例如：轮胎没气了",
-      "HOME": "例如：轮胎没气了",
-      "ITEMS": "例如：轮胎没气了",
-      "ANIMALS": "例如：轮胎没气了",
-      "PEOPLE": "例如：轮胎没气了",
-      "DISTRICT": "例如：轮胎没气了",
-      "URGENT": "例如：轮胎没气了",
-      "OTHER": "例如：轮胎没气了"
+      "AUTO": "例如：轮胎扎了",
+      "HOME": "例如：把衣柜搬到三楼",
+      "ITEMS": "例如：借电钻用一小时",
+      "ANIMALS": "例如：傍晚遛狗",
+      "PEOPLE": "例如：给奶奶送买好的东西",
+      "DISTRICT": "例如：打扫院子",
+      "URGENT": "例如：有人在街上身体不适",
+      "OTHER": "例如：帮忙看看笔记本电脑"
     },
     "pickDate": "选择日期",
     "leaveTitle": "离开创建请求？",
@@ -360,8 +360,8 @@
     "category": "类别",
     "urgency": "紧急程度",
     "all": "全部",
-    "emptyTitle": "附近暂时没有求助。",
-    "emptyText": "这不代表没有人需要帮助。开启通知后，附近有人需要帮助时我们会告诉你。",
+    "emptyTitle": "目前没有请求。",
+    "emptyText": "打开通知，有人需要帮助时我们会告诉你。",
     "enableNotifications": "开启通知",
     "needLocation": "要查看附近的求助，请允许访问位置。",
     "allowLocation": "允许定位",
@@ -459,8 +459,8 @@
   },
   "profile": {
     "title": "我的",
-    "helped": "🤝 帮助次数：{{count}}",
-    "thanks": "❤️ 收到感谢：{{count}}",
+    "helped": "🤝 帮助：{{count}}",
+    "thanks": "❤️ 感谢：{{count}}",
     "helpedShort": "🤝 帮助 {{count}} 次",
     "thanksShort": "❤️ 感谢 {{count}}",
     "canHelp": "我能帮忙：",
@@ -561,7 +561,13 @@
     "currentPassword": "当前密码",
     "newPassword": "新密码",
     "passwordChanged": "密码已修改",
-    "passwordOtherDevices": "其他设备需要重新登录。"
+    "passwordOtherDevices": "其他设备需要重新登录。",
+    "deleteAccount": "删除账号",
+    "deleteTitle": "要永久删除账号吗？",
+    "deleteText": "你的邮箱、手机号、照片、通知和设置将被清除。在其他人参与过的聊天和请求中，你的名字会显示为“已删除的用户”，你写的内容会被移除。此操作无法撤销。",
+    "deletePassword": "请输入密码以确认",
+    "deleteConfirm": "永久删除",
+    "deleted": "账号已删除"
   },
   "report": {
     "title": "举报",
@@ -690,9 +696,9 @@
     "howTo": "安装方法：",
     "steps": {
       "ios": [
-        "点按屏幕底部或“⋯”菜单中的“分享” ⬆️",
-        "选择“添加到主屏幕”",
-        "点按“添加”，Poruch 就会出现在应用中"
+        "点按底部地址栏旁“<dots></dots>”菜单中的“分享 <share></share>”",
+        "选择“查看更多 <more></more>”，然后点按“<add></add> 添加到主屏幕”",
+        "点按“添加”"
       ],
       "ios-other-browser": [
         "点按地址栏中的“分享” ⬆️",
@@ -708,7 +714,7 @@
         "选择“安装应用”或“添加到主屏幕”",
         "确认后，Poruch 就会出现在应用中"
       ],
-      "desktop": ["点击地址栏中的安装图标 ⊕（或菜单 ⋮ →“安装 Poruch”）", "确认安装"]
+      "desktop": ["点击地址栏中的安装图标 <install></install>（或菜单 ⋮ →“安装 Poruch”）", "确认安装"]
     },
     "troubleTitle": "无法安装？",
     "trouble": {

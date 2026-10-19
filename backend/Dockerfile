@@ -7,7 +7,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends gdal-bin libgdal-dev libgeos-dev libproj-dev curl \
+    && apt-get install -y --no-install-recommends gdal-bin libgdal-dev libgeos-dev libproj-dev curl gettext \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -25,7 +25,8 @@ COPY requirements/ requirements/
 RUN pip install -r requirements/base.txt
 COPY --chown=app:app . .
 ENV DJANGO_SETTINGS_MODULE=config.settings.production
-RUN DJANGO_SECRET_KEY=build-only DATABASE_URL=postgis://x:x@localhost/x python manage.py collectstatic --noinput
+RUN DJANGO_SECRET_KEY=build-only DATABASE_URL=postgis://x:x@localhost/x python manage.py collectstatic --noinput \
+    && DJANGO_SECRET_KEY=build-only DATABASE_URL=postgis://x:x@localhost/x python manage.py compilemessages --ignore=.venv
 USER app
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s CMD curl -fs http://localhost:8000/health/live/ || exit 1

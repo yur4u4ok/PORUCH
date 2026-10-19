@@ -340,17 +340,17 @@
     "locationManualDenied": "Standortzugriff ist aus. Zieh die Markierung dorthin, wo Hilfe gebraucht wird, oder erlaube den Standort in den Browsereinstellungen.",
     "locationPickPrompt": "Zieh die Markierung, um den Ort festzulegen",
     "categoryLabel": "Kategorie",
-    "categoryPlaceholder": "—",
-    "subcategoryLabel": "Wähle, was passt (optional)",
+    "categoryPlaceholder": "Kategorie wählen",
+    "subcategoryLabel": "Genauer (optional)",
     "titlePlaceholders": {
-      "AUTO": "Zum Beispiel: platter Reifen",
-      "HOME": "Zum Beispiel: platter Reifen",
-      "ITEMS": "Zum Beispiel: platter Reifen",
-      "ANIMALS": "Zum Beispiel: platter Reifen",
-      "PEOPLE": "Zum Beispiel: platter Reifen",
-      "DISTRICT": "Zum Beispiel: platter Reifen",
-      "URGENT": "Zum Beispiel: platter Reifen",
-      "OTHER": "Zum Beispiel: platter Reifen"
+      "AUTO": "z. B.: Platter Reifen",
+      "HOME": "z. B.: Schrank in den 3. Stock tragen",
+      "ITEMS": "z. B.: Bohrmaschine für eine Stunde leihen",
+      "ANIMALS": "z. B.: Abends mit dem Hund rausgehen",
+      "PEOPLE": "z. B.: Einkäufe zur Oma bringen",
+      "DISTRICT": "z. B.: Den Hof aufräumen",
+      "URGENT": "z. B.: Jemandem ist auf der Straße schlecht geworden",
+      "OTHER": "z. B.: Hilfe mit dem Laptop"
     },
     "pickDate": "Datum wählen",
     "leaveTitle": "Anfrage verlassen?",
@@ -366,8 +366,8 @@
     "category": "Kategorie",
     "urgency": "Dringlichkeit",
     "all": "Alle",
-    "emptyTitle": "Gerade keine Anfragen in der Nähe.",
-    "emptyText": "Das heißt nicht, dass niemand Hilfe braucht. Schalte Mitteilungen ein, dann sagen wir dir Bescheid, wenn jemand in der Nähe Hilfe braucht.",
+    "emptyTitle": "Gerade keine Anfragen.",
+    "emptyText": "Schalte Mitteilungen ein – wir sagen dir Bescheid, wenn jemand Hilfe braucht.",
     "enableNotifications": "Mitteilungen einschalten",
     "needLocation": "Erlaube den Standortzugriff, um Anfragen in der Nähe zu sehen.",
     "allowLocation": "Standort erlauben",
@@ -569,7 +569,13 @@
     "currentPassword": "Aktuelles Passwort",
     "newPassword": "Neues Passwort",
     "passwordChanged": "Passwort geändert",
-    "passwordOtherDevices": "Auf anderen Geräten musst du dich erneut anmelden."
+    "passwordOtherDevices": "Auf anderen Geräten musst du dich erneut anmelden.",
+    "deleteAccount": "Konto löschen",
+    "deleteTitle": "Konto endgültig löschen?",
+    "deleteText": "Deine E-Mail, Telefonnummer, Fotos, Mitteilungen und Einstellungen werden gelöscht. In Chats und Anfragen, an denen andere beteiligt waren, steht statt deines Namens „Gelöschter Nutzer“, und deine Texte werden entfernt. Das kann nicht rückgängig gemacht werden.",
+    "deletePassword": "Gib zur Bestätigung dein Passwort ein",
+    "deleteConfirm": "Endgültig löschen",
+    "deleted": "Konto gelöscht"
   },
   "report": {
     "title": "Melden",
@@ -702,9 +708,9 @@
     "howTo": "So installierst du sie:",
     "steps": {
       "ios": [
-        "Tippe auf Teilen ⬆️ – unten oder im Menü „⋯“",
-        "Wähle „Zum Home-Bildschirm“",
-        "Tippe auf „Hinzufügen“ – Poruch erscheint bei deinen Apps"
+        "Tippe im Menü „<dots></dots>“ unten neben der Adressleiste auf „Teilen <share></share>“",
+        "Wähle „Mehr anzeigen <more></more>“ und tippe auf „<add></add> Zum Home-Bildschirm“",
+        "Tippe auf „Hinzufügen“"
       ],
       "ios-other-browser": [
         "Tippe in der Adressleiste auf Teilen ⬆️",
@@ -721,7 +727,7 @@
         "Bestätige – Poruch erscheint bei deinen Apps"
       ],
       "desktop": [
-        "Klicke auf das Installationssymbol ⊕ in der Adressleiste (oder Menü ⋮ → „Poruch installieren“)",
+        "Klicke auf das Installationssymbol <install></install> in der Adressleiste (oder Menü ⋮ → „Poruch installieren“)",
         "Bestätige die Installation"
       ]
     },

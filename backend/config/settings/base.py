@@ -226,7 +226,22 @@ API_DOCS_PUBLIC = env.bool("API_DOCS_PUBLIC", default=DEBUG)
 
 # --- i18n -----------------------------------------------------------------
 LANGUAGE_CODE = "uk"
-LANGUAGES = [("uk", "Українська"), ("en", "English"), ("pl", "Polski")]
+# Same set as the app's interface languages (frontend/src/i18n/locales); Chinese is Simplified.
+LANGUAGES = [
+    ("uk", "Українська"),
+    ("en", "English"),
+    ("de", "Deutsch"),
+    ("es", "Español"),
+    ("fr", "Français"),
+    ("hi", "हिन्दी"),
+    ("it", "Italiano"),
+    ("ja", "日本語"),
+    ("ko", "한국어"),
+    ("pl", "Polski"),
+    ("pt", "Português"),
+    ("tr", "Türkçe"),
+    ("zh-hans", "简体中文"),
+]
 LOCALE_PATHS = [BASE_DIR / "locale"]
 TIME_ZONE = "UTC"
 USE_I18N = True

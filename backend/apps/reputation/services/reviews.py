@@ -12,6 +12,7 @@ from apps.reputation.models import Review
 from apps.users.models import Profile, User
 from common import analytics
 from common.exceptions import Conflict, Forbidden, InvalidState, NotFound
+from common.i18n import in_language_of
 
 
 def review_partners(help_request: HelpRequest, user: User) -> list:
@@ -47,13 +48,14 @@ def create_review(user: User, help_request_id, to_user_id, rating: int, text: st
     Profile.objects.filter(user_id=to_user_id).update(
         reviews_count=F("reviews_count") + 1, rating_sum=F("rating_sum") + rating
     )
-    notify(
-        User.objects.get(pk=to_user_id),
-        NotificationType.REVIEW_RECEIVED,
-        title=_("⭐ Новий відгук: {stars}").format(stars="★" * rating),
-        body=review.text[:200],
-        url="/profile",
-        help_request=help_request,
-    )
+    with in_language_of(User.objects.get(pk=to_user_id)):
+        notify(
+            User.objects.get(pk=to_user_id),
+            NotificationType.REVIEW_RECEIVED,
+            title=_("⭐ Новий відгук: {stars}").format(stars="★" * rating),
+            body=review.text[:200],
+            url="/profile",
+            help_request=help_request,
+        )
     analytics.track(user_id=user.id, event="review_created", properties={"rating": rating})
     return review

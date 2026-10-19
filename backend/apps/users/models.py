@@ -49,6 +49,8 @@ class User(UUIDModel, AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
     deactivated_at = models.DateTimeField(null=True, blank=True)
+    # Set when the person deleted their account (personal data erased, see services/deletion.py).
+    deleted_at = models.DateTimeField(null=True, blank=True)
     # Last time the app was open (written at most once a minute, see common/presence.py).
     last_seen_at = models.DateTimeField(null=True, blank=True)
 
@@ -75,6 +77,8 @@ class Profile(models.Model):
     show_name = models.BooleanField(default=True)
     show_avatar = models.BooleanField(default=True)
     onboarding_completed = models.BooleanField(default=False)
+    # Interface language: notifications and emails are written in it (one of settings.LANGUAGES).
+    language = models.CharField(max_length=10, default="uk")
     # Free-text "Маю" items for things not in the catalog (used with HAS_OTHER).
     custom_items = ArrayField(models.CharField(max_length=40), default=list, blank=True)
     # Reputation counters (denormalised, updated by services with F() expressions)

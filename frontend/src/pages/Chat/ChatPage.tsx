@@ -407,8 +407,10 @@ export default function ChatPage() {
           className={styles.requestLink}
           title={t("chat.aboutRequest", { title: conversation.data.help_request.title })}
         >
-          <span aria-hidden>{CATEGORY_EMOJI[conversation.data.help_request.category]}</span>
-          {t("chat.request")}
+          <span className={styles.requestIcon} aria-hidden>
+            {CATEGORY_EMOJI[conversation.data.help_request.category]}
+          </span>
+          <span className={styles.requestText}>{t("chat.request")}</span>
         </Link>
       </header>
       {(status === "reconnecting" || status === "offline") && (

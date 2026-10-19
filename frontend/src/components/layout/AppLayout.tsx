@@ -9,6 +9,7 @@ import { IconButton } from "@/components/ui";
 import { useLogoutConfirm } from "@/features/auth/LogoutConfirm";
 import { AttentionSignals } from "@/features/attention/AttentionSignals";
 import { InstallPrompt } from "@/features/pwa/InstallPrompt";
+import { LanguageSync } from "@/features/profile/LanguageSync";
 
 import { BrandMark } from "./BrandMark";
 import {
@@ -88,6 +89,7 @@ export function AppLayout() {
   return (
     <div className={styles.shell}>
       <PushDeepLinkTracker />
+      <LanguageSync />
       <PullToRefresh />
       <AttentionSignals unread={unread + chatBadge} />
       <InstallPrompt />

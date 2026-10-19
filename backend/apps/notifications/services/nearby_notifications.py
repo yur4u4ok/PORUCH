@@ -17,6 +17,7 @@ from apps.notifications.models import NotificationType, PushSubscription
 from apps.notifications.services.notify import notify
 from apps.notifications.services.texts import CATEGORY_PHRASES, URGENCY_PHRASES, format_distance
 from apps.users.models import User
+from common.i18n import in_language_of
 from common.utils import rate_limit
 
 logger = logging.getLogger(__name__)
@@ -80,16 +81,18 @@ def notify_users_about_help_request(help_request: HelpRequest) -> int:
     if help_request.status != HelpRequestStatus.ACTIVE or help_request.expires_at <= timezone.now():
         return 0
     high = is_high_urgency(help_request)
-    title = _("🆘 Комусь поруч потрібна допомога")
-    category_text = str(CATEGORY_PHRASES.get(Category(help_request.category), CATEGORY_PHRASES[Category.OTHER]))
-    urgency_text = str(URGENCY_PHRASES.get(Urgency(help_request.urgency), ""))
     sent = 0
     for user in find_recipients(help_request).iterator():
         distances = [d.m for d in (user.pref_distance, user.avail_distance) if d is not None]
         distance = min(distances) if distances else None
         if not _within_rate_limit(user.pk, high):
             continue
-        body = "\n".join(filter(None, [category_text, f"📍 {format_distance(distance)}", urgency_text]))
+        # Each neighbour reads it in their own language.
+        with in_language_of(user):
+            title = _("🆘 Комусь поруч потрібна допомога")
+            category_text = str(CATEGORY_PHRASES.get(Category(help_request.category), CATEGORY_PHRASES[Category.OTHER]))
+            urgency_text = str(URGENCY_PHRASES.get(Urgency(help_request.urgency), ""))
+            body = "\n".join(filter(None, [category_text, f"📍 {format_distance(distance)}", urgency_text]))
         created = notify(
             user,
             NotificationType.NEW_NEARBY_REQUEST,

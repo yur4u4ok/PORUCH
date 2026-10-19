@@ -29,9 +29,18 @@ def _frontend_url(path: str, **params: str) -> str:
 
 
 def _create_profile(user: User, display_name: str, city: City | None) -> Profile:
-    from apps.notifications.services.preferences import create_default_preferences
+    from django.utils import translation
 
-    profile = Profile.objects.create(user=user, display_name=display_name.strip()[:50], city=city)
+    from apps.notifications.services.preferences import create_default_preferences
+    from common.i18n import normalize_language
+
+    # The language the person signed up in (from the app's Accept-Language) until they change it.
+    profile = Profile.objects.create(
+        user=user,
+        display_name=display_name.strip()[:50],
+        city=city,
+        language=normalize_language(translation.get_language()),
+    )
     create_default_preferences(user)
     return profile
 

@@ -340,17 +340,17 @@
     "locationManualDenied": "Konum erişimi kapalı. İşareti yardımın gerektiği yere sürükle ya da tarayıcı ayarlarından konuma izin ver.",
     "locationPickPrompt": "Yeri işaretlemek için işareti sürükle",
     "categoryLabel": "Kategori",
-    "categoryPlaceholder": "—",
-    "subcategoryLabel": "Uygun olanı seç (isteğe bağlı)",
+    "categoryPlaceholder": "Kategori seçin",
+    "subcategoryLabel": "Ayrıntı (isteğe bağlı)",
     "titlePlaceholders": {
       "AUTO": "Örneğin: lastik patladı",
-      "HOME": "Örneğin: lastik patladı",
-      "ITEMS": "Örneğin: lastik patladı",
-      "ANIMALS": "Örneğin: lastik patladı",
-      "PEOPLE": "Örneğin: lastik patladı",
-      "DISTRICT": "Örneğin: lastik patladı",
-      "URGENT": "Örneğin: lastik patladı",
-      "OTHER": "Örneğin: lastik patladı"
+      "HOME": "Örneğin: dolabı 3. kata taşımak",
+      "ITEMS": "Örneğin: bir saatliğine matkap ödünç almak",
+      "ANIMALS": "Örneğin: akşam köpeği gezdirmek",
+      "PEOPLE": "Örneğin: babaanneye market alışverişi götürmek",
+      "DISTRICT": "Örneğin: avluyu temizlemek",
+      "URGENT": "Örneğin: sokakta biri fenalaştı",
+      "OTHER": "Örneğin: dizüstü bilgisayarla ilgili yardım"
     },
     "pickDate": "Tarih seçin",
     "leaveTitle": "Talepten çıkılsın mı?",
@@ -366,8 +366,8 @@
     "category": "Kategori",
     "urgency": "Aciliyet",
     "all": "Tümü",
-    "emptyTitle": "Şu an yakında istek yok.",
-    "emptyText": "Bu, kimsenin yardıma ihtiyacı olmadığı anlamına gelmez. Bildirimleri aç, yakında biri yardım istediğinde haber verelim.",
+    "emptyTitle": "Şu anda talep yok.",
+    "emptyText": "Bildirimleri açın; birinin yardıma ihtiyacı olduğunda size haber verelim.",
     "enableNotifications": "Bildirimleri aç",
     "needLocation": "Yakındaki istekleri görmek için konum erişimine izin ver.",
     "allowLocation": "Konuma izin ver",
@@ -467,8 +467,8 @@
   },
   "profile": {
     "title": "Profil",
-    "helped": "🤝 Yardım etti: {{count}}",
-    "thanks": "❤️ Alınan teşekkür: {{count}}",
+    "helped": "🤝 Yardımlar: {{count}}",
+    "thanks": "❤️ Teşekkürler: {{count}}",
     "helpedShort": "🤝 {{count}} yardım",
     "thanksShort": "❤️ {{count}} teşekkür",
     "canHelp": "Yardım edebileceklerim:",
@@ -569,7 +569,13 @@
     "currentPassword": "Mevcut şifre",
     "newPassword": "Yeni şifre",
     "passwordChanged": "Şifre değiştirildi",
-    "passwordOtherDevices": "Diğer cihazlarda yeniden giriş yapmanız gerekecek."
+    "passwordOtherDevices": "Diğer cihazlarda yeniden giriş yapmanız gerekecek.",
+    "deleteAccount": "Hesabı sil",
+    "deleteTitle": "Hesabınız kalıcı olarak silinsin mi?",
+    "deleteText": "E-postanız, telefonunuz, fotoğraflarınız, bildirimleriniz ve ayarlarınız silinir. Başkalarının katıldığı sohbet ve taleplerde adınızın yerine «Silinmiş kullanıcı» yazar ve yazdıklarınız kaldırılır. Bu işlem geri alınamaz.",
+    "deletePassword": "Onaylamak için şifrenizi girin",
+    "deleteConfirm": "Kalıcı olarak sil",
+    "deleted": "Hesap silindi"
   },
   "report": {
     "title": "Şikâyet et",
@@ -702,9 +708,9 @@
     "howTo": "Nasıl yüklenir:",
     "steps": {
       "ios": [
-        "Paylaş ⬆️ simgesine dokun — altta ya da “⋯” menüsünde",
-        "“Ana Ekrana Ekle”yi seç",
-        "“Ekle”ye dokun — Poruch uygulamalarının arasında görünür"
+        "Alttaki adres çubuğunun yanındaki «<dots></dots>» menüsünde «Paylaş <share></share>» simgesine dokunun",
+        "«Daha fazla göster <more></more>» seçin ve «<add></add> Ana Ekrana Ekle» simgesine dokunun",
+        "«Ekle»ye dokunun"
       ],
       "ios-other-browser": [
         "Adres çubuğundaki Paylaş ⬆️ simgesine dokun",
@@ -721,7 +727,7 @@
         "Onayla — Poruch uygulamalarının arasında görünür"
       ],
       "desktop": [
-        "Adres çubuğundaki yükleme simgesine ⊕ tıkla (veya menü ⋮ → “Poruch'u yükle”)",
+        "Adres çubuğundaki yükleme simgesine <install></install> tıklayın (veya menü ⋮ → «Poruch'u yükle»)",
         "Yüklemeyi onayla"
       ]
     },

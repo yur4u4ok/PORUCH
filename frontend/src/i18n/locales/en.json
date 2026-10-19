@@ -569,7 +569,13 @@
     "currentPassword": "Current password",
     "newPassword": "New password",
     "passwordChanged": "Password changed",
-    "passwordOtherDevices": "You'll need to log in again on other devices."
+    "passwordOtherDevices": "You'll need to log in again on other devices.",
+    "deleteAccount": "Delete account",
+    "deleteTitle": "Delete your account for good?",
+    "deleteText": "Your email, phone, photos, notifications and settings will be erased. In chats and requests other people took part in, your name becomes «Deleted user» and your texts are removed. This can't be undone.",
+    "deletePassword": "Enter your password to confirm",
+    "deleteConfirm": "Delete for good",
+    "deleted": "Account deleted"
   },
   "report": {
     "title": "Report",

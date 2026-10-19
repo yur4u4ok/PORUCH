@@ -15,6 +15,7 @@ from apps.notifications.services.notify import notify
 from apps.users.models import User
 from common import analytics
 from common.exceptions import Conflict, Forbidden, InvalidState, NotFound, ValidationFailed
+from common.i18n import in_language_of
 from common.utils.money import format_money
 
 
@@ -102,16 +103,21 @@ def respond(
             },
         )
         analytics.track(user_id=help_request.author_id, event="first_response_received")
-    notify(
-        help_request.author,
-        NotificationType.HELP_RESPONSE_RECEIVED,
-        title=_("🤝 Хтось може допомогти"),
-        body=_("{name} готовий(-а) допомогти з вашим запитом").format(name=_display_name(helper))
-        + (f" · {offer_summary(help_request, offer_type, offered_amount)}" if offer_type != OfferType.ACCEPT else ""),
-        url=f"/help/{help_request.id}",
-        help_request=help_request,
-        data={"help_request_id": str(help_request.id), "response_id": str(response.id)},
-    )
+    with in_language_of(help_request.author):
+        notify(
+            help_request.author,
+            NotificationType.HELP_RESPONSE_RECEIVED,
+            title=_("🤝 Хтось може допомогти"),
+            body=_("{name} готовий(-а) допомогти з вашим запитом").format(name=_display_name(helper))
+            + (
+                f" · {offer_summary(help_request, offer_type, offered_amount)}"
+                if offer_type != OfferType.ACCEPT
+                else ""
+            ),
+            url=f"/help/{help_request.id}",
+            help_request=help_request,
+            data={"help_request_id": str(help_request.id), "response_id": str(response.id)},
+        )
     analytics.track(user_id=helper.id, event="help_response_created", properties={"help_request_id": help_request.id})
     return response, True
 
@@ -177,25 +183,27 @@ def _accept_response(help_request: HelpRequest, response: HelpResponse, *, agree
             conversation,
             _("Домовленість про подяку: {terms}").format(terms=offer_summary(help_request, agreed_type, agreed_amount)),
         )
-    notify(
-        response.helper,
-        NotificationType.HELP_RESPONSE_ACCEPTED,
-        title=_("✅ Вашу допомогу прийнято"),
-        body=_("Напишіть людині, щоб домовитися про деталі"),
-        url=f"/chats/{conversation.id}",
-        help_request=help_request,
-        data={"help_request_id": str(help_request.id), "conversation_id": str(conversation.id)},
-    )
-    for other in rejected:
+    with in_language_of(response.helper):
         notify(
-            other.helper,
-            NotificationType.HELP_RESPONSE_REJECTED,
-            title=_("Дякуємо за готовність допомогти"),
-            body=_("Автор запиту вже знайшов помічників"),
-            url=f"/help/{help_request.id}",
+            response.helper,
+            NotificationType.HELP_RESPONSE_ACCEPTED,
+            title=_("✅ Вашу допомогу прийнято"),
+            body=_("Напишіть людині, щоб домовитися про деталі"),
+            url=f"/chats/{conversation.id}",
             help_request=help_request,
-            push=False,
+            data={"help_request_id": str(help_request.id), "conversation_id": str(conversation.id)},
         )
+    for other in rejected:
+        with in_language_of(other.helper):
+            notify(
+                other.helper,
+                NotificationType.HELP_RESPONSE_REJECTED,
+                title=_("Дякуємо за готовність допомогти"),
+                body=_("Автор запиту вже знайшов помічників"),
+                url=f"/help/{help_request.id}",
+                help_request=help_request,
+                push=False,
+            )
     analytics.track(
         user_id=help_request.author_id,
         event="help_response_accepted",
@@ -267,16 +275,17 @@ def counter_offer(author: User, response_id, amount) -> HelpResponse:
         raise ValidationFailed(details={"amount": [_("Вкажіть суму, яку пропонуєте.")]})
     response.author_counter_amount = amount
     response.save(update_fields=["author_counter_amount", "updated_at"])
-    notify(
-        response.helper,
-        NotificationType.HELP_RESPONSE_RECEIVED,
-        title=_("💬 Автор пропонує іншу суму"),
-        body=_("Автор запиту пропонує {amount}. Погодитися чи відмовитися?").format(
-            amount=format_money(amount, help_request.reward_currency)
-        ),
-        url=f"/help/{help_request.id}",
-        help_request=help_request,
-    )
+    with in_language_of(response.helper):
+        notify(
+            response.helper,
+            NotificationType.HELP_RESPONSE_RECEIVED,
+            title=_("💬 Автор пропонує іншу суму"),
+            body=_("Автор запиту пропонує {amount}. Погодитися чи відмовитися?").format(
+                amount=format_money(amount, help_request.reward_currency)
+            ),
+            url=f"/help/{help_request.id}",
+            help_request=help_request,
+        )
     return response
 
 
@@ -294,14 +303,15 @@ def answer_counter_offer(helper: User, response_id, accept: bool):
     if not accept:
         response.status = ResponseStatus.CANCELLED
         response.save(update_fields=["status", "updated_at"])
-        notify(
-            help_request.author,
-            NotificationType.HELP_RESPONSE_RECEIVED,
-            title=_("Помічник не погодився на суму"),
-            body=_("{name} відмовився(-лась) від вашої пропозиції").format(name=_display_name(helper)),
-            url=f"/help/{help_request.id}",
-            help_request=help_request,
-        )
+        with in_language_of(help_request.author):
+            notify(
+                help_request.author,
+                NotificationType.HELP_RESPONSE_RECEIVED,
+                title=_("Помічник не погодився на суму"),
+                body=_("{name} відмовився(-лась) від вашої пропозиції").format(name=_display_name(helper)),
+                url=f"/help/{help_request.id}",
+                help_request=help_request,
+            )
         return response, None
     conversation = _accept_response(
         help_request, response, agreed_type=OfferType.COUNTER, agreed_amount=response.author_counter_amount
@@ -324,15 +334,16 @@ def reject_response(author: User, response_id) -> HelpResponse:
         raise InvalidState(_("Ця пропозиція вже неактивна."), code="RESPONSE_NOT_PENDING")
     response.status = ResponseStatus.REJECTED
     response.save(update_fields=["status", "updated_at"])
-    notify(
-        response.helper,
-        NotificationType.HELP_RESPONSE_REJECTED,
-        title=_("Дякуємо за готовність допомогти"),
-        body=_("Цього разу автор обрав інший варіант"),
-        url=f"/help/{response.help_request_id}",
-        help_request=response.help_request,
-        push=False,
-    )
+    with in_language_of(response.helper):
+        notify(
+            response.helper,
+            NotificationType.HELP_RESPONSE_REJECTED,
+            title=_("Дякуємо за готовність допомогти"),
+            body=_("Цього разу автор обрав інший варіант"),
+            url=f"/help/{response.help_request_id}",
+            help_request=response.help_request,
+            push=False,
+        )
     return response
 
 
@@ -369,14 +380,15 @@ def cancel_response(helper: User, response_id) -> HelpResponse:
             fields += ["selected_helper", "agreed_offer_type", "agreed_amount"]
         help_request.save(update_fields=fields)
         close_conversations(help_request, helper)
-        notify(
-            help_request.author,
-            NotificationType.HELP_RESPONSE_RECEIVED,
-            title=_("Помічник не зможе допомогти"),
-            body=_("Ваш запит знову активний — інші люди поруч можуть відгукнутися"),
-            url=f"/help/{help_request.id}",
-            help_request=help_request,
-        )
+        with in_language_of(help_request.author):
+            notify(
+                help_request.author,
+                NotificationType.HELP_RESPONSE_RECEIVED,
+                title=_("Помічник не зможе допомогти"),
+                body=_("Ваш запит знову активний — інші люди поруч можуть відгукнутися"),
+                url=f"/help/{help_request.id}",
+                help_request=help_request,
+            )
     return response
 
 
