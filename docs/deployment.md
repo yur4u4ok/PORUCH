@@ -11,9 +11,9 @@
 
 ## Поточний production
 
-* Сервер Hetzner (Ubuntu), домен `poruch-app.duckdns.org`, код у `/opt/poruch`.
+* Сервер Hetzner (Ubuntu), домен `poruch-app.online`, код у `/opt/poruch`.
 * HTTPS — контейнер Caddy (Let's Encrypt, автопродовження), далі Nginx фронтенду → Django.
-* Фото — Cloudflare R2 (завантаження через presigned PUT: R2 не підтримує presigned POST). CORS bucket'а дозволяє `https://poruch-app.duckdns.org`.
+* Фото — Cloudflare R2 (завантаження через presigned PUT: R2 не підтримує presigned POST). CORS bucket'а дозволяє `https://poruch-app.online`.
 * Налаштування — лише на сервері: `/opt/poruch/.env.production` (права 600, у git не потрапляє).
 * Оновлення: `scripts/deploy.sh` (копіює код, збирає образи, міграції, перезапуск, перевірка здоров'я).
 * Файрвол ufw: відкриті лише 22, 80, 443.

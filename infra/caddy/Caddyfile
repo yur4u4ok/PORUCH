@@ -3,3 +3,8 @@
 	encode zstd gzip
 	reverse_proxy frontend:80
 }
+
+# www. → the main address, so both spellings work and links stay canonical.
+www.{$DOMAIN} {
+	redir https://{$DOMAIN}{uri} permanent
+}

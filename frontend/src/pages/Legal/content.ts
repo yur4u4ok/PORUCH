@@ -28,7 +28,7 @@ const privacy: Record<Lang, LegalDoc> = {
     sections: [
       {
         title: "1. Хто відповідає за ваші дані",
-        body: [`Сервіс Poruch (poruch-app.duckdns.org). З питань щодо даних пишіть на ${LEGAL_CONTACT}.`],
+        body: [`Сервіс Poruch (poruch-app.online). З питань щодо даних пишіть на ${LEGAL_CONTACT}.`],
       },
       {
         title: "2. Які дані ми збираємо",
@@ -134,9 +134,7 @@ const privacy: Record<Lang, LegalDoc> = {
     sections: [
       {
         title: "1. Who is responsible for your data",
-        body: [
-          `The Poruch service (poruch-app.duckdns.org). For any data questions, write to ${LEGAL_CONTACT}.`,
-        ],
+        body: [`The Poruch service (poruch-app.online). For any data questions, write to ${LEGAL_CONTACT}.`],
       },
       {
         title: "2. What we collect",
