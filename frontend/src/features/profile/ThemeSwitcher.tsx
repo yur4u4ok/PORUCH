@@ -32,7 +32,7 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      className={styles.compact}
+      className={`${styles.compact} ${styles.toggle}`}
       onClick={() => setTheme(dark ? "light" : "dark")}
       aria-label={dark ? t("settings.themeLight") : t("settings.themeDark")}
       title={dark ? t("settings.themeLight") : t("settings.themeDark")}
