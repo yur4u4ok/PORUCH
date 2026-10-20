@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import type { HTMLAttributes, ReactNode } from "react";
+import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
@@ -193,6 +194,8 @@ export function ErrorState({ message, onRetry }: { message?: string; onRetry?: (
 
 export function Loader({ label }: { label?: string }) {
   const { t } = useTranslation();
+  // own gradient id per loader: a shared id breaks every other loader's fill once one unmounts
+  const gradient = `loader-pin-${useId().replace(/:/g, "")}`;
   return (
     <div className={styles.loader} role="status" aria-label={label ?? t("common.loading")}>
       {/* The logo's pin hops over its shadow while the heart inside beats. */}
@@ -200,14 +203,14 @@ export function Loader({ label }: { label?: string }) {
         <svg viewBox="0 0 512 512" className={styles.loaderPin}>
           {/* same green gradient as the logo (public/icons/favicon.svg) */}
           <defs>
-            <linearGradient id="loader-pin" x1="0.2" y1="0" x2="0.8" y2="1">
+            <linearGradient id={gradient} x1="0.2" y1="0" x2="0.8" y2="1">
               <stop offset="0" stopColor="#22C55E" />
               <stop offset="1" stopColor="#15803D" />
             </linearGradient>
           </defs>
           <path
             d="M256 20c-94 0-170 74-170 168 0 128 136 250 160 282a13 13 0 0 0 20 0c24-32 160-154 160-282 0-94-76-168-170-168z"
-            fill="url(#loader-pin)"
+            fill={`url(#${gradient})`}
           />
           <path
             className={styles.loaderHeart}
