@@ -67,14 +67,14 @@ export function seo(siteUrl: string): Plugin {
     <meta property="og:url" content="${site}/" />
     <meta property="og:title" content="${esc(title)}" />
     <meta property="og:description" content="${esc(description)}" />
-    <meta property="og:image" content="${site}/og-image.png" />
+    <meta property="og:image" content="${site}/og-image.png?v=2" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Poruch — допомога від людей поруч" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${esc(title)}" />
     <meta name="twitter:description" content="${esc(description)}" />
-    <meta name="twitter:image" content="${site}/og-image.png" />
+    <meta name="twitter:image" content="${site}/og-image.png?v=2" />
     <script type="application/ld+json">${JSON.stringify({
       "@context": "https://schema.org",
       "@type": "WebApplication",
