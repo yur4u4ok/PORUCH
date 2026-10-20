@@ -100,7 +100,9 @@ select.control {
   border: 0;
   border-radius: var(--radius-md);
   background: none;
-  font-size: 20px;
+  display: grid;
+  place-items: center;
+  color: var(--color-text-muted);
   cursor: pointer;
 }
 .reveal:hover {

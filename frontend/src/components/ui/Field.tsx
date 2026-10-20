@@ -79,7 +79,22 @@ export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputE
               aria-controls={inputId}
               onClick={() => setVisible((v) => !v)}
             >
-              {visible ? "🙈" : "👁"}
+              {/* line icons like the rest of the app: open eye shows, crossed eye hides */}
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                aria-hidden
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" />
+                <circle cx="12" cy="12" r="3" />
+                {visible && <path d="M4 4l16 16" />}
+              </svg>
             </button>
           </div>
         ) : (
