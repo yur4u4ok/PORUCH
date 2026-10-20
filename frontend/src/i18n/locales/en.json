@@ -70,12 +70,12 @@
     "try": "Try it",
     "join": "Join",
     "login": "Log in",
-    "how": "How it works",
+    "how": "From request to help",
     "step1": "Describe what happened — it takes a minute",
     "step2": "People nearby get notified",
     "step3": "Someone responds — agree on details in chat",
     "step4": "Say thanks after you're helped ❤️",
-    "notMarketplace": "Not a service marketplace — a mutual-aid community.",
+    "notMarketplace": "Not a service marketplace — a mutual-aid community",
     "trustTitle": "Why it's safe here",
     "trust": [
       "Your exact address is hidden. Only people who agreed to help can see it.",
@@ -91,7 +91,13 @@
     "example3": "Help with chores or walk a dog",
     "askCta": "Ask for help",
     "nearbyCta": "Find requests nearby",
-    "haveAccount": "Already have an account?"
+    "haveAccount": "Already have an account?",
+    "stepLabel": "Step {{n}}",
+    "lookTitle": "Our space",
+    "shot_nearby": "Requests nearby — as a list and on the map",
+    "shot_request": "A request: what happened and where",
+    "shot_chat": "Agree on details in the chat",
+    "communityBadge": "Mutual-aid community"
   },
   "auth": {
     "loginTitle": "Log in",

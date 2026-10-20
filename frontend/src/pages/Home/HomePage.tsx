@@ -10,7 +10,6 @@ import { HelpRequestCard } from "@/features/help/components";
 import { useGeolocation } from "@/features/location/useGeolocation";
 import { useSyncNotificationLocation } from "@/features/location/useSyncNotificationLocation";
 import { useUnreadCount } from "@/features/notifications/hooks";
-import { InstallCard } from "@/features/pwa/InstallPrompt";
 import { HISTORY_SORTS, useListFilter } from "@/hooks/useListFilter";
 import { PAGE_SIZE, usePagedList } from "@/hooks/usePagedList";
 import type { Category } from "@/types/api";
@@ -175,7 +174,6 @@ export default function HomePage() {
       <Greeting />
       <AskNotice />
       <NearbyLink />
-      <InstallCard />
       <MyActiveHelp />
       <NotificationLocationSync />
     </main>

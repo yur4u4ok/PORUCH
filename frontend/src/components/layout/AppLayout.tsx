@@ -8,7 +8,6 @@ import { NavLink, Outlet, useNavigate, useSearchParams } from "react-router";
 import { IconButton } from "@/components/ui";
 import { useLogoutConfirm } from "@/features/auth/LogoutConfirm";
 import { AttentionSignals } from "@/features/attention/AttentionSignals";
-import { InstallPrompt } from "@/features/pwa/InstallPrompt";
 import { LanguageSync } from "@/features/profile/LanguageSync";
 
 import { BrandMark } from "./BrandMark";
@@ -92,7 +91,6 @@ export function AppLayout() {
       <LanguageSync />
       <PullToRefresh />
       <AttentionSignals unread={unread + chatBadge} />
-      <InstallPrompt />
       <nav className={styles.sidebar} aria-label={BRAND}>
         <NavLink to="/" className={styles.brand}>
           <BrandMark inverse />

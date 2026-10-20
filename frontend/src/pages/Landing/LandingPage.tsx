@@ -3,10 +3,8 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router";
 
 import { BrandMark } from "@/components/layout/BrandMark";
-import { InstallCard } from "@/features/pwa/InstallPrompt";
 import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
 import { ThemeToggle } from "@/features/profile/ThemeSwitcher";
-import { applyTheme, useThemeStore } from "@/stores/themeStore";
 import { rememberAfterAuth } from "@/utils/afterAuth";
 import { track } from "@/utils/analytics";
 
@@ -17,6 +15,10 @@ import styles from "./LandingPage.module.css";
  * Poruch is, with three concrete examples; under it the two ways in. Both lead through sign-up
  * and come back to the chosen action afterwards (utils/afterAuth).
  */
+const TRUST_ICONS = ["📍", "✅", "💚", "🛡️"];
+// screenshots of the app itself, taken on a phone in the light theme
+const SHOTS = ["nearby", "request", "chat"] as const;
+
 const EXAMPLES = [
   { key: "example1", icon: "🔧" },
   { key: "example2", icon: "📦" },
@@ -24,14 +26,6 @@ const EXAMPLES = [
 ] as const;
 
 export default function LandingPage() {
-  // The landing is dark unless the person picked a theme; the app itself follows the system.
-  const theme = useThemeStore((s) => s.theme);
-  useEffect(() => {
-    if (theme === "system") applyTheme("dark");
-  }, [theme]);
-  // Leaving the landing: back to whatever the person chose (or the system theme). Only on unmount —
-  // resetting on every theme change would undo a fresh choice and make the toggle need two taps.
-  useEffect(() => () => applyTheme(useThemeStore.getState().theme), []);
   const { t } = useTranslation();
   const navigate = useNavigate();
   useEffect(() => track("landing_view", "landing"), []);
@@ -47,17 +41,38 @@ export default function LandingPage() {
       <header className={styles.top}>
         <BrandMark />
         <div className={styles.topControls}>
-          <ThemeToggle fallback="dark" />
+          <ThemeToggle />
           <LanguageSwitcher compact />
         </div>
       </header>
 
+      <p className={styles.badge}>
+        <span className={styles.badgeIcon} aria-hidden>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="9" cy="8" r="3.2" />
+            <path d="M3.5 19c.6-3 2.8-4.8 5.5-4.8s4.9 1.8 5.5 4.8" />
+            <circle cx="16.5" cy="9" r="2.6" />
+            <path d="M16 14.3c2.3.1 4 1.6 4.5 4.2" />
+          </svg>
+        </span>
+        {t("landing.communityBadge")}
+      </p>
+
       <div className={styles.hero}>
         <section className={`${styles.paper} ${styles.ask}`} aria-labelledby="hero-title">
           <span className={styles.tape} aria-hidden />
-          <h1 id="hero-title" className={styles.paperTitle}>
+          <h2 id="hero-title" className={styles.paperTitle}>
             {t("landing.heroTitle")}
-          </h1>
+          </h2>
           <p>{t("landing.heroText")}</p>
           <ul className={styles.examples} aria-label={t("landing.examplesLabel")}>
             {EXAMPLES.map(({ key, icon }) => (
@@ -87,32 +102,58 @@ export default function LandingPage() {
           <p className={styles.signIn}>
             {t("landing.haveAccount")} <Link to="/auth/login">{t("landing.login")}</Link>
           </p>
-          <p className={styles.free}>{t("landing.notMarketplace")}</p>
         </div>
       </div>
 
-      <InstallCard />
+      <section className={styles.section} aria-labelledby="how-title">
+        <h2 id="how-title" className={styles.sectionTitle}>
+          {t("landing.how")}
+        </h2>
+        <ol className={styles.cards}>
+          {steps.map((key, i) => (
+            <li key={key} className={styles.card}>
+              <span className={styles.stepNo}>{t("landing.stepLabel", { n: i + 1 })}</span>
+              {t(`landing.${key}`)}
+            </li>
+          ))}
+        </ol>
+      </section>
 
-      {/* closed by default: the welcome screen stays short, details are a tap away */}
-      <div className={styles.blocks}>
-        <details className={styles.block}>
-          <summary className={styles.blockTitle}>{t("landing.how")}</summary>
-          <ol className={styles.steps}>
-            {steps.map((key) => (
-              <li key={key}>{t(`landing.${key}`)}</li>
-            ))}
-          </ol>
-        </details>
+      <section className={styles.section} aria-labelledby="look-title">
+        <h2 id="look-title" className={styles.sectionTitle}>
+          {t("landing.lookTitle")}
+        </h2>
+        <div className={styles.shots}>
+          {SHOTS.map((key) => (
+            <figure key={key} className={styles.shot}>
+              <img
+                src={`/landing/${key}.webp`}
+                alt={t(`landing.shot_${key}`)}
+                width={520}
+                height={1125}
+                loading="lazy"
+              />
+              <figcaption>{t(`landing.shot_${key}`)}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
 
-        <details className={styles.block}>
-          <summary className={styles.blockTitle}>{t("landing.trustTitle")}</summary>
-          <ul className={styles.trust}>
-            {(t("landing.trust", { returnObjects: true }) as string[]).map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </details>
-      </div>
+      <section className={styles.section} aria-labelledby="trust-title">
+        <h2 id="trust-title" className={styles.sectionTitle}>
+          {t("landing.trustTitle")}
+        </h2>
+        <ul className={styles.cards}>
+          {(t("landing.trust", { returnObjects: true }) as string[]).map((item, i) => (
+            <li key={item} className={styles.card}>
+              <span className={styles.trustIcon} aria-hidden>
+                {TRUST_ICONS[i]}
+              </span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <footer className={styles.footer}>
         <Link to="/privacy">{t("legal.privacy")}</Link>

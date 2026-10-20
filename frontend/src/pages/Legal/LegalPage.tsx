@@ -28,7 +28,7 @@ export default function LegalPage({ kind }: { kind: LegalKind }) {
 
   return (
     <main className={styles.page}>
-      <div className="row-between">
+      <div className="row-between top-rule">
         <Link to="/" aria-label={BRAND} style={{ textDecoration: "none" }}>
           <BrandMark />
         </Link>

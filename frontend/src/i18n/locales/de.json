@@ -70,12 +70,12 @@
     "try": "Ausprobieren",
     "join": "Mitmachen",
     "login": "Anmelden",
-    "how": "So funktioniert's",
+    "how": "Von der Anfrage zur Hilfe",
     "step1": "Beschreibe, was passiert ist – das dauert eine Minute",
     "step2": "Menschen in der Nähe werden benachrichtigt",
     "step3": "Jemand meldet sich – Details klärt ihr im Chat",
     "step4": "Bedanke dich, wenn dir geholfen wurde ❤️",
-    "notMarketplace": "Kein Dienstleistungsportal, sondern eine Gemeinschaft gegenseitiger Hilfe.",
+    "notMarketplace": "Kein Dienstleistungsportal, sondern eine Gemeinschaft gegenseitiger Hilfe",
     "trustTitle": "Warum es hier sicher ist",
     "trust": [
       "Deine genaue Adresse bleibt verborgen. Nur wer zugesagt hat zu helfen, kann sie sehen.",
@@ -91,7 +91,13 @@
     "example3": "Im Haushalt helfen oder mit dem Hund rausgehen",
     "askCta": "Um Hilfe bitten",
     "nearbyCta": "Anfragen in der Nähe finden",
-    "haveAccount": "Schon ein Konto?"
+    "haveAccount": "Schon ein Konto?",
+    "stepLabel": "Schritt {{n}}",
+    "lookTitle": "Unser Raum",
+    "shot_nearby": "Anfragen in der Nähe – als Liste und auf der Karte",
+    "shot_request": "Eine Anfrage: was passiert ist und wo",
+    "shot_chat": "Absprechen im Chat",
+    "communityBadge": "Gemeinschaft gegenseitiger Hilfe"
   },
   "auth": {
     "loginTitle": "Anmelden",

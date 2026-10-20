@@ -70,12 +70,12 @@
     "try": "Experimentar",
     "join": "Aderir",
     "login": "Entrar",
-    "how": "Como funciona",
+    "how": "Do pedido à ajuda",
     "step1": "Descreva o que aconteceu: leva um minuto",
     "step2": "As pessoas perto recebem um aviso",
     "step3": "Alguém responde e combinam os detalhes na conversa",
     "step4": "Agradeça depois de ser ajudado ❤️",
-    "notMarketplace": "Não é um serviço, é uma comunidade de ajuda mútua.",
+    "notMarketplace": "Não é um serviço, é uma comunidade de ajuda mútua",
     "trustTitle": "Porque é seguro",
     "trust": [
       "A sua morada exata fica escondida. Só a vê quem aceitou ajudar.",
@@ -91,7 +91,13 @@
     "example3": "Ajudar nas tarefas de casa ou passear um cão",
     "askCta": "Pedir ajuda",
     "nearbyCta": "Encontrar pedidos por perto",
-    "haveAccount": "Já tem conta?"
+    "haveAccount": "Já tem conta?",
+    "stepLabel": "Passo {{n}}",
+    "lookTitle": "O nosso espaço",
+    "shot_nearby": "Pedidos por perto, em lista e no mapa",
+    "shot_request": "Um pedido: o que aconteceu e onde",
+    "shot_chat": "Combinem tudo no chat",
+    "communityBadge": "Comunidade de ajuda mútua"
   },
   "auth": {
     "loginTitle": "Entrar",

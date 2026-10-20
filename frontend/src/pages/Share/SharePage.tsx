@@ -41,7 +41,7 @@ export default function SharePage() {
   const data = preview.data;
   return (
     <main className={styles.authPage}>
-      <div className="row-between">
+      <div className="row-between top-rule">
         <Link to="/" aria-label={BRAND} style={{ textDecoration: "none" }}>
           <BrandMark />
         </Link>

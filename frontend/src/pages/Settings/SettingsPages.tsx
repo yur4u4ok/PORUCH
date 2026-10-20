@@ -24,7 +24,6 @@ import {
   useUpdatePreferences,
 } from "@/features/profile/hooks";
 import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
-import { InstallCard } from "@/features/pwa/InstallPrompt";
 import { RegionSettings } from "@/features/profile/RegionSettings";
 import { ThemeSwitcher } from "@/features/profile/ThemeSwitcher";
 import { toast } from "@/stores/toastStore";
@@ -36,7 +35,6 @@ export function SettingsPage() {
   return (
     <main className="page stack">
       <PageHeader title={t("settings.title")} />
-      <InstallCard />
       <Card className="stack-sm">
         <strong>{t("settings.language")}</strong>
         <LanguageSwitcher />

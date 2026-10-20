@@ -64,12 +64,12 @@
     "try": "试一试",
     "join": "加入",
     "login": "登录",
-    "how": "如何使用",
+    "how": "从请求到帮助",
     "step1": "说说发生了什么，一分钟就好",
     "step2": "附近的人会收到通知",
     "step3": "有人回应后，在聊天中商量细节",
     "step4": "得到帮助后说声谢谢 ❤️",
-    "notMarketplace": "这不是服务平台，而是互助社区。",
+    "notMarketplace": "这不是服务平台，而是互助社区",
     "trustTitle": "为什么这里安全",
     "trust": [
       "你的确切地址会被隐藏，只有答应帮忙的人才能看到。",
@@ -85,7 +85,13 @@
     "example3": "帮忙做家务或遛狗",
     "askCta": "寻求帮助",
     "nearbyCta": "查看附近的请求",
-    "haveAccount": "已有账号？"
+    "haveAccount": "已有账号？",
+    "stepLabel": "第 {{n}} 步",
+    "lookTitle": "我们的空间",
+    "shot_nearby": "附近的请求——列表和地图",
+    "shot_request": "请求：发生了什么、在哪里",
+    "shot_chat": "在聊天中约定",
+    "communityBadge": "互助社区"
   },
   "auth": {
     "loginTitle": "登录",

@@ -24,12 +24,11 @@ export function ThemeSwitcher() {
 }
 
 /** One tap between light and dark (for the signed-out start page, next to the language). */
-/** `fallback` is the look used while the person hasn't picked a theme (the landing is dark by default). */
-export function ThemeToggle({ fallback }: { fallback?: "light" | "dark" } = {}) {
+export function ThemeToggle() {
   const { t } = useTranslation();
   const theme = useThemeStore((s) => s.theme);
   const setTheme = useThemeStore((s) => s.setTheme);
-  const dark = (theme === "system" && fallback ? fallback : resolved(theme)) === "dark";
+  const dark = resolved(theme) === "dark";
   return (
     <button
       type="button"

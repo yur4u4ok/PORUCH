@@ -70,12 +70,12 @@
     "try": "Dene",
     "join": "Katıl",
     "login": "Giriş yap",
-    "how": "Nasıl çalışır",
+    "how": "Talepten yardıma",
     "step1": "Ne olduğunu anlat: bir dakika sürer",
     "step2": "Yakındaki insanlara bildirim gider",
     "step3": "Biri yanıt verir, ayrıntıları sohbette konuşursunuz",
     "step4": "Yardım aldıktan sonra teşekkür et ❤️",
-    "notMarketplace": "Bir hizmet platformu değil, bir dayanışma topluluğu.",
+    "notMarketplace": "Bir hizmet platformu değil, bir dayanışma topluluğu",
     "trustTitle": "Neden güvenli",
     "trust": [
       "Tam adresin gizli kalır. Onu yalnızca yardım etmeyi kabul edenler görür.",
@@ -91,7 +91,13 @@
     "example3": "Ev işlerine yardım etmek ya da köpek gezdirmek",
     "askCta": "Yardım iste",
     "nearbyCta": "Yakındaki talepleri bul",
-    "haveAccount": "Zaten hesabın var mı?"
+    "haveAccount": "Zaten hesabın var mı?",
+    "stepLabel": "Adım {{n}}",
+    "lookTitle": "Alanımız",
+    "shot_nearby": "Yakındaki talepler — liste ve haritada",
+    "shot_request": "Bir talep: ne oldu ve nerede",
+    "shot_chat": "Sohbette anlaşın",
+    "communityBadge": "Dayanışma topluluğu"
   },
   "auth": {
     "loginTitle": "Giriş yap",

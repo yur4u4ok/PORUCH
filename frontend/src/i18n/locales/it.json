@@ -70,12 +70,12 @@
     "try": "Prova",
     "join": "Unisciti",
     "login": "Accedi",
-    "how": "Come funziona",
+    "how": "Dalla richiesta all’aiuto",
     "step1": "Descrivi cosa è successo: ci vuole un minuto",
     "step2": "Le persone vicine ricevono un avviso",
     "step3": "Qualcuno risponde e vi accordate in chat",
     "step4": "Ringrazia quando ti hanno aiutato ❤️",
-    "notMarketplace": "Non un servizio, ma una comunità di aiuto reciproco.",
+    "notMarketplace": "Non un servizio, ma una comunità di aiuto reciproco",
     "trustTitle": "Perché è sicuro",
     "trust": [
       "Il tuo indirizzo esatto resta nascosto. Lo vede solo chi ha accettato di aiutarti.",
@@ -91,7 +91,13 @@
     "example3": "Aiutare in casa o portare fuori un cane",
     "askCta": "Chiedi aiuto",
     "nearbyCta": "Trova richieste vicine",
-    "haveAccount": "Hai già un account?"
+    "haveAccount": "Hai già un account?",
+    "stepLabel": "Passo {{n}}",
+    "lookTitle": "Il nostro spazio",
+    "shot_nearby": "Richieste vicine, in elenco e sulla mappa",
+    "shot_request": "Una richiesta: cosa è successo e dove",
+    "shot_chat": "Accordatevi in chat",
+    "communityBadge": "Comunità di aiuto reciproco"
   },
   "auth": {
     "loginTitle": "Accedi",

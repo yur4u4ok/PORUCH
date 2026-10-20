@@ -85,7 +85,12 @@ export function LoginPage() {
 
   return (
     <main className={styles.authPage}>
-      <Link to="/" aria-label={BRAND} style={{ textDecoration: "none" }}>
+      <Link
+        to="/"
+        aria-label={BRAND}
+        className="top-rule"
+        style={{ textDecoration: "none", display: "block" }}
+      >
         <BrandMark />
       </Link>
       <h1>{t("auth.loginTitle")}</h1>
@@ -148,7 +153,12 @@ export function RegisterPage() {
 
   return (
     <main className={styles.authPage}>
-      <Link to="/" aria-label={BRAND} style={{ textDecoration: "none" }}>
+      <Link
+        to="/"
+        aria-label={BRAND}
+        className="top-rule"
+        style={{ textDecoration: "none", display: "block" }}
+      >
         <BrandMark />
       </Link>
       <h1>{t("auth.registerTitle")}</h1>

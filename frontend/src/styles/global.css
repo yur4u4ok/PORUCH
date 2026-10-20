@@ -155,3 +155,9 @@ img {
     transition-duration: 1ms !important;
   }
 }
+
+/* the thin line under every screen's top bar (logo, title, back button) */
+.top-rule {
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}

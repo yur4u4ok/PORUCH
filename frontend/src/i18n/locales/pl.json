@@ -82,12 +82,12 @@
     "try": "Wypróbuj",
     "join": "Dołącz",
     "login": "Zaloguj się",
-    "how": "Jak to działa",
+    "how": "Od prośby do pomocy",
     "step1": "Opisz, co się stało – to zajmie minutę",
     "step2": "Ludzie w pobliżu dostają powiadomienie",
     "step3": "Ktoś odpowiada – szczegóły ustalacie na czacie",
     "step4": "Podziękuj, gdy ktoś ci pomoże ❤️",
-    "notMarketplace": "To nie serwis usług, ale społeczność wzajemnej pomocy.",
+    "notMarketplace": "To nie serwis usług, ale społeczność wzajemnej pomocy",
     "trustTitle": "Dlaczego tu jest bezpiecznie",
     "trust": [
       "Twój dokładny adres jest ukryty. Widzą go tylko osoby, które zgodziły się pomóc.",
@@ -103,7 +103,13 @@
     "example3": "Pomóc w domu lub wyprowadzić psa",
     "askCta": "Poproś o pomoc",
     "nearbyCta": "Znajdź prośby w pobliżu",
-    "haveAccount": "Masz już konto?"
+    "haveAccount": "Masz już konto?",
+    "stepLabel": "Krok {{n}}",
+    "lookTitle": "Nasza przestrzeń",
+    "shot_nearby": "Prośby w pobliżu — na liście i na mapie",
+    "shot_request": "Prośba: co się stało i gdzie",
+    "shot_chat": "Umówcie się na czacie",
+    "communityBadge": "Społeczność wzajemnej pomocy"
   },
   "auth": {
     "loginTitle": "Logowanie",

@@ -64,12 +64,12 @@
     "try": "써 보기",
     "join": "가입하기",
     "login": "로그인",
-    "how": "이용 방법",
+    "how": "요청에서 도움까지",
     "step1": "무슨 일인지 적어 주세요. 1분이면 됩니다",
     "step2": "근처 사람들에게 알림이 갑니다",
     "step3": "누군가 응답하면 채팅으로 자세한 내용을 정하세요",
     "step4": "도움을 받으면 고마움을 전하세요 ❤️",
-    "notMarketplace": "서비스가 아니라 서로 돕는 공동체예요.",
+    "notMarketplace": "서비스가 아니라 서로 돕는 공동체예요",
     "trustTitle": "안심할 수 있는 이유",
     "trust": [
       "정확한 주소는 숨겨집니다. 돕기로 한 사람만 볼 수 있어요.",
@@ -85,7 +85,13 @@
     "example3": "집안일 돕기 또는 강아지 산책",
     "askCta": "도움 요청하기",
     "nearbyCta": "근처 요청 찾기",
-    "haveAccount": "이미 계정이 있나요?"
+    "haveAccount": "이미 계정이 있나요?",
+    "stepLabel": "{{n}}단계",
+    "lookTitle": "우리의 공간",
+    "shot_nearby": "주변 요청 — 목록과 지도",
+    "shot_request": "요청: 무슨 일이 어디서",
+    "shot_chat": "채팅으로 약속하기",
+    "communityBadge": "서로 돕는 공동체"
   },
   "auth": {
     "loginTitle": "로그인",
