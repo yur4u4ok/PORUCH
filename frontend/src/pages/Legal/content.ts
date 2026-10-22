@@ -445,6 +445,21 @@ const deletion: Record<Lang, LegalDoc> = {
         ],
       },
       {
+        title: "Видалити лише частину даних",
+        body: [
+          "Акаунт можна залишити, а окремі дані прибрати самому:",
+          [
+            "фото профілю — «Профіль» → фото → «Видалити»;",
+            "ім'я, телефон та інші дані профілю — змінити чи очистити в «Профіль» → «Редагувати профіль»;",
+            "місце для статусу «Можу допомогти» — вимкніть статус, і місце видаляється;",
+            "сповіщення й push-підписки — вимкнути в «Налаштування» → «Сповіщення».",
+          ],
+          "Щоб видалити будь-які інші дані (окремі запити, повідомлення, фото), напишіть на " +
+            LEGAL_CONTACT +
+            " або через poruch-app.online/contact. Видалимо протягом 30 днів.",
+        ],
+      },
+      {
         title: "Немає доступу до акаунта?",
         body: [
           "Напишіть на " +
@@ -484,6 +499,21 @@ const deletion: Record<Lang, LegalDoc> = {
         body: [
           "Chats and requests other people took part in stay with them, but your name becomes «Deleted user», your messages and request texts are replaced with «deleted», and the request's place is blurred to about 1 km. Reviews you left for others stay without your name. Abuse reports are kept for community safety.",
           "Database backups are deleted automatically after 14 days.",
+        ],
+      },
+      {
+        title: "Delete only some of your data",
+        body: [
+          "You can keep the account and remove some data yourself:",
+          [
+            "profile photo — «Profile» → photo → «Delete»;",
+            "name, phone and other profile data — change or clear them in «Profile» → «Edit profile»;",
+            "the place for the «I can help» status — turn the status off and the place is deleted;",
+            "notifications and push subscriptions — turn them off in «Settings» → «Notifications».",
+          ],
+          "To delete any other data (single requests, messages, photos), write to " +
+            LEGAL_CONTACT +
+            " or use poruch-app.online/contact. We will do it within 30 days.",
         ],
       },
       {
