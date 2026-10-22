@@ -528,5 +528,110 @@ const deletion: Record<Lang, LegalDoc> = {
   },
 };
 
-export const LEGAL = { privacy, terms, deletion };
+const childSafety: Record<Lang, LegalDoc> = {
+  uk: {
+    title: "Стандарти безпеки дітей Poruch",
+    intro:
+      "Poruch (poruch-app.online і застосунок Poruch у Google Play) має нульову толерантність до сексуального насильства над дітьми та експлуатації дітей (CSAE), зокрема до матеріалів сексуального насильства над дітьми (CSAM).",
+    sections: [
+      {
+        title: "Що заборонено",
+        body: [
+          [
+            "будь-які матеріали сексуального насильства над дітьми (CSAM) — фото, відео, тексти, посилання;",
+            "грумінг: спроби встановити контакт із дитиною з метою сексуальної експлуатації;",
+            "сексуалізація неповнолітніх, торгівля дітьми, вимагання (секс-шантаж) і будь-яке сприяння таким діям;",
+            "використання запитів про допомогу, профілів чи чатів, щоб шукати контакт із дітьми.",
+          ],
+        ],
+      },
+      {
+        title: "Хто може користуватися Poruch",
+        body: [
+          "Poruch призначений лише для людей від 16 років (Умови використання, розділ «Обліковий запис»). Акаунти, про які відомо, що їх створила молодша дитина, ми видаляємо.",
+        ],
+      },
+      {
+        title: "Як повідомити",
+        body: [
+          [
+            "у застосунку: «Поскаржитися» на повідомлення в чаті, на профіль користувача або на запит → причина «Небезпечно» чи «Неприйнятний вміст»;",
+            "користувача можна одразу заблокувати — він більше не зможе вам писати;",
+            "без акаунта: сторінка підтримки poruch-app.online/contact або лист на " + LEGAL_CONTACT + ".",
+          ],
+          "Якщо дитина в безпосередній небезпеці — негайно телефонуйте до поліції (в Україні — 102) або на гарячу лінію Ла Страда-Україна 116 111.",
+        ],
+      },
+      {
+        title: "Що ми робимо",
+        body: [
+          [
+            "скарги, пов'язані з безпекою дітей, розглядаємо першочергово;",
+            "вміст негайно видаляємо, а акаунт порушника блокуємо назавжди;",
+            "про виявлені CSAM і випадки експлуатації дітей повідомляємо до кіберполіції України, у відповідні органи країни користувача та до NCMEC (CyberTipline), як вимагає закон;",
+            "зберігаємо потрібні дані лише в обсязі, який вимагають правоохоронні органи, і співпрацюємо з ними.",
+          ],
+        ],
+      },
+      {
+        title: "Контакт з питань безпеки дітей",
+        body: ["Відповідальна особа за безпеку дітей у Poruch відповідає на " + LEGAL_CONTACT + "."],
+      },
+    ],
+  },
+  en: {
+    title: "Poruch child safety standards",
+    intro:
+      "Poruch (poruch-app.online and the Poruch app on Google Play) has zero tolerance for child sexual abuse and exploitation (CSAE), including child sexual abuse material (CSAM).",
+    sections: [
+      {
+        title: "What is prohibited",
+        body: [
+          [
+            "any child sexual abuse material (CSAM) — photos, videos, texts, links;",
+            "grooming: trying to contact a child for sexual exploitation;",
+            "sexualising minors, child trafficking, sextortion and any help with such acts;",
+            "using help requests, profiles or chats to seek contact with children.",
+          ],
+        ],
+      },
+      {
+        title: "Who can use Poruch",
+        body: [
+          "Poruch is only for people aged 16 and over (Terms of use, «Account»). Accounts known to be created by a younger child are deleted.",
+        ],
+      },
+      {
+        title: "How to report",
+        body: [
+          [
+            "in the app: «Report» a chat message, a user profile or a request → reason «Dangerous» or «Inappropriate content»;",
+            "you can block the user at once — they will no longer be able to message you;",
+            "without an account: the support page poruch-app.online/contact or an email to " +
+              LEGAL_CONTACT +
+              ".",
+          ],
+          "If a child is in immediate danger, call the police right away (in Ukraine — 102; elsewhere — your local emergency number).",
+        ],
+      },
+      {
+        title: "What we do",
+        body: [
+          [
+            "child safety reports are handled first;",
+            "the content is removed at once and the offender's account is banned for good;",
+            "detected CSAM and child exploitation are reported to the Cyber Police of Ukraine, the relevant authorities of the user's country and NCMEC (CyberTipline), as the law requires;",
+            "we keep the necessary data only as far as law enforcement requires and cooperate with them.",
+          ],
+        ],
+      },
+      {
+        title: "Child safety contact",
+        body: ["The person responsible for child safety at Poruch answers at " + LEGAL_CONTACT + "."],
+      },
+    ],
+  },
+};
+
+export const LEGAL = { privacy, terms, deletion, childSafety };
 export type LegalKind = keyof typeof LEGAL;

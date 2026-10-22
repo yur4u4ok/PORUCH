@@ -96,6 +96,7 @@ export const router = createBrowserRouter([
       { path: "/terms", element: page(<LegalPage kind="terms" />) },
       // Public how-to for deleting an account (Google Play asks for this URL).
       { path: "/delete-account", element: page(<LegalPage kind="deletion" />) },
+      { path: "/child-safety", element: page(<LegalPage kind="childSafety" />) },
       // Public: support must be reachable without an account (e.g. can't sign in).
       { path: "/contact", element: page(<SupportPage />) },
       // Public: shared request links work without an account.
