@@ -23,7 +23,11 @@ export default defineConfig(({ mode }) => {
         filename: "sw.ts",
         registerType: "autoUpdate",
         injectRegister: false,
-        injectManifest: { globPatterns: ["**/*.{js,css,html,svg,png,woff2}"] },
+        injectManifest: {
+          globPatterns: ["**/*.{js,css,html,svg,png,woff2}"],
+          // readable worker: store checkers (PWABuilder) look for the "push" listener by its text
+          minify: false,
+        },
         devOptions: { enabled: true, type: "module", navigateFallback: "index.html" },
         includeAssets: [
           "favicon.ico",
@@ -37,6 +41,7 @@ export default defineConfig(({ mode }) => {
           short_name: "Poruch",
           description: "Попроси допомогу в людей поруч або допоможи сам.",
           lang: "uk",
+          dir: "ltr",
           start_url: "/",
           scope: "/",
           display: "standalone",
@@ -55,6 +60,51 @@ export default defineConfig(({ mode }) => {
             { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
             { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
             { src: "/icons/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+          ],
+          // shown in Chrome's install sheet; the same shots as on the landing
+          screenshots: [
+            {
+              src: "/landing/nearby.webp",
+              sizes: "520x1125",
+              type: "image/webp",
+              form_factor: "narrow",
+              label: "Запити поруч",
+            },
+            {
+              src: "/landing/request.webp",
+              sizes: "520x1125",
+              type: "image/webp",
+              form_factor: "narrow",
+              label: "Запит",
+            },
+            {
+              src: "/landing/chat.webp",
+              sizes: "520x1125",
+              type: "image/webp",
+              form_factor: "narrow",
+              label: "Чат",
+            },
+          ],
+          // long-press on the app icon
+          shortcuts: [
+            {
+              name: "Попросити про допомогу",
+              short_name: "Попросити",
+              url: "/help/create",
+              icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }],
+            },
+            {
+              name: "Запити поруч",
+              short_name: "Навколо",
+              url: "/nearby",
+              icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }],
+            },
+            {
+              name: "Чати",
+              short_name: "Чати",
+              url: "/chats",
+              icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }],
+            },
           ],
         },
       }),
