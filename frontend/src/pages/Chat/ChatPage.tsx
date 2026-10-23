@@ -325,12 +325,18 @@ export default function ChatPage() {
     window.setTimeout(() => el.classList.remove(styles.flash!), 1200);
   };
 
+  // a tap on the messages or the header (anything but the composer) puts the keyboard away
+  const hideKeyboard = () => {
+    if (document.activeElement === inputRef.current) inputRef.current?.blur();
+  };
+
   const onSubmit = () => {
     const value = text.trim();
     if (!value) return;
     sendText(value);
     setText("");
     notifyTyping(false);
+    inputRef.current?.focus();
   };
 
   const onType = (value: string) => {
@@ -388,7 +394,7 @@ export default function ChatPage() {
 
   return (
     <div className={styles.screen}>
-      <header className={styles.top}>
+      <header className={styles.top} onPointerDown={hideKeyboard}>
         <BackButton label={t("nav.back")} onClick={() => navigate("/chats")} />
         <Link to={other ? `/profile/${other.id}` : "#"}>
           <Avatar
@@ -418,7 +424,7 @@ export default function ChatPage() {
           {status === "offline" ? t("app.offline") : t("chat.reconnecting")}
         </div>
       )}
-      <div ref={listRef} className={styles.list} aria-live="polite">
+      <div ref={listRef} className={styles.list} aria-live="polite" onPointerDown={hideKeyboard}>
         {messages.hasNextPage && (
           <Button
             variant="ghost"
@@ -530,7 +536,15 @@ export default function ChatPage() {
               }
             }}
           />
-          <button type="submit" className={styles.send} aria-label={t("chat.send")} disabled={!text.trim()}>
+          <button
+            type="submit"
+            className={styles.send}
+            aria-label={t("chat.send")}
+            disabled={!text.trim()}
+            // keep the focus (and the phone keyboard) in the message field while sending
+            onPointerDown={(e) => e.preventDefault()}
+            onMouseDown={(e) => e.preventDefault()}
+          >
             ➤
           </button>
         </form>
