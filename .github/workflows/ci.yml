@@ -35,7 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install GDAL/GEOS/PROJ
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends gdal-bin libgdal-dev libgeos-dev libproj-dev
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends gdal-bin libgdal-dev libgeos-dev libproj-dev gettext
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -56,7 +56,7 @@ jobs:
       - name: OpenAPI schema
         run: python manage.py spectacular --validate --fail-on-warn --file /tmp/schema.yml
       - name: Tests
-        run: pytest --create-db
+        run: python manage.py compilemessages --ignore=.venv && pytest --create-db
 
   frontend:
     runs-on: ubuntu-24.04

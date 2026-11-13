@@ -20,6 +20,7 @@ auth_urlpatterns = [
 urlpatterns = [
     path("me/", views.MeView.as_view(), name="me"),
     path("me/deactivate/", views.DeactivateView.as_view(), name="me-deactivate"),
+    path("me/delete/", views.DeleteAccountView.as_view(), name="me-delete"),
     path("me/email/", views.EmailChangeView.as_view(), name="me-email"),
     path("me/password/", views.PasswordChangeView.as_view(), name="me-password"),
     path("me/capabilities/", views.MyCapabilitiesView.as_view(), name="me-capabilities"),

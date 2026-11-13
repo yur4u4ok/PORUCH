@@ -99,7 +99,11 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
   const unsafe = method !== "GET";
   if (unsafe) await ensureCsrf();
 
-  const headers: Record<string, string> = { Accept: "application/json" };
+  // The interface language (kept on <html lang>): server messages come back in it.
+  const headers: Record<string, string> = {
+    Accept: "application/json",
+    "Accept-Language": document.documentElement.lang || navigator.language,
+  };
   if (options.body !== undefined) headers["Content-Type"] = "application/json";
   if (unsafe) headers["X-CSRFToken"] = getCookie("csrftoken") ?? "";
 

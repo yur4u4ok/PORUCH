@@ -35,7 +35,7 @@ export default function NotificationsPage() {
           )
         }
       />
-      <PushToggle hideWhenActive />
+      <PushToggle />
       {query.isPending ? (
         <SkeletonList count={4} height={72} />
       ) : query.isError ? (

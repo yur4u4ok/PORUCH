@@ -16,7 +16,7 @@ export default function LegalPage({ kind }: { kind: LegalKind }) {
   // Legal texts exist in Ukrainian and English; every other language reads the English version.
   const lang = i18n.language === "uk" ? "uk" : "en";
   const doc = LEGAL[kind][lang];
-  const other: LegalKind = kind === "privacy" ? "terms" : "privacy";
+  const other: LegalKind = kind === "terms" ? "privacy" : "terms";
 
   useEffect(() => {
     const previous = document.title;
@@ -28,7 +28,7 @@ export default function LegalPage({ kind }: { kind: LegalKind }) {
 
   return (
     <main className={styles.page}>
-      <div className="row-between">
+      <div className="row-between top-rule">
         <Link to="/" aria-label={BRAND} style={{ textDecoration: "none" }}>
           <BrandMark />
         </Link>

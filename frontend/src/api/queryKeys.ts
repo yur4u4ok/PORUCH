@@ -10,6 +10,7 @@ export const queryKeys = {
   myCapabilities: ["me", "capabilities"] as const,
   profile: (id: string) => ["users", id] as const,
   thanks: (id: string) => ["users", id, "thanks"] as const,
+  reviews: (id: string) => ["users", id, "reviews"] as const,
   blocks: ["blocks"] as const,
   helpRequests: ["help-requests"] as const,
   nearby: (q: Omit<NearbyQuery, "page">) => ["help-requests", "nearby", q] as const,

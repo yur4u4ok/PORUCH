@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import type { TFunction } from "i18next";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
@@ -15,19 +16,34 @@ import type {
   Urgency,
 } from "@/types/api";
 import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
-import { formatDateTime, formatDistance, formatRadius, timeAgo } from "@/utils/format";
+import { formatDate, formatDistance, formatRadius, formatTime, timeAgo } from "@/utils/format";
 import { emergencyVars } from "@/utils/emergency";
 import { REWARD_TYPE_EMOJI, rewardSummary } from "@/utils/reward";
+
+import { urgencyText } from "@/utils/urgencyText";
 
 import styles from "./components.module.css";
 
 /** Solid, high-contrast labels: they must read on white cards and on the yellow notice alike. */
-export function UrgencyBadge({ urgency, neededAt }: { urgency: Urgency; neededAt?: string | null }) {
+export function UrgencyBadge({
+  urgency,
+  neededAt,
+  createdAt,
+}: {
+  urgency: Urgency;
+  neededAt?: string | null;
+  createdAt?: string | null;
+}) {
   const { t } = useTranslation();
   return (
     <span className={styles.pill} style={{ background: URGENCY_HEX[urgency] }}>
-      {URGENCY_EMOJI[urgency]}{" "}
-      {urgency === "SCHEDULED" && neededAt ? formatDateTime(neededAt) : t(`urgency.${urgency}`)}
+      {/* a coloured circle emoji vanishes on a pill of the same colour — draw a white dot instead */}
+      {urgency === "SCHEDULED" ? (
+        `${URGENCY_EMOJI[urgency]} `
+      ) : (
+        <span className={styles.pillDot} aria-hidden />
+      )}
+      {urgencyText(t, urgency, neededAt, createdAt)}
     </span>
   );
 }
@@ -50,6 +66,22 @@ export function StatusBadge({ status }: { status: HelpRequestStatus }) {
   );
 }
 
+/** «На коли»: the planned time for scheduled requests, otherwise what the urgency means in days. */
+function whenText(request: HelpRequest, t: TFunction): string {
+  const now = new Date();
+  const sameDay = (a: Date, b: Date) => a.toDateString() === b.toDateString();
+  if (request.urgency === "SCHEDULED" && request.needed_at) {
+    const at = new Date(request.needed_at);
+    const tomorrow = new Date(now);
+    tomorrow.setDate(now.getDate() + 1);
+    const time = formatTime(at);
+    if (sameDay(at, now)) return t("when.todayAt", { time });
+    if (sameDay(at, tomorrow)) return t("when.tomorrowAt", { time });
+    return t("when.dateAt", { date: formatDate(at), time });
+  }
+  return urgencyText(t, request.urgency, request.needed_at, request.created_at);
+}
+
 export function HelpRequestCard({
   request,
   showStatus = false,
@@ -70,28 +102,46 @@ export function HelpRequestCard({
           {requestEmoji(request.category, request.subcategory)}
         </div>
         <div className={styles.body}>
-          <div className={styles.title}>{request.title}</div>
-          <div className={styles.description}>{request.description}</div>
+          <span className={styles.age}>{timeAgo(request.created_at)}</span>
+          {/* title and description end where the time above them begins: an invisible copy of the
+              time takes exactly that width on the right */}
+          <div className={styles.textRow}>
+            <div className={styles.texts}>
+              <div className={styles.title}>{request.title}</div>
+              <div className={clsx(styles.description, showStatus && styles.descriptionShort)}>
+                {request.description}
+              </div>
+            </div>
+            <span className={styles.ageSpacer} aria-hidden>
+              {timeAgo(request.created_at)}
+            </span>
+          </div>
           <div className={styles.meta}>
             {showStatus ? (
-              <StatusBadge status={request.status} />
+              <>
+                <StatusBadge status={request.status} />
+                <span className={styles.when}>🗓 {whenText(request, t)}</span>
+              </>
             ) : (
-              <UrgencyBadge urgency={request.urgency} neededAt={request.needed_at} />
+              <UrgencyBadge
+                urgency={request.urgency}
+                neededAt={request.needed_at}
+                createdAt={request.created_at}
+              />
             )}
+            <span className={styles.reward}>
+              {request.reward_type === "WILLING"
+                ? `${REWARD_TYPE_EMOJI.WILLING} ${rewardSummary(request, t) || t("reward.WILLING")}`
+                : `${REWARD_TYPE_EMOJI[request.reward_type]} ${t(`reward.${request.reward_type}`)}`}
+            </span>
             {request.distance_m != null && (
               <span>📍 {t("common.fromYou", { distance: formatDistance(request.distance_m) })}</span>
             )}
-            <span>{timeAgo(request.created_at)}</span>
             {request.helpers_needed > 1 && (
               <span>
                 👥 {t("request.peopleStillNeeded", { count: request.helpers_needed - request.helpers_count })}
               </span>
             )}
-          </div>
-          <div className={styles.reward}>
-            {request.reward_type === "WILLING"
-              ? `${REWARD_TYPE_EMOJI.WILLING} ${[t("reward.WILLING"), rewardSummary(request, t)].filter(Boolean).join(": ")}`
-              : `${REWARD_TYPE_EMOJI[request.reward_type]} ${t(`reward.${request.reward_type}`)}`}
           </div>
         </div>
       </div>
@@ -180,22 +230,27 @@ export function OptionTiles<T extends string>({
   onChange,
 }: {
   value: T;
-  options: { value: T; icon: ReactNode; label: ReactNode }[];
+  /** `accent`: a colour shown as two corners (like on the request cards) instead of the icon. */
+  options: { value: T; icon?: ReactNode; label: ReactNode; accent?: string }[];
   onChange: (value: T) => void;
 }) {
   return (
-    <div className="stack-sm" role="radiogroup">
+    <div className={styles.optionGrid} role="radiogroup">
       {options.map((option) => (
         <button
           key={option.value}
           type="button"
           role="radio"
           aria-checked={value === option.value}
-          className={clsx(styles.tile, value === option.value && styles.tileActive)}
-          style={{ flexDirection: "row", alignItems: "center", minHeight: 64 }}
+          className={clsx(
+            styles.option,
+            option.accent && styles.optionAccent,
+            value === option.value && styles.tileActive,
+          )}
+          style={option.accent ? ({ "--urgency": option.accent } as CSSProperties) : undefined}
           onClick={() => onChange(option.value)}
         >
-          <span aria-hidden>{option.icon}</span>
+          {option.icon && <span aria-hidden>{option.icon}</span>}
           <span>{option.label}</span>
         </button>
       ))}

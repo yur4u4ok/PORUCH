@@ -12,6 +12,8 @@ EMAIL_TYPES = {
     NotificationType.REQUEST_COMPLETED,
     NotificationType.THANK_YOU_RECEIVED,
 }
+# About the author's own request and easy to miss: sent by email even when email notifications are off.
+ALWAYS_EMAIL_TYPES = {NotificationType.REQUEST_EXPIRING}
 
 
 def notify(
@@ -45,7 +47,8 @@ def notify(
     prefs = NotificationPreference.objects.filter(user=user).first()
     if push and (prefs is None or prefs.push_enabled):
         queue_push(notification)
-    if prefs and prefs.email_enabled and type in EMAIL_TYPES:
+    wants_email = prefs is not None and prefs.email_enabled and type in EMAIL_TYPES
+    if wants_email or (type in ALWAYS_EMAIL_TYPES and user.email_verified):
         from common.emails import send_service_email
 
         send_service_email(

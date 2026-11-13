@@ -28,6 +28,8 @@ export interface MeUpdate {
   custom_items?: string[];
   phone?: string;
   phone_region?: string;
+  /** Interface language: the server writes notifications and emails in it. */
+  language?: string;
 }
 
 export interface PreferencesUpdate {
@@ -51,6 +53,7 @@ export const usersApi = {
   me: () => request<Me>("/me/"),
   updateMe: (input: MeUpdate) => http.patch<Me>("/me/", input),
   deactivate: () => http.post<void>("/me/deactivate/"),
+  deleteAccount: (password?: string) => http.post<void>("/me/delete/", { password }),
   changePassword: (input: { current_password?: string; new_password: string }) =>
     http.post<Me>("/me/password/", input),
   changeEmail: (input: { email: string; password?: string }) => http.post<Me>("/me/email/", input),
@@ -74,6 +77,6 @@ export const usersApi = {
     help_request_id?: string;
     message_id?: string;
   }) => http.post<{ id: string }>("/reports/", input),
-  support: (input: { topic: SupportTopic; message: string; page?: string }) =>
+  support: (input: { topic: SupportTopic; message: string; page?: string; email?: string }) =>
     http.post<void>("/support/", input),
 };

@@ -1,0 +1,50 @@
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding-top: var(--space-1);
+}
+.group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.step,
+.num,
+.current {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 800;
+  cursor: pointer;
+}
+.step {
+  font-size: 18px;
+  line-height: 1;
+}
+.current {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+.step:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.step:focus-visible,
+.num:focus-visible,
+.current:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+.gap {
+  color: var(--color-text-muted);
+  padding: 0 2px;
+}

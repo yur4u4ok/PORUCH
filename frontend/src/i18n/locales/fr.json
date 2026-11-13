@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "Accueil",
-    "nearby": "À proximité",
-    "help": "Demander",
+    "nearby": "Autour",
+    "help": "Créer",
     "chats": "Messages",
     "profile": "Profil",
     "notifications": "Notifications",
@@ -42,7 +42,9 @@
     "selectNone": "Tout désélectionner",
     "less": "Moins",
     "more": "Plus",
-    "previous": "Précédent"
+    "previous": "Précédent",
+    "selectedOf": "{{count}} sur {{total}} sélectionnées",
+    "moreInfo": "Plus d'infos"
   },
   "time": {
     "justNow": "à l'instant",
@@ -68,19 +70,34 @@
     "try": "Essayer",
     "join": "Rejoindre",
     "login": "Se connecter",
-    "how": "Comment ça marche",
+    "how": "De la demande à l’aide",
     "step1": "Décrivez ce qui se passe : une minute suffit",
     "step2": "Les gens à proximité sont prévenus",
     "step3": "Quelqu'un répond, vous réglez les détails dans le chat",
     "step4": "Dites merci une fois aidé ❤️",
-    "notMarketplace": "Pas un service, mais une communauté d’entraide. Aidez les gens près de chez vous, sans paiement ni commission obligatoires.",
+    "notMarketplace": "Pas un service, mais une communauté d’entraide",
     "trustTitle": "Pourquoi c'est sûr",
     "trust": [
       "Votre adresse exacte est masquée. Seules les personnes qui ont accepté d'aider la voient.",
       "Chaque membre confirme son email, et les profils montrent l'aide réellement apportée et les remerciements reçus.",
       "Aucun paiement ni commission. La façon de remercier vous appartient.",
       "Signalez ou bloquez n'importe qui en un geste."
-    ]
+    ],
+    "heroTitle": "Besoin d'aide ? Quelqu'un près de chez vous peut aider.",
+    "heroText": "Trouvez des gens près de chez vous, demandez de l'aide ou aidez vos voisins.",
+    "examplesLabel": "Par exemple",
+    "example1": "Emprunter un outil",
+    "example2": "Aider à porter des affaires",
+    "example3": "Aider aux tâches ménagères ou promener un chien",
+    "askCta": "Demander de l'aide",
+    "nearbyCta": "Voir les demandes proches",
+    "haveAccount": "Déjà un compte ?",
+    "stepLabel": "Étape {{n}}",
+    "lookTitle": "Notre espace",
+    "shot_nearby": "Demandes à proximité, en liste et sur la carte",
+    "shot_request": "Une demande : ce qui se passe et où",
+    "shot_chat": "Mettez-vous d'accord dans le chat",
+    "communityBadge": "Communauté d’entraide"
   },
   "auth": {
     "loginTitle": "Connexion",
@@ -114,7 +131,7 @@
     "newPassword": "Nouveau mot de passe",
     "setPassword": "Enregistrer le mot de passe",
     "passwordChanged": "Mot de passe modifié. Vous pouvez vous connecter.",
-    "terms": "En vous inscrivant, vous vous engagez à aider en toute sécurité et avec respect.",
+    "terms": "En vous inscrivant, vous confirmez avoir au moins 16 ans et vous engagez à aider en toute sécurité et avec respect.",
     "googleFailed": "Connexion avec Google impossible. Réessayez.",
     "googleInactive": "Ce compte a été désactivé.",
     "checkSpam": "Vous ne voyez pas l'email ? Attendez une minute et vérifiez les dossiers Spam et Promotions. S'il y est, marquez-le « Non spam » pour que les suivants arrivent dans votre boîte de réception.",
@@ -170,7 +187,8 @@
     "findSomeone": "Voir qui a besoin d’aide →",
     "hello": "Bonjour, {{name}} !",
     "ask": "Demander de l’aide",
-    "orPick": "Ou choisissez tout de suite le sujet :"
+    "orPick": "Ou choisissez tout de suite le sujet :",
+    "myActivity": "Mon activité"
   },
   "availability": {
     "title": "Je peux aider maintenant",
@@ -299,7 +317,7 @@
     "descriptionPlaceholder": "Décrivez l'aide dont vous avez besoin. N'indiquez ni adresse exacte ni téléphone : vous pourrez les partager dans le chat.",
     "locationHint": "Déplacez le repère si besoin",
     "youAreHere": "📍 Vous êtes ici",
-    "locationPrivacy": "Seules les personnes qui répondent voient l'endroit exact. Les autres voient une distance approximative.",
+    "locationPrivacy": "Seules les personnes qui répondent voient l'endroit exact. Les autres voient une distance approximative. Déplacez le repère si besoin",
     "locating": "Recherche de votre position…",
     "locationError": "Impossible d'obtenir votre position. Déplacez le repère sur la carte à la main.",
     "useMyLocation": "Ma position actuelle",
@@ -323,7 +341,27 @@
     "helpersNeeded": "Combien de personnes sont nécessaires",
     "helpersNeededHint": "Quand ce nombre de personnes a accepté d'aider, la demande se ferme aux autres.",
     "activeHours": "Combien de temps la demande reste active",
-    "activeHoursHint": "Ensuite, elle se ferme automatiquement."
+    "activeHoursHint": "Ensuite, elle se ferme automatiquement.",
+    "locationManual": "Impossible de détecter votre position. Faites glisser le repère là où l'aide est nécessaire.",
+    "locationManualDenied": "L'accès à la position est désactivé. Faites glisser le repère là où l'aide est nécessaire ou autorisez la position dans le navigateur.",
+    "locationPickPrompt": "Faites glisser le repère pour indiquer le lieu",
+    "categoryLabel": "Catégorie",
+    "categoryPlaceholder": "Choisissez une catégorie",
+    "subcategoryLabel": "Précision (facultatif)",
+    "titlePlaceholders": {
+      "AUTO": "Par exemple : pneu crevé",
+      "HOME": "Par exemple : monter une armoire au 3e étage",
+      "ITEMS": "Par exemple : emprunter une perceuse pour une heure",
+      "ANIMALS": "Par exemple : sortir le chien ce soir",
+      "PEOPLE": "Par exemple : apporter les courses à mamie",
+      "DISTRICT": "Par exemple : ranger la cour",
+      "URGENT": "Par exemple : quelqu’un a fait un malaise dans la rue",
+      "OTHER": "Par exemple : aide avec un ordinateur portable"
+    },
+    "pickDate": "Choisir une date",
+    "leaveTitle": "Quitter la demande ?",
+    "leaveText": "Ce que vous avez saisi ne sera pas enregistré.",
+    "leaveConfirm": "Quitter"
   },
   "nearby": {
     "title": "Aide à proximité",
@@ -334,15 +372,17 @@
     "category": "Catégorie",
     "urgency": "Urgence",
     "all": "Toutes",
-    "emptyTitle": "Aucune demande à proximité pour le moment.",
-    "emptyText": "Cela ne veut pas dire que personne n'a besoin d'aide. Activez les notifications et nous vous préviendrons dès que quelqu'un à proximité en aura besoin.",
+    "emptyTitle": "Aucune demande pour l’instant.",
+    "emptyText": "Activez les notifications : nous vous préviendrons quand quelqu’un aura besoin d’aide.",
     "enableNotifications": "Activer les notifications",
     "needLocation": "Pour voir les demandes à proximité, autorisez la localisation.",
     "allowLocation": "Autoriser la localisation",
     "approximate": "Position approximative",
     "loadMore": "Voir plus",
     "useCityCenter": "Afficher près du centre : {{city}}",
-    "cityCenterNotice": "Demandes affichées près du centre-ville. Autorisez la localisation pour des distances plus précises."
+    "cityCenterNotice": "Demandes affichées près du centre-ville. Autorisez la localisation pour des distances plus précises.",
+    "selectAll": "Tout sélectionner",
+    "resetMap": "Ma position"
   },
   "request": {
     "canHelp": "Je peux aider",
@@ -428,12 +468,13 @@
     "iosHint": "Sur iPhone, ajoutez l'app à l'écran d'accueil (Partager → Sur l'écran d'accueil) pour recevoir les notifications.",
     "enabled": "Notifications push activées",
     "enable": "Activer les notifications push",
-    "disable": "Désactiver le push sur cet appareil"
+    "disable": "Désactiver le push sur cet appareil",
+    "enabledHint": "Les nouvelles demandes proches vous parviendront tout de suite. Désactivable dans les Réglages."
   },
   "profile": {
     "title": "Profil",
-    "helped": "🤝 A aidé : {{count}}",
-    "thanks": "❤️ Remerciements reçus : {{count}}",
+    "helped": "🤝 Aides : {{count}}",
+    "thanks": "❤️ Remerciements : {{count}}",
     "helpedShort": "🤝 {{count}} aides",
     "thanksShort": "❤️ {{count}} mercis",
     "canHelp": "Je peux aider pour :",
@@ -469,7 +510,13 @@
     "sendConfirmation": "Envoyer la confirmation",
     "emailSent": "E-mail envoyé à {{email}}. Ouvrez le lien qu’il contient.",
     "emailPending": "En attente de confirmation : {{email}}",
-    "contactsPrivacy": "Votre téléphone et votre e-mail ne sont visibles que par les aidants choisis et les auteurs qui vous choisissent."
+    "contactsPrivacy": "Votre téléphone et votre e-mail ne sont visibles que par les aidants choisis et les auteurs qui vous choisissent.",
+    "declinedTab": "J'ai proposé",
+    "noDeclined": "Ici apparaîtront les demandes où vous avez proposé votre aide",
+    "viewPhoto": "Ouvrir la photo : {{name}}",
+    "emailNotVerified": "E-mail non vérifié",
+    "editPhoto": "Modifier",
+    "deletePhoto": "Supprimer"
   },
   "settings": {
     "title": "Réglages",
@@ -528,7 +575,13 @@
     "currentPassword": "Mot de passe actuel",
     "newPassword": "Nouveau mot de passe",
     "passwordChanged": "Mot de passe modifié",
-    "passwordOtherDevices": "Vous devrez vous reconnecter sur vos autres appareils."
+    "passwordOtherDevices": "Vous devrez vous reconnecter sur vos autres appareils.",
+    "deleteAccount": "Supprimer le compte",
+    "deleteTitle": "Supprimer définitivement votre compte ?",
+    "deleteText": "Votre e-mail, téléphone, photos, notifications et réglages seront effacés. Dans les discussions et demandes auxquelles d’autres ont participé, votre nom deviendra « Utilisateur supprimé » et vos textes seront retirés. C’est irréversible.",
+    "deletePassword": "Saisissez votre mot de passe pour confirmer",
+    "deleteConfirm": "Supprimer définitivement",
+    "deleted": "Compte supprimé"
   },
   "report": {
     "title": "Signaler",
@@ -646,7 +699,8 @@
     "send": "Envoyer",
     "sent": "Message envoyé",
     "replyNote": "Nous répondrons à {{email}}.",
-    "another": "Écrire un autre message"
+    "another": "Écrire un autre message",
+    "yourEmail": "Votre e-mail pour la réponse"
   },
   "install": {
     "title": "Installez Poruch comme application",
@@ -660,9 +714,9 @@
     "howTo": "Comment l'installer :",
     "steps": {
       "ios": [
-        "Touchez Partager ⬆️, en bas ou dans le menu « ⋯ »",
-        "Choisissez « Sur l'écran d'accueil »",
-        "Touchez « Ajouter » : Poruch apparaît avec vos apps"
+        "Touchez « Partager <share></share> » dans le menu « <dots></dots> » en bas, à côté de la barre d’adresse",
+        "Choisissez « Plus <more></more> » puis touchez « <add></add> Sur l’écran d’accueil »",
+        "Touchez « Ajouter »"
       ],
       "ios-other-browser": [
         "Touchez Partager ⬆️ dans la barre d'adresse",
@@ -679,7 +733,7 @@
         "Confirmez : Poruch apparaît avec vos apps"
       ],
       "desktop": [
-        "Cliquez sur l'icône d'installation ⊕ dans la barre d'adresse (ou menu ⋮ → « Installer Poruch »)",
+        "Cliquez sur l’icône d’installation <install></install> dans la barre d’adresse (ou menu ⋮ → « Installer Poruch »)",
         "Confirmez l'installation"
       ]
     },
@@ -722,5 +776,54 @@
     "updated": "Version en vigueur : {{date}}",
     "englishOnly": "Ce document est disponible en ukrainien et en anglais",
     "agree": "Vous acceptez aussi les <terms>Conditions d'utilisation</terms> et la <privacy>Politique de confidentialité</privacy>."
+  },
+  "reviews": {
+    "rating": "Note",
+    "sent": "Merci pour votre avis !",
+    "title": "Avis sur {{name}}",
+    "submit": "Envoyer l'avis",
+    "placeholder": "Comment ça s'est passé ? (facultatif)",
+    "permanent": "L'avis apparaît sur son profil et ne peut plus être modifié ni supprimé.",
+    "leaveTitle": "Évaluez la collaboration",
+    "done": "Avis laissé",
+    "leave": "Laisser un avis",
+    "heading": "Avis",
+    "none": "Pas encore d'avis",
+    "count_one": "{{count}} avis",
+    "count_other": "{{count}} avis"
+  },
+  "edit": {
+    "button": "Modifier",
+    "title": "Modifier la demande",
+    "save": "Enregistrer",
+    "saved": "Modifications enregistrées",
+    "fixedFields": "La catégorie, le lieu et l'urgence ne peuvent pas changer : les voisins s'y fient déjà. Annulez la demande et créez-en une nouvelle."
+  },
+  "location": {
+    "rough": "Position approximative (±{{metres}}). Approchez-vous d'une fenêtre ou sortez, ou activez « Position exacte » dans les réglages du téléphone.",
+    "roughDrag": "Position approximative (±{{metres}}). Faites glisser le repère au bon endroit ou activez « Position exacte » dans les réglages du téléphone."
+  },
+  "when": {
+    "todayAt": "aujourd'hui à {{time}}",
+    "tomorrowAt": "demain à {{time}}",
+    "dateAt": "{{date}} à {{time}}",
+    "yesterday": "Hier"
+  },
+  "pager": {
+    "label": "Pages",
+    "previous": "Page précédente",
+    "next": "Page suivante"
+  },
+  "listTools": {
+    "search": "Rechercher",
+    "sort": "Trier",
+    "nothingFound": "Aucun résultat",
+    "sorts": {
+      "distance": "Les plus proches",
+      "newest": "Les plus récents",
+      "oldest": "Les plus anciens",
+      "urgency": "Les plus urgents",
+      "soon": "Par date d’aide"
+    }
   }
 }

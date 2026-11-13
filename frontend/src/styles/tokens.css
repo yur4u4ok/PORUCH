@@ -63,6 +63,7 @@
   --header-height: 56px;
   --sidebar-width: 248px;
   --content-max: 720px;
+  --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --transition: 160ms ease;
 }

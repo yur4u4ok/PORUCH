@@ -6,19 +6,24 @@
   flex: 1;
   min-width: 0;
 }
+/* Phones: a rounded bar floating above the bottom edge (like the sidebar on computers). */
 .bottomNav {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: var(--space-3);
+  right: var(--space-3);
+  bottom: calc(var(--space-2) + var(--safe-bottom));
   z-index: 50;
   display: flex;
   justify-content: space-around;
-  height: calc(var(--nav-height) + var(--safe-bottom));
-  padding-bottom: var(--safe-bottom);
-  background: color-mix(in srgb, var(--color-surface) 94%, transparent);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid var(--color-border);
+  height: var(--nav-height);
+  padding: 0 var(--space-1);
+  /* solid surface + a brand-tinted rim + a deeper shadow, so it lifts off any background */
+  border: 1.5px solid color-mix(in srgb, var(--color-primary) 35%, var(--color-border));
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow:
+    0 10px 30px rgb(10 40 36 / 0.22),
+    0 2px 6px rgb(10 40 36 / 0.12);
 }
 .navItem {
   position: relative;
@@ -47,13 +52,15 @@
   transition: background var(--transition);
 }
 /* The open tab: a tinted pill behind the icon, bold coloured label. */
+/* the active tab wears the logo's green */
 .navActive {
-  color: var(--color-primary);
+  color: #15803d;
   font-weight: 800;
 }
 .navActive .navIcon {
-  background: var(--color-primary-soft);
-  box-shadow: inset 0 0 0 1.5px var(--color-primary);
+  color: #fff;
+  background: linear-gradient(135deg, #22c55e, #15803d);
+  box-shadow: 0 2px 6px rgb(21 128 61 / 0.35);
 }
 .dot {
   position: absolute;
@@ -122,6 +129,10 @@
     font-weight: 600;
     color: rgb(255 255 255 / 0.78);
   }
+  /* an inline box around the svg would sit it on the text baseline, i.e. too high */
+  .sideIcon {
+    display: inline-flex;
+  }
   button.sideItem {
     border: 0;
     background: none;
@@ -133,9 +144,15 @@
   /* Pinned to the bottom of the sidebar, apart from the main sections. */
   .sideBottom {
     margin-top: auto;
+  }
+  /* the divider sits above the item, so its icon and label stay centred in the block */
+  .sideBottom::before {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--space-1));
+    left: 0;
+    right: 0;
     border-top: 1px solid rgb(255 255 255 / 0.14);
-    border-radius: 0 0 var(--radius-md) var(--radius-md);
-    padding-top: var(--space-2);
   }
   .sideItem:hover {
     background: rgb(255 255 255 / 0.1);
@@ -168,8 +185,10 @@
   align-items: center;
   gap: var(--space-2);
   min-height: var(--header-height);
-  margin: calc(var(--space-4) * -1) calc(var(--space-4) * -1) var(--space-2);
-  padding: 0 var(--space-2);
+  margin: calc(var(--space-4) * -1) calc(var(--space-4) * -1) var(--space-3);
+  /* room under the phone's status bar (and a notch, if any) */
+  padding: calc(var(--space-3) + var(--safe-top)) var(--space-2) var(--space-2);
+  border-bottom: 1px solid var(--color-border);
 }
 .headerTitle {
   flex: 1;
@@ -183,6 +202,18 @@
 @media (min-width: 1024px) {
   .header {
     margin: 0 0 var(--space-4);
-    padding: 0;
+    padding: 0 0 var(--space-3);
   }
+}
+
+/* «Back»: a visible round button, arrow centred in it */
+.back {
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+.back svg {
+  display: block;
+  margin-left: -2px; /* optical centre of a chevron */
 }

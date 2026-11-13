@@ -39,18 +39,14 @@ import { ShareButton } from "@/features/help/ShareButton";
 import { PersonRow } from "@/features/profile/PersonRow";
 import { useBlockUser } from "@/features/profile/hooks";
 import { useLocationStore } from "@/stores/locationStore";
+import { LeaveReviews } from "@/features/reviews/Reviews";
 import { toast } from "@/stores/toastStore";
 import type { Contact, HelpRequest, HelpResponse, OfferType } from "@/types/api";
 import { URGENCY_EMOJI, URGENCY_HEX, requestEmoji } from "@/utils/categories";
-import {
-  currencySymbol,
-  formatDateTime,
-  formatDistance,
-  formatMoney,
-  timeAgo,
-  timeLeft,
-} from "@/utils/format";
+import { currencySymbol, formatDistance, formatMoney, timeAgo, timeLeft } from "@/utils/format";
 import { agreedSummary, offerSummary, rewardSummary } from "@/utils/reward";
+
+import { urgencyText } from "@/utils/urgencyText";
 
 import styles from "./HelpRequest.module.css";
 
@@ -84,7 +80,7 @@ function ResponsesSection({ request }: { request: HelpRequest }) {
               <div
                 className={clsx(styles.offerTag, response.offer_type === "COUNTER" && styles.offerCounter)}
               >
-                💰 {offerSummary(response, request.reward_currency, t)}
+                💵 {offerSummary(response, request.reward_currency, t)}
               </div>
             )}
             {response.message && <p>«{response.message}»</p>}
@@ -291,6 +287,13 @@ function AuthorActions({ request }: { request: HelpRequest }) {
               ✓ {t("request.complete")}
             </Button>
           )}
+          {request.status === "ACTIVE" && (
+            <Link to={`/help/${request.id}/edit`}>
+              <Button variant="secondary" block>
+                ✏️ {t("edit.button")}
+              </Button>
+            </Link>
+          )}
           <Button variant="danger" onClick={() => setConfirm("cancel")}>
             {t("request.cancel")}
           </Button>
@@ -450,10 +453,7 @@ function HelperActions({ request }: { request: HelpRequest }) {
 
 /** Message sent with the link: a few short lines that read well in Telegram/Viber/WhatsApp. */
 function shareMessage(request: HelpRequest, t: TFunction): string {
-  const when =
-    request.urgency === "SCHEDULED" && request.needed_at
-      ? formatDateTime(request.needed_at)
-      : t(`urgency.${request.urgency}`);
+  const when = urgencyText(t, request.urgency, request.needed_at, request.created_at);
   const details = [
     request.place_name ? `📍 ${request.place_name}` : null,
     `${URGENCY_EMOJI[request.urgency]} ${when}`,
@@ -529,7 +529,11 @@ export default function HelpRequestPage() {
             <h1 style={{ fontSize: "var(--text-xl)" }}>{request.title}</h1>
             <div className={styles.meta}>
               <StatusBadge status={request.status} />
-              <UrgencyBadge urgency={request.urgency} neededAt={request.needed_at} />
+              <UrgencyBadge
+                urgency={request.urgency}
+                neededAt={request.needed_at}
+                createdAt={request.created_at}
+              />
               {request.distance_m != null && (
                 <span>📍 {t("common.fromYou", { distance: formatDistance(request.distance_m) })}</span>
               )}
@@ -641,6 +645,7 @@ export default function HelpRequestPage() {
       )}
 
       {request.is_author ? <AuthorActions request={request} /> : <HelperActions request={request} />}
+      <LeaveReviews request={request} />
 
       {request.share_url && <ShareButton url={request.share_url} text={shareMessage(request, t)} />}
 

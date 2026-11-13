@@ -24,6 +24,7 @@ function SessionEffects() {
 
   // Keep this device's push subscription registered for the signed-in user.
   useEffect(() => {
+    // Re-subscribes after signing in again (logout unsubscribes this device) and updates every screen.
     if (me?.email_verified) void syncPushSubscription().catch(() => undefined);
   }, [me?.id, me?.email_verified]);
 

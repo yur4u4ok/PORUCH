@@ -34,3 +34,5 @@ class SupportMessageSerializer(serializers.Serializer):
     topic = serializers.ChoiceField(choices=["QUESTION", "BUG", "IDEA", "SAFETY", "OTHER"])
     message = serializers.CharField(max_length=3000)
     page = serializers.CharField(max_length=200, required=False, allow_blank=True)
+    # Visitors who aren't signed in say where to answer them.
+    email = serializers.EmailField(required=False)

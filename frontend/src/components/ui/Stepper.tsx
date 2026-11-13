@@ -1,6 +1,7 @@
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
 
+import { InfoTip } from "./InfoTip";
 import styles from "./Stepper.module.css";
 
 /** − value + for small counts (e.g. how many people are needed). */
@@ -23,8 +24,9 @@ export function Stepper({
   const id = useId();
   return (
     <div className={styles.field}>
-      <span id={id} className={styles.label}>
-        {label}
+      <span className={styles.label}>
+        <span id={id}>{label}</span>
+        {hint && <InfoTip text={hint} />}
       </span>
       <div className={styles.row} role="group" aria-labelledby={id}>
         <button
@@ -49,7 +51,6 @@ export function Stepper({
           +
         </button>
       </div>
-      {hint && <p className={styles.hint}>{hint}</p>}
     </div>
   );
 }

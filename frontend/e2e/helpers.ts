@@ -21,7 +21,7 @@ export async function newUserContext(browser: Browser, offsetMeters = 0): Promis
   return context;
 }
 
-async function verificationLink(email: string): Promise<string> {
+export async function verificationLink(email: string): Promise<string> {
   for (let attempt = 0; attempt < 30; attempt++) {
     const res = await fetch(`${MAILPIT}/api/v1/search?query=${encodeURIComponent(`to:"${email}"`)}`);
     const data = (await res.json()) as { messages: { ID: string }[] };
@@ -38,13 +38,29 @@ async function verificationLink(email: string): Promise<string> {
   throw new Error(`No verification email for ${email}`);
 }
 
-export async function registerAndOnboard(page: Page, name: string, email: string) {
-  await page.goto("/auth/register");
+/**
+ * fromLanding: start as a guest on the landing, pick «Попросити про допомогу», and expect to land on
+ * the create-request form right after sign-up (the choice survives email confirmation).
+ */
+export async function registerAndOnboard(
+  page: Page,
+  name: string,
+  email: string,
+  { fromLanding = false }: { fromLanding?: boolean } = {},
+) {
+  if (fromLanding) {
+    await page.goto("/");
+    await expect(
+      page.getByRole("heading", { name: /Потрібна допомога\? Хтось поруч може допомогти/ }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Попросити про допомогу" }).click();
+    await expect(page).toHaveURL(/\/auth\/register/);
+  } else {
+    await page.goto("/auth/register");
+  }
   await page.getByLabel("Як до вас звертатися").fill(name);
   await page.getByLabel("Email").fill(email);
-  await page.getByLabel("Номер телефону").fill("+380 67 123 45 67");
   await page.getByLabel("Пароль", { exact: true }).fill(PASSWORD);
-  await page.getByRole("checkbox").check(); // «Мені виповнилося 16 років»
   await page.getByRole("button", { name: "Зареєструватися" }).click();
   await expect(page.getByRole("heading", { name: /Підтвердіть email/ })).toBeVisible();
 
@@ -61,5 +77,6 @@ export async function registerAndOnboard(page: Page, name: string, email: string
   await page.getByRole("button", { name: "Далі" }).click();
   await page.getByRole("button", { name: "Далі" }).click();
   await page.getByRole("button", { name: "Готово" }).click();
-  await expect(page.getByRole("link", { name: "Попросити допомогу" })).toBeVisible();
+  if (fromLanding) await expect(page).toHaveURL(/\/help\/create/);
+  else await expect(page.getByRole("link", { name: "Попросити допомогу" })).toBeVisible();
 }

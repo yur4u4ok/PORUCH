@@ -4,7 +4,7 @@
   height: 100dvh;
   max-width: var(--content-max);
   margin: 0 auto;
-  padding-bottom: calc(var(--nav-height) + var(--safe-bottom));
+  padding-bottom: calc(var(--nav-height) + var(--space-3) + var(--safe-bottom));
 }
 @media (min-width: 1024px) {
   .screen {
@@ -15,7 +15,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
+  padding: calc(var(--space-3) + var(--safe-top)) var(--space-3) var(--space-2);
   border-bottom: 1px solid var(--color-border);
   background: var(--color-surface);
 }
@@ -140,14 +140,37 @@
   border-color: var(--color-primary);
 }
 .attach {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  /* the hidden file input is taken out of the flow, so only the icon is centred */
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
   width: 44px;
   height: 44px;
+  border: 1.5px solid var(--color-border);
   border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
   cursor: pointer;
-  font-size: 20px;
+  transition:
+    color var(--transition),
+    border-color var(--transition);
+}
+.attach:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.attach > input {
+  position: absolute;
+}
+.attachBusy {
+  opacity: 0.4;
+  animation: attachSpin 1s linear infinite;
+}
+@keyframes attachSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 .send {
   width: 44px;
@@ -173,6 +196,8 @@
 .requestLink {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  line-height: 1;
   gap: var(--space-1);
   min-height: 40px;
   padding: 0 var(--space-3);
@@ -185,9 +210,16 @@
   text-decoration: none;
   white-space: nowrap;
 }
-.requestLink span {
-  font-size: 22px;
+/* emoji glyphs carry extra space below: a fixed square box keeps the icon and the word level */
+/* the emoji font draws the picture low and the text font draws letters high: meet in the middle */
+.requestIcon {
+  font-size: 16px;
   line-height: 1;
+  transform: translateY(-1px);
+}
+.requestText {
+  line-height: 1;
+  transform: translateY(1px);
 }
 /* A photo still uploading: dimmed, with a spinner and a label over it. */
 .uploading {
@@ -412,4 +444,21 @@
   .actionLabel {
     display: none;
   }
+}
+/* reply arrow that appears behind a bubble being dragged towards the middle */
+.swipeHint {
+  position: absolute;
+  top: 50%;
+  left: var(--space-2);
+  transform: translateY(-50%);
+  color: var(--color-primary);
+  font-size: 20px;
+  pointer-events: none;
+}
+.swipeHintMine {
+  left: auto;
+  right: var(--space-2);
+}
+.row {
+  touch-action: pan-y;
 }

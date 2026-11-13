@@ -10,7 +10,7 @@ import { enablePush } from "@/features/notifications/push";
 import { PushToggle } from "@/features/notifications/PushToggle";
 import { usePublicConfig, useUpdateMe, useUpdatePreferences } from "@/features/profile/hooks";
 import type { NotificationCategory } from "@/types/api";
-import { consumeAfterAuth } from "@/utils/afterAuth";
+import { consumeAfterAuth, peekAfterAuth } from "@/utils/afterAuth";
 
 import styles from "../Landing/Landing.module.css";
 
@@ -21,7 +21,7 @@ export default function OnboardingPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = (location.state as { from?: string } | null)?.from ?? "/";
+  const from = (location.state as { from?: string } | null)?.from ?? peekAfterAuth() ?? "/";
   const [step, setStep] = useState(1);
   const [categories, setCategories] = useState<NotificationCategory[]>(DEFAULT);
   const { position, status, locate } = useGeolocation();
@@ -70,7 +70,7 @@ export default function OnboardingPage() {
         <Card className="stack">
           <h2>🔔 {t("onboarding.notificationsTitle")}</h2>
           <p className="muted">{t("onboarding.notificationsText")}</p>
-          <PushToggle />
+          <PushToggle confirmWhenOn />
           <p className="muted" style={{ fontSize: 13 }}>
             ℹ️ {t("onboarding.changeLater")}
           </p>

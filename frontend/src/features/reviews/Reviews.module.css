@@ -1,0 +1,39 @@
+.stars {
+  color: #f5a623;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+.starsOff {
+  color: var(--color-border);
+}
+.summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.starInput {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-1);
+}
+.starOn,
+.starOff {
+  width: 48px;
+  height: 48px;
+  border: 0;
+  background: none;
+  font-size: 38px;
+  line-height: 1;
+  cursor: pointer;
+}
+.starOn {
+  color: #f5a623;
+}
+.starOff {
+  color: var(--color-border);
+}
+.starOn:focus-visible,
+.starOff:focus-visible {
+  outline: 2px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+}

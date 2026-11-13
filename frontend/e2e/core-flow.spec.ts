@@ -19,18 +19,17 @@ test("help request end-to-end flow", async ({ browser }) => {
   const helper = await helperContext.newPage();
 
   // 1-2. Register both users (email verification through Mailpit)
-  await registerAndOnboard(author, "Автор", authorEmail);
+  // The author starts as a guest on the landing and picks «Попросити про допомогу».
+  await registerAndOnboard(author, "Автор", authorEmail, { fromLanding: true });
   await registerAndOnboard(helper, "Помічник", helperEmail);
 
-  // 3. Author creates a request through the wizard
-  await author.getByRole("link", { name: "Попросити допомогу" }).click();
-  await author.getByRole("radio", { name: /Автомобіль/ }).click();
-  await author.getByRole("button", { name: "Пробите колесо" }).click();
-  await author.getByRole("button", { name: "Далі" }).click();
+  // 3. Author is already on the wizard (returned there after sign-up) and creates a request
+  await author.getByLabel("Категорія").selectOption("AUTO");
+  await author.getByLabel("Уточнення (необов'язково)").selectOption({ label: "Пробите колесо" });
   await author.getByLabel("Коротко").fill(title);
   await author.getByLabel("Що сталося?").fill("Пробив колесо біля парку, потрібен домкрат.");
   await author.getByRole("button", { name: "Далі" }).click();
-  await expect(author.getByText("📍 Ви знаходитесь тут")).toBeVisible();
+  await expect(author.getByText("Перетягніть мітку, щоб позначити місце")).toBeHidden();
   await author.getByRole("button", { name: "Далі" }).click();
   await author.getByRole("radio", { name: /Зараз/ }).click();
   await author.getByRole("button", { name: "Далі" }).click();
@@ -44,7 +43,7 @@ test("help request end-to-end flow", async ({ browser }) => {
   // 4. Helper sees it nearby (approximate distance) and responds
   await helper.goto("/nearby");
   await helper.getByText(title).click();
-  await expect(helper.getByText(/Приблизне місце/)).toBeVisible();
+  await expect(helper.getByText(/Приблизна локація/)).toBeVisible();
   await helper.getByRole("button", { name: /Можу допомогти/ }).click();
   await helper.getByLabel("Повідомлення автору (необов'язково)").fill("Маю домкрат, буду за 10 хв");
   await helper.getByRole("dialog").getByRole("button", { name: "Можу допомогти" }).click();
@@ -85,8 +84,8 @@ test("help request end-to-end flow", async ({ browser }) => {
 
   // 9. Helper's reputation increased
   await helper.goto("/profile");
-  await expect(helper.getByText("🤝 Допоміг: 1")).toBeVisible();
-  await expect(helper.getByText("❤️ Отримав подяк: 1")).toBeVisible();
+  await expect(helper.getByText("🤝 Допомоги: 1")).toBeVisible();
+  await expect(helper.getByText("❤️ Подяки: 1")).toBeVisible();
 
   await authorContext.close();
   await helperContext.close();

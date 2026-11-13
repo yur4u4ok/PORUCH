@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "Ana sayfa",
-    "nearby": "Yakında",
-    "help": "İste",
+    "nearby": "Çevre",
+    "help": "Oluştur",
     "chats": "Sohbetler",
     "profile": "Profil",
     "notifications": "Bildirimler",
@@ -42,7 +42,9 @@
     "selectNone": "Tümünü kaldır",
     "less": "Azalt",
     "more": "Artır",
-    "previous": "Önceki"
+    "previous": "Önceki",
+    "selectedOf": "{{total}} içinden {{count}} seçildi",
+    "moreInfo": "Daha fazla bilgi"
   },
   "time": {
     "justNow": "az önce",
@@ -68,19 +70,34 @@
     "try": "Dene",
     "join": "Katıl",
     "login": "Giriş yap",
-    "how": "Nasıl çalışır",
+    "how": "Talepten yardıma",
     "step1": "Ne olduğunu anlat: bir dakika sürer",
     "step2": "Yakındaki insanlara bildirim gider",
     "step3": "Biri yanıt verir, ayrıntıları sohbette konuşursunuz",
     "step4": "Yardım aldıktan sonra teşekkür et ❤️",
-    "notMarketplace": "Bir hizmet platformu değil, bir dayanışma topluluğu. Yakınındakilere zorunlu ödeme ve komisyon olmadan yardım et.",
+    "notMarketplace": "Bir hizmet platformu değil, bir dayanışma topluluğu",
     "trustTitle": "Neden güvenli",
     "trust": [
       "Tam adresin gizli kalır. Onu yalnızca yardım etmeyi kabul edenler görür.",
       "Her üye e-postasını doğrular; profiller gerçek yardımları ve alınan teşekkürleri gösterir.",
       "Ödeme ya da komisyon yok. Nasıl teşekkür edeceğine sen karar verirsin.",
       "Herkesi tek dokunuşla şikâyet edebilir ya da engelleyebilirsin."
-    ]
+    ],
+    "heroTitle": "Yardım mı lazım? Yakınında biri yardım edebilir.",
+    "heroText": "Yakınındaki insanları bul, yardım iste ya da mahallende başkalarına yardım et.",
+    "examplesLabel": "Örneğin",
+    "example1": "Alet ödünç almak",
+    "example2": "Eşya taşımaya yardım etmek",
+    "example3": "Ev işlerine yardım etmek ya da köpek gezdirmek",
+    "askCta": "Yardım iste",
+    "nearbyCta": "Yakındaki talepleri bul",
+    "haveAccount": "Zaten hesabın var mı?",
+    "stepLabel": "Adım {{n}}",
+    "lookTitle": "Alanımız",
+    "shot_nearby": "Yakındaki talepler — liste ve haritada",
+    "shot_request": "Bir talep: ne oldu ve nerede",
+    "shot_chat": "Sohbette anlaşın",
+    "communityBadge": "Dayanışma topluluğu"
   },
   "auth": {
     "loginTitle": "Giriş yap",
@@ -114,7 +131,7 @@
     "newPassword": "Yeni şifre",
     "setPassword": "Şifreyi kaydet",
     "passwordChanged": "Şifre değiştirildi. Artık giriş yapabilirsin.",
-    "terms": "Kayıt olarak güvenli ve saygılı bir şekilde yardım etmeyi kabul edersin.",
+    "terms": "Kaydolarak en az 16 yaşında olduğunu onaylar, güvenli ve saygılı şekilde yardım etmeyi kabul edersin.",
     "googleFailed": "Google ile giriş yapılamadı. Tekrar dene.",
     "googleInactive": "Bu hesap devre dışı bırakıldı.",
     "checkSpam": "E-postayı göremiyor musun? Bir dakika bekle ve Spam ile Promosyonlar klasörlerine bak. Oradaysa “Spam değil” olarak işaretle, sonrakiler gelen kutuna düşsün.",
@@ -170,7 +187,8 @@
     "findSomeone": "Kimin yardıma ihtiyacı var, gör →",
     "hello": "Merhaba, {{name}}!",
     "ask": "Yardım iste",
-    "orPick": "Ya da konuyu hemen seç:"
+    "orPick": "Ya da konuyu hemen seç:",
+    "myActivity": "Etkinliğim"
   },
   "availability": {
     "title": "Şu an yardım edebilirim",
@@ -299,7 +317,7 @@
     "descriptionPlaceholder": "Nasıl bir yardıma ihtiyacın olduğunu anlat. Tam adres ya da telefon yazma — bunları sohbette paylaşabilirsin.",
     "locationHint": "Gerekirse işareti taşı",
     "youAreHere": "📍 Buradasın",
-    "locationPrivacy": "Tam yeri yalnızca yanıt verenler görür. Diğerleri yaklaşık mesafeyi görür.",
+    "locationPrivacy": "Tam yeri yalnızca yanıt verenler görür. Diğerleri yaklaşık mesafeyi görür. Gerekirse işareti taşı",
     "locating": "Konumun bulunuyor…",
     "locationError": "Konumun alınamadı. İşareti haritada elle taşı.",
     "useMyLocation": "Şu anki konumum",
@@ -323,7 +341,27 @@
     "helpersNeeded": "Kaç kişi gerekiyor",
     "helpersNeededHint": "Bu kadar kişi yardım etmeyi kabul edince istek diğerlerine kapanır.",
     "activeHours": "İstek ne kadar süre aktif kalsın",
-    "activeHoursHint": "Sonra otomatik olarak kapanır."
+    "activeHoursHint": "Sonra otomatik olarak kapanır.",
+    "locationManual": "Konumun belirlenemedi. İşareti yardımın gerektiği yere sürükle.",
+    "locationManualDenied": "Konum erişimi kapalı. İşareti yardımın gerektiği yere sürükle ya da tarayıcı ayarlarından konuma izin ver.",
+    "locationPickPrompt": "Yeri işaretlemek için işareti sürükle",
+    "categoryLabel": "Kategori",
+    "categoryPlaceholder": "Kategori seçin",
+    "subcategoryLabel": "Ayrıntı (isteğe bağlı)",
+    "titlePlaceholders": {
+      "AUTO": "Örneğin: lastik patladı",
+      "HOME": "Örneğin: dolabı 3. kata taşımak",
+      "ITEMS": "Örneğin: bir saatliğine matkap ödünç almak",
+      "ANIMALS": "Örneğin: akşam köpeği gezdirmek",
+      "PEOPLE": "Örneğin: babaanneye market alışverişi götürmek",
+      "DISTRICT": "Örneğin: avluyu temizlemek",
+      "URGENT": "Örneğin: sokakta biri fenalaştı",
+      "OTHER": "Örneğin: dizüstü bilgisayarla ilgili yardım"
+    },
+    "pickDate": "Tarih seçin",
+    "leaveTitle": "Talepten çıkılsın mı?",
+    "leaveText": "Doldurduklarınız kaydedilmeyecek.",
+    "leaveConfirm": "Çık"
   },
   "nearby": {
     "title": "Yakında yardım",
@@ -334,15 +372,17 @@
     "category": "Kategori",
     "urgency": "Aciliyet",
     "all": "Tümü",
-    "emptyTitle": "Şu an yakında istek yok.",
-    "emptyText": "Bu, kimsenin yardıma ihtiyacı olmadığı anlamına gelmez. Bildirimleri aç, yakında biri yardım istediğinde haber verelim.",
+    "emptyTitle": "Şu anda talep yok.",
+    "emptyText": "Bildirimleri açın; birinin yardıma ihtiyacı olduğunda size haber verelim.",
     "enableNotifications": "Bildirimleri aç",
     "needLocation": "Yakındaki istekleri görmek için konum erişimine izin ver.",
     "allowLocation": "Konuma izin ver",
     "approximate": "Yaklaşık konum",
     "loadMore": "Daha fazla göster",
     "useCityCenter": "Merkeze yakın göster: {{city}}",
-    "cityCenterNotice": "Şehir merkezine yakın istekler gösteriliyor. Daha doğru mesafeler için konuma izin ver."
+    "cityCenterNotice": "Şehir merkezine yakın istekler gösteriliyor. Daha doğru mesafeler için konuma izin ver.",
+    "selectAll": "Tümünü seç",
+    "resetMap": "Konumum"
   },
   "request": {
     "canHelp": "Yardım edebilirim",
@@ -428,12 +468,13 @@
     "iosHint": "iPhone'da bildirim almak için uygulamayı Ana Ekrana ekle (Paylaş → Ana Ekrana Ekle).",
     "enabled": "Anlık bildirimler açık",
     "enable": "Anlık bildirimleri aç",
-    "disable": "Bu cihazda bildirimleri kapat"
+    "disable": "Bu cihazda bildirimleri kapat",
+    "enabledHint": "Yakındaki yeni talepler hemen ulaşır. Ayarlar'dan kapatabilirsiniz."
   },
   "profile": {
     "title": "Profil",
-    "helped": "🤝 Yardım etti: {{count}}",
-    "thanks": "❤️ Alınan teşekkür: {{count}}",
+    "helped": "🤝 Yardımlar: {{count}}",
+    "thanks": "❤️ Teşekkürler: {{count}}",
     "helpedShort": "🤝 {{count}} yardım",
     "thanksShort": "❤️ {{count}} teşekkür",
     "canHelp": "Yardım edebileceklerim:",
@@ -469,7 +510,13 @@
     "sendConfirmation": "Onay gönder",
     "emailSent": "{{email}} adresine e-posta gönderildi. Bağlantıyı açın.",
     "emailPending": "Onay bekleniyor: {{email}}",
-    "contactsPrivacy": "Telefon ve e-postanızı yalnızca seçtiğiniz yardımcılar ve sizi seçen yazarlar görür."
+    "contactsPrivacy": "Telefon ve e-postanızı yalnızca seçtiğiniz yardımcılar ve sizi seçen yazarlar görür.",
+    "declinedTab": "Başvurdum",
+    "noDeclined": "Yardım teklif ettiğin talepler burada görünecek",
+    "viewPhoto": "Fotoğrafı aç: {{name}}",
+    "emailNotVerified": "E-posta doğrulanmadı",
+    "editPhoto": "Düzenle",
+    "deletePhoto": "Sil"
   },
   "settings": {
     "title": "Ayarlar",
@@ -528,7 +575,13 @@
     "currentPassword": "Mevcut şifre",
     "newPassword": "Yeni şifre",
     "passwordChanged": "Şifre değiştirildi",
-    "passwordOtherDevices": "Diğer cihazlarda yeniden giriş yapmanız gerekecek."
+    "passwordOtherDevices": "Diğer cihazlarda yeniden giriş yapmanız gerekecek.",
+    "deleteAccount": "Hesabı sil",
+    "deleteTitle": "Hesabınız kalıcı olarak silinsin mi?",
+    "deleteText": "E-postanız, telefonunuz, fotoğraflarınız, bildirimleriniz ve ayarlarınız silinir. Başkalarının katıldığı sohbet ve taleplerde adınızın yerine «Silinmiş kullanıcı» yazar ve yazdıklarınız kaldırılır. Bu işlem geri alınamaz.",
+    "deletePassword": "Onaylamak için şifrenizi girin",
+    "deleteConfirm": "Kalıcı olarak sil",
+    "deleted": "Hesap silindi"
   },
   "report": {
     "title": "Şikâyet et",
@@ -646,7 +699,8 @@
     "send": "Gönder",
     "sent": "Mesaj gönderildi",
     "replyNote": "{{email}} adresine yanıt vereceğiz.",
-    "another": "Bir tane daha yaz"
+    "another": "Bir tane daha yaz",
+    "yourEmail": "Yanıt için e-postanız"
   },
   "install": {
     "title": "Poruch'u uygulama olarak yükle",
@@ -660,9 +714,9 @@
     "howTo": "Nasıl yüklenir:",
     "steps": {
       "ios": [
-        "Paylaş ⬆️ simgesine dokun — altta ya da “⋯” menüsünde",
-        "“Ana Ekrana Ekle”yi seç",
-        "“Ekle”ye dokun — Poruch uygulamalarının arasında görünür"
+        "Alttaki adres çubuğunun yanındaki «<dots></dots>» menüsünde «Paylaş <share></share>» simgesine dokunun",
+        "«Daha fazla göster <more></more>» seçin ve «<add></add> Ana Ekrana Ekle» simgesine dokunun",
+        "«Ekle»ye dokunun"
       ],
       "ios-other-browser": [
         "Adres çubuğundaki Paylaş ⬆️ simgesine dokun",
@@ -679,7 +733,7 @@
         "Onayla — Poruch uygulamalarının arasında görünür"
       ],
       "desktop": [
-        "Adres çubuğundaki yükleme simgesine ⊕ tıkla (veya menü ⋮ → “Poruch'u yükle”)",
+        "Adres çubuğundaki yükleme simgesine <install></install> tıklayın (veya menü ⋮ → «Poruch'u yükle»)",
         "Yüklemeyi onayla"
       ]
     },
@@ -722,5 +776,54 @@
     "updated": "Geçerli sürüm: {{date}}",
     "englishOnly": "Bu belge Ukraynaca ve İngilizce olarak mevcuttur",
     "agree": "Ayrıca <terms>Kullanım Koşulları</terms> ile <privacy>Gizlilik Politikası</privacy>'nı kabul edersin."
+  },
+  "reviews": {
+    "rating": "Puan",
+    "sent": "Değerlendirmeniz için teşekkürler!",
+    "title": "{{name}} hakkında değerlendirme",
+    "submit": "Değerlendirmeyi gönder",
+    "placeholder": "Nasıl geçti? (isteğe bağlı)",
+    "permanent": "Değerlendirme profilinde görünür, sonradan değiştirilemez veya silinemez.",
+    "leaveTitle": "İş birliğini değerlendirin",
+    "done": "Değerlendirildi",
+    "leave": "Değerlendir",
+    "heading": "Değerlendirmeler",
+    "none": "Henüz değerlendirme yok",
+    "count_one": "{{count}} değerlendirme",
+    "count_other": "{{count}} değerlendirme"
+  },
+  "edit": {
+    "button": "Düzenle",
+    "title": "Talebi düzenle",
+    "save": "Değişiklikleri kaydet",
+    "saved": "Değişiklikler kaydedildi",
+    "fixedFields": "Kategori, yer ve aciliyet değiştirilemez — yakındakiler bunlara güveniyor. Değiştirmek için talebi iptal edip yenisini oluşturun."
+  },
+  "location": {
+    "rough": "Konum yaklaşık (±{{metres}}). Pencereye yaklaşın ya da dışarı çıkın veya telefon ayarlarından «Hassas konum»u açın.",
+    "roughDrag": "Konum yaklaşık (±{{metres}}). İşareti tam yere sürükleyin veya telefon ayarlarından «Hassas konum»u açın."
+  },
+  "when": {
+    "todayAt": "bugün {{time}}",
+    "tomorrowAt": "yarın {{time}}",
+    "dateAt": "{{date}} {{time}}",
+    "yesterday": "Dün"
+  },
+  "pager": {
+    "label": "Sayfalar",
+    "previous": "Önceki sayfa",
+    "next": "Sonraki sayfa"
+  },
+  "listTools": {
+    "search": "Ara",
+    "sort": "Sırala",
+    "nothingFound": "Hiçbir şey bulunamadı",
+    "sorts": {
+      "distance": "En yakın",
+      "newest": "En yeni",
+      "oldest": "En eski",
+      "urgency": "En acil",
+      "soon": "Yardım tarihine göre"
+    }
   }
 }

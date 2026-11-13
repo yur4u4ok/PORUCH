@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="uk">
+{% load i18n %}<!doctype html>
+{% get_current_language as LANG %}<html lang="{{ LANG }}">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -34,7 +34,7 @@
                     </tr>
                   </table>
                   <p style="margin:0 0 14px;font-size:13px;line-height:1.5;color:#546b67;">
-                    Якщо кнопка не працює, скопіюйте посилання в браузер:<br />
+                    {% translate "Якщо кнопка не працює, скопіюйте посилання в браузер:" %}<br />
                     <a href="{{ button_url }}" style="color:#0e5a54;word-break:break-all;">{{ button_url }}</a>
                   </p>
                 {% endif %}
@@ -45,9 +45,9 @@
             </tr>
             <tr>
               <td style="padding:16px 4px 0;font-size:12px;line-height:1.5;color:#546b67;">
-                Ви отримали цей лист, бо маєте обліковий запис у Poruch — застосунку взаємодопомоги між людьми поруч.
-                Питання? Просто дайте відповідь на цей лист.<br />
-                <a href="{{ site_url }}/privacy" style="color:#546b67;">Політика конфіденційності</a>
+                {% translate "Ви отримали цей лист, бо маєте обліковий запис у Poruch — застосунку взаємодопомоги між людьми поруч." %}
+                {% translate "Питання? Просто дайте відповідь на цей лист." %}<br />
+                <a href="{{ site_url }}/privacy" style="color:#546b67;">{% translate "Політика конфіденційності" %}</a>
               </td>
             </tr>
           </table>

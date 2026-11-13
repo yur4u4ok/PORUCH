@@ -10,6 +10,7 @@ import { GuestOnly, RequireAuth } from "./guards";
 
 // Route-level code splitting keeps the initial load small (LCP < 2.5s target).
 const LandingPage = lazy(() => import("@/pages/Landing/LandingPage"));
+const EditHelpPage = lazy(() => import("@/pages/EditHelp/EditHelpPage"));
 const HomePage = lazy(() => import("@/pages/Home/HomePage"));
 const NearbyPage = lazy(() => import("@/pages/Nearby/NearbyPage"));
 const CreateHelpPage = lazy(() => import("@/pages/CreateHelp/CreateHelpPage"));
@@ -93,6 +94,11 @@ export const router = createBrowserRouter([
       // Public legal pages (linked from Google's OAuth consent screen and sign-up).
       { path: "/privacy", element: page(<LegalPage kind="privacy" />) },
       { path: "/terms", element: page(<LegalPage kind="terms" />) },
+      // Public how-to for deleting an account (Google Play asks for this URL).
+      { path: "/delete-account", element: page(<LegalPage kind="deletion" />) },
+      { path: "/child-safety", element: page(<LegalPage kind="childSafety" />) },
+      // Public: support must be reachable without an account (e.g. can't sign in).
+      { path: "/contact", element: page(<SupportPage />) },
       // Public: shared request links work without an account.
       { path: "/share/:code", element: page(<SharePage />) },
       { path: "/r/:code", element: <ShortShareRedirect /> },
@@ -115,6 +121,7 @@ export const router = createBrowserRouter([
               { path: "nearby", element: page(<NearbyPage />) },
               { path: "help/create", element: page(<CreateHelpPage />) },
               { path: "help/:id", element: page(<HelpRequestPage />) },
+              { path: "help/:id/edit", element: page(<EditHelpPage />) },
               { path: "chats", element: page(<ConversationsPage />) },
               { path: "chats/:id", element: page(<ChatPage />) },
               { path: "chat/:id", element: <LegacyChatRedirect /> },

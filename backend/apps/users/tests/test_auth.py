@@ -26,20 +26,18 @@ def register(client, email="new@example.com", password=PASSWORD):
             "password": password,
             "display_name": "Остап",
             "phone": "067 123 45 67",
-            "age_confirmed": True,
         },
         format="json",
     )
 
 
-def test_register_requires_age_confirmation(api_client):
+def test_register_without_phone(api_client):
     response = api_client.post(
         reverse("auth-register"),
-        {"email": "young@example.com", "password": PASSWORD, "display_name": "Юний", "age_confirmed": False},
+        {"email": "nophone@example.com", "password": PASSWORD, "display_name": "Без телефону"},
         format="json",
     )
-    assert response.status_code == 400 and "age_confirmed" in response.data["details"]
-    assert not User.objects.filter(email="young@example.com").exists()
+    assert response.status_code == 201 and response.data["phone"] is None
 
 
 def test_register_creates_user_profile_preferences_and_sends_email(api_client):
@@ -150,6 +148,22 @@ def test_password_reset_flow(api_client, user):
     assert again.status_code == 400
 
 
+def test_password_reset_lets_a_google_only_account_set_a_password(api_client, user):
+    user.set_unusable_password()
+    user.save()
+    assert api_client.post(reverse("auth-password-reset"), {"email": user.email}, format="json").status_code == 204
+    body = mail.outbox[-1].body
+    assert "Google" in body
+    uid = re.search(r"uid=([^&\s]+)", body).group(1)
+    token = re.search(r"token=([^&\s]+)", body).group(1)
+    response = api_client.post(
+        reverse("auth-password-reset-confirm"), {"uid": uid, "token": token, "password": PASSWORD}, format="json"
+    )
+    assert response.status_code == 204
+    user.refresh_from_db()
+    assert user.check_password(PASSWORD)
+
+
 def test_password_reset_unknown_email_does_not_leak(api_client):
     assert api_client.post(reverse("auth-password-reset"), {"email": "nobody@x.com"}, format="json").status_code == 204
     assert len(mail.outbox) == 0
@@ -168,16 +182,17 @@ def test_google_auth_creates_verified_user(api_client, settings):
     assert SocialAccount.objects.filter(user=user, provider="google", uid="g-123").count() == 1
 
 
-def test_old_google_account_stops_working_after_email_change(api_client, settings):
+def test_old_google_account_is_released_after_email_change(api_client, settings):
     settings.GOOGLE_CLIENT_ID = "client-id"
     claims = {"sub": "g-old", "email": "old@example.com", "email_verified": True, "given_name": "Галя"}
     with mock.patch("apps.users.services.accounts._verify_google_credential", return_value=claims):
         assert api_client.post(reverse("auth-google"), {"credential": "x"}, format="json").status_code == 201
-        User.objects.filter(email="old@example.com").update(email="new@example.com")
+        first = User.objects.get(email="old@example.com")
+        User.objects.filter(pk=first.pk).update(email="new@example.com")
         response = api_client.post(reverse("auth-google"), {"credential": "x"}, format="json")
-    assert response.status_code == 400
-    assert response.data["code"] == "GOOGLE_EMAIL_CHANGED"
-    assert User.objects.count() == 1
+    assert response.status_code == 201  # a new account for the old address, not the moved profile
+    assert User.objects.get(email="old@example.com").pk != first.pk
+    assert not SocialAccount.objects.filter(user=first).exists()
 
 
 def test_email_verification_token_for_other_email_is_invalid(user, api_client):
@@ -278,7 +293,7 @@ class TestContacts:
     def test_invalid_phone_rejected(self, api_client):
         response = api_client.post(
             reverse("auth-register"),
-            {"email": "x@example.com", "password": PASSWORD, "display_name": "X", "phone": "12", "age_confirmed": True},
+            {"email": "x@example.com", "password": PASSWORD, "display_name": "X", "phone": "12"},
             format="json",
         )
         assert response.status_code == 400 and "phone" in response.data["details"]

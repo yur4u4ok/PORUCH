@@ -5,6 +5,7 @@ from rest_framework.response import Response
 
 from apps.help_requests import selectors
 from apps.help_requests.serializers import (
+    SORT_CHOICES,
     HelpRequestCreateSerializer,
     HelpRequestListQuerySerializer,
     HelpRequestSerializer,
@@ -15,7 +16,13 @@ from apps.help_requests.services.create_request import create_help_request
 from apps.interactions.models import HelpResponse
 from apps.interactions.serializers import HelpResponseSerializer, RespondSerializer, SelectHelperSerializer
 from apps.interactions.services import responses as response_svc
-from apps.reputation.serializers import ThankYouCreateSerializer, ThankYouSerializer
+from apps.reputation.serializers import (
+    ReviewCreateSerializer,
+    ReviewSerializer,
+    ThankYouCreateSerializer,
+    ThankYouSerializer,
+)
+from apps.reputation.services.reviews import create_review
 from apps.reputation.services.thanks import create_thank_you
 from common.exceptions import Forbidden, NotFound
 from common.throttling import CreateHelpRequestThrottle, RespondThrottle
@@ -57,7 +64,9 @@ class HelpRequestViewSet(viewsets.ViewSet):
             OpenApiParameter("category", str),
             OpenApiParameter("urgency", str),
             OpenApiParameter("status", str),
-            OpenApiParameter("role", str, enum=["author", "helper", "responded"]),
+            OpenApiParameter("role", str, enum=["author", "helper", "responded", "declined", "applied"]),
+            OpenApiParameter("q", str, description="Search in title, description and place name."),
+            OpenApiParameter("sort", str, enum=SORT_CHOICES),
         ],
         responses=HelpRequestSerializer(many=True),
     )
@@ -66,7 +75,9 @@ class HelpRequestViewSet(viewsets.ViewSet):
         query.is_valid(raise_exception=True)
         params = query.validated_data
         if params.get("role"):
-            qs = selectors.requests_by_role(request.user, params["role"], params["statuses"])
+            qs = selectors.requests_by_role(
+                request.user, params["role"], params["statuses"], query=params.get("q"), sort=params.get("sort")
+            )
             qs = selectors.with_distance(qs, _viewer_point(request))
         else:
             point = validate_coordinates(params["lat"], params["lng"]).to_point()
@@ -76,6 +87,8 @@ class HelpRequestViewSet(viewsets.ViewSet):
                 normalize_radius(params.get("radius")),
                 categories=params["categories"],
                 urgencies=params["urgencies"],
+                query=params.get("q"),
+                sort=params.get("sort"),
             )
         from common.pagination import DefaultPagination
 
@@ -160,6 +173,15 @@ class HelpRequestViewSet(viewsets.ViewSet):
             .order_by("created_at")
         )
         return Response(HelpResponseSerializer(qs, many=True).data)
+
+    @extend_schema(request=ReviewCreateSerializer, responses={201: ReviewSerializer})
+    @action(detail=True, methods=["post"], url_path="reviews")
+    def review(self, request, pk=None):
+        ser = ReviewCreateSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        data = ser.validated_data
+        review = create_review(request.user, pk, data["to_user"], data["rating"], data["text"])
+        return Response(ReviewSerializer(review).data, status=status.HTTP_201_CREATED)
 
     @extend_schema(request=ThankYouCreateSerializer, responses={201: ThankYouSerializer})
     @action(detail=True, methods=["post"], url_path="thank-you")

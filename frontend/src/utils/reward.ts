@@ -5,14 +5,14 @@ import type { AgreedTerms, HelpRequest, HelpResponse, OfferType, RewardOption } 
 
 export const REWARD_OPTIONS: RewardOption[] = ["PIZZA", "COFFEE", "RETURN_HELP", "GIVE_ITEM"];
 
-/** Same icons as on the create form: ❤️ no payment, 💰 ready to thank, 🍫 a small thank-you. */
-export const REWARD_TYPE_EMOJI = { NONE: "❤️", WILLING: "💰", UNSURE: "🍫" } as const;
+/** Same icons as on the create form: 🤝 no payment, 💵 ready to thank, 🎁 a small thank-you. */
+export const REWARD_TYPE_EMOJI = { NONE: "🤝", WILLING: "💵", UNSURE: "🎁" } as const;
 
 export const REWARD_OPTION_EMOJI: Record<RewardOption, string> = {
   PIZZA: "🍕",
   COFFEE: "☕",
-  RETURN_HELP: "🤝",
-  GIVE_ITEM: "🎁",
+  RETURN_HELP: "🔁",
+  GIVE_ITEM: "📦",
 };
 
 /** What the author offers as thanks, e.g. "500 грн, 🍕 Поставлю піцу" (amount in the request's currency). */

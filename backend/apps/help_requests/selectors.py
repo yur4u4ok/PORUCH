@@ -6,6 +6,7 @@ from django.contrib.gis.measure import D
 from django.db.models import (
     Case,
     Count,
+    DateTimeField,
     F,
     FloatField,
     IntegerField,
@@ -18,7 +19,7 @@ from django.db.models import (
 from django.db.models.functions import Cast, Round
 from django.utils import timezone
 
-from apps.help_requests.constants import URGENCY_RANK, HelpRequestStatus
+from apps.help_requests.constants import URGENCY_RANK, HelpRequestStatus, Urgency
 from apps.help_requests.models import HelpRequest
 from apps.interactions.constants import ACTIVE_RESPONSE_STATUSES, ResponseStatus
 from apps.interactions.models import HelpResponse
@@ -67,6 +68,8 @@ def nearby_requests(
     *,
     categories: list[str] | None = None,
     urgencies: list[str] | None = None,
+    query: str | None = None,
+    sort: str | None = None,
 ) -> QuerySet[HelpRequest]:
     """Active requests around a point: ST_DWithin + ST_Distance, ordered in SQL."""
     blocked = blocked_user_ids(viewer)
@@ -80,20 +83,59 @@ def nearby_requests(
         )
         .exclude(author=viewer)
         .exclude(author_id__in=blocked)
+        # The author already chose someone else / declined this viewer: nothing left to do here.
+        .exclude(responses__helper=viewer, responses__status="REJECTED")
     )
     if categories:
         qs = qs.filter(category__in=categories)
     if urgencies:
         qs = qs.filter(urgency__in=urgencies)
-    qs = with_distance(qs, point).annotate(
+    qs = with_distance(search(qs, query), point).annotate(
         # Sort by distance rounded to 100 m (what users see), then urgency, then recency.
         distance_bucket=Cast(Round(Cast(F("distance"), FloatField()) / 100.0), IntegerField()),
         urgency_rank=_urgency_rank(),
     )
+    if sort and sort != "distance":
+        return sorted_by(qs, sort)
     return qs.order_by("distance_bucket", "urgency_rank", "-created_at")
 
 
-def requests_by_role(viewer: User, role: str, statuses: list[str] | None = None) -> QuerySet[HelpRequest]:
+def search(qs: QuerySet[HelpRequest], query: str | None) -> QuerySet[HelpRequest]:
+    """Case-insensitive match in the title, description or place name."""
+    query = (query or "").strip()
+    if not query:
+        return qs
+    return qs.filter(Q(title__icontains=query) | Q(description__icontains=query) | Q(place_name__icontains=query))
+
+
+def sorted_by(qs: QuerySet[HelpRequest], sort: str | None) -> QuerySet[HelpRequest]:
+    """List order picked by the user; newest first by default."""
+    if sort == "oldest":
+        return qs.order_by("created_at")
+    if sort == "urgency":
+        return qs.annotate(urgency_rank=_urgency_rank()).order_by("urgency_rank", "-created_at")
+    if sort == "soon":
+        # When the help is needed: «now»/«today» count from when they were posted, a scheduled one
+        # from its date; «whenever» goes last.
+        return qs.annotate(
+            needed_by=Case(
+                When(urgency=Urgency.SCHEDULED, then=F("needed_at")),
+                When(urgency__in=[Urgency.NOW, Urgency.TODAY], then=F("created_at")),
+                default=Value(None),
+                output_field=DateTimeField(),
+            )
+        ).order_by(F("needed_by").asc(nulls_last=True), _urgency_rank(), "-created_at")
+    return qs.order_by("-created_at")
+
+
+def requests_by_role(
+    viewer: User,
+    role: str,
+    statuses: list[str] | None = None,
+    *,
+    query: str | None = None,
+    sort: str | None = None,
+) -> QuerySet[HelpRequest]:
     qs = base_queryset(viewer)
     if role == "author":
         qs = qs.filter(author=viewer)
@@ -102,11 +144,17 @@ def requests_by_role(viewer: User, role: str, statuses: list[str] | None = None)
     elif role == "responded":
         # Offers still waiting for the author's decision (chosen ones are under role=helper).
         qs = qs.filter(responses__helper=viewer, responses__status="PENDING").distinct()
+    elif role == "applied":
+        # «Я подавався»: offers still waiting and the ones that went to someone else (not the chosen ones).
+        qs = qs.filter(responses__helper=viewer, responses__status__in=["PENDING", "REJECTED"]).distinct()
+    elif role == "declined":
+        # Offers that didn't work out: the author chose someone else or declined.
+        qs = qs.filter(responses__helper=viewer, responses__status="REJECTED").distinct()
     else:
         return qs.none()
     if statuses:
         qs = qs.filter(status__in=statuses)
-    return qs.order_by("-created_at")
+    return sorted_by(search(qs, query), sort)
 
 
 def visible_request(viewer: User, request_id) -> HelpRequest | None:

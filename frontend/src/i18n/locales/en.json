@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "Home",
-    "nearby": "Nearby",
-    "help": "Ask",
+    "nearby": "Around",
+    "help": "Create",
     "chats": "Chats",
     "profile": "Profile",
     "notifications": "Notifications",
@@ -42,7 +42,9 @@
     "selectNone": "Clear all",
     "less": "Less",
     "more": "More",
-    "previous": "Previous"
+    "previous": "Previous",
+    "selectedOf": "{{count}} of {{total}} selected",
+    "moreInfo": "More info"
   },
   "time": {
     "justNow": "just now",
@@ -68,19 +70,34 @@
     "try": "Try it",
     "join": "Join",
     "login": "Log in",
-    "how": "How it works",
+    "how": "From request to help",
     "step1": "Describe what happened — it takes a minute",
     "step2": "People nearby get notified",
     "step3": "Someone responds — agree on details in chat",
     "step4": "Say thanks after you're helped ❤️",
-    "notMarketplace": "Not a service marketplace — a mutual-aid community. Help the people around you, with no required payments or fees.",
+    "notMarketplace": "Not a service marketplace — a mutual-aid community",
     "trustTitle": "Why it's safe here",
     "trust": [
       "Your exact address is hidden. Only people who agreed to help can see it.",
       "Every member confirms their email, and profiles show real help given and thanks received.",
       "No payments or fees. Saying thanks is up to you.",
       "Report or block anyone with one tap."
-    ]
+    ],
+    "heroTitle": "Need help? Someone nearby can help.",
+    "heroText": "Find people nearby, ask for help or help others in your neighbourhood.",
+    "examplesLabel": "For example",
+    "example1": "Borrow a tool",
+    "example2": "Help carry things",
+    "example3": "Help with chores or walk a dog",
+    "askCta": "Ask for help",
+    "nearbyCta": "Find requests nearby",
+    "haveAccount": "Already have an account?",
+    "stepLabel": "Step {{n}}",
+    "lookTitle": "Our space",
+    "shot_nearby": "Requests nearby — as a list and on the map",
+    "shot_request": "A request: what happened and where",
+    "shot_chat": "Agree on details in the chat",
+    "communityBadge": "Mutual-aid community"
   },
   "auth": {
     "loginTitle": "Log in",
@@ -114,7 +131,7 @@
     "newPassword": "New password",
     "setPassword": "Set password",
     "passwordChanged": "Password changed. You can log in now.",
-    "terms": "By signing up, you agree to help safely and respectfully.",
+    "terms": "By signing up, you confirm you are at least 16 and agree to help safely and respectfully.",
     "googleFailed": "Couldn't sign in with Google. Please try again.",
     "googleInactive": "This account has been deactivated.",
     "checkSpam": "Can't see the email? Wait a minute and check your Spam and Promotions folders. If it's there, mark it “Not spam” so future emails reach your inbox.",
@@ -170,7 +187,8 @@
     "findSomeone": "See who needs help →",
     "hello": "Hi, {{name}}!",
     "ask": "Ask for help",
-    "orPick": "Or pick what it's about:"
+    "orPick": "Or pick what it's about:",
+    "myActivity": "My activity"
   },
   "availability": {
     "title": "I can help right now",
@@ -299,7 +317,7 @@
     "descriptionPlaceholder": "Describe the help you need. Don't include your exact address or phone — you can share them in chat.",
     "locationHint": "Move the pin if needed",
     "youAreHere": "📍 You are here",
-    "locationPrivacy": "Only people who respond will see the exact spot. Others see an approximate distance.",
+    "locationPrivacy": "Only people who respond will see the exact location. Move the pin if needed.",
     "locating": "Finding your location…",
     "locationError": "Couldn't get your location. Move the pin on the map manually.",
     "useMyLocation": "My current location",
@@ -323,7 +341,27 @@
     "helpersNeeded": "How many people are needed",
     "helpersNeededHint": "Once that many people agree to help, the request closes to others.",
     "activeHours": "How long the request stays active",
-    "activeHoursHint": "After that, the request closes automatically."
+    "activeHoursHint": "After that, the request closes automatically.",
+    "locationManual": "We couldn't detect your location. Drag the pin on the map to where help is needed.",
+    "locationManualDenied": "Location access is off. Drag the pin on the map to where help is needed, or allow location in your browser settings.",
+    "locationPickPrompt": "Drag the pin to mark the place",
+    "categoryLabel": "Category",
+    "categoryPlaceholder": "Choose a category",
+    "subcategoryLabel": "Details (optional)",
+    "titlePlaceholders": {
+      "AUTO": "For example: flat tyre",
+      "HOME": "For example: carry a wardrobe to the 3rd floor",
+      "ITEMS": "For example: borrow a drill for an hour",
+      "ANIMALS": "For example: walk the dog tonight",
+      "PEOPLE": "For example: bring groceries to grandma",
+      "DISTRICT": "For example: tidy up the yard",
+      "URGENT": "For example: someone felt unwell on the street",
+      "OTHER": "For example: help with a laptop"
+    },
+    "pickDate": "Pick a date",
+    "leaveTitle": "Leave this request?",
+    "leaveText": "What you've filled in won't be saved.",
+    "leaveConfirm": "Leave"
   },
   "nearby": {
     "title": "Help nearby",
@@ -334,15 +372,17 @@
     "category": "Category",
     "urgency": "Urgency",
     "all": "All",
-    "emptyTitle": "No requests nearby right now.",
-    "emptyText": "That doesn't mean nobody needs help. Turn on notifications and we'll let you know when someone nearby does.",
+    "emptyTitle": "No requests right now.",
+    "emptyText": "Turn on notifications and we'll let you know when someone needs help.",
     "enableNotifications": "Turn on notifications",
     "needLocation": "To see requests nearby, allow location access.",
     "allowLocation": "Allow location",
     "approximate": "Approximate location",
     "loadMore": "Show more",
     "useCityCenter": "Show near the centre: {{city}}",
-    "cityCenterNotice": "Showing requests near the city centre. Allow location for more accurate distances."
+    "cityCenterNotice": "Showing requests near the city centre. Allow location for more accurate distances.",
+    "selectAll": "Select all",
+    "resetMap": "My location"
   },
   "request": {
     "canHelp": "I can help",
@@ -428,12 +468,13 @@
     "iosHint": "On iPhone, add the app to your Home Screen (Share → Add to Home Screen) to get notifications.",
     "enabled": "Push notifications on",
     "enable": "Turn on push notifications",
-    "disable": "Turn off push on this device"
+    "disable": "Turn off push on this device",
+    "enabledHint": "New requests nearby will reach you right away. You can turn this off in Settings."
   },
   "profile": {
     "title": "Profile",
-    "helped": "🤝 Helped: {{count}}",
-    "thanks": "❤️ Thanks received: {{count}}",
+    "helped": "🤝 Helps: {{count}}",
+    "thanks": "❤️ Thanks: {{count}}",
     "helpedShort": "🤝 {{count}} helped",
     "thanksShort": "❤️ {{count}} thanks",
     "canHelp": "I can help with:",
@@ -469,7 +510,13 @@
     "sendConfirmation": "Send confirmation",
     "emailSent": "Email sent to {{email}}. Open the link in it.",
     "emailPending": "Waiting for confirmation: {{email}}",
-    "contactsPrivacy": "Your phone and email are shown only to helpers you choose and to authors who choose you."
+    "contactsPrivacy": "Your phone and email are shown only to helpers you choose and to authors who choose you.",
+    "declinedTab": "I applied",
+    "noDeclined": "Requests you offered to help with will appear here",
+    "viewPhoto": "Open photo: {{name}}",
+    "emailNotVerified": "Email not verified",
+    "editPhoto": "Edit",
+    "deletePhoto": "Delete"
   },
   "settings": {
     "title": "Settings",
@@ -528,7 +575,13 @@
     "currentPassword": "Current password",
     "newPassword": "New password",
     "passwordChanged": "Password changed",
-    "passwordOtherDevices": "You'll need to log in again on other devices."
+    "passwordOtherDevices": "You'll need to log in again on other devices.",
+    "deleteAccount": "Delete account",
+    "deleteTitle": "Delete your account for good?",
+    "deleteText": "Your email, phone, photos, notifications and settings will be erased. In chats and requests other people took part in, your name becomes «Deleted user» and your texts are removed. This can't be undone.",
+    "deletePassword": "Enter your password to confirm",
+    "deleteConfirm": "Delete for good",
+    "deleted": "Account deleted"
   },
   "report": {
     "title": "Report",
@@ -646,7 +699,8 @@
     "send": "Send",
     "sent": "Message sent",
     "replyNote": "We'll reply to {{email}}.",
-    "another": "Write another"
+    "another": "Write another",
+    "yourEmail": "Your email for the reply"
   },
   "install": {
     "title": "Install Poruch as an app",
@@ -660,9 +714,9 @@
     "howTo": "How to install:",
     "steps": {
       "ios": [
-        "Tap Share ⬆️ — at the bottom of the screen or in the “⋯” menu",
-        "Choose “Add to Home Screen”",
-        "Tap “Add” — Poruch appears with your apps"
+        "Tap «Share <share></share>» in the «<dots></dots>» menu at the bottom, next to the address bar",
+        "Choose «View more <more></more>» and tap «<add></add> Add to Home Screen»",
+        "Tap «Add»"
       ],
       "ios-other-browser": [
         "Tap Share ⬆️ in the address bar",
@@ -679,7 +733,7 @@
         "Confirm — Poruch appears with your apps"
       ],
       "desktop": [
-        "Click the install icon ⊕ in the address bar (or menu ⋮ → “Install Poruch”)",
+        "Click the install icon <install></install> in the address bar (or menu ⋮ → “Install Poruch”)",
         "Confirm the installation"
       ]
     },
@@ -722,5 +776,54 @@
     "updated": "Current version: {{date}}",
     "englishOnly": "This document is available in Ukrainian and English",
     "agree": "You also accept the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
+  },
+  "reviews": {
+    "rating": "Rating",
+    "sent": "Thanks for the review!",
+    "title": "Review {{name}}",
+    "submit": "Send review",
+    "placeholder": "How did it go? (optional)",
+    "permanent": "The review appears on their profile. It can't be changed or deleted later.",
+    "leaveTitle": "Rate your cooperation",
+    "done": "Reviewed",
+    "leave": "Leave a review",
+    "heading": "Reviews",
+    "none": "No reviews yet",
+    "count_one": "{{count}} review",
+    "count_other": "{{count}} reviews"
+  },
+  "edit": {
+    "button": "Edit",
+    "title": "Edit request",
+    "save": "Save changes",
+    "saved": "Changes saved",
+    "fixedFields": "Category, place and urgency can't be changed — people nearby already rely on them. To change them, cancel the request and create a new one."
+  },
+  "location": {
+    "rough": "Location is approximate (±{{metres}}). Move closer to a window or outside, or turn on «Precise location» in your phone settings.",
+    "roughDrag": "Location is approximate (±{{metres}}). Drag the pin to the exact spot, or turn on «Precise location» in your phone settings."
+  },
+  "when": {
+    "todayAt": "today at {{time}}",
+    "tomorrowAt": "tomorrow at {{time}}",
+    "dateAt": "{{date}} at {{time}}",
+    "yesterday": "Yesterday"
+  },
+  "pager": {
+    "label": "Pages",
+    "previous": "Previous page",
+    "next": "Next page"
+  },
+  "listTools": {
+    "search": "Search",
+    "sort": "Sort",
+    "nothingFound": "Nothing found",
+    "sorts": {
+      "distance": "Nearest",
+      "newest": "Newest",
+      "oldest": "Oldest",
+      "urgency": "Most urgent",
+      "soon": "By help date"
+    }
   }
 }

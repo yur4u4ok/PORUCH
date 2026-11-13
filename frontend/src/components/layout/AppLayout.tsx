@@ -8,9 +8,19 @@ import { NavLink, Outlet, useNavigate, useSearchParams } from "react-router";
 import { IconButton } from "@/components/ui";
 import { useLogoutConfirm } from "@/features/auth/LogoutConfirm";
 import { AttentionSignals } from "@/features/attention/AttentionSignals";
-import { InstallPrompt } from "@/features/pwa/InstallPrompt";
+import { LanguageSync } from "@/features/profile/LanguageSync";
 
 import { BrandMark } from "./BrandMark";
+import {
+  AroundIcon,
+  BellIcon,
+  ChatIcon,
+  CreateIcon,
+  HomeIcon,
+  LogoutIcon,
+  ProfileIcon,
+  SupportIcon,
+} from "./NavIcons";
 import { PullToRefresh } from "./PullToRefresh";
 import { useConversations } from "@/features/chat/hooks";
 import { useMarkNotificationRead, useUnreadCount } from "@/features/notifications/hooks";
@@ -20,7 +30,7 @@ import styles from "./AppLayout.module.css";
 
 interface NavEntry {
   to: string;
-  icon: string;
+  icon: ReactNode;
   label: string;
   badge?: number;
   end?: boolean;
@@ -32,12 +42,12 @@ function useNavEntries(): NavEntry[] {
   const unreadChats = conversations?.results.reduce((sum, c) => sum + c.unread_count, 0) ?? 0;
   const { data: unread = 0 } = useUnreadCount(true);
   return [
-    { to: "/", icon: "🏠", label: t("nav.home"), end: true },
-    { to: "/nearby", icon: "🗺", label: t("nav.nearby") },
-    { to: "/help/create", icon: "❤️", label: t("nav.help") },
-    { to: "/chats", icon: "💬", label: t("nav.chats"), badge: unreadChats },
-    { to: "/notifications", icon: "🔔", label: t("nav.notifications"), badge: unread },
-    { to: "/profile", icon: "👤", label: t("nav.profile"), end: true },
+    { to: "/", icon: <HomeIcon />, label: t("nav.home"), end: true },
+    { to: "/nearby", icon: <AroundIcon />, label: t("nav.nearby") },
+    { to: "/help/create", icon: <CreateIcon />, label: t("nav.help") },
+    { to: "/chats", icon: <ChatIcon />, label: t("nav.chats"), badge: unreadChats },
+    { to: "/notifications", icon: <BellIcon />, label: t("nav.notifications"), badge: unread },
+    { to: "/profile", icon: <ProfileIcon />, label: t("nav.profile"), end: true },
   ];
 }
 
@@ -78,9 +88,9 @@ export function AppLayout() {
   return (
     <div className={styles.shell}>
       <PushDeepLinkTracker />
+      <LanguageSync />
       <PullToRefresh />
       <AttentionSignals unread={unread + chatBadge} />
-      <InstallPrompt />
       <nav className={styles.sidebar} aria-label={BRAND}>
         <NavLink to="/" className={styles.brand}>
           <BrandMark inverse />
@@ -92,7 +102,9 @@ export function AppLayout() {
             end={entry.end}
             className={({ isActive }) => clsx(styles.sideItem, isActive && styles.sideActive)}
           >
-            <span aria-hidden>{entry.icon}</span>
+            <span className={styles.sideIcon} aria-hidden>
+              {entry.icon}
+            </span>
             {entry.label}
             {!!entry.badge && <span className={styles.dot}>{entry.badge}</span>}
           </NavLink>
@@ -103,11 +115,11 @@ export function AppLayout() {
             clsx(styles.sideItem, styles.sideBottom, isActive && styles.sideActive)
           }
         >
-          <span aria-hidden>💬</span>
+          <SupportIcon />
           {t("support.title")}
         </NavLink>
         <button type="button" className={styles.sideItem} onClick={logout.ask}>
-          <span aria-hidden>🚪</span>
+          <LogoutIcon />
           {t("auth.logout")}
         </button>
         {logout.dialog}
@@ -117,22 +129,46 @@ export function AppLayout() {
         <Outlet />
       </div>
       <nav className={styles.bottomNav} aria-label={BRAND}>
-        {entries.map((entry) => (
-          <NavLink
-            key={entry.to}
-            to={entry.to}
-            end={entry.end}
-            className={({ isActive }) => clsx(styles.navItem, isActive && styles.navActive)}
-          >
-            <span className={styles.navIcon} aria-hidden>
-              {entry.icon}
-            </span>
-            {entry.label}
-            {!!entry.badge && <span className={styles.dot}>{entry.badge}</span>}
-          </NavLink>
-        ))}
+        {/* phones: notifications are the bell on the home screen, not a tab */}
+        {entries
+          .filter((entry) => entry.to !== "/notifications")
+          .map((entry) => (
+            <NavLink
+              key={entry.to}
+              to={entry.to}
+              end={entry.end}
+              className={({ isActive }) => clsx(styles.navItem, isActive && styles.navActive)}
+            >
+              <span className={styles.navIcon} aria-hidden>
+                {entry.icon}
+              </span>
+              {entry.label}
+              {!!entry.badge && <span className={styles.dot}>{entry.badge}</span>}
+            </NavLink>
+          ))}
       </nav>
     </div>
+  );
+}
+
+/** Round «back» button with a drawn arrow: a text «←» sits off-centre in most fonts. */
+export function BackButton({ onClick, label }: { onClick: () => void; label: string }) {
+  return (
+    <IconButton label={label} onClick={onClick} className={styles.back}>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        aria-hidden
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M15 5l-7 7 7 7" />
+      </svg>
+    </IconButton>
   );
 }
 
@@ -150,12 +186,10 @@ export function PageHeader({
   return (
     <header className={styles.header}>
       {back && (
-        <IconButton
-          label={t("nav.back")}
+        <BackButton
           onClick={() => (window.history.length > 1 ? navigate(-1) : navigate("/"))}
-        >
-          ←
-        </IconButton>
+          label={t("nav.back")}
+        />
       )}
       <h1 className={styles.headerTitle}>{title}</h1>
       {actions}

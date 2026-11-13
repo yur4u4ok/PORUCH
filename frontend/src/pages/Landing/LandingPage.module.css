@@ -7,6 +7,8 @@
   padding: var(--space-5) var(--space-4) var(--space-8);
 }
 .top {
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -19,15 +21,10 @@
   gap: var(--space-2);
 }
 
-/* ── Hero: two notices on the wall, the ways in right under them ───────────── */
+/* ── Hero: the notice, the ways in right under it ──────────────────────────── */
 .hero {
   display: grid;
   gap: var(--space-6);
-}
-.wall {
-  display: grid;
-  gap: var(--space-6);
-  padding-top: var(--space-3);
 }
 .paper {
   position: relative;
@@ -48,12 +45,6 @@
   color: var(--color-notice-ink);
   transform: rotate(-1deg);
 }
-.offer {
-  margin-left: var(--space-6);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  transform: rotate(0.8deg);
-}
 .paperTitle {
   font-size: clamp(24px, 6.6vw, 32px);
   font-weight: 700;
@@ -70,11 +61,6 @@
   background: rgb(255 255 255 / 0.6);
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.15);
 }
-.offer .tape {
-  background:
-    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.18) 0 2px, transparent 2px 6px),
-    rgb(214 192 140 / 0.85);
-}
 
 .actions {
   display: flex;
@@ -83,6 +69,10 @@
 }
 .join,
 .login {
+  width: 100%;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,96 +108,171 @@
   outline: 3px solid var(--color-text);
   outline-offset: 3px;
 }
-.free {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
+.signIn {
   text-align: center;
+  font-weight: 600;
+}
+.signIn a {
+  color: var(--color-primary);
+  font-weight: 800;
+}
+/* three concrete things people do here */
+.examples {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.examples li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 700;
+}
+.examples li span {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.55);
+  font-size: 17px;
+}
+/* small label over the hero: what Poruch is, without competing with the notice */
+.badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 5px 14px 5px 5px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.badgeIcon {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
 }
 
-/* ── Below the fold ────────────────────────────────────────────────────────── */
-.block {
+/* ── Below the fold: how it works, how it looks, why it's safe ─────────────── */
+.section {
+  margin-top: var(--space-6);
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
 }
-.blockTitle {
-  font-size: var(--text-xl);
+.sectionTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 5.6vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
-/* a real sequence, so numbered */
-.steps {
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-3);
   margin: 0;
   padding: 0;
   list-style: none;
-  counter-reset: step;
-  display: grid;
-  gap: var(--space-4);
 }
-.steps li {
-  counter-increment: step;
-  position: relative;
-  min-height: 36px;
-  padding: 6px 0 0 52px;
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
   font-weight: 600;
+  line-height: 1.4;
 }
-.steps li::before {
-  content: counter(step);
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
+.stepNo {
+  align-self: flex-start;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
   background: var(--color-primary);
   color: var(--color-on-primary);
   font-family: var(--font-display);
+  font-size: var(--text-sm);
   font-weight: 700;
 }
-/* the line linking the steps */
-.steps li:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  left: 17px;
-  top: 40px;
-  bottom: calc(-1 * var(--space-4) + 4px);
-  border-left: 2px dashed var(--color-border);
-}
-.trust {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: var(--space-3);
-}
-.trust li {
-  position: relative;
-  padding-left: 32px;
-}
-.trust li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  top: 1px;
+.trustIcon {
   display: grid;
   place-items: center;
-  width: 22px;
-  height: 22px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: var(--color-primary-soft);
-  color: var(--color-primary);
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 20px;
 }
-.footer {
+/* phone screenshots: a swipeable row on phones, side by side on wide screens */
+.shots {
   display: flex;
-  justify-content: center;
-  gap: var(--space-5);
+  gap: var(--space-4);
+  margin: 0 calc(-1 * var(--space-4));
+  padding: 4px var(--space-4) var(--space-3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.shot {
+  flex: 0 0 min(62vw, 260px);
+  margin: 0;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 6px solid var(--color-text);
+  border-radius: 28px;
+  box-shadow: var(--shadow-md);
+  background: var(--color-surface);
+}
+.shot figcaption {
+  text-align: center;
   font-size: var(--text-sm);
+  font-weight: 600;
   color: var(--color-text-muted);
 }
+@media (min-width: 860px) {
+  .shots {
+    justify-content: center;
+    overflow: visible;
+  }
+}
 
-/* ── Wide screens: notices left, the ways in right ─────────────────────────── */
+/* links wrap onto more rows on narrow screens, each kept on one line */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+.footer > a {
+  white-space: nowrap;
+}
+
+/* ── Wide screens: the notice left, the ways in right ──────────────────────── */
 @media (min-width: 860px) {
   .page {
     padding-top: var(--space-6);
@@ -216,10 +281,7 @@
     grid-template-columns: 1.15fr 1fr;
     align-items: center;
     gap: var(--space-8);
-    min-height: 60vh;
-  }
-  .block {
-    max-width: 640px;
+    min-height: 46vh;
   }
 }
 

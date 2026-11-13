@@ -154,6 +154,7 @@ def create_help_request(
         event="help_requests_created",
         properties={"help_request_id": help_request.id, "category": category, "urgency": urgency},
     )
+    analytics.track(user_id=author.id, event="request_published", properties={"category": category})
     from apps.notifications.tasks import send_nearby_help_notifications
 
     request_id = str(help_request.id)

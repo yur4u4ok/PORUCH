@@ -1,16 +1,22 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+
+import { ZoomableAvatar } from "@/features/profile/ZoomableAvatar";
+
+import { FeedbackSection } from "@/features/reviews/Feedback";
+import { RatingSummary } from "@/features/reviews/Reviews";
 import { Navigate, useNavigate, useParams } from "react-router";
 
 import { PageHeader } from "@/components/layout/AppLayout";
-import { Avatar, Button, EmptyState, Loader } from "@/components/ui";
+import { Button, EmptyState, Loader } from "@/components/ui";
 import { useMe } from "@/features/auth/hooks";
 import { ConfirmDialog, ReportDialog } from "@/features/help/components";
 import { useBlockUser, usePublicProfile } from "@/features/profile/hooks";
 import { toast } from "@/stores/toastStore";
 
+import { VerifiedBadge } from "@/features/profile/VerifiedBadge";
+
 import styles from "./Profile.module.css";
-import { ThanksList } from "./ProfilePage";
 
 export default function PublicProfilePage() {
   const { id = "" } = useParams();
@@ -36,20 +42,20 @@ export default function PublicProfilePage() {
   const name = user.display_name ?? t("common.anonymous");
   return (
     <main className="page stack">
-      <PageHeader title={name} />
+      <PageHeader title="" />
       <div className={styles.head}>
-        <Avatar name={name} media={user.avatar} size={96} />
-        <h1>{name}</h1>
+        <ZoomableAvatar name={name} media={user.avatar} size={96} />
+        <div className={styles.nameRow}>
+          <h1>{name}</h1>
+          <VerifiedBadge verified={user.is_verified} since={user.member_since} />
+        </div>
         <div className={styles.stats}>
           <span>{t("profile.helped", { count: user.helped_count })}</span>
           <span>{t("profile.thanks", { count: user.thanks_received_count })}</span>
+          <RatingSummary user={user} />
         </div>
-        <span className="muted">
-          {t("common.since", { year: new Date(user.member_since).getFullYear() })}
-          {user.is_verified && ` · ✓ ${t("profile.verified")}`}
-        </span>
       </div>
-      <ThanksList userId={user.id} />
+      <FeedbackSection userId={user.id} />
       <div className="row" style={{ justifyContent: "center" }}>
         <Button variant="ghost" size="sm" onClick={() => setReportOpen(true)}>
           🚩 {t("request.report")}

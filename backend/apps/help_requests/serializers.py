@@ -7,6 +7,7 @@ from apps.help_requests.selectors import can_see_exact_location
 from apps.interactions.constants import ACTIVE_RESPONSE_STATUSES
 from apps.locations.serializers import LocationInputSerializer
 from apps.media.serializers import MediaSerializer
+from apps.users.models import User
 from apps.users.serializers import PublicUserSerializer
 from common.utils.geo import approximate_point, point_to_dict, round_distance
 from common.utils.money import SUPPORTED_CURRENCIES
@@ -53,6 +54,9 @@ class HelpRequestUpdateSerializer(serializers.Serializer):
     )
 
 
+SORT_CHOICES = ["distance", "newest", "oldest", "urgency", "soon"]
+
+
 class HelpRequestListQuerySerializer(serializers.Serializer):
     lat = serializers.FloatField(required=False)
     lng = serializers.FloatField(required=False)
@@ -60,7 +64,9 @@ class HelpRequestListQuerySerializer(serializers.Serializer):
     category = serializers.CharField(required=False)
     urgency = serializers.CharField(required=False)
     status = serializers.CharField(required=False)
-    role = serializers.ChoiceField(choices=["author", "helper", "responded"], required=False)
+    role = serializers.ChoiceField(choices=["author", "helper", "responded", "declined", "applied"], required=False)
+    q = serializers.CharField(required=False, allow_blank=True, max_length=100)
+    sort = serializers.ChoiceField(choices=SORT_CHOICES, required=False)
 
     def _csv(self, value: str | None, allowed: set[str], field: str) -> list[str]:
         if not value:
@@ -109,6 +115,7 @@ class HelpRequestSerializer(serializers.ModelSerializer):
     conversation_id = serializers.SerializerMethodField()
     can_respond = serializers.SerializerMethodField()
     thanked = serializers.SerializerMethodField()
+    reviews_to_leave = serializers.SerializerMethodField()
     share_url = serializers.SerializerMethodField()
     helpers = serializers.SerializerMethodField()
     helpers_count = serializers.SerializerMethodField()
@@ -152,6 +159,7 @@ class HelpRequestSerializer(serializers.ModelSerializer):
             "conversation_id",
             "can_respond",
             "thanked",
+            "reviews_to_leave",
         ]
 
     @property
@@ -249,6 +257,20 @@ class HelpRequestSerializer(serializers.ModelSerializer):
         from apps.help_requests.sharing import share_url
 
         return share_url(obj) if obj.status == HelpRequestStatus.ACTIVE else None
+
+    def get_reviews_to_leave(self, obj) -> list[dict]:
+        """After completion: the people the viewer worked with and whether they already reviewed them."""
+        if obj.status != HelpRequestStatus.COMPLETED or not self._viewer.is_authenticated:
+            return []
+        from apps.reputation.models import Review
+        from apps.reputation.services.reviews import review_partners
+
+        partner_ids = review_partners(obj, self._viewer)
+        if not partner_ids:
+            return []
+        done = set(Review.objects.filter(help_request=obj, from_user=self._viewer).values_list("to_user_id", flat=True))
+        users = User.objects.filter(pk__in=partner_ids).select_related("profile__avatar")
+        return [{"user": PublicUserSerializer(u).data, "reviewed": u.pk in done} for u in users]
 
     def get_thanked(self, obj) -> bool | None:
         if obj.author_id != self._viewer.pk or obj.status != HelpRequestStatus.COMPLETED:

@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "Início",
-    "nearby": "Perto",
-    "help": "Pedir",
+    "nearby": "Por perto",
+    "help": "Criar",
     "chats": "Conversas",
     "profile": "Perfil",
     "notifications": "Notificações",
@@ -42,7 +42,9 @@
     "selectNone": "Limpar tudo",
     "less": "Menos",
     "more": "Mais",
-    "previous": "Anterior"
+    "previous": "Anterior",
+    "selectedOf": "{{count}} de {{total}} selecionadas",
+    "moreInfo": "Mais informações"
   },
   "time": {
     "justNow": "agora mesmo",
@@ -68,19 +70,34 @@
     "try": "Experimentar",
     "join": "Aderir",
     "login": "Entrar",
-    "how": "Como funciona",
+    "how": "Do pedido à ajuda",
     "step1": "Descreva o que aconteceu: leva um minuto",
     "step2": "As pessoas perto recebem um aviso",
     "step3": "Alguém responde e combinam os detalhes na conversa",
     "step4": "Agradeça depois de ser ajudado ❤️",
-    "notMarketplace": "Não é um serviço, é uma comunidade de ajuda mútua. Ajude quem está por perto, sem pagamentos nem taxas obrigatórias.",
+    "notMarketplace": "Não é um serviço, é uma comunidade de ajuda mútua",
     "trustTitle": "Porque é seguro",
     "trust": [
       "A sua morada exata fica escondida. Só a vê quem aceitou ajudar.",
       "Todos os membros confirmam o email, e os perfis mostram a ajuda dada e os agradecimentos recebidos.",
       "Sem pagamentos nem comissões. A forma de agradecer é consigo.",
       "Denuncie ou bloqueie qualquer pessoa com um toque."
-    ]
+    ],
+    "heroTitle": "Precisa de ajuda? Alguém por perto pode ajudar.",
+    "heroText": "Encontre pessoas por perto, peça ajuda ou ajude outros no seu bairro.",
+    "examplesLabel": "Por exemplo",
+    "example1": "Pedir uma ferramenta emprestada",
+    "example2": "Ajudar a carregar coisas",
+    "example3": "Ajudar nas tarefas de casa ou passear um cão",
+    "askCta": "Pedir ajuda",
+    "nearbyCta": "Encontrar pedidos por perto",
+    "haveAccount": "Já tem conta?",
+    "stepLabel": "Passo {{n}}",
+    "lookTitle": "O nosso espaço",
+    "shot_nearby": "Pedidos por perto, em lista e no mapa",
+    "shot_request": "Um pedido: o que aconteceu e onde",
+    "shot_chat": "Combinem tudo no chat",
+    "communityBadge": "Comunidade de ajuda mútua"
   },
   "auth": {
     "loginTitle": "Entrar",
@@ -114,7 +131,7 @@
     "newPassword": "Nova palavra-passe",
     "setPassword": "Guardar palavra-passe",
     "passwordChanged": "Palavra-passe alterada. Já pode entrar.",
-    "terms": "Ao criar conta, compromete-se a ajudar com segurança e respeito.",
+    "terms": "Ao registar-se, confirma que tem pelo menos 16 anos e concorda em ajudar com segurança e respeito.",
     "googleFailed": "Não foi possível entrar com o Google. Tente de novo.",
     "googleInactive": "Esta conta foi desativada.",
     "checkSpam": "Não vê o email? Aguarde um minuto e verifique as pastas Spam e Promoções. Se estiver lá, marque-o como «Não é spam» para que os próximos cheguem à caixa de entrada.",
@@ -170,7 +187,8 @@
     "findSomeone": "Veja quem precisa de ajuda →",
     "hello": "Olá, {{name}}!",
     "ask": "Pedir ajuda",
-    "orPick": "Ou escolha logo o assunto:"
+    "orPick": "Ou escolha logo o assunto:",
+    "myActivity": "A minha atividade"
   },
   "availability": {
     "title": "Posso ajudar agora",
@@ -299,7 +317,7 @@
     "descriptionPlaceholder": "Descreva a ajuda de que precisa. Não indique a morada exata nem o telefone: pode partilhá-los na conversa.",
     "locationHint": "Mova o marcador se for preciso",
     "youAreHere": "📍 Está aqui",
-    "locationPrivacy": "Só quem responder vê o local exato. Os outros veem uma distância aproximada.",
+    "locationPrivacy": "Só quem responder vê o local exato. Os outros veem uma distância aproximada. Mova o marcador se for preciso",
     "locating": "A procurar a sua localização…",
     "locationError": "Não foi possível obter a sua localização. Mova o marcador no mapa manualmente.",
     "useMyLocation": "A minha localização atual",
@@ -323,7 +341,27 @@
     "helpersNeeded": "Quantas pessoas são precisas",
     "helpersNeededHint": "Quando esse número de pessoas aceitar ajudar, o pedido fecha para os outros.",
     "activeHours": "Quanto tempo o pedido fica ativo",
-    "activeHoursHint": "Depois disso, fecha automaticamente."
+    "activeHoursHint": "Depois disso, fecha automaticamente.",
+    "locationManual": "Não conseguimos detetar a sua localização. Arraste o marcador para onde é precisa ajuda.",
+    "locationManualDenied": "O acesso à localização está desligado. Arraste o marcador para onde é precisa ajuda ou permita a localização no navegador.",
+    "locationPickPrompt": "Arraste o marcador para marcar o local",
+    "categoryLabel": "Categoria",
+    "categoryPlaceholder": "Escolha uma categoria",
+    "subcategoryLabel": "Detalhe (opcional)",
+    "titlePlaceholders": {
+      "AUTO": "Por exemplo: pneu furado",
+      "HOME": "Por exemplo: levar um armário ao 3º andar",
+      "ITEMS": "Por exemplo: pegar uma furadeira emprestada por uma hora",
+      "ANIMALS": "Por exemplo: passear com o cachorro à noite",
+      "PEOPLE": "Por exemplo: levar as compras para a avó",
+      "DISTRICT": "Por exemplo: limpar o quintal",
+      "URGENT": "Por exemplo: alguém passou mal na rua",
+      "OTHER": "Por exemplo: ajuda com o notebook"
+    },
+    "pickDate": "Escolha uma data",
+    "leaveTitle": "Sair do pedido?",
+    "leaveText": "O que você preencheu não será salvo.",
+    "leaveConfirm": "Sair"
   },
   "nearby": {
     "title": "Ajuda perto",
@@ -334,15 +372,17 @@
     "category": "Categoria",
     "urgency": "Urgência",
     "all": "Todas",
-    "emptyTitle": "Não há pedidos perto neste momento.",
-    "emptyText": "Isso não quer dizer que ninguém precise de ajuda. Ative as notificações e avisamos quando alguém perto precisar.",
+    "emptyTitle": "Nenhum pedido agora.",
+    "emptyText": "Ative as notificações e avisaremos quando alguém precisar de ajuda.",
     "enableNotifications": "Ativar notificações",
     "needLocation": "Para ver pedidos perto, permita o acesso à localização.",
     "allowLocation": "Permitir localização",
     "approximate": "Localização aproximada",
     "loadMore": "Mostrar mais",
     "useCityCenter": "Mostrar perto do centro: {{city}}",
-    "cityCenterNotice": "A mostrar pedidos perto do centro da cidade. Permita a localização para distâncias mais precisas."
+    "cityCenterNotice": "A mostrar pedidos perto do centro da cidade. Permita a localização para distâncias mais precisas.",
+    "selectAll": "Selecionar tudo",
+    "resetMap": "Minha localização"
   },
   "request": {
     "canHelp": "Posso ajudar",
@@ -428,12 +468,13 @@
     "iosHint": "No iPhone, adicione a app ao ecrã principal (Partilhar → Adicionar ao ecrã principal) para receber notificações.",
     "enabled": "Notificações push ativadas",
     "enable": "Ativar notificações push",
-    "disable": "Desativar push neste dispositivo"
+    "disable": "Desativar push neste dispositivo",
+    "enabledHint": "Novos pedidos por perto chegam na hora. Pode desligar nas Definições."
   },
   "profile": {
     "title": "Perfil",
-    "helped": "🤝 Ajudou: {{count}}",
-    "thanks": "❤️ Agradecimentos recebidos: {{count}}",
+    "helped": "🤝 Ajudas: {{count}}",
+    "thanks": "❤️ Agradecimentos: {{count}}",
     "helpedShort": "🤝 {{count}} ajudas",
     "thanksShort": "❤️ {{count}} obrigados",
     "canHelp": "Posso ajudar com:",
@@ -469,7 +510,13 @@
     "sendConfirmation": "Enviar confirmação",
     "emailSent": "E-mail enviado para {{email}}. Abra o link.",
     "emailPending": "Aguardando confirmação: {{email}}",
-    "contactsPrivacy": "Telefone e e-mail só aparecem para ajudantes que você escolher e autores que escolherem você."
+    "contactsPrivacy": "Telefone e e-mail só aparecem para ajudantes que você escolher e autores que escolherem você.",
+    "declinedTab": "Candidatei-me",
+    "noDeclined": "Aqui aparecerão os pedidos a que se ofereceu",
+    "viewPhoto": "Abrir foto: {{name}}",
+    "emailNotVerified": "Email não verificado",
+    "editPhoto": "Editar",
+    "deletePhoto": "Excluir"
   },
   "settings": {
     "title": "Definições",
@@ -528,7 +575,13 @@
     "currentPassword": "Senha atual",
     "newPassword": "Nova senha",
     "passwordChanged": "Senha alterada",
-    "passwordOtherDevices": "Você precisará entrar novamente em outros dispositivos."
+    "passwordOtherDevices": "Você precisará entrar novamente em outros dispositivos.",
+    "deleteAccount": "Excluir conta",
+    "deleteTitle": "Excluir sua conta para sempre?",
+    "deleteText": "Seu email, telefone, fotos, notificações e configurações serão apagados. Nos chats e pedidos em que outras pessoas participaram, seu nome passará a ser «Usuário excluído» e seus textos serão removidos. Não é possível desfazer.",
+    "deletePassword": "Digite sua senha para confirmar",
+    "deleteConfirm": "Excluir para sempre",
+    "deleted": "Conta excluída"
   },
   "report": {
     "title": "Denunciar",
@@ -646,7 +699,8 @@
     "send": "Enviar",
     "sent": "Mensagem enviada",
     "replyNote": "Vamos responder para {{email}}.",
-    "another": "Escrever outra"
+    "another": "Escrever outra",
+    "yourEmail": "Seu email para a resposta"
   },
   "install": {
     "title": "Instale o Poruch como app",
@@ -660,9 +714,9 @@
     "howTo": "Como instalar:",
     "steps": {
       "ios": [
-        "Toque em Partilhar ⬆️, no fundo ou no menu «⋯»",
-        "Escolha «Adicionar ao ecrã principal»",
-        "Toque em «Adicionar» — o Poruch aparece com as suas apps"
+        "Toque em «Compartilhar <share></share>» no menu «<dots></dots>» embaixo, ao lado da barra de endereço",
+        "Escolha «Ver mais <more></more>» e toque em «<add></add> Adicionar à Tela de Início»",
+        "Toque em «Adicionar»"
       ],
       "ios-other-browser": [
         "Toque em Partilhar ⬆️ na barra de endereço",
@@ -679,7 +733,7 @@
         "Confirme — o Poruch aparece com as suas apps"
       ],
       "desktop": [
-        "Clique no ícone de instalar ⊕ na barra de endereço (ou menu ⋮ → «Instalar Poruch»)",
+        "Clique no ícone de instalação <install></install> na barra de endereço (ou menu ⋮ → «Instalar Poruch»)",
         "Confirme a instalação"
       ]
     },
@@ -720,5 +774,54 @@
     "updated": "Versão em vigor: {{date}}",
     "englishOnly": "Este documento está disponível em ucraniano e inglês",
     "agree": "Também aceita os <terms>Termos de utilização</terms> e a <privacy>Política de privacidade</privacy>."
+  },
+  "reviews": {
+    "rating": "Avaliação",
+    "sent": "Obrigado pela avaliação!",
+    "title": "Avaliar {{name}}",
+    "submit": "Enviar avaliação",
+    "placeholder": "Como correu? (opcional)",
+    "permanent": "A avaliação aparece no perfil e não pode ser alterada nem apagada depois.",
+    "leaveTitle": "Avalie a colaboração",
+    "done": "Avaliado",
+    "leave": "Deixar avaliação",
+    "heading": "Avaliações",
+    "none": "Ainda sem avaliações",
+    "count_one": "{{count}} avaliação",
+    "count_other": "{{count}} avaliações"
+  },
+  "edit": {
+    "button": "Editar",
+    "title": "Editar pedido",
+    "save": "Guardar alterações",
+    "saved": "Alterações guardadas",
+    "fixedFields": "Categoria, local e urgência não podem ser alterados — quem está perto já conta com eles. Cancele o pedido e crie um novo."
+  },
+  "location": {
+    "rough": "A localização é aproximada (±{{metres}}). Aproxime-se de uma janela ou vá para fora, ou ative «Localização exata» nas definições do telemóvel.",
+    "roughDrag": "A localização é aproximada (±{{metres}}). Arraste o marcador para o local exato ou ative «Localização exata» nas definições do telemóvel."
+  },
+  "when": {
+    "todayAt": "hoje às {{time}}",
+    "tomorrowAt": "amanhã às {{time}}",
+    "dateAt": "{{date}} às {{time}}",
+    "yesterday": "Ontem"
+  },
+  "pager": {
+    "label": "Páginas",
+    "previous": "Página anterior",
+    "next": "Página seguinte"
+  },
+  "listTools": {
+    "search": "Pesquisar",
+    "sort": "Ordenar",
+    "nothingFound": "Nada encontrado",
+    "sorts": {
+      "distance": "Mais próximos",
+      "newest": "Mais recentes",
+      "oldest": "Mais antigos",
+      "urgency": "Mais urgentes",
+      "soon": "Pela data da ajuda"
+    }
   }
 }

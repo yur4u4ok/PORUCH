@@ -11,18 +11,19 @@ import { SelectAll } from "@/features/help/SelectAll";
 import { playChime, setSoundEnabled, soundEnabled } from "@/features/attention/sound";
 import { geolocationPermission, useGeolocation } from "@/features/location/useGeolocation";
 import { MuteNotifications } from "@/features/notifications/MuteNotifications";
-import { PushToggle } from "@/features/notifications/PushToggle";
+import { PushUnavailable } from "@/features/notifications/PushToggle";
+import { useEnablePush, usePushOn } from "@/features/notifications/usePush";
 import {
   useBlocks,
   useChangePassword,
   useDeactivate,
+  useDeleteAccount,
   usePreferences,
   usePublicConfig,
   useUnblockUser,
   useUpdatePreferences,
 } from "@/features/profile/hooks";
 import { LanguageSwitcher } from "@/features/profile/LanguageSwitcher";
-import { InstallCard } from "@/features/pwa/InstallPrompt";
 import { RegionSettings } from "@/features/profile/RegionSettings";
 import { ThemeSwitcher } from "@/features/profile/ThemeSwitcher";
 import { toast } from "@/stores/toastStore";
@@ -34,7 +35,6 @@ export function SettingsPage() {
   return (
     <main className="page stack">
       <PageHeader title={t("settings.title")} />
-      <InstallCard />
       <Card className="stack-sm">
         <strong>{t("settings.language")}</strong>
         <LanguageSwitcher />
@@ -62,6 +62,8 @@ export function NotificationSettingsPage() {
   const { data: prefs, isPending } = usePreferences();
   const { data: config } = usePublicConfig();
   const update = useUpdatePreferences();
+  const pushOn = usePushOn();
+  const enablePush = useEnablePush();
   const { locate, status } = useGeolocation();
   const [geoState, setGeoState] = useState<string>("granted");
 
@@ -90,12 +92,13 @@ export function NotificationSettingsPage() {
     <main className="page stack">
       <PageHeader title={t("settings.notifications")} />
       <Card className="stack-sm">
-        <PushToggle hideWhenActive />
         <Switch
           label={t("settings.push")}
-          checked={prefs.push_enabled}
-          onChange={(v) => update.mutate({ push_enabled: v })}
+          checked={!!pushOn}
+          disabled={enablePush.busy}
+          onChange={(v) => (v ? void enablePush.run() : update.mutate({ push_enabled: false }))}
         />
+        <PushUnavailable />
         <Switch
           label={t("settings.email")}
           checked={prefs.email_enabled}
@@ -137,16 +140,21 @@ export function NotificationSettingsPage() {
           labelKey="notificationCategories"
         />
       </Card>
-      <Card className="stack-sm">
-        <span className="muted" style={{ fontSize: 14 }}>
-          📍 {geoState === "denied" ? t("settings.locationAutoDenied") : t("settings.locationAuto")}
-        </span>
-        {geoState === "prompt" && (
-          <Button variant="secondary" onClick={allowLocation} loading={status === "locating"}>
-            {t("nearby.allowLocation")}
-          </Button>
-        )}
-      </Card>
+      {/* Shown only when something needs doing: location blocked, or not asked yet. */}
+      {(geoState === "denied" || geoState === "prompt") && (
+        <Card className="stack-sm">
+          {geoState === "denied" && (
+            <span className="muted" style={{ fontSize: 14 }}>
+              📍 {t("settings.locationAutoDenied")}
+            </span>
+          )}
+          {geoState === "prompt" && (
+            <Button variant="secondary" onClick={allowLocation} loading={status === "locating"}>
+              {t("nearby.allowLocation")}
+            </Button>
+          )}
+        </Card>
+      )}
     </main>
   );
 }
@@ -235,6 +243,10 @@ export function PrivacySettingsPage() {
   const unblock = useUnblockUser();
   const deactivate = useDeactivate();
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const deleteAccount = useDeleteAccount();
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deletePassword, setDeletePassword] = useState("");
+  const deleteErrors = deleteAccount.error instanceof ApiError ? deleteAccount.error.fieldErrors() : {};
   const [geoState, setGeoState] = useState<string>("prompt");
 
   useEffect(() => {
@@ -290,6 +302,48 @@ export function PrivacySettingsPage() {
       <Button variant="danger" onClick={() => setConfirmOpen(true)}>
         {t("settings.deactivate")}
       </Button>
+      <Button variant="danger" onClick={() => setDeleteOpen(true)}>
+        {t("settings.deleteAccount")}
+      </Button>
+      <Modal
+        open={deleteOpen}
+        onClose={() => setDeleteOpen(false)}
+        title={t("settings.deleteTitle")}
+        actions={
+          <>
+            <Button variant="secondary" onClick={() => setDeleteOpen(false)}>
+              {t("common.cancel")}
+            </Button>
+            <Button
+              variant="danger"
+              loading={deleteAccount.isPending}
+              disabled={me.has_password && !deletePassword}
+              onClick={() =>
+                deleteAccount.mutate(me.has_password ? deletePassword : undefined, {
+                  onSuccess: () => {
+                    toast.success(t("settings.deleted"));
+                    navigate("/", { replace: true });
+                  },
+                })
+              }
+            >
+              {t("settings.deleteConfirm")}
+            </Button>
+          </>
+        }
+      >
+        <p>{t("settings.deleteText")}</p>
+        {me.has_password && (
+          <Input
+            label={t("settings.deletePassword")}
+            type="password"
+            autoComplete="current-password"
+            value={deletePassword}
+            onChange={(e) => setDeletePassword(e.target.value)}
+            error={deleteErrors.password}
+          />
+        )}
+      </Modal>
       <ConfirmDialog
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)}

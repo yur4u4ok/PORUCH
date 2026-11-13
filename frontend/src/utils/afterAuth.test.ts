@@ -10,3 +10,13 @@ it("returns to the remembered page once, and only to local paths", () => {
   rememberAfterAuth("//evil.example.com");
   expect(consumeAfterAuth()).toBe("/");
 });
+
+it("survives a new tab (email link) but not a day later", () => {
+  rememberAfterAuth("/nearby");
+  expect(peekAfterAuth()).toBe("/nearby"); // stored in localStorage, shared between tabs
+  localStorage.setItem(
+    "poruch.afterAuth",
+    JSON.stringify({ path: "/nearby", at: Date.now() - 25 * 3600_000 }),
+  );
+  expect(consumeAfterAuth()).toBe("/");
+});

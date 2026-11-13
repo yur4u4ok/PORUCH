@@ -21,6 +21,11 @@ def update_profile(user: User, data: dict) -> Profile:
                     raise ValidationFailed(details={"display_name": [_("Ім'я не може бути порожнім.")]})
             setattr(profile, name, value)
             fields.append(name)
+    if "language" in data:
+        from common.i18n import normalize_language
+
+        profile.language = normalize_language(data["language"])
+        fields.append("language")
     if "custom_items" in data:
         items = [i.strip() for i in data["custom_items"] if i and i.strip()]
         items = list(dict.fromkeys(items))

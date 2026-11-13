@@ -21,6 +21,7 @@ from apps.users.cookies import clear_auth_cookies, set_auth_cookies
 from apps.users.models import Capability, User, UserCapability
 from apps.users.selectors import users_with_profile
 from apps.users.services import accounts, profile
+from apps.users.services.deletion import delete_account
 from apps.users.services.tokens import issue_tokens
 from common import analytics
 from common.exceptions import DomainError, NotFound
@@ -52,7 +53,6 @@ class RegisterView(APIView):
         ser = s.RegisterSerializer(data=request.data)
         ser.is_valid(raise_exception=True)
         data = dict(ser.validated_data)
-        data.pop("age_confirmed")
         user = accounts.register_user(**data)
         response = Response(_me(user), status=status.HTTP_201_CREATED)
         return set_auth_cookies(response, issue_tokens(user))
@@ -71,6 +71,7 @@ class LoginView(APIView):
         if user is None:
             raise DomainError(_("Неправильний email або пароль."), code="INVALID_CREDENTIALS")
         analytics.track(user_id=user.id, event="user_logged_in")
+        analytics.track(user_id=user.id, event="login_completed", properties={"method": "email"})
         return set_auth_cookies(Response(_me(user)), issue_tokens(user))
 
 
@@ -144,6 +145,8 @@ class GoogleAuthView(APIView):
         data = ser.validated_data
         credential = data.get("credential") or accounts.exchange_google_code(data["code"])
         user, created = accounts.authenticate_google(credential)
+        funnel_event = "signup_completed" if created else "login_completed"
+        analytics.track(user_id=user.id, event=funnel_event, properties={"method": "google"})
         response = Response(_me(user), status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
         return set_auth_cookies(response, issue_tokens(user))
 
@@ -222,6 +225,19 @@ class DeactivateView(APIView):
     def post(self, request):
         profile.deactivate_user(request.user)
         analytics.track(user_id=request.user.id, event="user_deactivated")
+        return clear_auth_cookies(Response(status=status.HTTP_204_NO_CONTENT))
+
+
+class DeleteAccountView(APIView):
+    """Erase the account for good (the password confirms it, if the account has one)."""
+
+    permission_classes = [IsAuthenticatedUser]
+
+    @extend_schema(request=s.DeleteAccountSerializer, responses={204: None})
+    def post(self, request):
+        ser = s.DeleteAccountSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        delete_account(request.user, ser.validated_data.get("password"))
         return clear_auth_cookies(Response(status=status.HTTP_204_NO_CONTENT))
 
 

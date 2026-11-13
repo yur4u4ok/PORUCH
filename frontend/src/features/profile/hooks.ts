@@ -1,10 +1,7 @@
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
-import { infiniteList } from "@/api/paging";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { queryKeys } from "@/api/queryKeys";
 import { usersApi, type AvailabilityInput, type MeUpdate, type PreferencesUpdate } from "@/api/users";
-import type { ThankYou } from "@/types/api";
 
 export function usePublicConfig() {
   return useQuery({ queryKey: queryKeys.config, queryFn: usersApi.config, staleTime: Infinity });
@@ -92,14 +89,6 @@ export function useChangeEmail() {
   });
 }
 
-export function useThanks(id: string | undefined) {
-  return useInfiniteQuery({
-    queryKey: queryKeys.thanks(id ?? ""),
-    ...infiniteList<ThankYou>(`/users/${id}/thanks/`),
-    enabled: !!id,
-  });
-}
-
 export function useBlocks() {
   return useQuery({ queryKey: queryKeys.blocks, queryFn: usersApi.blocks });
 }
@@ -132,6 +121,18 @@ export function useDeactivate() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: () => usersApi.deactivate(),
+    onSuccess: () => {
+      qc.clear();
+      qc.setQueryData(queryKeys.me, null);
+    },
+  });
+}
+
+/** Erases the account for good (the password confirms it when the account has one). */
+export function useDeleteAccount() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (password?: string) => usersApi.deleteAccount(password),
     onSuccess: () => {
       qc.clear();
       qc.setQueryData(queryKeys.me, null);

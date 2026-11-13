@@ -1,0 +1,658 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-19 20:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apps/conversations/services/conversations.py:146
+msgid "Розмову закрито."
+msgstr "Die Unterhaltung ist geschlossen."
+
+#: apps/conversations/services/conversations.py:150
+#: apps/interactions/services/responses.py:251
+msgid "Користувач недоступний."
+msgstr "Der Nutzer ist nicht verfügbar."
+
+#: apps/conversations/services/conversations.py:152
+msgid "Ви не можете писати цьому користувачу."
+msgstr "Du kannst diesem Nutzer nicht schreiben."
+
+#: apps/conversations/services/conversations.py:182
+#: apps/interactions/services/responses.py:24
+msgid "Сусід"
+msgstr "Nachbar"
+
+#: apps/conversations/services/conversations.py:185
+msgid "📷 Фото"
+msgstr "📷 Foto"
+
+#: apps/conversations/services/conversations.py:194
+#, python-brace-format
+msgid "💬 {name}"
+msgstr "💬 {name}"
+
+#: apps/conversations/services/conversations.py:242
+msgid "Повідомлення не знайдено."
+msgstr "Nachricht nicht gefunden."
+
+#: apps/conversations/services/conversations.py:244
+msgid "Невідома реакція."
+msgstr "Unbekannte Reaktion."
+
+#: apps/help_requests/services/create_request.py:33
+msgid "Вкажіть дату й час."
+msgstr "Gib Datum und Uhrzeit an."
+
+#: apps/help_requests/services/create_request.py:35
+msgid "Оберіть час щонайменше через 15 хвилин."
+msgstr "Wähle eine Zeit mindestens 15 Minuten ab jetzt."
+
+#: apps/help_requests/services/create_request.py:37
+msgid "Не пізніше ніж через 30 днів."
+msgstr "Höchstens 30 Tage im Voraus."
+
+#: apps/help_requests/services/create_request.py:54
+msgid "Невідомий варіант подяки."
+msgstr "Unbekannte Dankeschön-Option."
+
+#: apps/help_requests/services/create_request.py:56
+msgid "Сума має бути більшою за нуль."
+msgstr "Der Betrag muss größer als null sein."
+
+#: apps/help_requests/services/create_request.py:59
+msgid "Оберіть, як ви віддячите."
+msgstr "Wähle, wie du dich bedankst."
+
+#: apps/help_requests/services/create_request.py:61
+msgid "Вкажіть суму або оберіть варіант подяки."
+msgstr "Gib einen Betrag an oder wähle eine Dankeschön-Option."
+
+#: apps/help_requests/services/create_request.py:70
+msgid "Невідома підкатегорія."
+msgstr "Unbekannte Unterkategorie."
+
+#: apps/help_requests/services/create_request.py:100
+msgid "Потрібно підтвердити попередження про екстрені служби."
+msgstr "Bitte bestätige den Hinweis zu den Notdiensten."
+
+#: apps/help_requests/services/create_request.py:102
+msgid "Підтвердіть, що ознайомились із попередженням."
+msgstr "Bestätige, dass du den Hinweis gelesen hast."
+
+#: apps/help_requests/services/create_request.py:106
+msgid "Опишіть, що сталося."
+msgstr "Beschreibe, was passiert ist."
+
+#: apps/help_requests/services/create_request.py:110
+#, python-brace-format
+msgid "Максимум {n} фото."
+msgstr "Höchstens {n} Fotos."
+
+#: apps/help_requests/services/lifecycle.py:31
+msgid "Тільки автор може змінювати запит."
+msgstr "Nur die Person, die angefragt hat, kann die Anfrage ändern."
+
+#: apps/help_requests/services/lifecycle.py:41
+msgid "Редагувати можна тільки активний запит."
+msgstr "Nur eine aktive Anfrage kann bearbeitet werden."
+
+#: apps/help_requests/services/lifecycle.py:48
+msgid "Поле не може бути порожнім."
+msgstr "Das Feld darf nicht leer sein."
+
+#: apps/help_requests/services/lifecycle.py:59
+msgid "Максимум 5 фото."
+msgstr "Höchstens 5 Fotos."
+
+#: apps/help_requests/services/lifecycle.py:85
+msgid "Цей запит вже закрито."
+msgstr "Diese Anfrage ist bereits geschlossen."
+
+#: apps/help_requests/services/lifecycle.py:99
+msgid "Запит скасовано"
+msgstr "Anfrage abgebrochen"
+
+#: apps/help_requests/services/lifecycle.py:100
+msgid "Автор скасував запит, з яким ви допомагали"
+msgstr "Die Anfrage, bei der du geholfen hast, wurde abgebrochen"
+
+#: apps/help_requests/services/lifecycle.py:118
+msgid "Завершити можна тільки запит, з яким вже допомагають."
+msgstr "Abschließen lässt sich nur eine Anfrage, bei der schon jemand hilft."
+
+#: apps/help_requests/services/lifecycle.py:127
+msgid "Допомогу отримано ❤️ Запит завершено."
+msgstr "Hilfe erhalten ❤️ Die Anfrage ist abgeschlossen."
+
+#: apps/help_requests/services/lifecycle.py:132
+msgid "🎉 Допомога завершена"
+msgstr "🎉 Hilfe abgeschlossen"
+
+#: apps/help_requests/services/lifecycle.py:133
+msgid "Дякуємо, що допомогли людині поруч!"
+msgstr "Danke, dass du jemandem in deiner Nähe geholfen hast!"
+
+#: apps/help_requests/services/lifecycle.py:169
+msgid "⏳ Запит скоро завершиться"
+msgstr "⏳ Deine Anfrage endet bald"
+
+#: apps/help_requests/services/lifecycle.py:170
+#, python-brace-format
+msgid "Ваш запит «{title}» скоро стане неактивним"
+msgstr "Deine Anfrage „{title}“ wird bald inaktiv"
+
+#: apps/help_requests/sharing.py:142
+#, python-brace-format
+msgid "🆘 Потрібна допомога: {title}"
+msgstr "🆘 Hilfe gebraucht: {title}"
+
+#: apps/help_requests/sharing.py:157
+msgid "Можеш допомогти? Відгукнись у Poruch"
+msgstr "Kannst du helfen? Antworte in Poruch"
+
+#: apps/help_requests/sharing.py:159
+msgid "✅ Запит уже неактивний"
+msgstr "✅ Die Anfrage ist nicht mehr aktiv"
+
+#: apps/help_requests/sharing.py:160
+msgid "Poruch — локальна мережа взаємодопомоги"
+msgstr "Poruch – ein lokales Netzwerk für Nachbarschaftshilfe"
+
+#: apps/interactions/services/responses.py:34
+#: apps/interactions/services/responses.py:275
+msgid "Вкажіть суму, яку пропонуєте."
+msgstr "Gib den Betrag an, den du anbietest."
+
+#: apps/interactions/services/responses.py:42
+msgid "Допомога без оплати"
+msgstr "Hilfe ohne Bezahlung"
+
+#: apps/interactions/services/responses.py:62
+msgid "Не можна відгукнутися на власний запит."
+msgstr "Du kannst nicht auf deine eigene Anfrage antworten."
+
+#: apps/interactions/services/responses.py:73
+msgid "Запит вже неактивний."
+msgstr "Die Anfrage ist nicht mehr aktiv."
+
+#: apps/interactions/services/responses.py:75
+msgid "Автор вже відхилив вашу пропозицію."
+msgstr "Dein Angebot wurde bereits abgelehnt."
+
+#: apps/interactions/services/responses.py:110
+msgid "🤝 Хтось може допомогти"
+msgstr "🤝 Jemand kann helfen"
+
+#: apps/interactions/services/responses.py:111
+#, python-brace-format
+msgid "{name} готовий(-а) допомогти з вашим запитом"
+msgstr "{name} möchte bei deiner Anfrage helfen"
+
+#: apps/interactions/services/responses.py:180
+msgid "Помічника обрано. Домовтеся про деталі в цьому чаті."
+msgstr "Ein Helfer wurde ausgewählt. Besprecht die Details in diesem Chat."
+
+#: apps/interactions/services/responses.py:184
+#, python-brace-format
+msgid "Домовленість про подяку: {terms}"
+msgstr "Vereinbartes Dankeschön: {terms}"
+
+#: apps/interactions/services/responses.py:190
+msgid "✅ Вашу допомогу прийнято"
+msgstr "✅ Deine Hilfe wurde angenommen"
+
+#: apps/interactions/services/responses.py:191
+msgid "Напишіть людині, щоб домовитися про деталі"
+msgstr "Schreib der Person, um die Details abzusprechen"
+
+#: apps/interactions/services/responses.py:201
+#: apps/interactions/services/responses.py:341
+msgid "Дякуємо за готовність допомогти"
+msgstr "Danke, dass du helfen wolltest"
+
+#: apps/interactions/services/responses.py:202
+msgid "Автор запиту вже знайшов помічників"
+msgstr "Für die Anfrage wurden schon Helfer gefunden"
+
+#: apps/interactions/services/responses.py:243
+msgid "Тільки автор може обрати помічника."
+msgstr "Nur die Person, die angefragt hat, kann einen Helfer wählen."
+
+#: apps/interactions/services/responses.py:247
+msgid "Помічників вже обрано або запит закрито."
+msgstr "Helfer sind schon gewählt oder die Anfrage ist geschlossen."
+
+#: apps/interactions/services/responses.py:249
+#: apps/interactions/services/responses.py:269
+#: apps/interactions/services/responses.py:302
+#: apps/interactions/services/responses.py:334
+#: apps/interactions/services/responses.py:361
+msgid "Ця пропозиція вже неактивна."
+msgstr "Dieses Angebot ist nicht mehr aktiv."
+
+#: apps/interactions/services/responses.py:267
+msgid "Тільки автор може запропонувати суму."
+msgstr "Nur die Person, die angefragt hat, kann einen Betrag vorschlagen."
+
+#: apps/interactions/services/responses.py:271
+msgid "Помічник не пропонував іншу суму."
+msgstr "Der Helfer hat keinen anderen Betrag vorgeschlagen."
+
+#: apps/interactions/services/responses.py:273
+msgid "Ви вже запропонували свою суму."
+msgstr "Du hast deinen Betrag schon vorgeschlagen."
+
+#: apps/interactions/services/responses.py:282
+msgid "💬 Автор пропонує іншу суму"
+msgstr "💬 Ein anderer Betrag wird vorgeschlagen"
+
+#: apps/interactions/services/responses.py:283
+#, python-brace-format
+msgid "Автор запиту пропонує {amount}. Погодитися чи відмовитися?"
+msgstr "Vorgeschlagen werden {amount}. Annehmen oder ablehnen?"
+
+#: apps/interactions/services/responses.py:300
+msgid "Автор не пропонував іншої суми."
+msgstr "Es wurde kein anderer Betrag vorgeschlagen."
+
+#: apps/interactions/services/responses.py:310
+msgid "Помічник не погодився на суму"
+msgstr "Der Helfer ist mit dem Betrag nicht einverstanden"
+
+#: apps/interactions/services/responses.py:311
+#, python-brace-format
+msgid "{name} відмовився(-лась) від вашої пропозиції"
+msgstr "{name} hat dein Angebot abgelehnt"
+
+#: apps/interactions/services/responses.py:330
+msgid "Тільки автор може відхилити пропозицію."
+msgstr "Nur die Person, die angefragt hat, kann ein Angebot ablehnen."
+
+#: apps/interactions/services/responses.py:342
+msgid "Цього разу автор обрав інший варіант"
+msgstr "Diesmal wurde eine andere Option gewählt"
+
+#: apps/interactions/services/responses.py:365
+msgid "Запит вже завершено."
+msgstr "Die Anfrage ist bereits abgeschlossen."
+
+#: apps/interactions/services/responses.py:387
+msgid "Помічник не зможе допомогти"
+msgstr "Der Helfer kann doch nicht helfen"
+
+#: apps/interactions/services/responses.py:388
+msgid "Ваш запит знову активний — інші люди поруч можуть відгукнутися"
+msgstr ""
+"Deine Anfrage ist wieder aktiv – andere in deiner Nähe können antworten"
+
+#: apps/locations/services/availability.py:32
+#, python-brace-format
+msgid "Максимум {h} год."
+msgstr "Höchstens {h} Std."
+
+#: apps/media/services/media.py:23
+msgid "Дозволені формати: JPEG, PNG, WEBP."
+msgstr "Erlaubte Formate: JPEG, PNG, WEBP."
+
+#: apps/media/services/media.py:26
+#, python-brace-format
+msgid "Максимальний розмір файлу — {mb} MB."
+msgstr "Maximale Dateigröße: {mb} MB."
+
+#: apps/media/services/media.py:60
+msgid "Файл відхилено."
+msgstr "Datei abgelehnt."
+
+#: apps/media/services/media.py:64
+msgid "Файл ще не завантажено."
+msgstr "Die Datei wurde noch nicht hochgeladen."
+
+#: apps/media/services/media.py:66
+msgid "Файл занадто великий."
+msgstr "Die Datei ist zu groß."
+
+#: apps/media/services/media.py:96
+msgid "Файл не знайдено."
+msgstr "Datei nicht gefunden."
+
+#: apps/media/services/media.py:98
+msgid "Файл не готовий або має неправильний тип."
+msgstr "Die Datei ist nicht bereit oder hat den falschen Typ."
+
+#: apps/media/services/media.py:114
+msgid "Файл вже використовується."
+msgstr "Die Datei wird bereits verwendet."
+
+#: apps/moderation/services/moderation.py:13
+msgid "Не можна заблокувати себе."
+msgstr "Du kannst dich nicht selbst blockieren."
+
+#: apps/moderation/services/moderation.py:41
+msgid "Вкажіть, на що скаржитесь."
+msgstr "Gib an, was du meldest."
+
+#: apps/moderation/services/moderation.py:46
+#: apps/moderation/services/moderation.py:50
+#: apps/moderation/services/moderation.py:56
+msgid "Не знайдено."
+msgstr "Nicht gefunden."
+
+#: apps/moderation/services/moderation.py:59
+msgid "Не можна поскаржитися на себе."
+msgstr "Du kannst dich nicht selbst melden."
+
+#: apps/notifications/services/nearby_notifications.py:92
+msgid "🆘 Комусь поруч потрібна допомога"
+msgstr "🆘 Jemand in deiner Nähe braucht Hilfe"
+
+#: apps/notifications/services/notify.py:59
+msgid "Відкрити в Poruch"
+msgstr "In Poruch öffnen"
+
+#: apps/notifications/services/notify.py:61
+msgid "Сповіщення на пошту можна вимкнути в налаштуваннях застосунку."
+msgstr ""
+"E-Mail-Benachrichtigungen kannst du in den App-Einstellungen ausschalten."
+
+#: apps/notifications/services/preferences.py:30
+msgid "Невідома категорія."
+msgstr "Unbekannte Kategorie."
+
+#: apps/notifications/services/texts.py:8
+msgid "Проблема з автомобілем"
+msgstr "Ein Problem mit dem Auto"
+
+#: apps/notifications/services/texts.py:9
+msgid "Потрібна допомога вдома"
+msgstr "Hilfe zu Hause gebraucht"
+
+#: apps/notifications/services/texts.py:10
+msgid "Потрібна річ або передача"
+msgstr "Ein Gegenstand oder eine Übergabe wird gebraucht"
+
+#: apps/notifications/services/texts.py:11
+msgid "Допомога з твариною"
+msgstr "Hilfe mit einem Tier"
+
+#: apps/notifications/services/texts.py:12
+msgid "Потрібна допомога людині"
+msgstr "Ein Mensch braucht Hilfe"
+
+#: apps/notifications/services/texts.py:13
+msgid "Ситуація в районі"
+msgstr "Etwas in der Nachbarschaft"
+
+#: apps/notifications/services/texts.py:14
+msgid "Термінова ситуація"
+msgstr "Eine dringende Situation"
+
+#: apps/notifications/services/texts.py:15
+msgid "Потрібна допомога"
+msgstr "Hilfe gebraucht"
+
+#: apps/notifications/services/texts.py:19
+msgid "🔴 Потрібна допомога зараз"
+msgstr "🔴 Hilfe sofort gebraucht"
+
+#: apps/notifications/services/texts.py:20
+msgid "🟡 Сьогодні"
+msgstr "🟡 Heute"
+
+#: apps/notifications/services/texts.py:21
+msgid "🟢 Коли буде можливість"
+msgstr "🟢 Wann es passt"
+
+#: apps/notifications/services/texts.py:22
+msgid "📅 У визначений час"
+msgstr "📅 Zu einer bestimmten Zeit"
+
+#: apps/notifications/services/texts.py:31
+#, python-brace-format
+msgid "{m} м від вас"
+msgstr "{m} m von dir"
+
+#: apps/notifications/services/texts.py:32
+#, python-brace-format
+msgid "{km} км від вас"
+msgstr "{km} km von dir"
+
+#: apps/reputation/services/reviews.py:38
+msgid "Відгук можна залишити після завершення допомоги."
+msgstr "Eine Bewertung ist nach Abschluss der Hilfe möglich."
+
+#: apps/reputation/services/reviews.py:40
+msgid "Залишити відгук можна тільки учаснику цієї допомоги."
+msgstr "Nur Beteiligte dieser Hilfe können eine Bewertung abgeben."
+
+#: apps/reputation/services/reviews.py:47
+msgid "Ви вже залишили відгук цій людині."
+msgstr "Du hast diese Person bereits bewertet."
+
+#: apps/reputation/services/reviews.py:55
+#, python-brace-format
+msgid "⭐ Новий відгук: {stars}"
+msgstr "⭐ Neue Bewertung: {stars}"
+
+#: apps/reputation/services/thanks.py:22
+msgid "Подякувати може тільки автор запиту."
+msgstr "Nur die Person, die angefragt hat, kann sich bedanken."
+
+#: apps/reputation/services/thanks.py:24
+msgid "Подякувати можна після завершення допомоги."
+msgstr "Bedanken kannst du dich nach Abschluss der Hilfe."
+
+#: apps/reputation/services/thanks.py:54
+msgid "❤️ Вам подякували"
+msgstr "❤️ Jemand hat sich bei dir bedankt"
+
+#: apps/reputation/services/thanks.py:55
+msgid "Дякую за допомогу!"
+msgstr "Danke für deine Hilfe!"
+
+#: apps/users/phone.py:16 apps/users/phone.py:18
+msgid "Невірний номер телефону."
+msgstr "Ungültige Telefonnummer."
+
+#: apps/users/services/accounts.py:52 apps/users/services/profile.py:41
+msgid "Невідоме місто."
+msgstr "Unbekannte Stadt."
+
+#: apps/users/services/accounts.py:64 apps/users/services/accounts.py:78
+#: apps/users/services/accounts.py:127 apps/users/services/accounts.py:168
+msgid "Користувач з таким email вже існує."
+msgstr "Ein Nutzer mit dieser E-Mail existiert bereits."
+
+#: apps/users/services/accounts.py:98
+msgid "Підтвердіть email у Poruch"
+msgstr "Bestätige deine E-Mail in Poruch"
+
+#: apps/users/services/accounts.py:99
+msgid "Вітаємо у Poruch!"
+msgstr "Willkommen bei Poruch!"
+
+#: apps/users/services/accounts.py:102
+msgid ""
+"Залишився один крок: підтвердьте свою електронну адресу, щоб просити про "
+"допомогу й допомагати людям поруч."
+msgstr ""
+"Nur noch ein Schritt: Bestätige deine E-Mail-Adresse, um um Hilfe zu bitten "
+"und Menschen in deiner Nähe zu helfen."
+
+#: apps/users/services/accounts.py:105 apps/users/services/accounts.py:177
+msgid "Підтвердити email"
+msgstr "E-Mail bestätigen"
+
+#: apps/users/services/accounts.py:107
+msgid ""
+"Посилання дійсне 3 дні. Якщо ви не реєструвалися в Poruch — просто "
+"проігноруйте цей лист."
+msgstr ""
+"Der Link ist 3 Tage gültig. Wenn du dich nicht bei Poruch registriert hast, "
+"ignoriere diese E-Mail einfach."
+
+#: apps/users/services/accounts.py:115
+msgid "Посилання застаріло."
+msgstr "Der Link ist abgelaufen."
+
+#: apps/users/services/accounts.py:117 apps/users/services/accounts.py:120
+#: apps/users/services/accounts.py:125 apps/users/services/accounts.py:216
+msgid "Недійсне посилання."
+msgstr "Ungültiger Link."
+
+#: apps/users/services/accounts.py:147 apps/users/services/accounts.py:164
+#: apps/users/services/deletion.py:32
+msgid "Неправильний пароль."
+msgstr "Falsches Passwort."
+
+#: apps/users/services/accounts.py:166
+msgid "Це ваша поточна адреса."
+msgstr "Das ist deine aktuelle Adresse."
+
+#: apps/users/services/accounts.py:174
+msgid "Підтвердіть нову адресу в Poruch"
+msgstr "Bestätige deine neue Adresse in Poruch"
+
+#: apps/users/services/accounts.py:175
+msgid "Нова електронна адреса"
+msgstr "Neue E-Mail-Adresse"
+
+#: apps/users/services/accounts.py:176
+msgid ""
+"Ви змінюєте email свого акаунта Poruch. Підтвердіть, що ця адреса ваша."
+msgstr ""
+"Du änderst die E-Mail deines Poruch-Kontos. Bestätige, dass diese Adresse "
+"dir gehört."
+
+#: apps/users/services/accounts.py:179
+msgid ""
+"Якщо це були не ви — просто проігноруйте цей лист, нічого не зміниться."
+msgstr ""
+"Wenn du das nicht warst, ignoriere diese E-Mail einfach – es ändert sich "
+"nichts."
+
+#: apps/users/services/accounts.py:193
+msgid ""
+"Ви запросили відновлення пароля в Poruch. Натисніть кнопку, щоб встановити "
+"новий."
+msgstr ""
+"Du hast angefordert, dein Poruch-Passwort zurückzusetzen. Tippe auf die "
+"Schaltfläche, um ein neues festzulegen."
+
+#: apps/users/services/accounts.py:196
+msgid ""
+"Ви входили в Poruch через Google, тому пароля у вас ще немає. Натисніть "
+"кнопку, щоб створити його — тоді зможете входити і за email, і через Google."
+msgstr ""
+"Du hast dich mit Google bei Poruch angemeldet und hast daher noch kein "
+"Passwort. Tippe auf die Schaltfläche, um eines zu erstellen – dann kannst du"
+" dich per E-Mail und mit Google anmelden."
+
+#: apps/users/services/accounts.py:202
+msgid "Відновлення пароля в Poruch"
+msgstr "Poruch-Passwort zurücksetzen"
+
+#: apps/users/services/accounts.py:203
+msgid "Новий пароль"
+msgstr "Neues Passwort"
+
+#: apps/users/services/accounts.py:205
+msgid "Встановити новий пароль"
+msgstr "Neues Passwort festlegen"
+
+#: apps/users/services/accounts.py:207
+msgid "Якщо це були не ви — проігноруйте цей лист, ваш пароль не зміниться."
+msgstr ""
+"Wenn du das nicht warst, ignoriere diese E-Mail – dein Passwort ändert sich "
+"nicht."
+
+#: apps/users/services/accounts.py:218
+msgid "Недійсне або застаріле посилання."
+msgstr "Ungültiger oder abgelaufener Link."
+
+#: apps/users/services/accounts.py:238 apps/users/services/accounts.py:256
+msgid "Вхід через Google не налаштовано."
+msgstr "Die Anmeldung mit Google ist nicht eingerichtet."
+
+#: apps/users/services/accounts.py:242 apps/users/services/accounts.py:273
+msgid "Не вдалося перевірити обліковий запис Google."
+msgstr "Das Google-Konto konnte nicht überprüft werden."
+
+#: apps/users/services/accounts.py:282
+msgid "Email Google-акаунта не підтверджено."
+msgstr "Die E-Mail des Google-Kontos ist nicht bestätigt."
+
+#: apps/users/services/accounts.py:308
+msgid "Обліковий запис деактивовано."
+msgstr "Das Konto ist deaktiviert."
+
+#: apps/users/services/deletion.py:62
+msgid "Повідомлення видалено"
+msgstr "Nachricht gelöscht"
+
+#: apps/users/services/deletion.py:65
+msgid "Запит видалено"
+msgstr "Anfrage gelöscht"
+
+#: apps/users/services/deletion.py:66
+msgid "Автор видалив свій акаунт."
+msgstr "Die Person hat ihr Konto gelöscht."
+
+#: apps/users/services/deletion.py:81
+msgid "Видалений користувач"
+msgstr "Gelöschter Nutzer"
+
+#: apps/users/services/profile.py:21
+msgid "Ім'я не може бути порожнім."
+msgstr "Der Name darf nicht leer sein."
+
+#: apps/users/services/profile.py:33
+msgid "До 10 пунктів, кожен до 40 символів."
+msgstr "Bis zu 10 Einträge, je bis zu 40 Zeichen."
+
+#: apps/users/services/profile.py:65
+msgid "Невідомі можливості: "
+msgstr "Unbekannte Fähigkeiten: "
+
+#: apps/users/views.py:72
+msgid "Неправильний email або пароль."
+msgstr "Falsche E-Mail oder falsches Passwort."
+
+#: apps/users/views.py:106
+msgid "Сесію завершено."
+msgstr "Die Sitzung ist beendet."
+
+#: templates/emails/base.html:37
+msgid "Якщо кнопка не працює, скопіюйте посилання в браузер:"
+msgstr ""
+"Falls die Schaltfläche nicht funktioniert, kopiere den Link in deinen "
+"Browser:"
+
+#: templates/emails/base.html:48
+msgid ""
+"Ви отримали цей лист, бо маєте обліковий запис у Poruch — застосунку "
+"взаємодопомоги між людьми поруч."
+msgstr ""
+"Du erhältst diese E-Mail, weil du ein Konto bei Poruch hast, einer App für "
+"Nachbarschaftshilfe."
+
+#: templates/emails/base.html:49
+msgid "Питання? Просто дайте відповідь на цей лист."
+msgstr "Fragen? Antworte einfach auf diese E-Mail."
+
+#: templates/emails/base.html:50
+msgid "Політика конфіденційності"
+msgstr "Datenschutzerklärung"

@@ -18,6 +18,7 @@ from apps.notifications.services.notify import notify
 from apps.users.models import Profile, User
 from common import analytics
 from common.exceptions import Forbidden, InvalidState, NotFound, ValidationFailed
+from common.i18n import in_language_of
 
 EDITABLE_FIELDS = {"title", "description", "reward_type", "reward_amount", "reward_options", "reward_currency"}
 
@@ -91,14 +92,15 @@ def cancel_help_request(author: User, help_request_id) -> HelpRequest:
     )
     close_conversations(help_request)
     for helper in helpers:
-        notify(
-            helper,
-            NotificationType.REQUEST_CANCELLED,
-            title=_("Запит скасовано"),
-            body=_("Автор скасував запит, з яким ви допомагали"),
-            url=f"/help/{help_request.id}",
-            help_request=help_request,
-        )
+        with in_language_of(helper):
+            notify(
+                helper,
+                NotificationType.REQUEST_CANCELLED,
+                title=_("Запит скасовано"),
+                body=_("Автор скасував запит, з яким ви допомагали"),
+                url=f"/help/{help_request.id}",
+                help_request=help_request,
+            )
     analytics.track(user_id=author.id, event="help_requests_cancelled", properties={"help_request_id": help_request.id})
     return help_request
 
@@ -123,14 +125,15 @@ def complete_help_request(author: User, help_request_id) -> HelpRequest:
         conversation = Conversation.objects.filter(help_request=help_request, helper_id=helper.pk).first()
         if conversation:
             post_system_message(conversation, _("Допомогу отримано ❤️ Запит завершено."))
-        notify(
-            helper,
-            NotificationType.REQUEST_COMPLETED,
-            title=_("🎉 Допомога завершена"),
-            body=_("Дякуємо, що допомогли людині поруч!"),
-            url=f"/help/{help_request.id}",
-            help_request=help_request,
-        )
+        with in_language_of(helper):
+            notify(
+                helper,
+                NotificationType.REQUEST_COMPLETED,
+                title=_("🎉 Допомога завершена"),
+                body=_("Дякуємо, що допомогли людині поруч!"),
+                url=f"/help/{help_request.id}",
+                help_request=help_request,
+            )
     # Done means done: the chats of this request become read-only.
     close_conversations(help_request)
     analytics.track(
@@ -159,15 +162,16 @@ def expire_help_requests() -> int:
             expiring_notified_at=now
         )
         if updated:
-            notify(
-                help_request.author,
-                NotificationType.REQUEST_EXPIRING,
-                title=_("⏳ Запит скоро завершиться"),
-                body=_("Ваш запит «{title}» скоро стане неактивним").format(title=help_request.title[:60]),
-                url=f"/help/{help_request.id}",
-                help_request=help_request,
-                dedupe_key=f"expiring:{help_request.id}",
-            )
+            with in_language_of(help_request.author):
+                notify(
+                    help_request.author,
+                    NotificationType.REQUEST_EXPIRING,
+                    title=_("⏳ Запит скоро завершиться"),
+                    body=_("Ваш запит «{title}» скоро стане неактивним").format(title=help_request.title[:60]),
+                    url=f"/help/{help_request.id}",
+                    help_request=help_request,
+                    dedupe_key=f"expiring:{help_request.id}",
+                )
 
     with transaction.atomic():
         expired_ids = list(

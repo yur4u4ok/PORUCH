@@ -11,6 +11,12 @@ class CapabilitySerializer(serializers.ModelSerializer):
         fields = ["code", "kind", "category", "emoji"]
 
 
+def rating_of(user: User) -> float | None:
+    """Average stars, one decimal; None until the first review."""
+    profile = user.profile
+    return round(profile.rating_sum / profile.reviews_count, 1) if profile.reviews_count else None
+
+
 class PublicUserSerializer(serializers.Serializer):
     """Public information only. Respects the user's privacy settings."""
 
@@ -19,9 +25,14 @@ class PublicUserSerializer(serializers.Serializer):
     avatar = serializers.SerializerMethodField()
     helped_count = serializers.IntegerField(source="profile.helped_count", read_only=True)
     thanks_received_count = serializers.IntegerField(source="profile.thanks_received_count", read_only=True)
+    reviews_count = serializers.IntegerField(source="profile.reviews_count", read_only=True)
+    rating = serializers.SerializerMethodField()
     member_since = serializers.DateTimeField(source="date_joined", read_only=True)
     is_verified = serializers.BooleanField(source="email_verified", read_only=True)
     is_active = serializers.BooleanField(read_only=True)
+
+    def get_rating(self, user: User) -> float | None:
+        return rating_of(user)
 
     def get_display_name(self, user: User) -> str | None:
         profile = user.profile
@@ -54,13 +65,19 @@ class MeSerializer(serializers.Serializer):
     show_name = serializers.BooleanField(source="profile.show_name")
     show_avatar = serializers.BooleanField(source="profile.show_avatar")
     onboarding_completed = serializers.BooleanField(source="profile.onboarding_completed")
+    language = serializers.CharField(source="profile.language", read_only=True)
     custom_items = serializers.ListField(source="profile.custom_items", child=serializers.CharField(), read_only=True)
     helped_count = serializers.IntegerField(source="profile.helped_count", read_only=True)
     thanks_received_count = serializers.IntegerField(source="profile.thanks_received_count", read_only=True)
+    reviews_count = serializers.IntegerField(source="profile.reviews_count", read_only=True)
+    rating = serializers.SerializerMethodField()
     has_password = serializers.SerializerMethodField()
     phone = serializers.SerializerMethodField()
     phone_verified = serializers.BooleanField(read_only=True)
     pending_email = serializers.EmailField(read_only=True)
+
+    def get_rating(self, user: User) -> float | None:
+        return rating_of(user)
 
     def get_phone(self, user: User) -> str | None:
         from apps.users.phone import get_phone
@@ -82,6 +99,7 @@ class MeUpdateSerializer(serializers.Serializer):
     show_name = serializers.BooleanField(required=False)
     show_avatar = serializers.BooleanField(required=False)
     onboarding_completed = serializers.BooleanField(required=False)
+    language = serializers.CharField(max_length=16, required=False)
     custom_items = serializers.ListField(
         child=serializers.CharField(max_length=40, allow_blank=True), required=False, max_length=10
     )
@@ -105,15 +123,9 @@ class RegisterSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, min_length=8, max_length=128)
     display_name = serializers.CharField(max_length=50)
     city_id = serializers.UUIDField(required=False, allow_null=True)
-    phone = serializers.CharField(max_length=32)
+    # Optional: not asked at sign-up any more, can be added later in the profile.
+    phone = serializers.CharField(max_length=32, required=False, allow_blank=True)
     phone_region = serializers.CharField(max_length=2, required=False)
-    # Terms of Service: users must be at least 16.
-    age_confirmed = serializers.BooleanField()
-
-    def validate_age_confirmed(self, value: bool) -> bool:
-        if not value:
-            raise serializers.ValidationError("Потрібно підтвердити, що вам виповнилося 16 років.")
-        return value
 
 
 class LoginSerializer(serializers.Serializer):
@@ -149,3 +161,7 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
 
 class CapabilityCodesSerializer(serializers.Serializer):
     codes = serializers.ListField(child=serializers.CharField(max_length=40), max_length=50)
+
+
+class DeleteAccountSerializer(serializers.Serializer):
+    password = serializers.CharField(required=False, allow_blank=True, write_only=True)

@@ -29,9 +29,18 @@ def _frontend_url(path: str, **params: str) -> str:
 
 
 def _create_profile(user: User, display_name: str, city: City | None) -> Profile:
-    from apps.notifications.services.preferences import create_default_preferences
+    from django.utils import translation
 
-    profile = Profile.objects.create(user=user, display_name=display_name.strip()[:50], city=city)
+    from apps.notifications.services.preferences import create_default_preferences
+    from common.i18n import normalize_language
+
+    # The language the person signed up in (from the app's Accept-Language) until they change it.
+    profile = Profile.objects.create(
+        user=user,
+        display_name=display_name.strip()[:50],
+        city=city,
+        language=normalize_language(translation.get_language()),
+    )
     create_default_preferences(user)
     return profile
 
@@ -127,6 +136,8 @@ def verify_email(token: str) -> User:
         user.email_verified = True
         user.save(update_fields=["email_verified"])
         analytics.track(user_id=user.id, event="email_verified")
+        # Funnel: an email sign-up counts as completed once the address is confirmed.
+        analytics.track(user_id=user.id, event="signup_completed", properties={"method": "email"})
     return user
 
 
@@ -172,16 +183,25 @@ def request_email_change(user: User, new_email: str, password: str | None) -> No
 def request_password_reset(email: str) -> None:
     """Always succeeds silently to avoid account enumeration."""
     user = User.objects.filter(email__iexact=email.strip(), is_active=True).first()
-    if user is None or not user.has_usable_password():
+    if user is None:
         return
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     token = default_token_generator.make_token(user)
     link = _frontend_url("/auth/reset-password", uid=uid, token=token)
+    # Google-only accounts have no password yet: the same link lets them set one.
+    text = (
+        _("Ви запросили відновлення пароля в Poruch. Натисніть кнопку, щоб встановити новий.")
+        if user.has_usable_password()
+        else _(
+            "Ви входили в Poruch через Google, тому пароля у вас ще немає. Натисніть кнопку, щоб створити його — "
+            "тоді зможете входити і за email, і через Google."
+        )
+    )
     send_service_email(
         user.email,
         _("Відновлення пароля в Poruch"),
         heading=_("Новий пароль"),
-        paragraphs=[_("Ви запросили відновлення пароля в Poruch. Натисніть кнопку, щоб встановити новий.")],
+        paragraphs=[text],
         button_text=_("Встановити новий пароль"),
         button_url=link,
         note=_("Якщо це були не ви — проігноруйте цей лист, ваш пароль не зміниться."),
@@ -265,13 +285,10 @@ def authenticate_google(credential: str) -> tuple[User, bool]:
 
     social = SocialAccount.objects.select_related("user").filter(provider="google", uid=uid).first()
     if social and social.user.email.lower() != email:
-        # The account moved to another email: the old Google identity no longer opens it.
-        raise DomainError(
-            _(
-                "Цей Google-акаунт більше не прив'язаний до профілю — email у профілі змінено. Увійдіть через Google з новою адресою."
-            ),
-            code="GOOGLE_EMAIL_CHANGED",
-        )
+        # The profile moved to another email: the old Google identity is released and can
+        # sign up (or join an account with its own address) like any new one.
+        social.delete()
+        social = None
     if social:
         user = social.user
         created = False

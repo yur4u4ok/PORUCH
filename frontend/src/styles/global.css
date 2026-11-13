@@ -14,6 +14,11 @@ body,
 #root {
   height: 100%;
 }
+/* nothing may widen the page sideways: phones would zoom out and the floating menu would slide down */
+html,
+body {
+  overflow-x: clip;
+}
 
 body {
   margin: 0;
@@ -135,7 +140,7 @@ img {
   width: 100%;
   max-width: var(--content-max);
   margin: 0 auto;
-  padding: var(--space-4) var(--space-4) calc(var(--nav-height) + var(--space-6) + var(--safe-bottom));
+  padding: var(--space-4) var(--space-4) calc(var(--nav-height) + var(--space-8) + var(--safe-bottom));
 }
 
 @media (min-width: 1024px) {
@@ -149,4 +154,10 @@ img {
     animation-duration: 1ms !important;
     transition-duration: 1ms !important;
   }
+}
+
+/* the thin line under every screen's top bar (logo, title, back button) */
+.top-rule {
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
 }

@@ -41,7 +41,7 @@ export default function SharePage() {
   const data = preview.data;
   return (
     <main className={styles.authPage}>
-      <div className="row-between">
+      <div className="row-between top-rule">
         <Link to="/" aria-label={BRAND} style={{ textDecoration: "none" }}>
           <BrandMark />
         </Link>
@@ -68,7 +68,13 @@ export default function SharePage() {
               <div className="stack-sm">
                 <h1 style={{ fontSize: "var(--text-xl)" }}>{data.title}</h1>
                 <div className="row wrap muted" style={{ fontSize: 14 }}>
-                  {data.urgency && <UrgencyBadge urgency={data.urgency} neededAt={data.needed_at} />}
+                  {data.urgency && (
+                    <UrgencyBadge
+                      urgency={data.urgency}
+                      neededAt={data.needed_at}
+                      createdAt={data.created_at}
+                    />
+                  )}
                   {data.place && <span>📍 {data.place}</span>}
                   <span>{timeAgo(data.created_at)}</span>
                 </div>

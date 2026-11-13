@@ -1,30 +1,34 @@
 import clsx from "clsx";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useSearchParams } from "react-router";
+import { useBlocker, useNavigate, useSearchParams } from "react-router";
 
 import { ApiError } from "@/api/client";
+import { queryKeys } from "@/api/queryKeys";
+import { usersApi } from "@/api/users";
 import { errorMessage } from "@/app/queryClient";
 import { PageHeader } from "@/components/layout/AppLayout";
-import { Button, Card, Chip, Input, Select, Textarea } from "@/components/ui";
+import { Button, Card, InfoTip, Input, Select, Textarea } from "@/components/ui";
 import { Stepper } from "@/components/ui/Stepper";
 import { LazyMap } from "@/components/ui/LazyMap";
 import { useMe } from "@/features/auth/hooks";
-import { CategoryGrid, EmergencyDisclaimer, OptionTiles, UrgencyBadge } from "@/features/help/components";
+import { ConfirmDialog, EmergencyDisclaimer, OptionTiles, UrgencyBadge } from "@/features/help/components";
 import { createHelpSchema, STEP_FIELDS, type CreateHelpForm } from "@/features/help/createSchema";
 import { useCreateHelpRequest } from "@/features/help/hooks";
 import { PhotoUploader } from "@/features/help/PhotoUploader";
 import { ScheduleInput } from "@/features/help/ScheduleInput";
 import { fallbackCenter as approximateCenter, placeNameFor, usePlace } from "@/features/location/place";
+import { RoughLocationHint } from "@/features/location/RoughLocationHint";
 import { useGeolocation } from "@/features/location/useGeolocation";
 import { usePublicConfig } from "@/features/profile/hooks";
 import { useOnline } from "@/hooks/useOnline";
 import { useFieldError } from "@/hooks/useFieldError";
 import { toast } from "@/stores/toastStore";
 import type { Category, Media, Urgency } from "@/types/api";
-import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCIES, URGENCY_EMOJI } from "@/utils/categories";
+import { CATEGORY_EMOJI, CATEGORY_ORDER, URGENCIES, URGENCY_HEX } from "@/utils/categories";
 import { currencySymbol, region } from "@/utils/format";
 import { REWARD_OPTION_EMOJI, REWARD_OPTIONS, REWARD_TYPE_EMOJI, rewardSummary } from "@/utils/reward";
 
@@ -45,7 +49,6 @@ const DEFAULT_ACTIVE_HOURS: Record<Exclude<Urgency, "SCHEDULED">, number> = {
 };
 
 const STEP_TITLES = [
-  "create.stepCategory",
   "create.stepDetails",
   "create.stepLocation",
   "create.stepUrgency",
@@ -98,13 +101,32 @@ export default function CreateHelpPage() {
     },
   );
 
+  // Leaving with something filled in asks first, so a stray tap doesn't throw the draft away.
+  const hasDraft = formState.isDirty || photos.length > 0;
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) =>
+      hasDraft &&
+      // going to the request just published is not leaving
+      !(nextLocation.state as { published?: boolean } | null)?.published &&
+      currentLocation.pathname !== nextLocation.pathname,
+  );
+  useEffect(() => {
+    if (!hasDraft || create.isSuccess) return;
+    const warn = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [hasDraft, create.isSuccess]);
+
   // All fields have defaults, so the watched form is complete at runtime.
   const values = useWatch({ control }) as CreateHelpForm;
   const subcategories = values.category ? (config?.subcategories[values.category] ?? []) : [];
 
   // Location: ask once when reaching the location step; user may drag the marker.
   useEffect(() => {
-    if (step !== 2 || values.location) return;
+    if (step !== 1 || values.location) return;
     void locate({ force: true }).then((pos) => {
       if (pos) setValue("location", pos, { shouldValidate: true });
     });
@@ -112,6 +134,19 @@ export default function CreateHelpPage() {
 
   const place = usePlace();
   const fallbackCenter = position ?? approximateCenter(place, me?.city?.center);
+  // No GPS and no known city (location denied, Google sign-up without a city): the map still opens
+  // on a rough guess — the IP-based city, else the default city from the server — and the pin stays
+  // unset until the person drags it, so a guess is never published as the place.
+  const cities = useQuery({
+    queryKey: queryKeys.cities,
+    queryFn: usersApi.cities,
+    staleTime: Infinity,
+    enabled: step === 1 && !fallbackCenter,
+  });
+  const roughCenter =
+    place?.center ?? (cities.data?.find((c) => c.is_default) ?? cities.data?.[0])?.center ?? null;
+  const mapCenter = fallbackCenter ?? roughCenter;
+  const manual = !position && geoStatus !== "locating" && geoStatus !== "idle";
 
   // Explicit action with visible feedback: moves the pin (and the map) to a fresh GPS fix.
   const useMyLocation = async () => {
@@ -134,7 +169,7 @@ export default function CreateHelpPage() {
   };
 
   const selectSubcategory = (code: string) => {
-    const next = values.subcategory === code ? null : code;
+    const next = code || null;
     setValue("subcategory", next);
     if (next && !values.title) setValue("title", t(`subcategories.${next}`));
   };
@@ -180,19 +215,19 @@ export default function CreateHelpPage() {
       {
         onSuccess: (created) => {
           toast.success(t("create.success"));
-          navigate(`/help/${created.id}`, { replace: true });
+          navigate(`/help/${created.id}`, { replace: true, state: { published: true } });
         },
         onError: (error) => {
           if (error instanceof ApiError) {
             const fieldErrors = error.fieldErrors();
             const map: Record<string, number> = {
               category: 0,
-              description: 1,
-              title: 1,
-              location: 2,
-              latitude: 2,
-              reward_amount: 4,
-              needed_at: 3,
+              description: 0,
+              title: 0,
+              location: 1,
+              latitude: 1,
+              reward_amount: 3,
+              needed_at: 2,
             };
             const first = Object.keys(fieldErrors).find((k) => k in map);
             Object.entries(fieldErrors).forEach(([k, msg]) => {
@@ -230,36 +265,44 @@ export default function CreateHelpPage() {
 
       {step === 0 && (
         <div className="stack">
-          <CategoryGrid value={values.category ?? null} onChange={selectCategory} />
-          {formState.errors.category && (
-            <p role="alert" style={{ color: "var(--color-danger)" }}>
-              {fe(formState.errors.category.message)}
-            </p>
-          )}
+          <Select
+            label={t("create.categoryLabel")}
+            value={values.category ?? ""}
+            onChange={(e) => selectCategory(e.target.value as Category)}
+            error={fe(formState.errors.category?.message)}
+          >
+            <option value="" disabled>
+              {t("create.categoryPlaceholder")}
+            </option>
+            {CATEGORY_ORDER.map((c) => (
+              <option key={c} value={c}>
+                {CATEGORY_EMOJI[c]} {t(`categories.${c}`)}
+              </option>
+            ))}
+          </Select>
           {subcategories.length > 0 && (
-            <div className="stack-sm">
-              <p className="muted">{t("create.chooseSubcategory")}</p>
-              <div className="row wrap">
-                {subcategories.map((code) => (
-                  <Chip
-                    key={code}
-                    active={values.subcategory === code}
-                    onClick={() => selectSubcategory(code)}
-                  >
-                    {t(`subcategories.${code}`)}
-                  </Chip>
-                ))}
-              </div>
-            </div>
+            <Select
+              label={t("create.subcategoryLabel")}
+              value={values.subcategory ?? ""}
+              onChange={(e) => selectSubcategory(e.target.value)}
+            >
+              <option value="">—</option>
+              {subcategories.map((code) => (
+                <option key={code} value={code}>
+                  {t(`subcategories.${code}`)}
+                </option>
+              ))}
+            </Select>
           )}
-        </div>
-      )}
-
-      {step === 1 && (
-        <div className="stack">
           <Input
             label={t("create.titleLabel")}
-            placeholder={t("create.titlePlaceholder")}
+            placeholder={
+              values.category
+                ? t(`create.titlePlaceholders.${values.category}`, {
+                    defaultValue: t("create.titlePlaceholder"),
+                  })
+                : t("create.titlePlaceholder")
+            }
             maxLength={120}
             {...register("title")}
             error={fe(formState.errors.title?.message)}
@@ -273,7 +316,6 @@ export default function CreateHelpPage() {
             valueLength={values.description.length}
             {...register("description")}
             error={fe(formState.errors.description?.message)}
-            autoFocus
           />
           <Controller
             control={control}
@@ -292,15 +334,21 @@ export default function CreateHelpPage() {
         </div>
       )}
 
-      {step === 2 && (
+      {step === 1 && (
         <div className="stack">
-          {fallbackCenter ? (
+          {manual && (
+            <p role="status" className={styles.manualHint}>
+              📍 {t(geoStatus === "denied" ? "create.locationManualDenied" : "create.locationManual")}
+            </p>
+          )}
+          {mapCenter ? (
             <LazyMap
-              center={values.location ?? fallbackCenter}
+              center={values.location ?? mapCenter}
               me={position}
-              zoom={15}
+              meAccuracy={position?.accuracy}
+              zoom={fallbackCenter ? 15 : 12}
               height={340}
-              picker={values.location ?? fallbackCenter}
+              picker={values.location ?? mapCenter}
               onPickerChange={(pos) =>
                 setValue("location", { ...pos, accuracy: null }, { shouldValidate: true })
               }
@@ -309,15 +357,24 @@ export default function CreateHelpPage() {
           ) : (
             <Card>{t("create.locating")}</Card>
           )}
-          <p className="muted">
-            {geoStatus === "locating"
-              ? t("create.locating")
-              : values.location
-                ? t("create.youAreHere")
-                : t("create.locationError")}
-          </p>
+          {/* once the person placed the pin themselves, the device's rough fix no longer matters */}
+          <RoughLocationHint
+            position={
+              values.location &&
+              (values.location.latitude !== position?.latitude ||
+                values.location.longitude !== position?.longitude)
+                ? null
+                : position
+            }
+            canDrag
+          />
+          {(geoStatus === "locating" || !values.location) && (
+            <p className="muted">
+              {geoStatus === "locating" ? t("create.locating") : t("create.locationPickPrompt")}
+            </p>
+          )}
           <p className="muted" style={{ fontSize: 13 }}>
-            🔒 {t("create.locationPrivacy")} · {t("create.locationHint")}
+            🔒 {t("create.locationPrivacy")}
           </p>
           <Button variant="secondary" loading={geoStatus === "locating"} onClick={useMyLocation}>
             🎯 {t("create.useMyLocation")}
@@ -340,7 +397,7 @@ export default function CreateHelpPage() {
         </div>
       )}
 
-      {step === 3 && (
+      {step === 2 && (
         <div className="stack">
           <Controller
             control={control}
@@ -354,7 +411,7 @@ export default function CreateHelpPage() {
                 }}
                 options={URGENCIES.filter((u) => values.category !== "URGENT" || u === "NOW").map((u) => ({
                   value: u,
-                  icon: URGENCY_EMOJI[u],
+                  accent: URGENCY_HEX[u],
                   label: t(`urgency.${u}`),
                 }))}
               />
@@ -366,8 +423,12 @@ export default function CreateHelpPage() {
               name="active_hours"
               render={({ field }) => (
                 <Select
-                  label={t("create.activeHours")}
-                  hint={t("create.activeHoursHint")}
+                  label={
+                    <span className="row" style={{ gap: 6, display: "inline-flex" }}>
+                      {t("create.activeHours")}
+                      <InfoTip text={t("create.activeHoursHint")} />
+                    </span>
+                  }
                   value={field.value}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                 >
@@ -400,7 +461,7 @@ export default function CreateHelpPage() {
         </div>
       )}
 
-      {step === 4 && (
+      {step === 3 && (
         <div className="stack">
           <Controller
             control={control}
@@ -462,9 +523,9 @@ export default function CreateHelpPage() {
         </div>
       )}
 
-      {step === 5 && <PhotoUploader value={photos} onChange={setPhotos} />}
+      {step === 4 && <PhotoUploader value={photos} onChange={setPhotos} />}
 
-      {step === 6 && values.category && (
+      {step === 5 && values.category && (
         <Card>
           <dl className={styles.summary}>
             <dt>{t("nearby.category")}</dt>
@@ -528,6 +589,15 @@ export default function CreateHelpPage() {
         )}
       </div>
 
+      <ConfirmDialog
+        open={blocker.state === "blocked"}
+        onClose={() => blocker.reset?.()}
+        onConfirm={() => blocker.proceed?.()}
+        title={t("create.leaveTitle")}
+        text={t("create.leaveText")}
+        confirmLabel={t("create.leaveConfirm")}
+        danger
+      />
       <EmergencyDisclaimer
         open={disclaimerOpen}
         onClose={() => setDisclaimerOpen(false)}

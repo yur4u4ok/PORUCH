@@ -5,7 +5,7 @@ import { useLocation } from "react-router";
 
 import { usersApi, type SupportTopic } from "@/api/users";
 import { PageHeader } from "@/components/layout/AppLayout";
-import { Button, Card, Select, Textarea } from "@/components/ui";
+import { Button, Card, Input, Select, Textarea } from "@/components/ui";
 import { useMe } from "@/features/auth/hooks";
 import { toast } from "@/stores/toastStore";
 
@@ -19,9 +19,19 @@ export default function SupportPage() {
   const from = (useLocation().state as { from?: string } | null)?.from ?? "";
   const [topic, setTopic] = useState<SupportTopic>("QUESTION");
   const [message, setMessage] = useState("");
+  // Not signed in (the page is open from the welcome screen too): ask where to reply.
+  const [email, setEmail] = useState("");
+  const guest = !me;
+  const replyTo = me?.email ?? email.trim();
   const [sent, setSent] = useState(false);
   const send = useMutation({
-    mutationFn: () => usersApi.support({ topic, message: message.trim(), page: from }),
+    mutationFn: () =>
+      usersApi.support({
+        topic,
+        message: message.trim(),
+        page: from,
+        ...(guest ? { email: email.trim() } : {}),
+      }),
     onSuccess: () => {
       setSent(true);
       setMessage("");
@@ -35,7 +45,7 @@ export default function SupportPage() {
       {sent ? (
         <Card className="stack-sm">
           <strong>✅ {t("support.sent")}</strong>
-          <p className="muted">{t("support.replyNote", { email: me?.email ?? "" })}</p>
+          <p className="muted">{t("support.replyNote", { email: replyTo })}</p>
           <Button variant="secondary" onClick={() => setSent(false)}>
             {t("support.another")}
           </Button>
@@ -43,6 +53,15 @@ export default function SupportPage() {
       ) : (
         <Card className="stack-sm">
           <p className="muted">{t("support.intro")}</p>
+          {guest && (
+            <Input
+              label={t("support.yourEmail")}
+              type="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          )}
           <Select
             label={t("support.topic")}
             value={topic}
@@ -64,10 +83,15 @@ export default function SupportPage() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <p className="muted" style={{ fontSize: 13 }}>
-            {t("support.replyNote", { email: me?.email ?? "" })}
-          </p>
-          <Button onClick={() => send.mutate()} disabled={!message.trim() || send.isPending}>
+          {replyTo && (
+            <p className="muted" style={{ fontSize: 13 }}>
+              {t("support.replyNote", { email: replyTo })}
+            </p>
+          )}
+          <Button
+            onClick={() => send.mutate()}
+            disabled={!message.trim() || (guest && !/^\S+@\S+\.\S+$/.test(email.trim())) || send.isPending}
+          >
             {send.isPending ? t("create.submitting") : t("support.send")}
           </Button>
         </Card>

@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "首页",
-    "nearby": "附近",
-    "help": "求助",
+    "nearby": "周边",
+    "help": "创建",
     "chats": "聊天",
     "profile": "我的",
     "notifications": "通知",
@@ -42,7 +42,9 @@
     "selectNone": "全部取消",
     "less": "减少",
     "more": "增加",
-    "previous": "上一张"
+    "previous": "上一张",
+    "selectedOf": "已选 {{count}}/{{total}}",
+    "moreInfo": "更多信息"
   },
   "time": {
     "justNow": "刚刚",
@@ -62,19 +64,34 @@
     "try": "试一试",
     "join": "加入",
     "login": "登录",
-    "how": "如何使用",
+    "how": "从请求到帮助",
     "step1": "说说发生了什么，一分钟就好",
     "step2": "附近的人会收到通知",
     "step3": "有人回应后，在聊天中商量细节",
     "step4": "得到帮助后说声谢谢 ❤️",
-    "notMarketplace": "这不是服务平台，而是互助社区。帮助身边的人，无需强制付费或佣金。",
+    "notMarketplace": "这不是服务平台，而是互助社区",
     "trustTitle": "为什么这里安全",
     "trust": [
       "你的确切地址会被隐藏，只有答应帮忙的人才能看到。",
       "每位成员都验证了邮箱，个人主页会显示真实的帮助记录和收到的感谢。",
       "没有付款，也没有佣金。如何道谢由你决定。",
       "一键即可举报或屏蔽任何人。"
-    ]
+    ],
+    "heroTitle": "需要帮助吗？附近有人可以帮你。",
+    "heroText": "找到附近的人，寻求帮助或帮助你所在社区的其他人。",
+    "examplesLabel": "例如",
+    "example1": "借一件工具",
+    "example2": "帮忙搬东西",
+    "example3": "帮忙做家务或遛狗",
+    "askCta": "寻求帮助",
+    "nearbyCta": "查看附近的请求",
+    "haveAccount": "已有账号？",
+    "stepLabel": "第 {{n}} 步",
+    "lookTitle": "我们的空间",
+    "shot_nearby": "附近的请求——列表和地图",
+    "shot_request": "请求：发生了什么、在哪里",
+    "shot_chat": "在聊天中约定",
+    "communityBadge": "互助社区"
   },
   "auth": {
     "loginTitle": "登录",
@@ -108,7 +125,7 @@
     "newPassword": "新密码",
     "setPassword": "设置密码",
     "passwordChanged": "密码已修改，现在可以登录了。",
-    "terms": "注册即表示你同意以安全、尊重的方式互相帮助。",
+    "terms": "注册即表示你确认已年满 16 岁，并同意以安全、尊重的方式互助。",
     "googleFailed": "无法使用 Google 登录，请重试。",
     "googleInactive": "该账号已被停用。",
     "checkSpam": "没看到邮件？请等一分钟，再查看垃圾邮件和推广邮件文件夹。如果在那里，请标记为“非垃圾邮件”，以后的邮件就会进入收件箱。",
@@ -164,7 +181,8 @@
     "findSomeone": "看看谁需要帮助 →",
     "hello": "你好，{{name}}！",
     "ask": "请求帮助",
-    "orPick": "或直接选择类别："
+    "orPick": "或直接选择类别：",
+    "myActivity": "我的动态"
   },
   "availability": {
     "title": "我现在可以帮忙",
@@ -293,7 +311,7 @@
     "descriptionPlaceholder": "描述你需要什么帮助。不要填写确切地址或电话，可以在聊天中告诉对方。",
     "locationHint": "如有需要，拖动标记",
     "youAreHere": "📍 你在这里",
-    "locationPrivacy": "只有回应的人能看到确切位置，其他人只能看到大致距离。",
+    "locationPrivacy": "只有回应的人能看到确切位置，其他人只能看到大致距离。 如有需要，拖动标记",
     "locating": "正在定位…",
     "locationError": "无法获取你的位置，请在地图上手动拖动标记。",
     "useMyLocation": "我的当前位置",
@@ -317,7 +335,27 @@
     "helpersNeeded": "需要多少人",
     "helpersNeededHint": "当这么多人同意帮忙后，求助将不再对其他人开放。",
     "activeHours": "求助保持有效的时长",
-    "activeHoursHint": "到期后会自动关闭。"
+    "activeHoursHint": "到期后会自动关闭。",
+    "locationManual": "无法获取你的位置。请把图钉拖到需要帮助的地方。",
+    "locationManualDenied": "位置权限已关闭。请把图钉拖到需要帮助的地方，或在浏览器设置中允许定位。",
+    "locationPickPrompt": "拖动图钉标记地点",
+    "categoryLabel": "类别",
+    "categoryPlaceholder": "选择类别",
+    "subcategoryLabel": "细分（可选）",
+    "titlePlaceholders": {
+      "AUTO": "例如：轮胎扎了",
+      "HOME": "例如：把衣柜搬到三楼",
+      "ITEMS": "例如：借电钻用一小时",
+      "ANIMALS": "例如：傍晚遛狗",
+      "PEOPLE": "例如：给奶奶送买好的东西",
+      "DISTRICT": "例如：打扫院子",
+      "URGENT": "例如：有人在街上身体不适",
+      "OTHER": "例如：帮忙看看笔记本电脑"
+    },
+    "pickDate": "选择日期",
+    "leaveTitle": "离开创建请求？",
+    "leaveText": "已填写的内容不会保存。",
+    "leaveConfirm": "离开"
   },
   "nearby": {
     "title": "附近互助",
@@ -328,15 +366,17 @@
     "category": "类别",
     "urgency": "紧急程度",
     "all": "全部",
-    "emptyTitle": "附近暂时没有求助。",
-    "emptyText": "这不代表没有人需要帮助。开启通知后，附近有人需要帮助时我们会告诉你。",
+    "emptyTitle": "目前没有请求。",
+    "emptyText": "打开通知，有人需要帮助时我们会告诉你。",
     "enableNotifications": "开启通知",
     "needLocation": "要查看附近的求助，请允许访问位置。",
     "allowLocation": "允许定位",
     "approximate": "大致位置",
     "loadMore": "加载更多",
     "useCityCenter": "显示市中心附近：{{city}}",
-    "cityCenterNotice": "正在显示市中心附近的求助。允许定位可以让距离更准确。"
+    "cityCenterNotice": "正在显示市中心附近的求助。允许定位可以让距离更准确。",
+    "selectAll": "全选",
+    "resetMap": "我的位置"
   },
   "request": {
     "canHelp": "我可以帮忙",
@@ -420,12 +460,13 @@
     "iosHint": "在 iPhone 上，请将应用添加到主屏幕（分享 → 添加到主屏幕）以接收通知。",
     "enabled": "推送通知已开启",
     "enable": "开启推送通知",
-    "disable": "关闭此设备的推送"
+    "disable": "关闭此设备的推送",
+    "enabledHint": "附近的新请求会立即通知你。可在设置中关闭。"
   },
   "profile": {
     "title": "我的",
-    "helped": "🤝 帮助次数：{{count}}",
-    "thanks": "❤️ 收到感谢：{{count}}",
+    "helped": "🤝 帮助：{{count}}",
+    "thanks": "❤️ 感谢：{{count}}",
     "helpedShort": "🤝 帮助 {{count}} 次",
     "thanksShort": "❤️ 感谢 {{count}}",
     "canHelp": "我能帮忙：",
@@ -461,7 +502,13 @@
     "sendConfirmation": "发送确认",
     "emailSent": "已发送至 {{email}}，请打开其中的链接。",
     "emailPending": "等待确认：{{email}}",
-    "contactsPrivacy": "你的电话和邮箱仅对你选中的帮助者和选中你的发布者可见。"
+    "contactsPrivacy": "你的电话和邮箱仅对你选中的帮助者和选中你的发布者可见。",
+    "declinedTab": "我报名的",
+    "noDeclined": "你主动提出帮助的请求会显示在这里",
+    "viewPhoto": "打开照片：{{name}}",
+    "emailNotVerified": "邮箱未验证",
+    "editPhoto": "编辑",
+    "deletePhoto": "删除"
   },
   "settings": {
     "title": "设置",
@@ -520,7 +567,13 @@
     "currentPassword": "当前密码",
     "newPassword": "新密码",
     "passwordChanged": "密码已修改",
-    "passwordOtherDevices": "其他设备需要重新登录。"
+    "passwordOtherDevices": "其他设备需要重新登录。",
+    "deleteAccount": "删除账号",
+    "deleteTitle": "要永久删除账号吗？",
+    "deleteText": "你的邮箱、手机号、照片、通知和设置将被清除。在其他人参与过的聊天和请求中，你的名字会显示为“已删除的用户”，你写的内容会被移除。此操作无法撤销。",
+    "deletePassword": "请输入密码以确认",
+    "deleteConfirm": "永久删除",
+    "deleted": "账号已删除"
   },
   "report": {
     "title": "举报",
@@ -638,7 +691,8 @@
     "send": "发送",
     "sent": "已发送",
     "replyNote": "我们会回复到 {{email}}。",
-    "another": "再写一条"
+    "another": "再写一条",
+    "yourEmail": "用于回复的邮箱"
   },
   "install": {
     "title": "将 Poruch 安装为应用",
@@ -648,9 +702,9 @@
     "howTo": "安装方法：",
     "steps": {
       "ios": [
-        "点按屏幕底部或“⋯”菜单中的“分享” ⬆️",
-        "选择“添加到主屏幕”",
-        "点按“添加”，Poruch 就会出现在应用中"
+        "点按底部地址栏旁“<dots></dots>”菜单中的“分享 <share></share>”",
+        "选择“查看更多 <more></more>”，然后点按“<add></add> 添加到主屏幕”",
+        "点按“添加”"
       ],
       "ios-other-browser": [
         "点按地址栏中的“分享” ⬆️",
@@ -666,7 +720,7 @@
         "选择“安装应用”或“添加到主屏幕”",
         "确认后，Poruch 就会出现在应用中"
       ],
-      "desktop": ["点击地址栏中的安装图标 ⊕（或菜单 ⋮ →“安装 Poruch”）", "确认安装"]
+      "desktop": ["点击地址栏中的安装图标 <install></install>（或菜单 ⋮ →“安装 Poruch”）", "确认安装"]
     },
     "troubleTitle": "无法安装？",
     "trouble": {
@@ -705,5 +759,54 @@
     "updated": "当前版本：{{date}}",
     "englishOnly": "本文件提供乌克兰语和英语版本",
     "agree": "同时，你也接受<terms>服务条款</terms>和<privacy>隐私政策</privacy>。"
+  },
+  "reviews": {
+    "rating": "评分",
+    "sent": "感谢你的评价！",
+    "title": "评价 {{name}}",
+    "submit": "提交评价",
+    "placeholder": "进展如何？（可选）",
+    "permanent": "评价会显示在对方的个人资料中，之后无法修改或删除。",
+    "leaveTitle": "评价这次合作",
+    "done": "已评价",
+    "leave": "写评价",
+    "heading": "评价",
+    "none": "暂无评价",
+    "count_one": "{{count}} 条评价",
+    "count_other": "{{count}} 条评价"
+  },
+  "edit": {
+    "button": "编辑",
+    "title": "编辑请求",
+    "save": "保存更改",
+    "saved": "已保存更改",
+    "fixedFields": "类别、地点和紧急程度无法修改——附近的人已据此行动。如需修改，请取消请求并重新发布。"
+  },
+  "location": {
+    "rough": "位置是大概的（±{{metres}}）。请靠近窗户或到室外，或在手机设置中开启“精确位置”。",
+    "roughDrag": "位置是大概的（±{{metres}}）。请把图钉拖到准确位置，或在手机设置中开启“精确位置”。"
+  },
+  "when": {
+    "todayAt": "今天 {{time}}",
+    "tomorrowAt": "明天 {{time}}",
+    "dateAt": "{{date}} {{time}}",
+    "yesterday": "昨天"
+  },
+  "pager": {
+    "label": "页码",
+    "previous": "上一页",
+    "next": "下一页"
+  },
+  "listTools": {
+    "search": "搜索",
+    "sort": "排序",
+    "nothingFound": "未找到结果",
+    "sorts": {
+      "distance": "最近的",
+      "newest": "最新",
+      "oldest": "最早",
+      "urgency": "最紧急",
+      "soon": "按帮助日期"
+    }
   }
 }

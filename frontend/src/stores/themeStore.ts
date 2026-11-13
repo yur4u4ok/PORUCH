@@ -8,9 +8,10 @@ const THEME_COLORS = { light: "#0E5A54", dark: "#0F1A19" };
 function read(): ThemePreference {
   try {
     const value = localStorage.getItem(STORAGE_KEY);
-    return value === "light" || value === "dark" ? value : "system";
+    // light unless the person picked otherwise (dark, or following the system)
+    return value === "dark" || value === "system" ? value : "light";
   } catch {
-    return "system";
+    return "light";
   }
 }
 
@@ -36,8 +37,7 @@ export const useThemeStore = create<ThemeState>((set) => ({
   theme: read(),
   setTheme: (theme) => {
     try {
-      if (theme === "system") localStorage.removeItem(STORAGE_KEY);
-      else localStorage.setItem(STORAGE_KEY, theme);
+      localStorage.setItem(STORAGE_KEY, theme);
     } catch {
       /* storage unavailable: theme still applies for this session */
     }

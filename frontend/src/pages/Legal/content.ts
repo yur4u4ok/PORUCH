@@ -4,7 +4,7 @@
  */
 
 export const LEGAL_CONTACT = "help.poruch@gmail.com";
-export const LEGAL_UPDATED = "2026-10-07";
+export const LEGAL_UPDATED = "2026-10-19";
 
 export interface LegalSection {
   title: string;
@@ -28,7 +28,7 @@ const privacy: Record<Lang, LegalDoc> = {
     sections: [
       {
         title: "1. Хто відповідає за ваші дані",
-        body: [`Сервіс Poruch (poruch-app.duckdns.org). З питань щодо даних пишіть на ${LEGAL_CONTACT}.`],
+        body: [`Сервіс Poruch (poruch-app.online). З питань щодо даних пишіть на ${LEGAL_CONTACT}.`],
       },
       {
         title: "2. Які дані ми збираємо",
@@ -87,9 +87,9 @@ const privacy: Record<Lang, LegalDoc> = {
         body: [
           [
             "Дані облікового запису — поки він існує. Деактивація вимикає обліковий запис, скасовує активні запити й видаляє push-підписки, але історію допомог зберігає.",
-            "Повне видалення облікового запису та пов'язаних даних — за запитом на " +
+            "Повне видалення облікового запису — у застосунку: Профіль → Налаштування → Приватність і безпека → «Видалити акаунт» (як саме — на сторінці /delete-account). Email, телефон, фото, сповіщення й налаштування стираються одразу; у чатах і запитах інших людей ваше ім'я замінюється на «Видалений користувач», а ваші тексти прибираються. Без доступу до застосунку — напишіть на " +
               LEGAL_CONTACT +
-              ". Виконуємо протягом 30 днів.",
+              ", виконаємо протягом 30 днів.",
             "Резервні копії бази даних зберігаються 14 днів, після чого видаляються автоматично.",
             "Службові журнали сервера перезаписуються автоматично і не зберігаються довго.",
           ],
@@ -134,9 +134,7 @@ const privacy: Record<Lang, LegalDoc> = {
     sections: [
       {
         title: "1. Who is responsible for your data",
-        body: [
-          `The Poruch service (poruch-app.duckdns.org). For any data questions, write to ${LEGAL_CONTACT}.`,
-        ],
+        body: [`The Poruch service (poruch-app.online). For any data questions, write to ${LEGAL_CONTACT}.`],
       },
       {
         title: "2. What we collect",
@@ -195,9 +193,9 @@ const privacy: Record<Lang, LegalDoc> = {
         body: [
           [
             "Account data — while the account exists. Deactivation turns the account off, cancels active requests and removes push subscriptions, but keeps the help history.",
-            "Full deletion of your account and related data — on request to " +
+            "Full deletion of your account — in the app: Profile → Settings → Privacy and safety → «Delete account» (step by step at /delete-account). Email, phone, photos, notifications and settings are erased at once; in other people's chats and requests your name becomes «Deleted user» and your texts are removed. Without access to the app, write to " +
               LEGAL_CONTACT +
-              ", completed within 30 days.",
+              " and we will do it within 30 days.",
             "Database backups are kept for 14 days and then deleted automatically.",
             "Server logs are overwritten automatically and are not kept for long.",
           ],
@@ -309,7 +307,7 @@ const terms: Record<Lang, LegalDoc> = {
       {
         title: "9. Припинення",
         body: [
-          "Ви можете будь-коли деактивувати обліковий запис у налаштуваннях або попросити його повністю видалити. Ми можемо обмежити чи припинити доступ у разі порушення цих умов.",
+          "Ви можете будь-коли деактивувати або повністю видалити обліковий запис у налаштуваннях. Ми можемо обмежити чи припинити доступ у разі порушення цих умов.",
         ],
       },
       {
@@ -395,7 +393,7 @@ const terms: Record<Lang, LegalDoc> = {
       {
         title: "9. Termination",
         body: [
-          "You can deactivate your account at any time in settings or ask us to delete it completely. We may restrict or end access if these terms are violated.",
+          "You can deactivate or completely delete your account at any time in settings. We may restrict or end access if these terms are violated.",
         ],
       },
       {
@@ -412,5 +410,228 @@ const terms: Record<Lang, LegalDoc> = {
   },
 };
 
-export const LEGAL = { privacy, terms };
+/** Public how-to for deleting an account (the URL Google Play asks for). */
+const deletion: Record<Lang, LegalDoc> = {
+  uk: {
+    title: "Видалення акаунта Poruch",
+    intro: "Ви можете будь-коли назавжди видалити свій акаунт Poruch разом з особистими даними.",
+    sections: [
+      {
+        title: "Як видалити акаунт",
+        body: [
+          [
+            "Увійдіть у Poruch (застосунок або poruch-app.online).",
+            "Відкрийте «Профіль» → «Налаштування» → «Приватність і безпека».",
+            "Натисніть «Видалити акаунт».",
+            "Підтвердіть паролем (якщо входите через Google — пароль не потрібен) і натисніть «Видалити назавжди».",
+          ],
+        ],
+      },
+      {
+        title: "Що видаляється одразу",
+        body: [
+          [
+            "email, телефон, ім'я, фото профілю, фото в запитах і чатах;",
+            "сповіщення, push-підписки, налаштування, статус «Можу допомогти» і його місце;",
+            "вхід через Google, відгуки й подяки, які ви отримали, ваші блокування.",
+          ],
+        ],
+      },
+      {
+        title: "Що залишається знеособленим",
+        body: [
+          "Чати й запити, у яких брали участь інші люди, залишаються в них, але замість вашого імені — «Видалений користувач», ваші повідомлення й тексти запитів замінено на «видалено», а місце запиту огрублено приблизно до 1 км. Відгуки, які ви залишили іншим, залишаються без вашого імені. Скарги на порушення зберігаються для безпеки спільноти.",
+          "Резервні копії бази даних автоматично видаляються через 14 днів.",
+        ],
+      },
+      {
+        title: "Видалити лише частину даних",
+        body: [
+          "Акаунт можна залишити, а окремі дані прибрати самому:",
+          [
+            "фото профілю — «Профіль» → фото → «Видалити»;",
+            "ім'я, телефон та інші дані профілю — змінити чи очистити в «Профіль» → «Редагувати профіль»;",
+            "місце для статусу «Можу допомогти» — вимкніть статус, і місце видаляється;",
+            "сповіщення й push-підписки — вимкнути в «Налаштування» → «Сповіщення».",
+          ],
+          "Щоб видалити будь-які інші дані (окремі запити, повідомлення, фото), напишіть на " +
+            LEGAL_CONTACT +
+            " або через poruch-app.online/contact. Видалимо протягом 30 днів.",
+        ],
+      },
+      {
+        title: "Немає доступу до акаунта?",
+        body: [
+          "Напишіть на " +
+            LEGAL_CONTACT +
+            " з адреси, на яку зареєстровано акаунт, або через сторінку підтримки poruch-app.online/contact. Видалимо протягом 30 днів.",
+        ],
+      },
+    ],
+  },
+  en: {
+    title: "Deleting a Poruch account",
+    intro: "You can delete your Poruch account together with your personal data at any time.",
+    sections: [
+      {
+        title: "How to delete your account",
+        body: [
+          [
+            "Sign in to Poruch (the app or poruch-app.online).",
+            "Open «Profile» → «Settings» → «Privacy and safety».",
+            "Tap «Delete account».",
+            "Confirm with your password (no password if you sign in with Google) and tap «Delete for good».",
+          ],
+        ],
+      },
+      {
+        title: "Erased at once",
+        body: [
+          [
+            "email, phone, name, profile photo, photos in requests and chats;",
+            "notifications, push subscriptions, settings, the «I can help» status and its place;",
+            "Google sign-in, reviews and thanks you received, your blocks.",
+          ],
+        ],
+      },
+      {
+        title: "Kept without your identity",
+        body: [
+          "Chats and requests other people took part in stay with them, but your name becomes «Deleted user», your messages and request texts are replaced with «deleted», and the request's place is blurred to about 1 km. Reviews you left for others stay without your name. Abuse reports are kept for community safety.",
+          "Database backups are deleted automatically after 14 days.",
+        ],
+      },
+      {
+        title: "Delete only some of your data",
+        body: [
+          "You can keep the account and remove some data yourself:",
+          [
+            "profile photo — «Profile» → photo → «Delete»;",
+            "name, phone and other profile data — change or clear them in «Profile» → «Edit profile»;",
+            "the place for the «I can help» status — turn the status off and the place is deleted;",
+            "notifications and push subscriptions — turn them off in «Settings» → «Notifications».",
+          ],
+          "To delete any other data (single requests, messages, photos), write to " +
+            LEGAL_CONTACT +
+            " or use poruch-app.online/contact. We will do it within 30 days.",
+        ],
+      },
+      {
+        title: "Can't access your account?",
+        body: [
+          "Write to " +
+            LEGAL_CONTACT +
+            " from the address the account was registered with, or use the support page poruch-app.online/contact. We will delete it within 30 days.",
+        ],
+      },
+    ],
+  },
+};
+
+const childSafety: Record<Lang, LegalDoc> = {
+  uk: {
+    title: "Стандарти безпеки дітей Poruch",
+    intro:
+      "Poruch (poruch-app.online і застосунок Poruch у Google Play) має нульову толерантність до сексуального насильства над дітьми та експлуатації дітей (CSAE), зокрема до матеріалів сексуального насильства над дітьми (CSAM).",
+    sections: [
+      {
+        title: "Що заборонено",
+        body: [
+          [
+            "будь-які матеріали сексуального насильства над дітьми (CSAM) — фото, відео, тексти, посилання;",
+            "грумінг: спроби встановити контакт із дитиною з метою сексуальної експлуатації;",
+            "сексуалізація неповнолітніх, торгівля дітьми, вимагання (секс-шантаж) і будь-яке сприяння таким діям;",
+            "використання запитів про допомогу, профілів чи чатів, щоб шукати контакт із дітьми.",
+          ],
+        ],
+      },
+      {
+        title: "Хто може користуватися Poruch",
+        body: [
+          "Poruch призначений лише для людей від 16 років (Умови використання, розділ «Обліковий запис»). Акаунти, про які відомо, що їх створила молодша дитина, ми видаляємо.",
+        ],
+      },
+      {
+        title: "Як повідомити",
+        body: [
+          [
+            "у застосунку: «Поскаржитися» на повідомлення в чаті, на профіль користувача або на запит → причина «Небезпечно» чи «Неприйнятний вміст»;",
+            "користувача можна одразу заблокувати — він більше не зможе вам писати;",
+            "без акаунта: сторінка підтримки poruch-app.online/contact або лист на " + LEGAL_CONTACT + ".",
+          ],
+          "Якщо дитина в безпосередній небезпеці — негайно телефонуйте до поліції (в Україні — 102) або на гарячу лінію Ла Страда-Україна 116 111.",
+        ],
+      },
+      {
+        title: "Що ми робимо",
+        body: [
+          [
+            "скарги, пов'язані з безпекою дітей, розглядаємо першочергово;",
+            "вміст негайно видаляємо, а акаунт порушника блокуємо назавжди;",
+            "про виявлені CSAM і випадки експлуатації дітей повідомляємо до кіберполіції України, у відповідні органи країни користувача та до NCMEC (CyberTipline), як вимагає закон;",
+            "зберігаємо потрібні дані лише в обсязі, який вимагають правоохоронні органи, і співпрацюємо з ними.",
+          ],
+        ],
+      },
+      {
+        title: "Контакт з питань безпеки дітей",
+        body: ["Відповідальна особа за безпеку дітей у Poruch відповідає на " + LEGAL_CONTACT + "."],
+      },
+    ],
+  },
+  en: {
+    title: "Poruch child safety standards",
+    intro:
+      "Poruch (poruch-app.online and the Poruch app on Google Play) has zero tolerance for child sexual abuse and exploitation (CSAE), including child sexual abuse material (CSAM).",
+    sections: [
+      {
+        title: "What is prohibited",
+        body: [
+          [
+            "any child sexual abuse material (CSAM) — photos, videos, texts, links;",
+            "grooming: trying to contact a child for sexual exploitation;",
+            "sexualising minors, child trafficking, sextortion and any help with such acts;",
+            "using help requests, profiles or chats to seek contact with children.",
+          ],
+        ],
+      },
+      {
+        title: "Who can use Poruch",
+        body: [
+          "Poruch is only for people aged 16 and over (Terms of use, «Account»). Accounts known to be created by a younger child are deleted.",
+        ],
+      },
+      {
+        title: "How to report",
+        body: [
+          [
+            "in the app: «Report» a chat message, a user profile or a request → reason «Dangerous» or «Inappropriate content»;",
+            "you can block the user at once — they will no longer be able to message you;",
+            "without an account: the support page poruch-app.online/contact or an email to " +
+              LEGAL_CONTACT +
+              ".",
+          ],
+          "If a child is in immediate danger, call the police right away (in Ukraine — 102; elsewhere — your local emergency number).",
+        ],
+      },
+      {
+        title: "What we do",
+        body: [
+          [
+            "child safety reports are handled first;",
+            "the content is removed at once and the offender's account is banned for good;",
+            "detected CSAM and child exploitation are reported to the Cyber Police of Ukraine, the relevant authorities of the user's country and NCMEC (CyberTipline), as the law requires;",
+            "we keep the necessary data only as far as law enforcement requires and cooperate with them.",
+          ],
+        ],
+      },
+      {
+        title: "Child safety contact",
+        body: ["The person responsible for child safety at Poruch answers at " + LEGAL_CONTACT + "."],
+      },
+    ],
+  },
+};
+
+export const LEGAL = { privacy, terms, deletion, childSafety };
 export type LegalKind = keyof typeof LEGAL;

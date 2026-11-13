@@ -5,16 +5,43 @@ import { queryKeys } from "@/api/queryKeys";
 
 import { playChime, soundEnabled } from "./sound";
 
-const FAVICON = "/icons/favicon.svg";
+const FAVICON = "/icons/tab.svg"; // tightly cropped so the pin fills the tab
 
-/** Favicon with a red dot (canvas over the normal icon); restores the plain icon at 0. */
+/**
+ * Favicon with a red dot (canvas over the normal icon); restores the plain icons at 0.
+ * The page declares several icons (.ico, PNGs, SVG) and the browser picks one of them, so all of
+ * them are swapped — changing only the first left the dot invisible.
+ */
+const originals = new Map<HTMLLinkElement, { href: string; type: string }>();
+let dotted: string | null = null;
+
+function iconLinks(): HTMLLinkElement[] {
+  return Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel~="icon"]'));
+}
+
 function setFaviconDot(on: boolean) {
-  const link = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
-  if (!link) return;
+  const links = iconLinks();
+  for (const link of links) {
+    if (!originals.has(link)) originals.set(link, { href: link.getAttribute("href") ?? "", type: link.type });
+  }
   if (!on) {
-    link.href = FAVICON;
+    for (const link of links) {
+      const original = originals.get(link);
+      if (!original) continue;
+      link.href = original.href;
+      link.type = original.type;
+      link.removeAttribute("data-dot");
+    }
     return;
   }
+  const apply = (url: string) => {
+    for (const link of iconLinks()) {
+      link.href = url;
+      link.type = "image/png";
+      link.setAttribute("data-dot", "1");
+    }
+  };
+  if (dotted) return apply(dotted);
   const img = new Image();
   img.onload = () => {
     const canvas = document.createElement("canvas");
@@ -23,13 +50,14 @@ function setFaviconDot(on: boolean) {
     if (!ctx) return;
     ctx.drawImage(img, 0, 0, 64, 64);
     ctx.beginPath();
-    ctx.arc(50, 14, 13, 0, Math.PI * 2);
+    ctx.arc(48, 16, 15, 0, Math.PI * 2);
     ctx.fillStyle = "#e5484d";
     ctx.fill();
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 4;
     ctx.strokeStyle = "#ffffff";
     ctx.stroke();
-    link.href = canvas.toDataURL("image/png");
+    dotted = canvas.toDataURL("image/png");
+    apply(dotted);
   };
   img.src = FAVICON;
 }

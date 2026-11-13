@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "ホーム",
-    "nearby": "近く",
-    "help": "頼む",
+    "nearby": "周辺",
+    "help": "作成",
     "chats": "チャット",
     "profile": "プロフィール",
     "notifications": "通知",
@@ -42,7 +42,9 @@
     "selectNone": "すべて解除",
     "less": "減らす",
     "more": "増やす",
-    "previous": "前へ"
+    "previous": "前へ",
+    "selectedOf": "{{total}}件中{{count}}件を選択",
+    "moreInfo": "詳細"
   },
   "time": {
     "justNow": "たった今",
@@ -62,19 +64,34 @@
     "try": "試してみる",
     "join": "参加する",
     "login": "ログイン",
-    "how": "使い方",
+    "how": "リクエストから助けまで",
     "step1": "何があったかを書く（1分で済みます）",
     "step2": "近くの人に通知が届く",
     "step3": "誰かが応答したら、チャットで詳細を決める",
     "step4": "助けてもらったらお礼を伝える ❤️",
-    "notMarketplace": "サービスではなく、助け合いのコミュニティです。必須の支払いや手数料なしで、近くの人を助けましょう。",
+    "notMarketplace": "サービスではなく、助け合いのコミュニティです",
     "trustTitle": "安心して使える理由",
     "trust": [
       "正確な住所は表示されません。見られるのは、手伝うと決めた人だけです。",
       "全員がメールアドレスを確認済みで、プロフィールには実際の手助けと受け取ったお礼が表示されます。",
       "支払いも手数料もありません。お礼の仕方はあなた次第です。",
       "ワンタップで誰でも通報・ブロックできます。"
-    ]
+    ],
+    "heroTitle": "助けが必要ですか？近くの誰かが助けてくれます。",
+    "heroText": "近くの人を見つけて、助けを求めたり、地域の人を助けたりしましょう。",
+    "examplesLabel": "例えば",
+    "example1": "工具を借りる",
+    "example2": "荷物運びを手伝う",
+    "example3": "家事を手伝う・犬の散歩をする",
+    "askCta": "助けを求める",
+    "nearbyCta": "近くの依頼を見る",
+    "haveAccount": "アカウントをお持ちですか？",
+    "stepLabel": "ステップ {{n}}",
+    "lookTitle": "私たちの場所",
+    "shot_nearby": "近くのリクエスト（リストと地図）",
+    "shot_request": "リクエスト：何が起きて、どこか",
+    "shot_chat": "チャットで相談",
+    "communityBadge": "助け合いのコミュニティ"
   },
   "auth": {
     "loginTitle": "ログイン",
@@ -108,7 +125,7 @@
     "newPassword": "新しいパスワード",
     "setPassword": "パスワードを設定",
     "passwordChanged": "パスワードを変更しました。ログインできます。",
-    "terms": "登録することで、安全かつ思いやりをもって助け合うことに同意したものとみなされます。",
+    "terms": "登録すると、16歳以上であることを確認し、安全かつ敬意をもって助け合うことに同意したことになります。",
     "googleFailed": "Googleでログインできませんでした。もう一度お試しください。",
     "googleInactive": "このアカウントは無効になっています。",
     "checkSpam": "メールが見当たらない場合は、1分ほど待ってから迷惑メールフォルダやプロモーションタブを確認してください。そこにあれば「迷惑メールではない」に設定すると、次から受信トレイに届きます。",
@@ -164,7 +181,8 @@
     "findSomeone": "助けが必要な人を見る →",
     "hello": "こんにちは、{{name}}さん",
     "ask": "助けを求める",
-    "orPick": "または内容を選ぶ:"
+    "orPick": "または内容を選ぶ:",
+    "myActivity": "自分のアクティビティ"
   },
   "availability": {
     "title": "今すぐ手伝えます",
@@ -293,7 +311,7 @@
     "descriptionPlaceholder": "どんな助けが必要か書いてください。正確な住所や電話番号は書かないでください。チャットで伝えられます。",
     "locationHint": "必要ならピンを動かしてください",
     "youAreHere": "📍 現在地",
-    "locationPrivacy": "正確な場所は、応答した人だけに表示されます。ほかの人にはおおよその距離だけが見えます。",
+    "locationPrivacy": "正確な場所は、応答した人だけに表示されます。ほかの人にはおおよその距離だけが見えます。 必要ならピンを動かしてください",
     "locating": "現在地を取得しています…",
     "locationError": "現在地を取得できませんでした。地図上のピンを手で動かしてください。",
     "useMyLocation": "現在地",
@@ -317,7 +335,27 @@
     "helpersNeeded": "必要な人数",
     "helpersNeededHint": "この人数が手伝うことに同意すると、依頼はほかの人には閉じられます。",
     "activeHours": "依頼を公開しておく時間",
-    "activeHoursHint": "時間が過ぎると自動で締め切られます。"
+    "activeHoursHint": "時間が過ぎると自動で締め切られます。",
+    "locationManual": "現在地を取得できませんでした。助けが必要な場所までピンをドラッグしてください。",
+    "locationManualDenied": "位置情報がオフです。助けが必要な場所までピンをドラッグするか、ブラウザ設定で位置情報を許可してください。",
+    "locationPickPrompt": "ピンをドラッグして場所を指定",
+    "categoryLabel": "カテゴリ",
+    "categoryPlaceholder": "カテゴリを選択",
+    "subcategoryLabel": "詳細（任意）",
+    "titlePlaceholders": {
+      "AUTO": "例：タイヤがパンクした",
+      "HOME": "例：タンスを3階まで運びたい",
+      "ITEMS": "例：ドリルを1時間借りたい",
+      "ANIMALS": "例：夕方に犬の散歩",
+      "PEOPLE": "例：祖母に食料品を届ける",
+      "DISTRICT": "例：中庭の掃除",
+      "URGENT": "例：路上で具合が悪くなった人がいる",
+      "OTHER": "例：ノートパソコンのことで手伝ってほしい"
+    },
+    "pickDate": "日付を選択",
+    "leaveTitle": "リクエスト作成をやめますか？",
+    "leaveText": "入力した内容は保存されません。",
+    "leaveConfirm": "やめる"
   },
   "nearby": {
     "title": "近くの助け合い",
@@ -328,15 +366,17 @@
     "category": "カテゴリ",
     "urgency": "緊急度",
     "all": "すべて",
-    "emptyTitle": "今は近くに依頼がありません。",
-    "emptyText": "だからといって、誰も困っていないわけではありません。通知をオンにすれば、近くで助けが必要になったときにお知らせします。",
+    "emptyTitle": "いまはリクエストがありません。",
+    "emptyText": "通知をオンにすると、誰かが助けを必要としたときにお知らせします。",
     "enableNotifications": "通知をオンにする",
     "needLocation": "近くの依頼を見るには、位置情報の利用を許可してください。",
     "allowLocation": "位置情報を許可",
     "approximate": "おおよその場所",
     "loadMore": "もっと見る",
     "useCityCenter": "中心部付近を表示：{{city}}",
-    "cityCenterNotice": "市の中心部付近の依頼を表示しています。位置情報を許可すると距離がより正確になります。"
+    "cityCenterNotice": "市の中心部付近の依頼を表示しています。位置情報を許可すると距離がより正確になります。",
+    "selectAll": "すべて選択",
+    "resetMap": "現在地"
   },
   "request": {
     "canHelp": "手伝えます",
@@ -420,12 +460,13 @@
     "iosHint": "iPhoneで通知を受け取るには、アプリをホーム画面に追加してください（共有 → ホーム画面に追加）。",
     "enabled": "プッシュ通知はオンです",
     "enable": "プッシュ通知をオンにする",
-    "disable": "この端末のプッシュ通知をオフにする"
+    "disable": "この端末のプッシュ通知をオフにする",
+    "enabledHint": "近くの新しい依頼がすぐ届きます。設定でオフにできます。"
   },
   "profile": {
     "title": "プロフィール",
-    "helped": "🤝 手助け：{{count}}回",
-    "thanks": "❤️ 受け取ったお礼：{{count}}件",
+    "helped": "🤝 手助け：{{count}}",
+    "thanks": "❤️ お礼：{{count}}",
     "helpedShort": "🤝 手助け{{count}}回",
     "thanksShort": "❤️ お礼{{count}}件",
     "canHelp": "手伝えること：",
@@ -461,7 +502,13 @@
     "sendConfirmation": "確認を送信",
     "emailSent": "{{email}} に送信しました。リンクを開いてください。",
     "emailPending": "確認待ち: {{email}}",
-    "contactsPrivacy": "電話とメールは、あなたが選んだ手伝う人と、あなたを選んだ依頼者にだけ表示されます。"
+    "contactsPrivacy": "電話とメールは、あなたが選んだ手伝う人と、あなたを選んだ依頼者にだけ表示されます。",
+    "declinedTab": "応募した",
+    "noDeclined": "手伝いを申し出た依頼がここに表示されます",
+    "viewPhoto": "写真を開く: {{name}}",
+    "emailNotVerified": "メール未確認",
+    "editPhoto": "編集",
+    "deletePhoto": "削除"
   },
   "settings": {
     "title": "設定",
@@ -520,7 +567,13 @@
     "currentPassword": "現在のパスワード",
     "newPassword": "新しいパスワード",
     "passwordChanged": "パスワードを変更しました",
-    "passwordOtherDevices": "他の端末では再ログインが必要です。"
+    "passwordOtherDevices": "他の端末では再ログインが必要です。",
+    "deleteAccount": "アカウントを削除",
+    "deleteTitle": "アカウントを完全に削除しますか？",
+    "deleteText": "メールアドレス、電話番号、写真、通知、設定が消去されます。ほかの人が参加したチャットやリクエストでは、あなたの名前は「削除されたユーザー」になり、あなたのテキストは取り除かれます。元に戻すことはできません。",
+    "deletePassword": "確認のためパスワードを入力してください",
+    "deleteConfirm": "完全に削除する",
+    "deleted": "アカウントを削除しました"
   },
   "report": {
     "title": "通報",
@@ -638,7 +691,8 @@
     "send": "送信",
     "sent": "送信しました",
     "replyNote": "{{email}} に返信します。",
-    "another": "もう一件書く"
+    "another": "もう一件書く",
+    "yourEmail": "返信先のメールアドレス"
   },
   "install": {
     "title": "Poruchをアプリとしてインストール",
@@ -652,9 +706,9 @@
     "howTo": "インストール方法：",
     "steps": {
       "ios": [
-        "画面下部または「⋯」メニューの共有ボタン ⬆️ をタップ",
-        "「ホーム画面に追加」を選択",
-        "「追加」をタップ — Poruchがアプリに並びます"
+        "アドレスバー横の下部にある「<dots></dots>」メニューで「共有 <share></share>」をタップ",
+        "「さらに表示 <more></more>」を選び、「<add></add> ホーム画面に追加」をタップ",
+        "「追加」をタップ"
       ],
       "ios-other-browser": [
         "アドレスバーの共有ボタン ⬆️ をタップ",
@@ -671,7 +725,7 @@
         "確認すると、Poruchがアプリに並びます"
       ],
       "desktop": [
-        "アドレスバーのインストールアイコン ⊕ をクリック（またはメニュー ⋮ →「Poruchをインストール」）",
+        "アドレスバーのインストールアイコン <install></install> をクリック（またはメニュー ⋮ →「Poruch をインストール」）",
         "インストールを確認"
       ]
     },
@@ -714,5 +768,54 @@
     "updated": "現行版：{{date}}",
     "englishOnly": "この文書はウクライナ語と英語で提供しています",
     "agree": "また、<terms>利用規約</terms>と<privacy>プライバシーポリシー</privacy>に同意したものとみなされます。"
+  },
+  "reviews": {
+    "rating": "評価",
+    "sent": "レビューありがとうございます！",
+    "title": "{{name}}さんへのレビュー",
+    "submit": "レビューを送信",
+    "placeholder": "いかがでしたか？（任意）",
+    "permanent": "レビューはプロフィールに表示され、後から変更・削除できません。",
+    "leaveTitle": "協力を評価する",
+    "done": "レビュー済み",
+    "leave": "レビューする",
+    "heading": "レビュー",
+    "none": "まだレビューはありません",
+    "count_one": "{{count}}件のレビュー",
+    "count_other": "{{count}}件のレビュー"
+  },
+  "edit": {
+    "button": "編集",
+    "title": "依頼を編集",
+    "save": "変更を保存",
+    "saved": "変更を保存しました",
+    "fixedFields": "カテゴリ・場所・緊急度は変更できません。近くの人がすでにそれを頼りにしています。変更するには依頼を取り消して新しく作成してください。"
+  },
+  "location": {
+    "rough": "位置はおおよそです（±{{metres}}）。窓の近くや屋外に移動するか、端末の設定で「正確な位置情報」をオンにしてください。",
+    "roughDrag": "位置はおおよそです（±{{metres}}）。ピンを正確な場所までドラッグするか、端末の設定で「正確な位置情報」をオンにしてください。"
+  },
+  "when": {
+    "todayAt": "今日 {{time}}",
+    "tomorrowAt": "明日 {{time}}",
+    "dateAt": "{{date}} {{time}}",
+    "yesterday": "昨日"
+  },
+  "pager": {
+    "label": "ページ",
+    "previous": "前のページ",
+    "next": "次のページ"
+  },
+  "listTools": {
+    "search": "検索",
+    "sort": "並べ替え",
+    "nothingFound": "見つかりません",
+    "sorts": {
+      "distance": "近い順",
+      "newest": "新しい順",
+      "oldest": "古い順",
+      "urgency": "緊急度順",
+      "soon": "手伝う日付順"
+    }
   }
 }

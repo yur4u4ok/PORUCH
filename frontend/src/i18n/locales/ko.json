@@ -8,8 +8,8 @@
   },
   "nav": {
     "home": "홈",
-    "nearby": "내 주변",
-    "help": "요청",
+    "nearby": "주변",
+    "help": "만들기",
     "chats": "채팅",
     "profile": "프로필",
     "notifications": "알림",
@@ -42,7 +42,9 @@
     "selectNone": "모두 해제",
     "less": "줄이기",
     "more": "늘리기",
-    "previous": "이전"
+    "previous": "이전",
+    "selectedOf": "{{total}}개 중 {{count}}개 선택",
+    "moreInfo": "자세히"
   },
   "time": {
     "justNow": "방금",
@@ -62,19 +64,34 @@
     "try": "써 보기",
     "join": "가입하기",
     "login": "로그인",
-    "how": "이용 방법",
+    "how": "요청에서 도움까지",
     "step1": "무슨 일인지 적어 주세요. 1분이면 됩니다",
     "step2": "근처 사람들에게 알림이 갑니다",
     "step3": "누군가 응답하면 채팅으로 자세한 내용을 정하세요",
     "step4": "도움을 받으면 고마움을 전하세요 ❤️",
-    "notMarketplace": "서비스가 아니라 서로 돕는 공동체예요. 필수 결제나 수수료 없이 가까운 이웃을 도와주세요.",
+    "notMarketplace": "서비스가 아니라 서로 돕는 공동체예요",
     "trustTitle": "안심할 수 있는 이유",
     "trust": [
       "정확한 주소는 숨겨집니다. 돕기로 한 사람만 볼 수 있어요.",
       "모든 회원은 이메일을 인증하고, 프로필에는 실제로 도운 기록과 받은 감사가 표시됩니다.",
       "결제도 수수료도 없습니다. 감사 표현은 자유입니다.",
       "누구든 한 번의 탭으로 신고하거나 차단할 수 있습니다."
-    ]
+    ],
+    "heroTitle": "도움이 필요하세요? 근처의 누군가가 도울 수 있어요.",
+    "heroText": "근처 사람을 찾고, 도움을 요청하거나 동네 이웃을 도와주세요.",
+    "examplesLabel": "예를 들어",
+    "example1": "공구 빌리기",
+    "example2": "짐 옮기기 돕기",
+    "example3": "집안일 돕기 또는 강아지 산책",
+    "askCta": "도움 요청하기",
+    "nearbyCta": "근처 요청 찾기",
+    "haveAccount": "이미 계정이 있나요?",
+    "stepLabel": "{{n}}단계",
+    "lookTitle": "우리의 공간",
+    "shot_nearby": "주변 요청 — 목록과 지도",
+    "shot_request": "요청: 무슨 일이 어디서",
+    "shot_chat": "채팅으로 약속하기",
+    "communityBadge": "서로 돕는 공동체"
   },
   "auth": {
     "loginTitle": "로그인",
@@ -108,7 +125,7 @@
     "newPassword": "새 비밀번호",
     "setPassword": "비밀번호 설정",
     "passwordChanged": "비밀번호가 변경되었습니다. 이제 로그인할 수 있어요.",
-    "terms": "가입하면 안전하고 정중하게 서로 돕는 데 동의하는 것입니다.",
+    "terms": "가입하면 만 16세 이상임을 확인하고 안전하고 존중하는 태도로 돕는 데 동의하게 됩니다.",
     "googleFailed": "Google로 로그인하지 못했어요. 다시 시도해 주세요.",
     "googleInactive": "이 계정은 비활성화되었습니다.",
     "checkSpam": "메일이 보이지 않나요? 1분 정도 기다린 뒤 스팸함과 프로모션함을 확인해 주세요. 거기 있다면 ‘스팸 아님’으로 표시하면 다음부터 받은편지함으로 와요.",
@@ -164,7 +181,8 @@
     "findSomeone": "도움이 필요한 사람 보기 →",
     "hello": "안녕하세요, {{name}}님!",
     "ask": "도움 요청하기",
-    "orPick": "또는 바로 종류를 고르세요:"
+    "orPick": "또는 바로 종류를 고르세요:",
+    "myActivity": "내 활동"
   },
   "availability": {
     "title": "지금 도울 수 있어요",
@@ -293,7 +311,7 @@
     "descriptionPlaceholder": "어떤 도움이 필요한지 적어 주세요. 정확한 주소나 전화번호는 적지 마세요. 채팅에서 알려 줄 수 있어요.",
     "locationHint": "필요하면 핀을 옮기세요",
     "youAreHere": "📍 현재 위치",
-    "locationPrivacy": "정확한 위치는 응답한 사람만 볼 수 있습니다. 다른 사람에게는 대략적인 거리만 보여요.",
+    "locationPrivacy": "정확한 위치는 응답한 사람만 볼 수 있습니다. 다른 사람에게는 대략적인 거리만 보여요. 필요하면 핀을 옮기세요",
     "locating": "위치를 찾는 중…",
     "locationError": "위치를 가져오지 못했습니다. 지도에서 핀을 직접 옮겨 주세요.",
     "useMyLocation": "현재 위치",
@@ -317,7 +335,27 @@
     "helpersNeeded": "필요한 인원",
     "helpersNeededHint": "이만큼의 사람이 돕기로 하면 요청이 다른 사람에게 닫혀요.",
     "activeHours": "요청 유지 시간",
-    "activeHoursHint": "시간이 지나면 자동으로 닫혀요."
+    "activeHoursHint": "시간이 지나면 자동으로 닫혀요.",
+    "locationManual": "위치를 확인하지 못했어요. 도움이 필요한 곳으로 핀을 끌어 놓으세요.",
+    "locationManualDenied": "위치 접근이 꺼져 있어요. 도움이 필요한 곳으로 핀을 끌어 놓거나 브라우저 설정에서 위치를 허용하세요.",
+    "locationPickPrompt": "핀을 끌어 장소를 표시하세요",
+    "categoryLabel": "카테고리",
+    "categoryPlaceholder": "카테고리 선택",
+    "subcategoryLabel": "세부 항목 (선택)",
+    "titlePlaceholders": {
+      "AUTO": "예: 타이어 펑크",
+      "HOME": "예: 옷장을 3층까지 옮기기",
+      "ITEMS": "예: 드릴을 한 시간 빌리기",
+      "ANIMALS": "예: 저녁에 강아지 산책",
+      "PEOPLE": "예: 할머니께 장 본 것 가져다드리기",
+      "DISTRICT": "예: 마당 청소",
+      "URGENT": "예: 길에서 누군가 몸이 안 좋아요",
+      "OTHER": "예: 노트북 관련 도움"
+    },
+    "pickDate": "날짜 선택",
+    "leaveTitle": "요청 작성을 그만둘까요?",
+    "leaveText": "입력한 내용은 저장되지 않습니다.",
+    "leaveConfirm": "나가기"
   },
   "nearby": {
     "title": "내 주변 도움",
@@ -328,15 +366,17 @@
     "category": "카테고리",
     "urgency": "긴급도",
     "all": "전체",
-    "emptyTitle": "지금은 주변에 요청이 없어요.",
-    "emptyText": "그렇다고 도움이 필요한 사람이 없다는 뜻은 아니에요. 알림을 켜 두면 근처에서 도움이 필요할 때 알려 드릴게요.",
+    "emptyTitle": "지금은 요청이 없습니다.",
+    "emptyText": "알림을 켜 두면 누군가 도움이 필요할 때 알려 드릴게요.",
     "enableNotifications": "알림 켜기",
     "needLocation": "주변 요청을 보려면 위치 접근을 허용해 주세요.",
     "allowLocation": "위치 허용",
     "approximate": "대략적인 위치",
     "loadMore": "더 보기",
     "useCityCenter": "중심가 근처 보기: {{city}}",
-    "cityCenterNotice": "도심 근처의 요청을 보여 주고 있어요. 위치를 허용하면 거리가 더 정확해집니다."
+    "cityCenterNotice": "도심 근처의 요청을 보여 주고 있어요. 위치를 허용하면 거리가 더 정확해집니다.",
+    "selectAll": "모두 선택",
+    "resetMap": "내 위치"
   },
   "request": {
     "canHelp": "도울 수 있어요",
@@ -420,12 +460,13 @@
     "iosHint": "iPhone에서 알림을 받으려면 앱을 홈 화면에 추가하세요(공유 → 홈 화면에 추가).",
     "enabled": "푸시 알림 켜짐",
     "enable": "푸시 알림 켜기",
-    "disable": "이 기기에서 푸시 끄기"
+    "disable": "이 기기에서 푸시 끄기",
+    "enabledHint": "근처 새 요청을 바로 받아요. 설정에서 끌 수 있어요."
   },
   "profile": {
     "title": "프로필",
-    "helped": "🤝 도운 횟수: {{count}}",
-    "thanks": "❤️ 받은 감사: {{count}}",
+    "helped": "🤝 도움: {{count}}",
+    "thanks": "❤️ 감사: {{count}}",
     "helpedShort": "🤝 도움 {{count}}회",
     "thanksShort": "❤️ 감사 {{count}}",
     "canHelp": "도울 수 있는 것:",
@@ -461,7 +502,13 @@
     "sendConfirmation": "확인 메일 보내기",
     "emailSent": "{{email}}(으)로 보냈어요. 링크를 열어 주세요.",
     "emailPending": "확인 대기 중: {{email}}",
-    "contactsPrivacy": "전화번호와 이메일은 내가 고른 도우미와 나를 고른 요청자에게만 보여요."
+    "contactsPrivacy": "전화번호와 이메일은 내가 고른 도우미와 나를 고른 요청자에게만 보여요.",
+    "declinedTab": "지원함",
+    "noDeclined": "도움을 제안한 요청이 여기에 표시됩니다",
+    "viewPhoto": "사진 열기: {{name}}",
+    "emailNotVerified": "이메일 미인증",
+    "editPhoto": "편집",
+    "deletePhoto": "삭제"
   },
   "settings": {
     "title": "설정",
@@ -520,7 +567,13 @@
     "currentPassword": "현재 비밀번호",
     "newPassword": "새 비밀번호",
     "passwordChanged": "비밀번호를 변경했어요",
-    "passwordOtherDevices": "다른 기기에서는 다시 로그인해야 해요."
+    "passwordOtherDevices": "다른 기기에서는 다시 로그인해야 해요.",
+    "deleteAccount": "계정 삭제",
+    "deleteTitle": "계정을 영구적으로 삭제할까요?",
+    "deleteText": "이메일, 전화번호, 사진, 알림, 설정이 지워집니다. 다른 사람이 참여한 채팅과 요청에서는 이름이 「삭제된 사용자」로 바뀌고 작성한 내용은 삭제됩니다. 되돌릴 수 없습니다.",
+    "deletePassword": "확인을 위해 비밀번호를 입력하세요",
+    "deleteConfirm": "영구 삭제",
+    "deleted": "계정이 삭제되었습니다"
   },
   "report": {
     "title": "신고",
@@ -638,7 +691,8 @@
     "send": "보내기",
     "sent": "메시지를 보냈어요",
     "replyNote": "{{email}}(으)로 답장드릴게요.",
-    "another": "하나 더 쓰기"
+    "another": "하나 더 쓰기",
+    "yourEmail": "답변 받을 이메일"
   },
   "install": {
     "title": "Poruch를 앱으로 설치하기",
@@ -652,9 +706,9 @@
     "howTo": "설치 방법:",
     "steps": {
       "ios": [
-        "화면 아래쪽이나 ‘⋯’ 메뉴의 공유 ⬆️ 버튼을 탭하세요",
-        "‘홈 화면에 추가’를 선택하세요",
-        "‘추가’를 탭하면 Poruch가 앱 목록에 생겨요"
+        "주소창 옆 아래쪽 「<dots></dots>」 메뉴에서 「공유 <share></share>」를 누르세요",
+        "「더 보기 <more></more>」를 선택하고 「<add></add> 홈 화면에 추가」를 누르세요",
+        "「추가」를 누르세요"
       ],
       "ios-other-browser": [
         "주소창의 공유 ⬆️ 버튼을 탭하세요",
@@ -670,7 +724,10 @@
         "‘앱 설치’ 또는 ‘홈 화면에 추가’를 선택하세요",
         "확인하면 Poruch가 앱 목록에 생겨요"
       ],
-      "desktop": ["주소창의 설치 아이콘 ⊕ 을 클릭하세요(또는 메뉴 ⋮ → ‘Poruch 설치’)", "설치를 확인하세요"]
+      "desktop": [
+        "주소창의 설치 아이콘 <install></install>을 클릭하세요 (또는 메뉴 ⋮ → 「Poruch 설치」)",
+        "설치를 확인하세요"
+      ]
     },
     "troubleTitle": "설치가 안 되나요?",
     "trouble": {
@@ -709,5 +766,54 @@
     "updated": "현재 버전: {{date}}",
     "englishOnly": "이 문서는 우크라이나어와 영어로 제공됩니다",
     "agree": "또한 <terms>이용약관</terms> 및 <privacy>개인정보 처리방침</privacy>에 동의하게 됩니다."
+  },
+  "reviews": {
+    "rating": "평점",
+    "sent": "리뷰 감사합니다!",
+    "title": "{{name}}님 리뷰",
+    "submit": "리뷰 보내기",
+    "placeholder": "어떠셨나요? (선택)",
+    "permanent": "리뷰는 프로필에 표시되며 나중에 수정하거나 삭제할 수 없습니다.",
+    "leaveTitle": "협력 평가하기",
+    "done": "리뷰 완료",
+    "leave": "리뷰 남기기",
+    "heading": "리뷰",
+    "none": "아직 리뷰가 없습니다",
+    "count_one": "리뷰 {{count}}개",
+    "count_other": "리뷰 {{count}}개"
+  },
+  "edit": {
+    "button": "수정",
+    "title": "요청 수정",
+    "save": "변경 사항 저장",
+    "saved": "변경 사항이 저장되었어요",
+    "fixedFields": "카테고리, 장소, 긴급도는 바꿀 수 없어요. 근처 사람들이 이미 이를 보고 있어요. 바꾸려면 요청을 취소하고 새로 만드세요."
+  },
+  "location": {
+    "rough": "위치가 대략적이에요(±{{metres}}). 창가나 바깥으로 이동하거나 휴대폰 설정에서 '정확한 위치'를 켜세요.",
+    "roughDrag": "위치가 대략적이에요(±{{metres}}). 핀을 정확한 곳으로 끌어 놓거나 휴대폰 설정에서 '정확한 위치'를 켜세요."
+  },
+  "when": {
+    "todayAt": "오늘 {{time}}",
+    "tomorrowAt": "내일 {{time}}",
+    "dateAt": "{{date}} {{time}}",
+    "yesterday": "어제"
+  },
+  "pager": {
+    "label": "페이지",
+    "previous": "이전 페이지",
+    "next": "다음 페이지"
+  },
+  "listTools": {
+    "search": "검색",
+    "sort": "정렬",
+    "nothingFound": "결과 없음",
+    "sorts": {
+      "distance": "가까운 순",
+      "newest": "최신순",
+      "oldest": "오래된 순",
+      "urgency": "긴급한 순",
+      "soon": "도움 날짜순"
+    }
   }
 }

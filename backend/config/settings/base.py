@@ -207,6 +207,7 @@ REST_FRAMEWORK = {
         "support": env("RATE_LIMIT_SUPPORT", default="5/hour"),
         "media_upload": env("RATE_LIMIT_MEDIA_UPLOAD", default="60/hour"),
         "share_preview": env("RATE_LIMIT_SHARE_PREVIEW", default="120/minute"),
+        "client_events": env("RATE_LIMIT_CLIENT_EVENTS", default="60/minute"),
     },
     "DATETIME_FORMAT": "iso-8601",
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
@@ -225,7 +226,22 @@ API_DOCS_PUBLIC = env.bool("API_DOCS_PUBLIC", default=DEBUG)
 
 # --- i18n -----------------------------------------------------------------
 LANGUAGE_CODE = "uk"
-LANGUAGES = [("uk", "Українська"), ("en", "English"), ("pl", "Polski")]
+# Same set as the app's interface languages (frontend/src/i18n/locales); Chinese is Simplified.
+LANGUAGES = [
+    ("uk", "Українська"),
+    ("en", "English"),
+    ("de", "Deutsch"),
+    ("es", "Español"),
+    ("fr", "Français"),
+    ("hi", "हिन्दी"),
+    ("it", "Italiano"),
+    ("ja", "日本語"),
+    ("ko", "한국어"),
+    ("pl", "Polski"),
+    ("pt", "Português"),
+    ("tr", "Türkçe"),
+    ("zh-hans", "简体中文"),
+]
 LOCALE_PATHS = [BASE_DIR / "locale"]
 TIME_ZONE = "UTC"
 USE_I18N = True
